@@ -56,6 +56,104 @@ document.querySelectorAll('pre').forEach(function(pre) {
   }
 });
 
+// ─── Docs enhancements ───────────────────────────────────────
+
+// 1. Right-side TOC — populate from h2/h3 headings + scroll spy
+(function() {
+  var tocList = document.querySelector('.docs-toc-list');
+  var article = document.querySelector('.docs-content article');
+  if (!tocList || !article) return;
+
+  var headings = article.querySelectorAll('h2, h3');
+  if (headings.length < 2) {
+    var toc = document.querySelector('.docs-toc');
+    if (toc) toc.style.display = 'none';
+    return;
+  }
+
+  // Get heading text without child elements (anchor links, etc.)
+  function headingText(h) {
+    var text = '';
+    h.childNodes.forEach(function(n) {
+      if (n.nodeType === 3) text += n.textContent; // text nodes only
+    });
+    return text.trim();
+  }
+
+  headings.forEach(function(h) {
+    var text = headingText(h);
+    if (!h.id) {
+      h.id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+    var li = document.createElement('li');
+    if (h.tagName === 'H3') li.className = 'toc-h3';
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = text;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  var tocLinks = tocList.querySelectorAll('a');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocLinks.forEach(function(link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+        var activeLink = tocList.querySelector('a.active');
+        if (activeLink) {
+          var li = activeLink.parentElement;
+          tocList.style.setProperty('--toc-indicator-y', li.offsetTop + 'px');
+          tocList.style.setProperty('--toc-indicator-h', li.offsetHeight + 'px');
+        }
+      }
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+
+  headings.forEach(function(h) { observer.observe(h); });
+})();
+
+// 2. Copy-to-clipboard on code blocks
+(function() {
+  document.querySelectorAll('.docs-content pre, .post-body pre').forEach(function(pre) {
+    var btn = document.createElement('button');
+    btn.className = 'code-copy';
+    btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy code to clipboard');
+    btn.addEventListener('click', function() {
+      var code = pre.querySelector('code');
+      var text = code ? code.textContent : pre.textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(function() {
+          btn.textContent = 'Copy';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    });
+    pre.style.position = 'relative';
+    pre.appendChild(btn);
+  });
+})();
+
+// 3. Heading anchor links
+(function() {
+  document.querySelectorAll('.docs-content article h2, .docs-content article h3, .post-body h2, .post-body h3').forEach(function(h) {
+    if (!h.id) {
+      h.id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+    var anchor = document.createElement('a');
+    anchor.className = 'heading-anchor';
+    anchor.href = '#' + h.id;
+    anchor.textContent = '#';
+    anchor.setAttribute('aria-label', 'Link to this section');
+    h.appendChild(anchor);
+  });
+})();
+
 // Docs sidebar scroll persistence
 (function() {
   var sidebar = document.querySelector('.docs-sidebar');
@@ -914,70 +1012,3 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   });
 })();
 
-// ─── Table of Contents ───────────────────────────────────────
-(function () {
-  var tocList = document.querySelector('.docs-toc-list');
-  var tocAside = document.querySelector('.docs-toc');
-  if (!tocList || !tocAside) return;
-
-  var article = document.querySelector('.docs-content article');
-  if (!article) return;
-
-  var headings = article.querySelectorAll('h2, h3');
-  if (headings.length < 2) {
-    tocAside.style.display = 'none';
-    return;
-  }
-
-  // Build ToC links from headings
-  headings.forEach(function (h) {
-    if (!h.id) {
-      h.id = h.textContent.trim().toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
-    }
-    var li = document.createElement('li');
-    if (h.tagName === 'H3') li.classList.add('toc-h3');
-    var a = document.createElement('a');
-    a.href = '#' + h.id;
-    a.textContent = h.textContent;
-    li.appendChild(a);
-    tocList.appendChild(li);
-  });
-
-  var tocLinks = tocList.querySelectorAll('a');
-  if (!tocLinks.length) return;
-
-  function updateIndicator(activeLink) {
-    if (!activeLink) return;
-    var li = activeLink.parentElement;
-    var listRect = tocList.getBoundingClientRect();
-    var liRect = li.getBoundingClientRect();
-    tocList.style.setProperty('--toc-indicator-y', (liRect.top - listRect.top) + 'px');
-    tocList.style.setProperty('--toc-indicator-h', liRect.height + 'px');
-  }
-
-  // IntersectionObserver to track which heading is in view
-  var activeId = null;
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        activeId = entry.target.id;
-      }
-    });
-    tocLinks.forEach(function (link) {
-      var isActive = link.getAttribute('href') === '#' + activeId;
-      link.classList.toggle('active', isActive);
-      if (isActive) updateIndicator(link);
-    });
-  }, {
-    rootMargin: '-80px 0px -60% 0px',
-    threshold: 0
-  });
-
-  headings.forEach(function (h) { observer.observe(h); });
-
-  // Activate first link on load
-  tocLinks[0].classList.add('active');
-  updateIndicator(tocLinks[0]);
-})();

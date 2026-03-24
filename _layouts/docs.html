@@ -33,13 +33,54 @@ body_class: page-docs
         {% endif %}
       </header>
       {% endif %}
+
+      {% comment %}Build flat list of all doc pages for prev/next{% endcomment %}
+      {% assign all_docs = "" | split: "" %}
+      {% for group in site.data.docs_nav %}
+        {% for item in group.items %}
+          {% assign all_docs = all_docs | push: item %}
+        {% endfor %}
+      {% endfor %}
+
+      {% comment %}Find current page index{% endcomment %}
+      {% assign current_idx = -1 %}
+      {% for doc in all_docs %}
+        {% assign doc_url_slash = doc.url | append: '/' %}
+        {% if page.url == doc.url or page.url == doc_url_slash %}
+          {% assign current_idx = forloop.index0 %}
+        {% endif %}
+      {% endfor %}
+
       {{ content }}
+
+      {% comment %}Previous/Next pager{% endcomment %}
+      {% if current_idx >= 0 %}
+      {% assign prev_idx = current_idx | minus: 1 %}
+      {% assign next_idx = current_idx | plus: 1 %}
+      <nav class="docs-pager" aria-label="Page navigation">
+        {% if current_idx > 0 %}
+          {% assign prev = all_docs[prev_idx] %}
+          <a href="{{ prev.url }}" class="docs-pager-link prev">
+            <span class="docs-pager-dir">Previous</span>
+            <span class="docs-pager-title">{{ prev.title }}</span>
+          </a>
+        {% endif %}
+        {% if next_idx < all_docs.size %}
+          {% assign next_doc = all_docs[next_idx] %}
+          <a href="{{ next_doc.url }}" class="docs-pager-link next">
+            <span class="docs-pager-dir">Next</span>
+            <span class="docs-pager-title">{{ next_doc.title }}</span>
+          </a>
+        {% endif %}
+      </nav>
+      {% endif %}
     </article>
   </main>
+  {% unless page.hide_toc %}
   <aside class="docs-toc" aria-label="Table of contents">
     <nav class="docs-toc-inner">
-      <div class="docs-toc-label">On this page</div>
       <ul class="docs-toc-list"></ul>
     </nav>
   </aside>
+  {% endunless %}
 </div>

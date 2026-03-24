@@ -337,6 +337,139 @@ document.querySelectorAll('pre').forEach(function(pre) {
   }
 })();
 
+// ─── Numeric decrypt effect ──────────────────────────────────
+// Elements with [data-decrypt-num] scramble through digits/symbols
+// before resolving. Resets on scroll out.
+(function() {
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var digits = '0123456789';
+  var elements = document.querySelectorAll('[data-decrypt-num]');
+  if (!elements.length) return;
+
+  if (reducedMotion) {
+    elements.forEach(function(el) { el.textContent = el.getAttribute('data-decrypt-num'); });
+    return;
+  }
+
+  var active = new Map();
+
+  function scramble(el) {
+    var target = el.getAttribute('data-decrypt-num');
+    var len = target.length;
+    var resolved = new Array(len).fill(false);
+    var current = new Array(len);
+    var frame = 0;
+
+    var resolveFrames = [];
+    for (var i = 0; i < len; i++) {
+      resolveFrames[i] = 15 + i * 5 + Math.floor(Math.random() * 20);
+      // Keep symbols/letters as-is from the start, only scramble digits
+      if ('0123456789'.indexOf(target[i]) >= 0) {
+        current[i] = digits[Math.floor(Math.random() * digits.length)];
+      } else {
+        current[i] = target[i];
+        resolved[i] = true;
+      }
+    }
+    el.textContent = current.join('');
+
+    function tick() {
+      frame++;
+      var allDone = true;
+
+      for (var i = 0; i < len; i++) {
+        if (resolved[i]) continue;
+        if (frame >= resolveFrames[i]) {
+          resolved[i] = true;
+          current[i] = target[i];
+        } else {
+          var nearResolve = frame / resolveFrames[i];
+          if (nearResolve > 0.6) {
+            current[i] = Math.random() < 0.25 ? target[i] : digits[Math.floor(Math.random() * digits.length)];
+          } else if (frame % 2 === 0) {
+            current[i] = digits[Math.floor(Math.random() * digits.length)];
+          }
+          allDone = false;
+        }
+      }
+
+      el.textContent = current.join('');
+
+      if (allDone) {
+        active.delete(el);
+      } else {
+        active.set(el, requestAnimationFrame(tick));
+      }
+    }
+
+    if (active.has(el)) { cancelAnimationFrame(active.get(el)); }
+    active.set(el, requestAnimationFrame(tick));
+  }
+
+  function reset(el) {
+    if (active.has(el)) { cancelAnimationFrame(active.get(el)); active.delete(el); }
+    el.textContent = '';
+  }
+
+  var timeouts = new Map();
+  var idleAnims = new Map();
+
+  // Show cycling random digits until the real decrypt starts
+  function startIdle(el) {
+    var target = el.getAttribute('data-decrypt-num');
+    var len = target.length;
+    function tick() {
+      var out = '';
+      for (var i = 0; i < len; i++) {
+        if ('0123456789'.indexOf(target[i]) >= 0) {
+          out += digits[Math.floor(Math.random() * digits.length)];
+        } else {
+          out += target[i];
+        }
+      }
+      el.textContent = out;
+      idleAnims.set(el, requestAnimationFrame(tick));
+    }
+    idleAnims.set(el, requestAnimationFrame(tick));
+  }
+
+  function stopIdle(el) {
+    if (idleAnims.has(el)) {
+      cancelAnimationFrame(idleAnims.get(el));
+      idleAnims.delete(el);
+    }
+  }
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var delay = parseInt(entry.target.getAttribute('data-decrypt-delay') || '0', 10);
+        // Start idle scrambling immediately
+        startIdle(entry.target);
+        // After delay, stop idle and begin real decrypt
+        var tid = setTimeout(function() {
+          stopIdle(entry.target);
+          scramble(entry.target);
+          timeouts.delete(entry.target);
+        }, delay);
+        timeouts.set(entry.target, tid);
+      } else {
+        if (timeouts.has(entry.target)) {
+          clearTimeout(timeouts.get(entry.target));
+          timeouts.delete(entry.target);
+        }
+        stopIdle(entry.target);
+        reset(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  elements.forEach(function(el) {
+    el.textContent = '';
+    observer.observe(el);
+  });
+})();
+
 // ─── Viewport reveal animations ──────────────────────────────
 // Elements with [data-reveal] fade/slide in when they enter the viewport.
 // Respects prefers-reduced-motion.

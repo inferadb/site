@@ -1,0 +1,164 @@
+<svg viewBox="0 0 800 420" fill="none" xmlns="http://www.w3.org/2000/svg" class="arch-schematic" aria-hidden="true">
+  <style>
+    .sch-line { stroke: #1c2028; stroke-width: 1; }
+    .sch-line-active { stroke: #272d38; stroke-width: 1; stroke-dasharray: 4 3; }
+    .sch-line-accent { stroke: #c8a44e; stroke-width: 1; opacity: 0.4; }
+    .sch-box { fill: #10131a; stroke: #1c2028; stroke-width: 1; }
+    .sch-box-engine { fill: #10131a; stroke: #c8a44e; stroke-width: 1; opacity: 0.8; }
+    .sch-box-control { fill: #10131a; stroke: #56b6c2; stroke-width: 1; opacity: 0.8; }
+    .sch-box-ledger { fill: #10131a; stroke: #6a9e4a; stroke-width: 1; opacity: 0.8; }
+    .sch-label { font-family: 'JetBrains Mono', 'SF Mono', monospace; fill: #555d68; font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+    .sch-label-bright { font-family: 'JetBrains Mono', 'SF Mono', monospace; fill: #778189; font-size: 8px; letter-spacing: 0.05em; }
+    .sch-title { font-family: 'Inter', system-ui, sans-serif; fill: #dce1e8; font-size: 13px; font-weight: 600; }
+    .sch-subtitle { font-family: 'JetBrains Mono', 'SF Mono', monospace; fill: #c8a44e; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .sch-port { font-family: 'JetBrains Mono', 'SF Mono', monospace; fill: #555d68; font-size: 7px; }
+    .sch-fig { font-family: 'JetBrains Mono', 'SF Mono', monospace; fill: #555d68; font-size: 7px; letter-spacing: 0.1em; }
+    .sch-dot { fill: #272d38; }
+    .sch-dot-active { fill: #c8a44e; opacity: 0.6; }
+  </style>
+
+  <!-- Figure label -->
+  <text x="16" y="16" class="sch-fig">FIG. 01 — SYSTEM ARCHITECTURE</text>
+
+  <!-- Registration marks -->
+  <line x1="0" y1="0" x2="12" y2="0" class="sch-line"/>
+  <line x1="0" y1="0" x2="0" y2="12" class="sch-line"/>
+  <line x1="800" y1="0" x2="788" y2="0" class="sch-line"/>
+  <line x1="800" y1="0" x2="800" y2="12" class="sch-line"/>
+  <line x1="0" y1="420" x2="12" y2="420" class="sch-line"/>
+  <line x1="0" y1="420" x2="0" y2="408" class="sch-line"/>
+  <line x1="800" y1="420" x2="788" y2="420" class="sch-line"/>
+  <line x1="800" y1="420" x2="800" y2="408" class="sch-line"/>
+
+  <!-- Grid dots -->
+  <circle cx="100" cy="50" r="1" class="sch-dot"/>
+  <circle cx="200" cy="50" r="1" class="sch-dot"/>
+  <circle cx="300" cy="50" r="1" class="sch-dot"/>
+  <circle cx="400" cy="50" r="1" class="sch-dot"/>
+  <circle cx="500" cy="50" r="1" class="sch-dot"/>
+  <circle cx="600" cy="50" r="1" class="sch-dot"/>
+  <circle cx="700" cy="50" r="1" class="sch-dot"/>
+
+  <!-- CLIENT LAYER -->
+  <text x="16" y="62" class="sch-label">CLIENT LAYER</text>
+  <rect x="100" y="70" width="120" height="36" rx="2" class="sch-box"/>
+  <text x="160" y="84" text-anchor="middle" class="sch-label-bright">SDK / CLI</text>
+  <text x="160" y="96" text-anchor="middle" class="sch-port">REST · gRPC · AuthZEN</text>
+
+  <rect x="260" y="70" width="120" height="36" rx="2" class="sch-box"/>
+  <text x="320" y="84" text-anchor="middle" class="sch-label-bright">Dashboard</text>
+  <text x="320" y="96" text-anchor="middle" class="sch-port">TypeScript · React 19</text>
+
+  <rect x="420" y="70" width="120" height="36" rx="2" class="sch-box"/>
+  <text x="480" y="84" text-anchor="middle" class="sch-label-bright">Terraform</text>
+  <text x="480" y="96" text-anchor="middle" class="sch-port">HCL · Provider</text>
+
+  <!-- Connection lines from clients to Engine/Control -->
+  <line x1="160" y1="106" x2="160" y2="155" class="sch-line-active"/>
+  <line x1="320" y1="106" x2="320" y2="155" class="sch-line-active"/>
+  <line x1="480" y1="106" x2="580" y2="155" class="sch-line-active"/>
+
+  <!-- Callout: ports -->
+  <line x1="160" y1="130" x2="80" y2="130" class="sch-line-accent"/>
+  <text x="76" y="133" text-anchor="end" class="sch-port">:8080 HTTP</text>
+  <circle cx="160" cy="130" r="2" class="sch-dot-active"/>
+
+  <line x1="320" y1="130" x2="375" y2="130" class="sch-line-accent"/>
+  <text x="379" y="133" class="sch-port">:8081 gRPC</text>
+  <circle cx="320" cy="130" r="2" class="sch-dot-active"/>
+
+  <!-- ENGINE -->
+  <text x="60" y="160" class="sch-subtitle">Data Plane</text>
+  <rect x="60" y="168" width="340" height="100" rx="2" class="sch-box-engine"/>
+  <text x="80" y="192" class="sch-title">Engine</text>
+  <text x="80" y="208" class="sch-label-bright">Authorization evaluation · Sub-µs latency</text>
+
+  <!-- Engine internal modules -->
+  <rect x="80" y="220" width="70" height="28" rx="1" class="sch-box"/>
+  <text x="115" y="238" text-anchor="middle" class="sch-port">Evaluator</text>
+
+  <rect x="160" y="220" width="55" height="28" rx="1" class="sch-box"/>
+  <text x="187" y="238" text-anchor="middle" class="sch-port">Cache</text>
+
+  <rect x="225" y="220" width="55" height="28" rx="1" class="sch-box"/>
+  <text x="252" y="238" text-anchor="middle" class="sch-port">WASM</text>
+
+  <rect x="290" y="220" width="90" height="28" rx="1" class="sch-box"/>
+  <text x="335" y="238" text-anchor="middle" class="sch-port">IPL Parser</text>
+
+  <!-- CONTROL -->
+  <text x="440" y="160" class="sch-subtitle">Control Plane</text>
+  <rect x="440" y="168" width="300" height="100" rx="2" class="sch-box-control"/>
+  <text x="460" y="192" class="sch-title">Control</text>
+  <text x="460" y="208" class="sch-label-bright">Administration · Auth · Token issuance</text>
+
+  <!-- Control internal modules -->
+  <rect x="460" y="220" width="70" height="28" rx="1" class="sch-box"/>
+  <text x="495" y="238" text-anchor="middle" class="sch-port">WebAuthn</text>
+
+  <rect x="540" y="220" width="60" height="28" rx="1" class="sch-box"/>
+  <text x="570" y="238" text-anchor="middle" class="sch-port">JWT</text>
+
+  <rect x="610" y="220" width="55" height="28" rx="1" class="sch-box"/>
+  <text x="637" y="238" text-anchor="middle" class="sch-port">RBAC</text>
+
+  <rect x="675" y="220" width="50" height="28" rx="1" class="sch-box"/>
+  <text x="700" y="238" text-anchor="middle" class="sch-port">Audit</text>
+
+  <!-- Control port callout -->
+  <line x1="740" y1="200" x2="785" y2="200" class="sch-line-accent"/>
+  <text x="785" y="196" text-anchor="end" class="sch-port">:9090</text>
+  <text x="785" y="206" text-anchor="end" class="sch-port">REST</text>
+  <circle cx="740" cy="200" r="2" class="sch-dot-active"/>
+
+  <!-- Connection: Engine <-> Control via Ledger -->
+  <text x="405" y="228" text-anchor="middle" class="sch-port">JWKS</text>
+  <line x1="400" y1="230" x2="400" y2="240" class="sch-line-accent"/>
+  <line x1="395" y1="240" x2="405" y2="240" class="sch-line-accent"/>
+
+  <!-- Lines down to Ledger -->
+  <line x1="230" y1="268" x2="230" y2="310" class="sch-line-active"/>
+  <line x1="590" y1="268" x2="590" y2="310" class="sch-line-active"/>
+
+  <!-- Connection callouts -->
+  <line x1="230" y1="290" x2="80" y2="290" class="sch-line-accent"/>
+  <text x="76" y="287" text-anchor="end" class="sch-port">Tuple Store</text>
+  <text x="76" y="297" text-anchor="end" class="sch-port">Read/Write</text>
+  <circle cx="230" cy="290" r="2" class="sch-dot-active"/>
+
+  <line x1="590" y1="290" x2="740" y2="290" class="sch-line-accent"/>
+  <text x="744" y="287" class="sch-port">Entity Store</text>
+  <text x="744" y="297" class="sch-port">KV + Sessions</text>
+  <circle cx="590" cy="290" r="2" class="sch-dot-active"/>
+
+  <!-- LEDGER -->
+  <text x="200" y="316" class="sch-subtitle">Storage Layer</text>
+  <rect x="200" y="324" width="440" height="80" rx="2" class="sch-box-ledger"/>
+  <text x="220" y="348" class="sch-title">Ledger</text>
+  <text x="220" y="364" class="sch-label-bright">Per-vault blockchain · Raft consensus · Merkle proofs</text>
+
+  <!-- Ledger internal -->
+  <rect x="220" y="372" width="70" height="22" rx="1" class="sch-box"/>
+  <text x="255" y="387" text-anchor="middle" class="sch-port">B+ Tree</text>
+
+  <rect x="300" y="372" width="55" height="22" rx="1" class="sch-box"/>
+  <text x="327" y="387" text-anchor="middle" class="sch-port">Raft</text>
+
+  <rect x="365" y="372" width="65" height="22" rx="1" class="sch-box"/>
+  <text x="397" y="387" text-anchor="middle" class="sch-port">Merkle</text>
+
+  <rect x="440" y="372" width="80" height="22" rx="1" class="sch-box"/>
+  <text x="480" y="387" text-anchor="middle" class="sch-port">AES-256-GCM</text>
+
+  <rect x="530" y="372" width="90" height="22" rx="1" class="sch-box"/>
+  <text x="575" y="387" text-anchor="middle" class="sch-port">Blockchain</text>
+
+  <!-- Ledger port callout -->
+  <line x1="640" y1="364" x2="690" y2="364" class="sch-line-accent"/>
+  <text x="694" y="361" class="sch-port">:50051</text>
+  <text x="694" y="371" class="sch-port">gRPC</text>
+  <circle cx="640" cy="364" r="2" class="sch-dot-active"/>
+
+  <!-- Bottom registration -->
+  <text x="784" y="416" text-anchor="end" class="sch-fig">INFERADB v0.1 — CONFIDENTIAL</text>
+</svg>

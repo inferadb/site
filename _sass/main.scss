@@ -18,17 +18,23 @@
   --muted: #555d68;          // 3.10:1 — decorative only, never for essential text
 
   // Accent: hazard amber (primary), desaturated teal (secondary)
-  --accent: #c8a44e;
-  --accent-dim: rgba(200, 164, 78, 0.15);
-  --accent-teal: #56b6c2;
-  --accent-red: #d45858;     // 4.82:1 — meets AA (was #c75050 at 4.34:1)
-  --accent-green: #6a9e4a;
+  // Defined in oklch for perceptually uniform palette derivation
+  --accent: oklch(0.73 0.12 80);           // hazard amber
+  --accent-hover: oklch(0.78 0.12 80);     // lighter amber for hover
+  --accent-dim: oklch(0.73 0.12 80 / 0.15);
+  --accent-teal: oklch(0.72 0.1 200);      // desaturated teal
+  --accent-red: oklch(0.62 0.18 25);       // signal red
+  --accent-green: oklch(0.62 0.14 140);    // muted green
 
-  // Legacy aliases for gradient-text (now amber)
-  --purple: #c8a44e;
-  --pink: #c8a44e;
-  --accent-gradient: linear-gradient(135deg, #c8a44e 0%, #d4b96a 100%);
-  --accent-gradient-subtle: linear-gradient(135deg, rgba(200, 164, 78, 0.08) 0%, rgba(200, 164, 78, 0.03) 100%);
+  // Derived states via color-mix — hover/active shades from one source
+  --border-accent: color-mix(in oklch, var(--accent) 20%, transparent);
+  --bg-accent-subtle: color-mix(in oklch, var(--accent) 6%, var(--bg));
+
+  // Legacy aliases
+  --purple: var(--accent);
+  --pink: var(--accent);
+  --accent-gradient: linear-gradient(135deg, oklch(0.73 0.12 80) 0%, oklch(0.78 0.10 80) 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, oklch(0.73 0.12 80 / 0.08) 0%, oklch(0.73 0.12 80 / 0.03) 100%);
 
   // Typography: Inter for body, Figtree for display, JetBrains Mono for technical
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -309,6 +315,16 @@ section {
   padding: 12rem 0 5rem;
   text-align: center;
   overflow: hidden;
+}
+
+// Hero grid background — subtle dot pattern
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.4) 0%, transparent 70%);
 }
 
 .hero-glow {
@@ -623,6 +639,26 @@ section {
 
 .architecture {
   padding: 6rem 0 7rem;
+}
+
+// Architecture schematic — NASA-style systems diagram
+.arch-schematic-container {
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .arch-schematic {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    min-width: 600px;
+  }
 }
 
 .arch-cards {
@@ -2656,6 +2692,186 @@ section {
 @media (max-width: 768px) {
   .careers-principles-grid { grid-template-columns: 1fr; }
   .careers-role { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+
+// ─── Modern CSS Enhancements (2025) ──────────────────────────
+// Progressive enhancements — older browsers get the static version.
+
+// @property — typed custom properties for animatable values
+// These enable CSS-only gradient animations and glow effects.
+@property --glow-opacity {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --glow-spread {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+
+// Mechanical easing — hydraulic/damped spring for industrial feel
+// Simulates a mechanical actuator rather than a rubber band
+:root {
+  --ease-mechanical: linear(
+    0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%,
+    0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%,
+    1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001 85%, 1
+  );
+}
+
+// Hero accent glow — animated with @property
+.hero-title .gradient-text {
+  --glow-opacity: 0;
+  transition: --glow-opacity 0.6s var(--ease-mechanical);
+  text-shadow: 0 0 40px oklch(0.73 0.12 80 / var(--glow-opacity));
+}
+
+.hero:hover .hero-title .gradient-text {
+  --glow-opacity: 0.3;
+}
+
+// :has() — sibling dimming on card grids
+// When any card is hovered, dim the others. Spotlight effect.
+.diff-grid:has(.diff-card:hover) .diff-card:not(:hover) {
+  opacity: 0.55;
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.diff-grid .diff-card {
+  transition: opacity 0.3s var(--ease-mechanical), border-color 0.15s;
+}
+
+.uc-grid:has(.uc-card:hover) .uc-card:not(:hover) {
+  opacity: 0.55;
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.uc-card {
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.arch-cards:has(.arch-service:hover) .arch-service:not(:hover) {
+  opacity: 0.55;
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.arch-service {
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.card-grid:has(.card:hover) .card:not(:hover) {
+  opacity: 0.55;
+  transition: opacity 0.3s var(--ease-mechanical), border-color 0.15s;
+}
+
+.pricing-grid:has(.pricing-card:hover) .pricing-card:not(:hover) {
+  opacity: 0.55;
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.pricing-card {
+  transition: opacity 0.3s var(--ease-mechanical), border-color 0.15s;
+}
+
+// @starting-style — entry animations for elements appearing in DOM
+// Sections and cards fade in when they enter the viewport via scroll
+.diff-card,
+.uc-card,
+.arch-service,
+.stat-card,
+.perf-card,
+.standard-card,
+.compliance-badge-item,
+.about-principle,
+.about-person,
+.about-stat,
+.careers-principle,
+.careers-role {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  transition: opacity 0.5s var(--ease-mechanical),
+              transform 0.5s var(--ease-mechanical),
+              border-color 0.15s;
+}
+
+// Scroll-driven animations — progressive enhancement
+// Only apply when supported (Chrome/Edge). Safari/Firefox get static content.
+@supports (animation-timeline: view()) {
+  .section-header {
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  .arch-schematic-container {
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+
+  .hero-code,
+  .hiw-code,
+  .hiw-steps {
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  // Stats count up feel — stagger the cards
+  .stat-card:nth-child(1) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 0% entry 25%; }
+  .stat-card:nth-child(2) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 5% entry 30%; }
+  .stat-card:nth-child(3) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 10% entry 35%; }
+
+  .perf-card:nth-child(1) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 0% entry 25%; }
+  .perf-card:nth-child(2) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 3% entry 28%; }
+  .perf-card:nth-child(3) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 6% entry 31%; }
+  .perf-card:nth-child(4) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 9% entry 34%; }
+
+  @keyframes fade-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// Button hover — mechanical spring
+.btn {
+  transition: all 0.25s var(--ease-mechanical);
+}
+
+// Nav border transition — mechanical
+.site-nav {
+  transition: border-bottom-color 0.3s var(--ease-mechanical);
+}
+
+// Code window hover — subtle lift
+.code-window {
+  transition: border-color 0.25s var(--ease-mechanical),
+              box-shadow 0.25s var(--ease-mechanical);
+
+  &:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 2px 20px oklch(0.73 0.12 80 / 0.04);
+  }
+}
+
+// Schematic connection dots — pulse on hover
+.arch-schematic-container:hover .sch-dot-active {
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 // ─── Responsive ──────────────────────────────────────────────

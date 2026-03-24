@@ -5,18 +5,19 @@ body_class: home
 
 <!-- Hero -->
 <section class="hero">
-    <div class="hero-grid"></div>
+    <canvas class="hero-constellation" id="constellation" aria-hidden="true"></canvas>
     <div class="hero-glow"></div>
     <div class="container">
         <p class="hero-eyebrow">SYS:INFERADB // The Authorization Database</p>
-        <h1 class="hero-title">
-            Permissions infrastructure<br />for
-            <span class="gradient-text">modern software</span>
+        <h1 class="hero-title" data-hero-decrypt>
+            <span data-hero-static>Permissions infrastructure</span><br/>
+            <span data-hero-static>for </span><span class="gradient-text" data-hero-cycle
+              data-phrases="modern software,AI-native products,teams that ship,regulated industries,every scale,what comes next">modern software</span>
         </h1>
         <p class="hero-subtitle">
-            Sub-microsecond access control with cryptographic audit trails,
-            storage-layer tenant isolation, and distributed consensus.
-            Zanzibar-inspired. AuthZEN-compliant.
+            Broken access control is the #1 API security risk. InferaDB is
+            the authorization database purpose-built to fix that — deploys
+            in minutes, scales to millions, satisfies auditors by default.
         </p>
         <div class="hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -46,7 +47,7 @@ body_class: home
 <!-- Credibility bar -->
 <section class="credibility">
     <div class="container">
-        <div class="credibility-grid">
+        <div class="credibility-grid" data-reveal="fade">
             <span class="credibility-value"
                 >From the engineers behind OpenFGA</span
             >
@@ -60,10 +61,11 @@ body_class: home
     </div>
 </section>
 
+{% include section-break.html id="01" label="THREAT ASSESSMENT" %}
 <!-- Problem -->
 <section class="problem">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>Authorization is a hidden crisis</h2>
             <p>
                 Broken access control is the #1 risk in the OWASP API Security
@@ -72,21 +74,21 @@ body_class: home
             </p>
         </div>
         <div class="stats-grid">
-            <div class="stat-card">
+            <div class="stat-card" data-reveal data-reveal-delay="0">
                 <span class="stat-number">94%</span>
                 <span class="stat-label"
                     >of applications tested exhibit broken access control</span
                 >
                 <span class="stat-source">OWASP, 2021</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-reveal data-reveal-delay="80">
                 <span class="stat-number">$4.88M</span>
                 <span class="stat-label"
                     >average cost of a data breach globally in 2024</span
                 >
                 <span class="stat-source">IBM / Ponemon</span>
             </div>
-            <div class="stat-card">
+            <div class="stat-card" data-reveal data-reveal-delay="160">
                 <span class="stat-number">6+</span>
                 <span class="stat-label"
                     >engineers dedicated to authorization at companies that
@@ -98,10 +100,11 @@ body_class: home
     </div>
 </section>
 
+{% include section-break.html id="02" label="PERFORMANCE METRICS" %}
 <!-- Performance -->
 <section class="performance" id="product">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>Not another policy engine</h2>
             <p>
                 Competitors bolt authorization onto PostgreSQL or embed it in
@@ -111,26 +114,26 @@ body_class: home
             </p>
         </div>
         <div class="perf-grid">
-            <div class="perf-card perf-hero">
+            <div class="perf-card perf-hero" data-reveal data-reveal-delay="0">
                 <span class="perf-number"
                     >2.8<span class="perf-unit">µs</span></span
                 >
                 <span class="perf-label">p99 read latency</span>
                 <span class="perf-context">Competitors: 5–50ms</span>
             </div>
-            <div class="perf-card">
+            <div class="perf-card" data-reveal data-reveal-delay="60">
                 <span class="perf-number">952K</span>
                 <span class="perf-label">operations/second</span>
                 <span class="perf-context">On commodity hardware</span>
             </div>
-            <div class="perf-card">
+            <div class="perf-card" data-reveal data-reveal-delay="120">
                 <span class="perf-number"
                     >&lt;1<span class="perf-unit">ms</span></span
                 >
                 <span class="perf-label">B+ tree index reads</span>
                 <span class="perf-context">Independent of Merkle layer</span>
             </div>
-            <div class="perf-card">
+            <div class="perf-card" data-reveal data-reveal-delay="180">
                 <span class="perf-number"
                     >&lt;100<span class="perf-unit">ms</span></span
                 >
@@ -168,7 +171,7 @@ body_class: home
 <!-- How it works -->
 <section class="how-it-works">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>Model any permission system</h2>
             <p>
                 The Infera Policy Language unifies ReBAC, RBAC, and ABAC in a
@@ -178,7 +181,7 @@ body_class: home
             </p>
         </div>
         <div class="hiw-grid">
-            <div class="hiw-code">
+            <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
                         <span class="code-dot"></span>
@@ -208,7 +211,7 @@ body_class: home
 }</code></pre>
                 </div>
             </div>
-            <div class="hiw-steps">
+            <div class="hiw-steps" data-reveal data-reveal-delay="100">
                 <div class="hiw-step">
                     <span class="hiw-step-num">01</span>
                     <h3>Define your model</h3>
@@ -242,10 +245,11 @@ body_class: home
     </div>
 </section>
 
+{% include section-break.html id="03" label="SYSTEM ARCHITECTURE" %}
 <!-- Architecture -->
 <section class="architecture" id="architecture">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>Three services, one system</h2>
             <p>
                 A clean separation between authorization evaluation,
@@ -254,10 +258,10 @@ body_class: home
             </p>
         </div>
         <div class="arch-cards">
-            <div class="arch-service">
+            <div class="arch-service" data-reveal>
                 <div class="arch-service-header">
                     <span class="arch-service-badge engine">Data Plane</span>
-                    <h3>Engine</h3>
+                    <h3>Engine <span class="status-dot" aria-hidden="true"></span></h3>
                 </div>
                 <p>
                     The core authorization engine. Evaluates permission checks
@@ -280,12 +284,12 @@ body_class: home
                     >View on GitHub →</a
                 >
             </div>
-            <div class="arch-service">
+            <div class="arch-service" data-reveal>
                 <div class="arch-service-header">
                     <span class="arch-service-badge control"
                         >Control Plane</span
                     >
-                    <h3>Control</h3>
+                    <h3>Control <span class="status-dot" aria-hidden="true"></span></h3>
                 </div>
                 <p>
                     Multi-tenant administration. Manages organizations, vaults,
@@ -308,10 +312,10 @@ body_class: home
                     >View on GitHub →</a
                 >
             </div>
-            <div class="arch-service">
+            <div class="arch-service" data-reveal>
                 <div class="arch-service-header">
                     <span class="arch-service-badge ledger">Storage Layer</span>
-                    <h3>Ledger</h3>
+                    <h3>Ledger <span class="status-dot" aria-hidden="true"></span></h3>
                 </div>
                 <p>
                     Distributed blockchain persistence. Every permission change
@@ -341,12 +345,12 @@ body_class: home
 <!-- Differentiators -->
 <section class="differentiators">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>What makes InferaDB different</h2>
         </div>
         <div class="diff-grid">
             {% for feature in site.data.features %}
-            <div class="diff-card">
+            <div class="diff-card" data-reveal>
                 <div class="diff-highlight">{{ feature.highlight }}</div>
                 <h3>{{ feature.title }}</h3>
                 <p>{{ feature.description }}</p>
@@ -356,14 +360,15 @@ body_class: home
     </div>
 </section>
 
+{% include section-break.html id="04" label="DEPLOYMENT SCENARIOS" %}
 <!-- Use Cases -->
 <section class="use-cases">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>Built for the workloads that matter</h2>
         </div>
         <div class="uc-grid">
-            <div class="uc-card">
+            <div class="uc-card" data-reveal>
                 <span class="uc-icon">
                     <svg
                         width="24"
@@ -392,7 +397,7 @@ body_class: home
                     <li>Permission-aware search</li>
                 </ul>
             </div>
-            <div class="uc-card">
+            <div class="uc-card" data-reveal>
                 <span class="uc-icon">
                     <svg
                         width="24"
@@ -422,7 +427,7 @@ body_class: home
                     <li>Merkle proof verification for auditors</li>
                 </ul>
             </div>
-            <div class="uc-card">
+            <div class="uc-card" data-reveal>
                 <span class="uc-icon">
                     <svg
                         width="24"
@@ -463,7 +468,7 @@ body_class: home
 <!-- Compliance -->
 <section class="compliance">
     <div class="container">
-        <div class="compliance-inner">
+        <div class="compliance-inner" data-reveal>
             <div class="compliance-text">
                 <h2>Compliance by design</h2>
                 <p>
@@ -491,10 +496,11 @@ body_class: home
     </div>
 </section>
 
+{% include section-break.html id="05" label="DEVELOPER INTERFACE" %}
 <!-- Developer Experience -->
 <section class="devex" id="developers">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
             <h2>Developer experience that doesn't get in the way</h2>
             <p>
                 Integrate in under 30 minutes. Branch, test, and merge policies
@@ -503,7 +509,7 @@ body_class: home
             </p>
         </div>
         <div class="devex-grid">
-            <div class="devex-card">
+            <div class="devex-card" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
                         <span class="code-dot"></span>
@@ -537,7 +543,7 @@ body_class: home
                     keychain storage.
                 </p>
             </div>
-            <div class="devex-card">
+            <div class="devex-card" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
                         <span class="code-dot"></span>
@@ -570,7 +576,7 @@ body_class: home
             </div>
         </div>
         <div class="devex-extras">
-            <div class="devex-extra">
+            <div class="devex-extra" data-reveal>
                 <h4>Dashboard</h4>
                 <p>
                     Visual policy editor, relationship graph explorer, decision
@@ -578,14 +584,14 @@ body_class: home
                     writing code.
                 </p>
             </div>
-            <div class="devex-extra">
+            <div class="devex-extra" data-reveal>
                 <h4>Terraform Provider</h4>
                 <p>
                     Manage organizations, vaults, clients, teams, and grants as
                     infrastructure as code. Published in the Terraform registry.
                 </p>
             </div>
-            <div class="devex-extra">
+            <div class="devex-extra" data-reveal>
                 <h4>Framework Integrations</h4>
                 <p>
                     Middleware for Axum, Actix-web, Next.js, Rails, Django,
@@ -600,7 +606,7 @@ body_class: home
 <section class="oss-cloud">
     <div class="container">
         <div class="oss-grid">
-            <div class="oss-card">
+            <div class="oss-card" data-reveal>
                 <div class="oss-card-badge">Open Source</div>
                 <h3>Community Edition</h3>
                 <p>
@@ -662,7 +668,7 @@ body_class: home
 <!-- CTA -->
 <section class="cta">
     <div class="container">
-        <div class="cta-content">
+        <div class="cta-content" data-reveal>
             <div class="cta-glow"></div>
             <p class="cta-eyebrow">Ready to rethink authorization?</p>
             <h2>

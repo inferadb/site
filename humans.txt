@@ -4,6 +4,7 @@
 
 Co-Founder & CTO: Evan Sims
 Site: https://evansims.com
+GitHub: https://github.com/evansims
 Location: United States
 
 Co-Founder & CEO: Jane Sims
@@ -11,16 +12,14 @@ Location: United States
 
 /* THANKS */
 
-OpenFGA — for proving the category
-Google Zanzibar — for the architecture that inspired ours
-OpenID AuthZEN — for the standard we build on
+The OpenFGA contributors at Auth0/Okta — for proving the category
 The Rust community — for the language that makes sub-microsecond possible
+The OpenID AuthZEN working group — for standardizing authorization APIs
 
 /* SITE */
 
 Built with: Jekyll, SCSS, vanilla JS
 Hosted on: GitHub Pages
 Fonts: Inter, Figtree, JetBrains Mono (Google Fonts)
-Aesthetic: Mil-Spec Hard Sci-Fi Industrial
-Standards: WCAG 2.1 AA, OpenGraph, JSON-LD
+Standards: WCAG 2.1 AA, OpenGraph, JSON-LD, llms.txt
 Last updated: {{ 'now' | date: '%Y-%m-%d' }}

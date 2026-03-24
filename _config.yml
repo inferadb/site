@@ -33,3 +33,5 @@ exclude:
   - .jekyll-cache
   - vendor
   - assets/images/og-source.svg
+  - assets/images/linkedin-banner-source.svg
+  - assets/images/linkedin-banner.png

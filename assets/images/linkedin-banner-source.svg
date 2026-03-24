@@ -1,0 +1,48 @@
+<svg width="1584" height="396" viewBox="0 0 1584 396" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1584" height="396" fill="#0b0d11"/>
+  <rect x="0" y="0" width="1584" height="3" fill="#c8a44e"/>
+
+  <!-- Dot grid background -->
+  <defs>
+    <pattern id="dots" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
+      <circle cx="16" cy="16" r="0.7" fill="#1c2028"/>
+    </pattern>
+  </defs>
+  <rect width="1584" height="396" fill="url(#dots)"/>
+
+  <!-- Logo mark — left of center -->
+  <!-- Hexagonal frame -->
+  <path d="M620 128L662 152V200L620 224L578 200V152Z" stroke="#c8a44e" stroke-width="2" stroke-linejoin="bevel" fill="none"/>
+
+  <!-- Three graph nodes -->
+  <circle cx="620" cy="155" r="6" fill="#c8a44e"/>
+  <circle cx="598" cy="192" r="6" fill="#c8a44e"/>
+  <circle cx="642" cy="192" r="6" fill="#c8a44e"/>
+
+  <!-- Connection edges -->
+  <line x1="620" y1="161" x2="601" y2="187" stroke="#c8a44e" stroke-width="1.5"/>
+  <line x1="620" y1="161" x2="639" y2="187" stroke="#c8a44e" stroke-width="1.5"/>
+  <line x1="604" y1="192" x2="636" y2="192" stroke="#c8a44e" stroke-width="1.5"/>
+
+  <!-- "InferaDB" wordmark — right of logo -->
+  <text x="690" y="180" font-family="Inter, Helvetica, Arial, sans-serif" font-size="38" font-weight="600" fill="#dce1e8" letter-spacing="-0.02em">InferaDB</text>
+
+  <!-- Tagline — left-aligned under wordmark -->
+  <text x="690" y="205" font-family="monospace" font-size="12" fill="#555d68" letter-spacing="0.12em">THE AUTHORIZATION DATABASE</text>
+
+  <!-- Right side: key stats -->
+  <text x="1050" y="155" font-family="monospace" font-size="11" fill="#555d68" letter-spacing="0.08em">P99 READ LATENCY</text>
+  <text x="1050" y="185" font-family="Inter, Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#c8a44e">2.8µs</text>
+
+  <text x="1280" y="155" font-family="monospace" font-size="11" fill="#555d68" letter-spacing="0.08em">OPS/SEC</text>
+  <text x="1280" y="185" font-family="Inter, Helvetica, Arial, sans-serif" font-size="32" font-weight="700" fill="#c8a44e">952K</text>
+
+  <!-- Divider line -->
+  <rect x="1050" y="210" width="420" height="1" fill="#1c2028"/>
+
+  <!-- Bottom right: positioning -->
+  <text x="1050" y="245" font-family="monospace" font-size="11" fill="#555d68" letter-spacing="0.06em">ZANZIBAR-INSPIRED // AUTHZEN-COMPLIANT // OPEN SOURCE</text>
+
+  <!-- Bottom bar -->
+  <rect x="0" y="393" width="1584" height="3" fill="#c8a44e" opacity="0.3"/>
+</svg>

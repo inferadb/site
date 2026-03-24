@@ -2975,45 +2975,32 @@ h3:hover .heading-anchor {
 
 // :has() — sibling dimming on card grids
 // When any card is hovered, dim the others. Spotlight effect.
-.diff-grid:has(.diff-card:hover) .diff-card:not(:hover) {
-  opacity: 0.55;
-  transition: opacity 0.3s var(--ease-mechanical);
-}
+// The 200ms transition-delay on the *recovery* prevents flicker when crossing gaps.
 
-.diff-grid .diff-card {
-  transition: opacity 0.3s var(--ease-mechanical), border-color 0.15s;
-}
-
-.uc-grid:has(.uc-card:hover) .uc-card:not(:hover) {
-  opacity: 0.55;
-  transition: opacity 0.3s var(--ease-mechanical);
-}
-
-.uc-card {
-  transition: opacity 0.3s var(--ease-mechanical);
-}
-
-.arch-cards:has(.arch-service:hover) .arch-service:not(:hover) {
-  opacity: 0.55;
-  transition: opacity 0.3s var(--ease-mechanical);
-}
-
-.arch-service {
-  transition: opacity 0.3s var(--ease-mechanical);
-}
-
-.card-grid:has(.card:hover) .card:not(:hover) {
-  opacity: 0.55;
-  transition: opacity 0.3s var(--ease-mechanical), border-color 0.15s;
-}
-
-.pricing-grid:has(.pricing-card:hover) .pricing-card:not(:hover) {
-  opacity: 0.55;
-  transition: opacity 0.3s var(--ease-mechanical);
-}
-
+.diff-grid .diff-card,
+.uc-card,
+.arch-service,
+.card-grid .card,
 .pricing-card {
-  transition: opacity 0.3s var(--ease-mechanical), border-color 0.15s;
+  transition: opacity 0.2s var(--ease-mechanical), border-color 0.15s;
+}
+
+.diff-grid:has(.diff-card:hover) .diff-card,
+.uc-grid:has(.uc-card:hover) .uc-card,
+.arch-cards:has(.arch-service:hover) .arch-service,
+.card-grid:has(.card:hover) .card,
+.pricing-grid:has(.pricing-card:hover) .pricing-card {
+  opacity: 0.55;
+  transition: opacity 0.2s var(--ease-mechanical);
+}
+
+.diff-grid:has(.diff-card:hover) .diff-card:hover,
+.uc-grid:has(.uc-card:hover) .uc-card:hover,
+.arch-cards:has(.arch-service:hover) .arch-service:hover,
+.card-grid:has(.card:hover) .card:hover,
+.pricing-grid:has(.pricing-card:hover) .pricing-card:hover {
+  opacity: 1;
+  transition: opacity 0s; // snap in instantly, fade out handled by the rule above
 }
 
 // @starting-style — entry animations for elements appearing in DOM

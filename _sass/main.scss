@@ -108,6 +108,23 @@ img, svg { display: block; max-width: 100%; }
   html { scroll-behavior: auto; }
 }
 
+// Windows High Contrast Mode / forced-colors
+@media (forced-colors: active) {
+  .btn-primary {
+    border: 1px solid ButtonText;
+  }
+  .card, .docs-sidebar, .now-tabs, .docs-hub-tabs {
+    border-color: ButtonText;
+  }
+  .skip-link:focus {
+    background: Highlight;
+    color: HighlightText;
+  }
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
 // ─── Layout ──────────────────────────────────────────────────
 
 .container {

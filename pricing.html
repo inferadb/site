@@ -5,95 +5,129 @@ body_class: page-pricing
 ---
 
 <section class="pricing-section">
-  <div class="container">
-    <div class="pricing-header">
-      <h1>Simple, usage-based pricing</h1>
-      <p>Pay for what you use. No per-seat charges. No MAU surprises. Authorization checks scale linearly with your application — and so does InferaDB.</p>
+    <div class="container">
+        <div class="pricing-header">
+            <h1>Simple, usage-based pricing</h1>
+            <p>
+                Pay for what you use. No per-seat charges. No MAU surprises.
+                Authorization checks scale linearly with your application — and
+                so does InferaDB.
+            </p>
+        </div>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <span class="pricing-tier">Open Source</span>
+                <div class="pricing-name">Free</div>
+                <div class="pricing-price">
+                    <span class="price-amount">$0</span>
+                    <span class="price-period">/forever</span>
+                </div>
+                <p class="pricing-desc">
+                    Self-hosted community edition. Run InferaDB on your own
+                    infrastructure with complete control.
+                </p>
+                <ul class="pricing-features">
+                    <li>Full authorization engine</li>
+                    <li>IPL policy language</li>
+                    <li>REST &amp; gRPC APIs</li>
+                    <li>CLI, SDKs, Dashboard</li>
+                    <li>Community support</li>
+                </ul>
+                <a
+                    href="https://github.com/inferadb/inferadb"
+                    class="btn btn-ghost"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+                        />
+                    </svg>
+                    Get Started
+                </a>
+            </div>
+
+            <div class="pricing-card">
+                <span class="pricing-tier">Cloud</span>
+                <div class="pricing-name">Starter</div>
+                <div class="pricing-price">
+                    <span class="price-amount">$99</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <p class="pricing-desc">
+                    Managed hosting with 5M authorization checks/month. Perfect
+                    for small teams and early-stage products.
+                </p>
+                <ul class="pricing-features">
+                    <li>Everything in Free</li>
+                    <li>5M checks/month included</li>
+                    <li>3 environments</li>
+                    <li>Managed infrastructure</li>
+                    <li>Email support</li>
+                </ul>
+                <a href="/waitlist" class="btn btn-ghost">Join Waitlist</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <span class="pricing-tier">Cloud</span>
+                <div class="pricing-name">Pro</div>
+                <div class="pricing-price">
+                    <span class="price-amount">$499</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <p class="pricing-desc">
+                    For growth-stage SaaS. Unlimited environments, multi-tenant
+                    isolation, and priority support.
+                </p>
+                <ul class="pricing-features">
+                    <li>Everything in Starter</li>
+                    <li>10–100M checks/month</li>
+                    <li>Unlimited environments</li>
+                    <li>Cryptographic tenant isolation</li>
+                    <li>Audit trail with Merkle proofs</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="/waitlist" class="btn btn-primary">Join Waitlist</a>
+            </div>
+
+            <div class="pricing-card">
+                <span class="pricing-tier">Cloud</span>
+                <div class="pricing-name">Enterprise</div>
+                <div class="pricing-price">
+                    <span class="price-amount">Custom</span>
+                </div>
+                <p class="pricing-desc">
+                    Dedicated infrastructure, SLA guarantees, compliance
+                    reporting, and data residency controls.
+                </p>
+                <ul class="pricing-features">
+                    <li>Everything in Pro</li>
+                    <li>Custom volume</li>
+                    <li>Dedicated infrastructure</li>
+                    <li>SLA guarantees (99.99%)</li>
+                    <li>Compliance reporting</li>
+                    <li>Data residency enforcement</li>
+                    <li>SSO &amp; SCIM provisioning</li>
+                    <li>24/7 priority support</li>
+                </ul>
+                <a href="/contact" class="btn btn-ghost">Contact Sales</a>
+            </div>
+        </div>
+
+        <p class="pricing-note">
+            All cloud plans include usage-based pricing that scales with your
+            application. No per-seat or per-MAU charges.<br />
+            Need help deciding? <a href="/contact">Talk to us</a> or
+            <a href="https://discord.gg/inferadb" target="_blank" rel="noopener"
+                >ask on Discord</a
+            >.
+        </p>
     </div>
-
-    <div class="pricing-grid">
-      <div class="pricing-card">
-        <span class="pricing-tier">Open Source</span>
-        <div class="pricing-name">Free</div>
-        <div class="pricing-price">
-          <span class="price-amount">$0</span>
-          <span class="price-period">/forever</span>
-        </div>
-        <p class="pricing-desc">Self-hosted community edition. Run InferaDB on your own infrastructure with complete control.</p>
-        <ul class="pricing-features">
-          <li>Full authorization engine</li>
-          <li>IPL policy language</li>
-          <li>REST &amp; gRPC APIs</li>
-          <li>CLI, SDKs, Dashboard</li>
-          <li>Community support</li>
-        </ul>
-        <a href="https://github.com/inferadb/inferadb" class="btn btn-ghost" target="_blank" rel="noopener">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          Get Started
-        </a>
-      </div>
-
-      <div class="pricing-card">
-        <span class="pricing-tier">Cloud</span>
-        <div class="pricing-name">Starter</div>
-        <div class="pricing-price">
-          <span class="price-amount">$99</span>
-          <span class="price-period">/month</span>
-        </div>
-        <p class="pricing-desc">Managed hosting with 5M authorization checks/month. Perfect for small teams and early-stage products.</p>
-        <ul class="pricing-features">
-          <li>Everything in Free</li>
-          <li>5M checks/month included</li>
-          <li>3 environments</li>
-          <li>Managed infrastructure</li>
-          <li>Email support</li>
-        </ul>
-        <a href="/waitlist" class="btn btn-ghost">Join Waitlist</a>
-      </div>
-
-      <div class="pricing-card featured">
-        <span class="pricing-tier">Cloud</span>
-        <div class="pricing-name">Pro</div>
-        <div class="pricing-price">
-          <span class="price-amount">$499</span>
-          <span class="price-period">/month</span>
-        </div>
-        <p class="pricing-desc">For growth-stage SaaS. Unlimited environments, multi-tenant isolation, and priority support.</p>
-        <ul class="pricing-features">
-          <li>Everything in Starter</li>
-          <li>10–100M checks/month</li>
-          <li>Unlimited environments</li>
-          <li>Cryptographic tenant isolation</li>
-          <li>Audit trail with Merkle proofs</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="/waitlist" class="btn btn-primary">Join Waitlist</a>
-      </div>
-
-      <div class="pricing-card">
-        <span class="pricing-tier">Cloud</span>
-        <div class="pricing-name">Enterprise</div>
-        <div class="pricing-price">
-          <span class="price-amount">Custom</span>
-        </div>
-        <p class="pricing-desc">Dedicated infrastructure, SLA guarantees, compliance reporting, and data residency controls.</p>
-        <ul class="pricing-features">
-          <li>Everything in Pro</li>
-          <li>Custom volume</li>
-          <li>Dedicated infrastructure</li>
-          <li>SLA guarantees (99.99%)</li>
-          <li>Compliance reporting</li>
-          <li>Data residency enforcement</li>
-          <li>SSO &amp; SCIM provisioning</li>
-          <li>24/7 priority support</li>
-        </ul>
-        <a href="/contact" class="btn btn-ghost">Contact Sales</a>
-      </div>
-    </div>
-
-    <p class="pricing-note">
-      All cloud plans include usage-based pricing that scales with your application. No per-seat or per-MAU charges.<br/>
-      Need help deciding? <a href="/contact">Talk to us</a> or <a href="https://discord.gg/inferadb" target="_blank" rel="noopener">ask on Discord</a>.
-    </p>
-  </div>
 </section>

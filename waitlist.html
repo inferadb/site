@@ -5,27 +5,63 @@ body_class: page-waitlist
 ---
 
 <section class="waitlist-section">
-  <div class="container">
-    <div class="waitlist-content">
-      <h1>Get early access</h1>
-      <p>InferaDB is under active development. Join the waitlist to be among the first to try it when it's ready.</p>
-      <form class="waitlist-form" action="https://formspree.io/f/xqeyryaq" method="POST">
-        <div class="form-group">
-          <label class="form-label" for="waitlist-name">Name</label>
-          <input class="form-input" type="text" id="waitlist-name" name="name" placeholder="Jane Doe" required />
+    <div class="container">
+        <div class="waitlist-content">
+            <h1>Get early access</h1>
+            <p>
+                InferaDB is under active development. Join the waitlist to be
+                among the first to try it when it's ready.
+            </p>
+            <form
+                class="waitlist-form"
+                action="https://formspree.io/f/xqeyryaq"
+                method="POST"
+            >
+                <div class="form-group">
+                    <label class="form-label" for="waitlist-name">Name</label>
+                    <input
+                        class="form-input"
+                        type="text"
+                        id="waitlist-name"
+                        name="name"
+                        placeholder="Jane Doe"
+                        required
+                        autocomplete="name"
+                    />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="waitlist-email">Email</label>
+                    <div class="waitlist-inline">
+                        <input
+                            class="form-input"
+                            type="email"
+                            id="waitlist-email"
+                            name="email"
+                            placeholder="jane@example.com"
+                            required
+                            autocomplete="email"
+                        />
+                        <button type="submit" class="btn btn-primary">
+                            Join Waitlist
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="waitlist-use-case"
+                        >What are you building?
+                        <span style="color: var(--muted); font-weight: 400"
+                            >(optional)</span
+                        ></label
+                    >
+                    <textarea
+                        class="form-textarea"
+                        id="waitlist-use-case"
+                        name="use-case"
+                        placeholder="Tell us about your authorization needs..."
+                        rows="3"
+                    ></textarea>
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-          <label class="form-label" for="waitlist-email">Email</label>
-          <div class="waitlist-inline">
-            <input class="form-input" type="email" id="waitlist-email" name="email" placeholder="jane@example.com" required />
-            <button type="submit" class="btn btn-primary">Join Waitlist</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="waitlist-use-case">What are you building? <span style="color: var(--muted); font-weight: 400;">(optional)</span></label>
-          <textarea class="form-textarea" id="waitlist-use-case" name="use-case" placeholder="Tell us about your authorization needs..." rows="3"></textarea>
-        </div>
-      </form>
     </div>
-  </div>
 </section>

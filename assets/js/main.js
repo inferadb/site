@@ -25,6 +25,15 @@ if (toggle && links) {
   });
 }
 
+// Scrollable code blocks — make keyboard-accessible
+document.querySelectorAll('pre').forEach(function(pre) {
+  if (pre.scrollWidth > pre.clientWidth) {
+    pre.setAttribute('tabindex', '0');
+    pre.setAttribute('role', 'region');
+    pre.setAttribute('aria-label', 'Code example (scroll horizontally)');
+  }
+});
+
 // Docs sidebar scroll persistence
 (function() {
   var sidebar = document.querySelector('.docs-sidebar');

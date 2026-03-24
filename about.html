@@ -6,37 +6,117 @@ body_class: page-about
 
 <section class="about-hero">
   <div class="container">
-    <h1>We built this market category</h1>
-    <p class="lead">InferaDB's team previously built Auth0/Okta's fine-grained authorization solution and its open-source counterpart OpenFGA — now a CNCF incubating project used in production by Grafana Labs, Docker, and Canonical.</p>
+    <p class="about-eyebrow">SYS:ABOUT // InferaDB</p>
+    <h1>Authorization should be<br/>infrastructure, not a project</h1>
+    <p class="lead">We're building the system that every application needs but nobody wants to maintain — fine-grained access control that's fast enough to disappear, auditable enough to satisfy regulators, and reliable enough to trust with your most sensitive decisions.</p>
   </div>
 </section>
 
-<section class="about-content">
+<section class="about-story">
+  <div class="container about-narrow">
+    <div class="about-section-label"><span>SEC.01</span> Origin</div>
+    <p>InferaDB started with a frustration. Our engineering team spent years building authorization products at Auth0 and Okta — including OpenFGA, now a CNCF incubating project used in production by Grafana Labs, Docker, and Canonical. We shipped software that millions of developers depend on. And we kept running into the same wall.</p>
+    <p>Every existing approach relies on general-purpose databases that weren't designed for this workload. Every system trades correctness for performance, or performance for auditability. Every architecture assumes application-level multi-tenancy is good enough — until a cross-tenant data leak proves it isn't.</p>
+    <p>We set out to build what we wished we could have built at Auth0: a true authorization database. Purpose-built storage. Cryptographic isolation. Consensus replication. Not another policy engine bolted onto PostgreSQL. A fundamentally different architecture.</p>
+  </div>
+</section>
+
+<section class="about-principles">
   <div class="container">
-    <p>Authorization — the system that governs who can access what within software applications — is a hidden crisis in modern enterprise software. Authorization vulnerabilities are the #1 risk in the OWASP API Security Top 10. Ninety-four percent of applications tested exhibit broken access control. Organizations that build authorization in-house typically dedicate six or more engineers to maintaining it, representing roughly $900,000 per year in engineering budget alone.</p>
+    <div class="about-section-label"><span>SEC.02</span> Design Principles</div>
+    <div class="about-principles-grid">
+      <div class="about-principle">
+        <h3>Inference as a primitive</h3>
+        <p>Authorization is derived from reasoning over relationships, not static role lookups. Each decision is a provable inference — explainable, traceable, replayable.</p>
+      </div>
+      <div class="about-principle">
+        <h3>Consistency above all</h3>
+        <p>Eventual consistency is unacceptable for authorization. If Alice revokes Bob's access, Bob must lose access immediately — not eventually. Raft consensus with revision tokens makes this a guarantee.</p>
+      </div>
+      <div class="about-principle">
+        <h3>Transparent trust</h3>
+        <p>Every decision is cryptographically signed, hash-chained, and replayable. Auditors can independently verify that no records have been altered — without trusting the server.</p>
+      </div>
+      <div class="about-principle">
+        <h3>Developer-centric experience</h3>
+        <p>Authorization should be understandable, testable, and observable. Branch, test, and merge policies like code. Integrate in under 30 minutes. The tooling matters as much as the throughput.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <p>We experienced this problem firsthand while building Auth0/Okta's authorization products. We identified fundamental architectural limitations in existing approaches — reliance on general-purpose databases, cache-dependent policy engines, and application-level multi-tenancy — and set out to build what we wished we could have built at Auth0: a true authorization database designed from the ground up for this workload.</p>
+<section class="about-team">
+  <div class="container">
+    <div class="about-section-label"><span>SEC.03</span> Team</div>
+    <div class="about-team-grid">
+      <div class="about-person">
+        <div class="about-person-info">
+          <h3>Evan Sims</h3>
+          <span class="about-person-role">Co-Founder &amp; CTO</span>
+        </div>
+        <p>20+ years in identity, security, and developer infrastructure. Founding engineer on Auth0's fine-grained authorization team at Okta, where he helped build OpenFGA. Previously oversaw 45+ open-source developer libraries at Auth0 and helped lead FedRAMP certification. One of the first engineers at Ushahidi, a crisis-response platform deployed by the United Nations and Facebook.</p>
+      </div>
+      <div class="about-person">
+        <div class="about-person-info">
+          <h3>Jane Sims</h3>
+          <span class="about-person-role">Co-Founder &amp; CEO</span>
+        </div>
+        <p>Decades of experience building and operating founder-led businesses. Led marketing, sales, and operations for a multi-state construction company. Successful author of nine novels including multiple Amazon category best sellers. Responsible for business operations, go-to-market strategy, partnerships, and long-term company building.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <h2>The Problem</h2>
+<section class="about-numbers">
+  <div class="container">
+    <div class="about-section-label"><span>SEC.04</span> By the Numbers</div>
+    <div class="about-numbers-grid">
+      <div class="about-stat">
+        <span class="about-stat-value">2.8µs</span>
+        <span class="about-stat-label">p99 read latency</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-value">952K</span>
+        <span class="about-stat-label">ops/sec on commodity hardware</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-value">30K+</span>
+        <span class="about-stat-label">lines of Rust</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-value">$3.32B</span>
+        <span class="about-stat-label">fine-grained authz market (2025)</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-value">19.3%</span>
+        <span class="about-stat-label">market CAGR</span>
+      </div>
+      <div class="about-stat">
+        <span class="about-stat-value">10</span>
+        <span class="about-stat-label">SDK languages (planned)</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <p>The rise of AI agents is exponentially increasing the number of fine-grained authorization decisions required per request. Traditional authorization systems were built for 1–2 permission checks per request. AI agent workflows require dozens. Meanwhile, three major EU regulations — NIS2, DORA, and the EU AI Act — are converging to mandate fine-grained, auditable access controls. The authorization infrastructure required to meet these demands does not exist in most organizations.</p>
+<section class="about-oss">
+  <div class="container about-narrow">
+    <div class="about-section-label"><span>SEC.05</span> Open Source &amp; Standards</div>
+    <p>InferaDB's core authorization engine is open source, dual-licensed under <a href="https://github.com/inferadb/inferadb/blob/main/LICENSE-MIT">MIT</a> and <a href="https://github.com/inferadb/inferadb/blob/main/LICENSE-APACHE">Apache 2.0</a>. We believe authorization infrastructure should be transparent, auditable, and community-driven.</p>
+    <p>We implement the <a href="https://openid.net/wg/authzen/">OpenID AuthZEN</a> specification — the industry's first standardized authorization API. Our architecture is inspired by <a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/">Google Zanzibar</a>, the system Google built to handle authorization for YouTube, Drive, and Cloud at trillions of checks per day.</p>
+  </div>
+</section>
 
-    <h2>Our Approach</h2>
-
-    <p><strong>InferaDB is not another policy engine — it's a purpose-built authorization database.</strong> Competitors either bolt authorization onto general-purpose databases or operate as policy engines without persistent storage. InferaDB's custom storage engine, cryptographic isolation, and consensus replication represent a fundamentally different architectural approach.</p>
-
-    <p>The result is sub-microsecond authorization decisions (2.8µs p99), cryptographic multi-tenant isolation at the storage layer, and tamper-proof audit trails with Merkle proof verification — capabilities that no existing product offers together.</p>
-
-    <h2>Open Source</h2>
-
-    <p>InferaDB's core authorization engine is open source, dual-licensed under <a href="https://github.com/inferadb/inferadb/blob/main/LICENSE-MIT">MIT</a> and <a href="https://github.com/inferadb/inferadb/blob/main/LICENSE-APACHE">Apache 2.0</a>. We believe authorization infrastructure should be transparent, auditable, and community-driven. The managed cloud service adds multi-tenant isolation, cryptographic audit trails, SLAs, and compliance reporting.</p>
-
-    <h2>Standards</h2>
-
-    <p>InferaDB implements the <a href="https://openid.net/wg/authzen/">OpenID AuthZEN</a> specification — the industry's first standardized authorization API — ensuring vendor-neutral interoperability. Our architecture is inspired by <a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/">Google Zanzibar</a>, the internal system Google built to handle authorization for YouTube, Drive, and Cloud at trillions of checks per day.</p>
-
-    <h2>Community</h2>
-
-    <p>Join us on <a href="https://discord.gg/inferadb">Discord</a> for questions, discussions, and contributions. Follow our development on <a href="https://github.com/inferadb">GitHub</a>.</p>
+<section class="about-cta">
+  <div class="container">
+    <div class="about-cta-inner">
+      <h2>We're building the future of authorization</h2>
+      <p>Join the community, follow our progress, or get in touch.</p>
+      <div class="about-cta-actions">
+        <a href="https://discord.gg/inferadb" class="btn btn-primary" target="_blank" rel="noopener">Join Discord</a>
+        <a href="https://github.com/inferadb" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
+        <a href="/contact" class="btn btn-ghost">Contact Us</a>
+      </div>
+    </div>
   </div>
 </section>

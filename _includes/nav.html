@@ -10,9 +10,34 @@
       <span></span>
     </button>
     <div class="nav-links">
-      {% for item in site.data.nav %}
-      <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>
-      {% endfor %}
+      <!-- Global nav — always visible on desktop, hidden on mobile docs pages -->
+      <div class="nav-global">
+        {% for item in site.data.nav %}
+        <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>
+        {% endfor %}
+      </div>
+      {% if page.layout == 'docs' %}
+      <!-- Docs nav — only visible inside mobile hamburger on docs pages -->
+      <div class="nav-mobile-docs">
+        <a href="/docs/" class="nav-mobile-docs-title">Documentation</a>
+        {% for group in site.data.docs_nav %}
+        <div class="nav-mobile-docs-group">
+          <h4>{{ group.section }}</h4>
+          <ul>
+            {% for item in group.items %}
+            <li>
+              {% assign item_url_slash = item.url | append: '/' %}
+              <a href="{{ item.url }}"{% if page.url == item.url or page.url == item_url_slash %} class="active"{% endif %}>{{ item.title }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+        <div class="nav-mobile-docs-back">
+          <a href="/">← Back to site</a>
+        </div>
+      </div>
+      {% endif %}
       <div class="nav-ctas">
         <a href="/waitlist" class="btn btn-primary btn-sm">Get Early Access</a>
       </div>

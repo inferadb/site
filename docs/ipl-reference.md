@@ -26,7 +26,7 @@ Must start with a letter (`a-z`, `A-Z`), followed by letters, digits, or undersc
 
 ## Type Definitions
 
-```
+```rust
 type <identifier> {
     (relation <identifier> [= <expression>])*
     (forbid <identifier> [= <expression>])*
@@ -94,7 +94,7 @@ Union and intersection branches are evaluated concurrently across threads.
 
 ## Complete Example
 
-```
+```rust
 type user {}
 
 type team {

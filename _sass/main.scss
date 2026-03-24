@@ -1704,44 +1704,192 @@ section {
 
 // ─── About ───────────────────────────────────────────────────
 
+.about-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
 .about-hero {
   padding: 10rem 0 4rem;
   text-align: center;
 
   h1 {
-    font-family: var(--font-sans);
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 600;
     color: var(--text-white);
-    letter-spacing: -0.025em;
-    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .lead {
-    max-width: 620px;
+    max-width: 580px;
     margin: 0 auto;
-    font-size: 1.0625rem;
+    font-size: 1rem;
     color: var(--text);
-    line-height: 1.75;
+    line-height: 1.8;
   }
 }
 
-.about-content {
-  padding: 3rem 0 6rem;
-  .container { max-width: var(--container-narrow); }
+.about-narrow {
+  max-width: var(--container-narrow);
+}
 
-  h2 {
-    font-family: var(--font-sans);
-    font-size: 1.375rem;
-    font-weight: 600;
-    color: var(--text-white);
-    margin-top: 3rem;
-    margin-bottom: 1rem;
+.about-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--border);
+
+  span {
+    color: var(--accent);
+    margin-right: 0.75rem;
   }
+}
+
+.about-story {
+  padding: 2rem 0 5rem;
 
   p {
     font-size: 0.9375rem;
-    line-height: 1.8;
+    line-height: 1.85;
     margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+}
+
+.about-principles {
+  padding: 5rem 0;
+}
+
+.about-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.about-principle {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.8125rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+}
+
+.about-team {
+  padding: 5rem 0;
+}
+
+.about-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.about-person {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.about-person-info {
+  margin-bottom: 0.75rem;
+
+  h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.125rem;
+  }
+}
+
+.about-person-role {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.about-person p {
+  font-size: 0.8125rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.about-team-note {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 1.25rem;
+  border-left: 2px solid var(--border-hover);
+}
+
+.about-numbers {
+  padding: 5rem 0;
+}
+
+.about-numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.about-stat {
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.about-stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.about-stat-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.about-oss {
+  padding: 4rem 0 5rem;
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+    color: var(--text);
   }
 
   a {
@@ -1751,8 +1899,40 @@ section {
     text-decoration-color: rgba(200, 164, 78, 0.3);
     &:hover { text-decoration-color: var(--accent); }
   }
+}
 
-  strong { color: var(--text-bright); font-weight: 600; }
+.about-cta {
+  padding: 5rem 0 6rem;
+  text-align: center;
+}
+
+.about-cta-inner {
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+}
+
+.about-cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .about-principles-grid { grid-template-columns: 1fr; }
+  .about-team-grid { grid-template-columns: 1fr; }
+  .about-numbers-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-cta-actions { flex-direction: column; align-items: center; }
 }
 
 // ─── Documentation ───────────────────────────────────────────
@@ -1777,6 +1957,64 @@ section {
   &::-webkit-scrollbar { width: 4px; }
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+}
+
+// Global nav links wrapper
+.nav-global {
+  display: contents; // on desktop, children flow into parent flex
+}
+
+// Mobile docs nav (inside hamburger menu on docs pages)
+.nav-mobile-docs {
+  display: none; // hidden on desktop
+}
+
+.nav-mobile-docs-title {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 1rem;
+}
+
+.nav-mobile-docs-group {
+  margin-bottom: 1.25rem;
+
+  h4 {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.375rem;
+  }
+
+  ul li a {
+    display: block;
+    padding: 0.25rem 0;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+
+    &:hover { color: var(--text-white); }
+    &.active { color: var(--accent); }
+  }
+}
+
+.nav-mobile-docs-back {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+
+  a {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    &:hover { color: var(--text-white); }
+  }
 }
 
 .docs-sidebar-inner {
@@ -2011,6 +2249,26 @@ section {
     }
   }
 
+  // Rouge syntax highlighting — kramdown wraps in div.highlighter-rouge > div.highlight > pre > code
+  .highlighter-rouge {
+    margin-bottom: 1.25rem;
+
+    .highlight {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    pre {
+      margin: 0;
+      padding: 1rem 1.25rem;
+      background: transparent;
+      border: none;
+    }
+  }
+
   table {
     width: 100%;
     margin-bottom: 1.25rem;
@@ -2058,6 +2316,280 @@ section {
   }
 }
 
+// ─── Rouge syntax highlighting ───────────────────────────────
+// Maps Rouge token classes to the mil-spec industrial palette.
+// Amber = keywords/control flow, Teal = types/builtins, Green = strings/literals.
+
+.highlight {
+  // Keywords
+  .k, .kd, .kn, .kp, .kr, .kc, .kt,
+  .kv  { color: var(--accent); }          // amber — keywords, declarations
+  .nb  { color: var(--accent); }          // amber — builtins (print, len)
+  .ow  { color: var(--accent); }          // amber — operator words (and, or, not)
+  .bp  { color: var(--text-secondary); }  // self, cls
+
+  // Types, classes, namespaces
+  .nc, .nn, .no, .nd,
+  .ni  { color: var(--accent-teal); }     // teal — class names, decorators
+  .nf, .fm { color: var(--text-bright); } // bright — function names
+
+  // Strings
+  .s, .s1, .s2, .sb, .sc, .sd,
+  .se, .sh, .si, .sx,
+  .sr, .ss { color: var(--accent-green); } // green — all string types
+  .sa  { color: var(--accent); }           // amber — string affix (f, b, r)
+  .dl  { color: var(--accent-green); }     // green — string delimiters
+
+  // Numbers
+  .m, .mi, .mf, .mh, .mo,
+  .mb, .mx, .il { color: var(--accent-green); } // green — numeric literals
+
+  // Comments
+  .c, .c1, .cm, .cp, .cs,
+  .ch  { color: var(--muted); font-style: italic; } // muted italic
+
+  // Operators, punctuation
+  .o, .p { color: var(--text-secondary); } // subtle
+
+  // Variables, identifiers
+  .n, .na, .nv, .vi, .vg, .vc,
+  .nx  { color: var(--text); }            // default text
+  .nl  { color: var(--text-bright); }     // label names
+
+  // Output, errors
+  .go  { color: var(--text-secondary); }  // generic output
+  .ge  { font-style: italic; }            // generic emphasis
+  .gs  { font-weight: bold; }             // generic strong
+  .gr, .gt { color: var(--accent-red); }  // errors, tracebacks
+  .gd  { color: var(--accent-red); }      // diff deleted
+  .gi  { color: var(--accent-green); }    // diff inserted
+  .gh  { color: var(--text-bright); font-weight: 600; } // heading
+  .gu  { color: var(--accent-teal); }     // diff subheading
+
+  // Special
+  .w   { color: var(--text); }            // whitespace
+  .err { color: var(--accent-red); }      // lexer error
+}
+
+// ─── Careers ─────────────────────────────────────────────────
+
+.careers-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.careers-hero {
+  padding: 10rem 0 4rem;
+  text-align: center;
+
+  h1 {
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .lead {
+    max-width: 540px;
+    margin: 0 auto;
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.8;
+  }
+}
+
+.careers-narrow {
+  max-width: var(--container-narrow);
+}
+
+.careers-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--border);
+
+  span {
+    color: var(--accent);
+    margin-right: 0.75rem;
+  }
+}
+
+.careers-mission {
+  padding: 2rem 0 5rem;
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.85;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+}
+
+.careers-principles {
+  padding: 5rem 0;
+}
+
+.careers-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.careers-principle {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+
+  h3 {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.8125rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+}
+
+.careers-principle-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.careers-roles {
+  padding: 5rem 0;
+}
+
+.careers-role-group {
+  margin-bottom: 2rem;
+}
+
+.careers-role-dept {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.careers-role {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s;
+
+  &:hover { border-color: var(--border-hover); }
+
+  & + .careers-role { margin-top: 0.5rem; }
+}
+
+.careers-role-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.careers-role-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.careers-role-meta {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.careers-role-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--accent);
+  white-space: nowrap;
+  transition: opacity 0.15s;
+  &:hover { opacity: 0.8; }
+}
+
+.careers-general {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border-left: 2px solid var(--border-hover);
+
+  p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(200, 164, 78, 0.3);
+    &:hover { text-decoration-color: var(--accent); }
+  }
+}
+
+.careers-cta {
+  padding: 6rem 0;
+  text-align: center;
+}
+
+.careers-cta-inner {
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 768px) {
+  .careers-principles-grid { grid-template-columns: 1fr; }
+  .careers-role { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+}
+
 // ─── Responsive ──────────────────────────────────────────────
 
 @media (max-width: 1024px) {
@@ -2083,13 +2615,20 @@ section {
     right: 0;
     flex-direction: column;
     padding: 1.5rem;
-    background: rgba(5, 5, 5, 0.97);
+    background: rgba(11, 13, 17, 0.97);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
     gap: 1rem;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     .nav-ctas { margin-left: 0; flex-direction: column; width: 100%; .btn { width: 100%; justify-content: center; } }
     &.open { display: flex; }
   }
+
+  // On mobile docs pages: hide global links, show docs nav
+  [data-layout="docs"] .nav-global { display: none; }
+  .nav-mobile-docs { display: block; }
 
   .docs-layout { grid-template-columns: 1fr; }
   .docs-sidebar { display: none; }

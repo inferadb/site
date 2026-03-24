@@ -11,7 +11,7 @@ The **Infera Policy Language (IPL)** defines your authorization model — what t
 
 An IPL schema is a collection of type definitions:
 
-```
+```rust
 type user {}
 
 type team {
@@ -38,7 +38,7 @@ type document {
 
 Types represent the kinds of entities in your system. Every type has a unique name (alphanumeric + underscores, starting with a letter).
 
-```
+```rust
 type document {
     // relations and permissions go here
 }
@@ -48,13 +48,13 @@ type document {
 
 **Direct relations** store explicit tuples — when you write `(user:alice, editor, document:readme)`, that's a direct relation.
 
-```
+```rust
 relation editor    // direct: stored as tuples
 ```
 
 **Computed relations** derive access from expressions:
 
-```
+```rust
 relation can_view = viewer | editor | owner
 ```
 
@@ -64,7 +64,7 @@ relation can_view = viewer | editor | owner
 
 Access is granted if **any** branch matches:
 
-```
+```rust
 relation can_view = viewer | editor | owner
 ```
 
@@ -72,7 +72,7 @@ relation can_view = viewer | editor | owner
 
 Access is granted only if **all** branches match:
 
-```
+```rust
 relation can_view_sensitive = viewer & has_clearance
 ```
 
@@ -80,7 +80,7 @@ relation can_view_sensitive = viewer & has_clearance
 
 Access is granted by the base set but removed by the exclusion:
 
-```
+```rust
 relation can_view_safe = viewer - blocked
 ```
 
@@ -88,7 +88,7 @@ relation can_view_safe = viewer - blocked
 
 Follow a relationship to a related object, then check a relation on that object:
 
-```
+```rust
 type document {
     relation parent              // points to a folder
     relation inherited = viewer from parent  // inherit viewer from parent folder
@@ -99,7 +99,7 @@ If `document:readme` → `parent` → `folder:specs`, and `user:alice` is a `vie
 
 ### Related Object Userset (`->`)
 
-```
+```rust
 relation computed = parent->can_edit  // follow parent, evaluate can_edit there
 ```
 
@@ -107,7 +107,7 @@ relation computed = parent->can_edit  // follow parent, evaluate can_edit there
 
 Invoke a sandboxed [WebAssembly module](/docs/wasm) for custom logic:
 
-```
+```rust
 relation access = viewer & module("business_hours")
 ```
 
@@ -115,7 +115,7 @@ relation access = viewer & module("business_hours")
 
 Use parentheses for precedence:
 
-```
+```rust
 relation can_view = (viewer | editor) & module("check_ip")
 ```
 
@@ -123,7 +123,7 @@ relation can_view = (viewer | editor) & module("check_ip")
 
 Forbid rules are **explicit deny** directives. They are evaluated **before** all permit rules and override them unconditionally:
 
-```
+```rust
 type document {
     relation viewer
     forbid suspended
@@ -162,7 +162,7 @@ inferadb schemas push schema.ipl
 
 Single-line comments with `//`:
 
-```
+```rust
 type document {
     relation viewer    // anyone with explicit view access
     relation editor    // can also view (via can_view)

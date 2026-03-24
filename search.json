@@ -1,0 +1,14 @@
+---
+---
+[
+{% for group in site.data.docs_nav %}
+  {% for item in group.items %}
+  {
+    "title": {{ item.title | jsonify }},
+    "url": {{ item.url | jsonify }},
+    "section": {{ group.section | jsonify }},
+    "excerpt": {{ item.excerpt | default: "" | jsonify }}
+  }{% unless forloop.last and forloop.parentloop.last %},{% endunless %}
+  {% endfor %}
+{% endfor %}
+]

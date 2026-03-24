@@ -56,6 +56,125 @@ document.querySelectorAll('pre').forEach(function(pre) {
   }
 });
 
+// ─── Docs search (Cmd+K) ─────────────────────────────────────
+(function() {
+  var overlay = document.getElementById('search-overlay');
+  var input = document.getElementById('search-input');
+  var resultsList = document.getElementById('search-results');
+  var trigger = document.getElementById('search-trigger');
+  if (!overlay || !input) return;
+
+  var index = null;
+  var activeIdx = -1;
+
+  function open() {
+    overlay.classList.add('open');
+    input.value = '';
+    while (resultsList.firstChild) resultsList.removeChild(resultsList.firstChild);
+    activeIdx = -1;
+    input.focus();
+    if (!index) {
+      fetch('/search.json').then(function(r) { return r.json(); }).then(function(data) {
+        index = data;
+      });
+    }
+  }
+
+  function close() {
+    overlay.classList.remove('open');
+  }
+
+  function createResult(item, query) {
+    var li = document.createElement('li');
+    var a = document.createElement('a');
+    a.href = item.url;
+
+    var section = document.createElement('div');
+    section.className = 'search-result-section';
+    section.textContent = item.section;
+
+    var title = document.createElement('div');
+    title.className = 'search-result-title';
+    title.textContent = item.title;
+
+    a.appendChild(section);
+    a.appendChild(title);
+
+    if (item.excerpt) {
+      var excerpt = document.createElement('div');
+      excerpt.className = 'search-result-excerpt';
+      excerpt.textContent = item.excerpt;
+      a.appendChild(excerpt);
+    }
+
+    li.appendChild(a);
+    return li;
+  }
+
+  function search(query) {
+    while (resultsList.firstChild) resultsList.removeChild(resultsList.firstChild);
+    if (!index || !query) { activeIdx = -1; return; }
+    var q = query.toLowerCase();
+    var matches = index.filter(function(item) {
+      return item.title.toLowerCase().indexOf(q) >= 0
+        || item.excerpt.toLowerCase().indexOf(q) >= 0
+        || item.section.toLowerCase().indexOf(q) >= 0;
+    }).slice(0, 10);
+
+    if (!matches.length) {
+      var empty = document.createElement('li');
+      empty.className = 'search-empty';
+      empty.textContent = 'No results for \u201c' + query + '\u201d';
+      resultsList.appendChild(empty);
+      activeIdx = -1;
+      return;
+    }
+
+    matches.forEach(function(item) {
+      resultsList.appendChild(createResult(item, query));
+    });
+    activeIdx = -1;
+  }
+
+  function setActive(idx) {
+    var links = resultsList.querySelectorAll('a');
+    if (!links.length) return;
+    activeIdx = Math.max(0, Math.min(idx, links.length - 1));
+    links.forEach(function(a, i) { a.classList.toggle('active', i === activeIdx); });
+    links[activeIdx].scrollIntoView({ block: 'nearest' });
+  }
+
+  input.addEventListener('input', function() { search(input.value); });
+
+  input.addEventListener('keydown', function(e) {
+    var links = resultsList.querySelectorAll('a');
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActive(activeIdx + 1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActive(activeIdx - 1);
+    } else if (e.key === 'Enter' && activeIdx >= 0 && links[activeIdx]) {
+      e.preventDefault();
+      links[activeIdx].click();
+    }
+  });
+
+  if (trigger) trigger.addEventListener('click', open);
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (overlay.classList.contains('open')) close(); else open();
+    }
+    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+  });
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) close();
+  });
+})();
+
 // ─── Docs enhancements ───────────────────────────────────────
 
 // 1. Right-side TOC — populate from h2/h3 headings + scroll spy

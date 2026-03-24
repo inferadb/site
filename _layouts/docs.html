@@ -1,0 +1,39 @@
+---
+layout: default
+body_class: page-docs
+---
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <div class="docs-sidebar-inner">
+      <a href="/docs/" class="docs-sidebar-title">Documentation</a>
+      <nav class="docs-nav" aria-label="Documentation navigation">
+        {% for group in site.data.docs_nav %}
+        <div class="docs-nav-group">
+          <h4 class="docs-nav-heading">{{ group.section }}</h4>
+          <ul>
+            {% for item in group.items %}
+            <li>
+              {% assign item_url_slash = item.url | append: '/' %}
+              <a href="{{ item.url }}"{% if page.url == item.url or page.url == item_url_slash %} class="active" aria-current="page"{% endif %}>{{ item.title }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </nav>
+    </div>
+  </aside>
+  <main class="docs-content">
+    <article>
+      {% if page.doc_title %}
+      <header class="docs-header">
+        <h1>{{ page.doc_title }}</h1>
+        {% if page.doc_subtitle %}
+        <p class="docs-subtitle">{{ page.doc_subtitle }}</p>
+        {% endif %}
+      </header>
+      {% endif %}
+      {{ content }}
+    </article>
+  </main>
+</div>

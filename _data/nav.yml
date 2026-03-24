@@ -3,7 +3,6 @@
 - title: Pricing
   url: "/pricing"
 - title: Docs
-  url: "https://github.com/inferadb/inferadb"
-  external: true
+  url: "/docs/"
 - title: About
   url: "/about"

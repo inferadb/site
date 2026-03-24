@@ -1,0 +1,73 @@
+- section: Getting Started
+  items:
+    - title: What is InferaDB?
+      url: /docs/
+    - title: Quick Start
+      url: /docs/quickstart
+    - title: Core Concepts
+      url: /docs/concepts
+
+- section: Policy Language
+  items:
+    - title: IPL Overview
+      url: /docs/ipl
+    - title: Schema Reference
+      url: /docs/ipl-reference
+    - title: WASM Modules
+      url: /docs/wasm
+
+- section: API Reference
+  items:
+    - title: REST API
+      url: /docs/api-rest
+    - title: gRPC API
+      url: /docs/api-grpc
+    - title: AuthZEN API
+      url: /docs/api-authzen
+
+- section: Developer Tools
+  items:
+    - title: CLI
+      url: /docs/cli
+    - title: Rust SDK
+      url: /docs/sdk-rust
+    - title: Terraform Provider
+      url: /docs/terraform
+    - title: Dashboard
+      url: /docs/dashboard
+
+- section: Architecture
+  items:
+    - title: System Overview
+      url: /docs/architecture
+    - title: Engine
+      url: /docs/architecture-engine
+    - title: Control Plane
+      url: /docs/architecture-control
+    - title: Ledger
+      url: /docs/architecture-ledger
+
+- section: Deployment
+  items:
+    - title: Local Development
+      url: /docs/deploy-local
+    - title: Docker
+      url: /docs/deploy-docker
+    - title: Kubernetes
+      url: /docs/deploy-kubernetes
+
+- section: Security & Compliance
+  items:
+    - title: Security Model
+      url: /docs/security
+    - title: Authentication
+      url: /docs/authentication
+    - title: Compliance
+      url: /docs/compliance
+
+- section: Operations
+  items:
+    - title: Configuration
+      url: /docs/configuration
+    - title: Observability
+      url: /docs/observability

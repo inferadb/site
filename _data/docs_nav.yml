@@ -31,6 +31,16 @@
       url: /docs/cli
     - title: Rust SDK
       url: /docs/sdk-rust
+    - title: TypeScript SDK
+      url: /docs/sdk-typescript
+    - title: Go SDK
+      url: /docs/sdk-go
+    - title: Python SDK
+      url: /docs/sdk-python
+    - title: Java SDK
+      url: /docs/sdk-java
+    - title: .NET SDK
+      url: /docs/sdk-dotnet
     - title: Terraform Provider
       url: /docs/terraform
     - title: Dashboard

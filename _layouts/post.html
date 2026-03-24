@@ -1,0 +1,28 @@
+---
+layout: default
+body_class: page-post
+---
+<article class="post">
+  <div class="container post-container">
+    <header class="post-header">
+      <div class="post-meta">
+        <a href="/now/" class="post-back">Now</a>
+        <span class="post-sep">/</span>
+        <span class="post-cat">{{ page.category }}</span>
+        <span class="post-sep">/</span>
+        <time datetime="{{ page.date }}">{{ page.date | date: "%b %d, %Y" }}</time>
+      </div>
+      <h1>{{ page.post_title }}</h1>
+      {% if page.authors %}
+      <div class="post-authors">
+        {% for author in page.authors %}
+        <span>{{ author }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </header>
+    <div class="post-body">
+      {{ content }}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,17 @@
+<div class="now-card-grid">
+{% for entry in include.entries %}
+<a href="/now/{{ entry.slug }}" class="now-card">
+  <div class="now-card-meta">
+    <span class="now-card-cat">{{ entry.category }}</span>
+    <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+  </div>
+  <h2 class="now-card-title">{{ entry.title }}</h2>
+  <p class="now-card-excerpt">{{ entry.excerpt }}</p>
+  {% if entry.authors %}
+  <div class="now-card-authors">
+    {% for author in entry.authors %}<span>{{ author }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</a>
+{% endfor %}
+</div>

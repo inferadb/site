@@ -1,0 +1,111 @@
+- date: 2026-03-18
+  title: "Ledger: Per-Vault Blockchain with Merkle Proof Verification"
+  body: |
+    Every permission change is now committed to a per-vault blockchain with Merkle proof verification. Auditors can independently verify that no records have been altered — without trusting the server.
+
+    **New**
+    - Per-vault blockchain with independent state commitments
+    - Merkle proof verification for point reads and transaction inclusion
+    - Bucket-based state root computation (256 buckets, incremental rehashing)
+    - Raft consensus with linearizable writes and configurable read consistency
+
+    **Improvements**
+    - B+ tree index reads now independent of Merkle layer (sub-millisecond)
+    - Adaptive batching: max 100 transactions, 5ms timeout, eager commit by default
+    - Two-tier idempotency deduplication (Moka cache + replicated entries)
+  tags:
+    - Ledger
+    - Security
+
+- date: 2026-03-08
+  title: "Engine: AuthZEN-Compliant Evaluation API"
+  body: |
+    The Engine now implements the OpenID AuthZEN specification — the industry's first standardized authorization API.
+
+    **New**
+    - `POST /access/v1/evaluation` — Single authorization check
+    - `POST /access/v1/evaluations` — Batch checks (up to 100)
+    - `POST /access/v1/search/resource` — Find accessible resources
+    - `POST /access/v1/search/subject` — Find subjects with access
+    - `GET /.well-known/authzen-configuration` — Service discovery
+    - InferaDB extension capabilities advertised via well-known endpoint
+
+    **Improvements**
+    - Content negotiation: `text/toon` format for 30–60% token reduction (LLM consumption)
+    - Rate limiting headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+  tags:
+    - Engine
+    - API
+
+- date: 2026-03-05
+  title: "Control: WebAuthn Passkey Authentication"
+  body: |
+    The Control plane now supports passkey (WebAuthn/FIDO2) authentication alongside password and OAuth.
+
+    **New**
+    - WebAuthn/FIDO2 passkey registration and authentication
+    - Ed25519 client certificates with RFC 7523 JWT assertions
+    - PKCE CLI authentication flow (`inferadb login`)
+    - Refresh token rotation with replay detection and family revocation
+
+    **Improvements**
+    - Argon2id password hashing (64 MB memory, 3 iterations)
+    - Rate limiting: login 100/hr, registration 5/day, email verify 5/hr
+    - Max 10 concurrent sessions per user
+  tags:
+    - Control
+    - Security
+
+- date: 2026-02-18
+  title: "CLI: Branch, Test, and Merge Policies Like Code"
+  body: |
+    The `inferadb` CLI now supports a full policy development workflow.
+
+    **New**
+    - `inferadb schemas push` — Push schemas to InferaDB
+    - `inferadb schemas validate` — Validate schemas locally
+    - `inferadb schemas test` — Run schema test assertions
+    - `inferadb schemas diff` — Compare local and remote schemas
+    - `inferadb simulate` — What-if testing with ephemeral relationships
+    - `inferadb explain-permission` — Show the decision path for a check
+
+    **Improvements**
+    - Profile-based configuration with `@prod` syntax
+    - Output formats: table, JSON, YAML, JSONL
+    - Semantic exit codes: 0 = allowed, 20 = denied, 21 = indeterminate
+    - Credentials stored in OS keychain
+  tags:
+    - CLI
+
+- date: 2026-02-12
+  title: "Rust SDK: Type-Safe Authorization Client"
+  body: |
+    The official Rust SDK (`inferadb` crate) is now available on crates.io.
+
+    **New**
+    - Builder-pattern client with Ed25519, Bearer, and API Key authentication
+    - `vault.check()`, `vault.require()`, `vault.check_batch()`
+    - `vault.relationships().write()`, `.write_batch()`, `.list()`, `.delete_where()`
+    - `vault.resources().accessible_by()`, `vault.subjects().with_permission()`
+    - `MockClient`, `InMemoryClient`, and `TestVault` for testing
+    - Automatic background token refresh with configurable thresholds
+
+    **Improvements**
+    - gRPC (default) and REST transports with auto-fallback
+    - Retry budget with per-category policies (reads, idempotent writes, non-idempotent writes)
+    - Graceful degradation: cache fallback, write queueing, failure mode callbacks
+  tags:
+    - SDK
+    - Rust
+
+- date: 2026-01-28
+  title: "Terraform Provider: Infrastructure as Code"
+  body: |
+    The InferaDB Terraform provider is now available in the Terraform registry.
+
+    **New**
+    - Resources: `inferadb_organization`, `inferadb_vault`, `inferadb_client`, `inferadb_client_certificate`, `inferadb_team`, `inferadb_team_member`, `inferadb_vault_user_grant`, `inferadb_vault_team_grant`
+    - Data sources: `inferadb_organization`, `inferadb_vault`, `inferadb_client`, `inferadb_team`
+    - Authentication via session token from `inferadb login`
+  tags:
+    - Terraform

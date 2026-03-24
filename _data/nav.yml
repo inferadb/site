@@ -4,5 +4,7 @@
   url: "/pricing"
 - title: Docs
   url: "/docs/"
+- title: Now
+  url: "/now/"
 - title: About
   url: "/about"

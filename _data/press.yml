@@ -1,0 +1,17 @@
+- title: "Gartner Recognizes Authorization as a Standalone Product Category"
+  date: 2026-03-03
+  source: Gartner
+  url: "https://www.gartner.com/en/documents/authorization-management-platforms"
+  excerpt: "Gartner published its first-ever 'Innovation Insight: Authorization Management Platforms' report, formally recognizing authorization as a distinct market category."
+
+- title: "Fine-Grained Authorization Market Growing at 19.3% CAGR"
+  date: 2026-02-01
+  source: The Business Research Company
+  url: "https://www.thebusinessresearchcompany.com/report/fine-grained-authorization"
+  excerpt: "The fine-grained authorization market is valued at $3.32 billion in 2025 and projected to reach $7.90 billion by 2030."
+
+- title: "InferaDB Announces Seed Funding Round"
+  date: 2026-01-20
+  source: InferaDB
+  url: "/now/seed-funding-announcement"
+  excerpt: "InferaDB is raising a $5M seed round to bring the first purpose-built authorization database to market, founded by the team that built OpenFGA."

@@ -1,0 +1,12 @@
+<div class="now-card-grid">
+{% for entry in include.entries %}
+<a href="{{ entry.url }}" class="now-card now-card-press"{% if entry.url contains "://" %} target="_blank" rel="noopener"{% endif %}>
+  <div class="now-card-meta">
+    <span class="now-card-source">{{ entry.source }}</span>
+    <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+  </div>
+  <h2 class="now-card-title">{{ entry.title }}</h2>
+  <p class="now-card-excerpt">{{ entry.excerpt }}</p>
+</a>
+{% endfor %}
+</div>

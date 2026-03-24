@@ -1,0 +1,184 @@
+---
+layout: docs
+title: Documentation — InferaDB
+doc_title: InferaDB Docs
+doc_subtitle: Learn how to integrate and manage fine-grained authorization with InferaDB.
+---
+
+<div class="docs-hub">
+
+  <div class="docs-hub-section">
+    <h2>Popular</h2>
+    <div class="docs-cards docs-cards-4">
+      <a href="/docs/quickstart" class="docs-card">
+        <h3>Quick Start</h3>
+        <p>Run InferaDB locally and make your first authorization check in under 5 minutes.</p>
+      </a>
+      <a href="/docs/ipl" class="docs-card">
+        <h3>Policy Language</h3>
+        <p>Define entities, relationships, and permissions with the Infera Policy Language.</p>
+      </a>
+      <a href="/docs/api-rest" class="docs-card">
+        <h3>REST API</h3>
+        <p>HTTP endpoints for permission checks, relationships, and resource lookups.</p>
+      </a>
+      <a href="/docs/sdk-rust" class="docs-card">
+        <h3>Rust SDK</h3>
+        <p>Type-safe, async-first client library with MockClient and InMemoryClient for testing.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="docs-hub-section">
+    <h2>Fundamentals</h2>
+    <div class="docs-cards docs-cards-3">
+      <a href="/docs/concepts" class="docs-card">
+        <h3>Core Concepts</h3>
+        <p>Entities, relationships, permissions, revision tokens, and multi-tenancy.</p>
+      </a>
+      <a href="/docs/ipl-reference" class="docs-card">
+        <h3>Schema Reference</h3>
+        <p>Complete syntax reference for IPL — keywords, expressions, and evaluation semantics.</p>
+      </a>
+      <a href="/docs/wasm" class="docs-card">
+        <h3>WASM Modules</h3>
+        <p>Extend authorization with sandboxed WebAssembly for custom logic.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="docs-hub-section">
+    <h2>APIs</h2>
+    <div class="docs-cards docs-cards-3">
+      <a href="/docs/api-rest" class="docs-card">
+        <h3>REST API</h3>
+        <p>JSON endpoints on port 8080 for checks, relationships, lookups, and simulation.</p>
+      </a>
+      <a href="/docs/api-grpc" class="docs-card">
+        <h3>gRPC API</h3>
+        <p>Binary protocol on port 8081 with bidirectional streaming. 20–30% faster than REST.</p>
+      </a>
+      <a href="/docs/api-authzen" class="docs-card">
+        <h3>AuthZEN API</h3>
+        <p>OpenID Foundation standardized authorization API for vendor-neutral interoperability.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="docs-hub-section">
+    <h2>SDKs</h2>
+    <div class="docs-cards docs-cards-5">
+      <a href="/docs/sdk-rust" class="docs-card docs-card-compact">
+        <h3>Rust</h3>
+        <p>Available now</p>
+      </a>
+      <a href="/docs/sdk-typescript" class="docs-card docs-card-compact">
+        <h3>TypeScript</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-go" class="docs-card docs-card-compact">
+        <h3>Go</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-python" class="docs-card docs-card-compact">
+        <h3>Python</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-java" class="docs-card docs-card-compact">
+        <h3>Java</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-dotnet" class="docs-card docs-card-compact">
+        <h3>.NET</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-php" class="docs-card docs-card-compact">
+        <h3>PHP</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-ruby" class="docs-card docs-card-compact">
+        <h3>Ruby</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-elixir" class="docs-card docs-card-compact">
+        <h3>Elixir</h3>
+        <p>Coming soon</p>
+      </a>
+      <a href="/docs/sdk-c" class="docs-card docs-card-compact">
+        <h3>C/C++</h3>
+        <p>Coming soon</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="docs-hub-section">
+    <h2>Architecture</h2>
+    <div class="docs-cards docs-cards-4">
+      <a href="/docs/architecture" class="docs-card">
+        <h3>System Overview</h3>
+        <p>Three services — Engine, Control, Ledger — and how they fit together.</p>
+      </a>
+      <a href="/docs/architecture-engine" class="docs-card">
+        <h3>Engine</h3>
+        <p>Authorization evaluation, graph traversal, caching, and WASM sandbox.</p>
+      </a>
+      <a href="/docs/architecture-control" class="docs-card">
+        <h3>Control Plane</h3>
+        <p>Tenant administration, authentication, token issuance, and audit logs.</p>
+      </a>
+      <a href="/docs/architecture-ledger" class="docs-card">
+        <h3>Ledger</h3>
+        <p>Per-vault blockchain, Raft consensus, Merkle proofs, and B+ tree storage.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="docs-hub-section">
+    <h2>Deploy &amp; Operate</h2>
+    <div class="docs-cards docs-cards-3">
+      <a href="/docs/deploy-local" class="docs-card">
+        <h3>Local Development</h3>
+        <p>Start a complete stack with inferadb dev start.</p>
+      </a>
+      <a href="/docs/deploy-docker" class="docs-card">
+        <h3>Docker</h3>
+        <p>Container images, configuration, and compose setups.</p>
+      </a>
+      <a href="/docs/deploy-kubernetes" class="docs-card">
+        <h3>Kubernetes</h3>
+        <p>Helm charts, multi-region, Talos Linux, and Cilium networking.</p>
+      </a>
+      <a href="/docs/configuration" class="docs-card">
+        <h3>Configuration</h3>
+        <p>Environment variables, YAML config, and CLI flags for all three services.</p>
+      </a>
+      <a href="/docs/observability" class="docs-card">
+        <h3>Observability</h3>
+        <p>Prometheus metrics, OpenTelemetry tracing, structured logging.</p>
+      </a>
+      <a href="/docs/terraform" class="docs-card">
+        <h3>Terraform</h3>
+        <p>Manage organizations, vaults, clients, and teams as infrastructure code.</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="docs-hub-section">
+    <h2>Security &amp; Compliance</h2>
+    <div class="docs-cards docs-cards-3">
+      <a href="/docs/security" class="docs-card">
+        <h3>Security Model</h3>
+        <p>Zero-trust architecture, threat model, and defense in depth.</p>
+      </a>
+      <a href="/docs/authentication" class="docs-card">
+        <h3>Authentication</h3>
+        <p>JWT, Ed25519, WebAuthn, OAuth, PKCE, and JWKS caching.</p>
+      </a>
+      <a href="/docs/compliance" class="docs-card">
+        <h3>Compliance</h3>
+        <p>SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, and EU AI Act mapping.</p>
+      </a>
+    </div>
+  </div>
+
+</div>

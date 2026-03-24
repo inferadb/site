@@ -8,9 +8,9 @@ body_class: home
   <div class="hero-glow"></div>
   <div class="container">
     <p class="hero-eyebrow">The Authorization Database</p>
-    <h1 class="hero-title">Fine-grained access control.<br/><span class="gradient-text">Purpose-built for scale.</span></h1>
+    <h1 class="hero-title">Permissions infrastructure<br/>for <span class="gradient-text">modern software</span></h1>
     <p class="hero-subtitle">
-      InferaDB is a distributed authorization database that answers "can this user do this?" in microseconds — with cryptographic audit trails, multi-tenant isolation at the storage layer, and consistency guarantees no existing solution offers together.
+      Sub-microsecond access control with cryptographic audit trails, storage-layer tenant isolation, and distributed consensus. Zanzibar-inspired. AuthZEN-compliant.
     </p>
     <div class="hero-actions">
       <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -26,22 +26,13 @@ body_class: home
 <section class="credibility">
   <div class="container">
     <div class="credibility-grid">
-      <div class="credibility-item">
-        <span class="credibility-label">Heritage</span>
-        <span class="credibility-value">Built by the team behind OpenFGA at Auth0/Okta</span>
-      </div>
-      <div class="credibility-item">
-        <span class="credibility-label">Architecture</span>
-        <span class="credibility-value">Inspired by Google Zanzibar</span>
-      </div>
-      <div class="credibility-item">
-        <span class="credibility-label">Standards</span>
-        <span class="credibility-value">OpenID AuthZEN-compliant</span>
-      </div>
-      <div class="credibility-item">
-        <span class="credibility-label">License</span>
-        <span class="credibility-value">Open source — MIT / Apache 2.0</span>
-      </div>
+      <span class="credibility-value">From the engineers behind OpenFGA</span>
+      <span class="credibility-sep">/</span>
+      <span class="credibility-value">Zanzibar-inspired</span>
+      <span class="credibility-sep">/</span>
+      <span class="credibility-value">AuthZEN-compliant</span>
+      <span class="credibility-sep">/</span>
+      <span class="credibility-value">Open source</span>
     </div>
   </div>
 </section>
@@ -50,8 +41,8 @@ body_class: home
 <section class="problem">
   <div class="container">
     <div class="section-header">
-      <h2>Authorization is a<br/><span class="gradient-text">hidden crisis</span></h2>
-      <p>Broken access control is the #1 risk in the OWASP API Security Top 10 and occupies three of the top five positions. Most companies are still building authorization from scratch.</p>
+      <h2>Authorization is a hidden crisis</h2>
+      <p>Broken access control is the #1 risk in the OWASP API Security Top 10 and occupies three of the top five positions. Most companies are still building it from scratch.</p>
     </div>
     <div class="stats-grid">
       <div class="stat-card">
@@ -77,8 +68,8 @@ body_class: home
 <section class="performance" id="product">
   <div class="container">
     <div class="section-header">
-      <h2>Not another policy engine.<br/><span class="gradient-text">A purpose-built database.</span></h2>
-      <p>Competitors bolt authorization onto PostgreSQL or embed it in your application. InferaDB is built from the ground up as an authorization-specific storage engine. The performance difference is architectural, not incremental.</p>
+      <h2>Not another policy engine</h2>
+      <p>Competitors bolt authorization onto PostgreSQL or embed it in your application. InferaDB is a purpose-built authorization database. The performance difference is architectural, not incremental.</p>
     </div>
     <div class="perf-grid">
       <div class="perf-card perf-hero">
@@ -113,7 +104,7 @@ body_class: home
 <section class="how-it-works">
   <div class="container">
     <div class="section-header">
-      <h2>Model any<br/><span class="gradient-text">permission system</span></h2>
+      <h2>Model any permission system</h2>
       <p>The Infera Policy Language unifies ReBAC, RBAC, and ABAC in a single declarative syntax. Express hierarchies, conditions, and custom logic — then extend with WebAssembly when you need to go further.</p>
     </div>
     <div class="hiw-grid">
@@ -172,7 +163,7 @@ body_class: home
 <section class="architecture" id="architecture">
   <div class="container">
     <div class="section-header">
-      <h2>Three services.<br/><span class="gradient-text">One system.</span></h2>
+      <h2>Three services, one system</h2>
       <p>A clean separation between authorization evaluation, administration, and cryptographic storage. Each service is independently deployable, scalable, and observable.</p>
     </div>
     <div class="arch-cards">
@@ -232,7 +223,7 @@ body_class: home
 <section class="differentiators">
   <div class="container">
     <div class="section-header">
-      <h2>What makes InferaDB<br/><span class="gradient-text">different</span></h2>
+      <h2>What makes InferaDB different</h2>
     </div>
     <div class="diff-grid">
       {% for feature in site.data.features %}
@@ -250,7 +241,7 @@ body_class: home
 <section class="use-cases">
   <div class="container">
     <div class="section-header">
-      <h2>Built for the workloads<br/><span class="gradient-text">that matter most</span></h2>
+      <h2>Built for the workloads that matter</h2>
     </div>
     <div class="uc-grid">
       <div class="uc-card">
@@ -301,7 +292,7 @@ body_class: home
   <div class="container">
     <div class="compliance-inner">
       <div class="compliance-text">
-        <h2>Compliance<br/><span class="gradient-text">by design</span></h2>
+        <h2>Compliance by design</h2>
         <p>Every authorization decision is revision-tracked, cryptographically signed, and replayable. Audit logs are append-only and hash-chained. Any historical decision can be independently verified by specifying its revision token.</p>
         <p class="compliance-detail">The EU is converging on mandatory fine-grained access controls: NIS2 (effective 2024), DORA (effective 2025), and the EU AI Act (high-risk provisions 2026–2027) all require precisely what InferaDB provides.</p>
       </div>
@@ -321,7 +312,7 @@ body_class: home
 <section class="devex" id="developers">
   <div class="container">
     <div class="section-header">
-      <h2>Developer experience<br/><span class="gradient-text">that doesn't get in the way</span></h2>
+      <h2>Developer experience that doesn't get in the way</h2>
       <p>Integrate in under 30 minutes. Branch, test, and merge policies like code. SDKs for every major language. Infrastructure as code from day one.</p>
     </div>
     <div class="devex-grid">
@@ -444,8 +435,8 @@ body_class: home
     <div class="cta-content">
       <div class="cta-glow"></div>
       <p class="cta-eyebrow">Ready to rethink authorization?</p>
-      <h2>Stop building permissions.<br/><span class="gradient-text">Start shipping features.</span></h2>
-      <p>InferaDB replaces 6+ engineers and $900K/year of in-house authorization infrastructure with a single, standards-compliant database that scales from day one.</p>
+      <h2>Stop building permissions.<br/>Start shipping <span class="gradient-text">features</span>.</h2>
+      <p>Replace 6+ engineers and $900K/year of in-house authorization with a single database that scales from day one.</p>
       <div class="cta-actions">
         <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
         <a href="/pricing" class="btn btn-ghost btn-lg">View Pricing</a>

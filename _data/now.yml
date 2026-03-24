@@ -1,0 +1,88 @@
+# Posts — link to individual pages at /now/{slug}
+- title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
+  date: 2026-03-20
+  category: news
+  slug: why-were-building-inferadb
+  excerpt: "Authorization is a hidden crisis in modern software. We built OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished we could have built — a true authorization database."
+  authors:
+    - Evan Sims
+
+- title: "How AI Agents Are Breaking Traditional Authorization"
+  date: 2026-03-14
+  category: ai
+  slug: ai-agents-breaking-authorization
+  excerpt: "Traditional systems handle 1–2 permission checks per request. Agent workflows require dozens. At 5–50ms per check, that's seconds of latency. At 2.8µs, InferaDB makes agent-scale authorization tractable."
+  authors:
+    - Evan Sims
+
+- title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works"
+  date: 2026-03-12
+  category: practices
+  slug: b-plus-tree-storage-engine
+  excerpt: "2.8µs p99 read latency and 952K ops/sec on commodity hardware. This post explains the architectural decisions — per-page envelope encryption, XXH3 checksums, and a two-layer caching architecture."
+  authors:
+    - Evan Sims
+
+- title: "Raft Consensus for Authorization: Why Eventual Consistency Is Unacceptable"
+  date: 2026-03-10
+  category: practices
+  slug: raft-consensus-authorization
+  excerpt: "If Alice revokes Bob's access at 10:00:00 and Bob's request at 10:00:01 hits a stale replica, he retains access. This is the 'new enemy problem.' InferaDB uses Raft consensus with revision tokens to solve it."
+  authors:
+    - Evan Sims
+
+- title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
+  date: 2026-03-01
+  category: practices
+  slug: wasm-policy-modules
+  excerpt: "For logic beyond declarative rules — IP ranges, subscription tiers, time windows — InferaDB supports WASM modules. Sandboxed, deterministic, fuel-limited, with no I/O access."
+  authors:
+    - Evan Sims
+
+- title: "The Infera Policy Language: Designing a Schema for Authorization"
+  date: 2026-02-25
+  category: practices
+  slug: designing-ipl
+  excerpt: "IPL unifies ReBAC, RBAC, and ABAC in a single declarative syntax. Union, intersection, exclusion, tuple-to-userset, and WASM module invocation — all composable."
+  authors:
+    - Evan Sims
+
+- title: "Authorization Market: $3.32B and No Dominant Player"
+  date: 2026-02-20
+  category: news
+  slug: authorization-market-analysis
+  excerpt: "The fine-grained authorization market is growing at 19.3% CAGR — nearly twice the broader IAM market. Total VC investment across all pure-play authorization companies is approximately $165M."
+  authors:
+    - Jane Sims
+
+- title: "NIS2, DORA, and the EU AI Act: Why Authorization Is Now a Compliance Requirement"
+  date: 2026-02-15
+  category: news
+  slug: eu-regulation-authorization
+  excerpt: "Three major EU regulations are converging on mandatory fine-grained access controls. NIS2, DORA, and the EU AI Act all require precisely what InferaDB provides."
+  authors:
+    - Jane Sims
+
+- title: "Why We Chose Rust for a Distributed Authorization Database"
+  date: 2026-02-08
+  category: ai
+  slug: why-rust-for-authorization
+  excerpt: "Memory safety without garbage collection. Fearless concurrency for parallel graph traversal. Zero-cost abstractions for hot-path optimization."
+  authors:
+    - Evan Sims
+
+- title: "Cryptographic Tenant Isolation: Why Application-Level Multi-Tenancy Isn't Enough"
+  date: 2026-02-05
+  category: practices
+  slug: cryptographic-tenant-isolation
+  excerpt: "Most authorization systems rely on application logic to prevent cross-tenant data leakage. InferaDB encrypts each vault independently with AES-256-GCM. Cross-tenant access is architecturally impossible."
+  authors:
+    - Evan Sims
+
+- title: "Securing RAG Pipelines: Per-User Document Authorization for AI"
+  date: 2026-01-25
+  category: ai
+  slug: securing-rag-pipelines
+  excerpt: "When an LLM retrieves documents for a user, every document must be authorized. InferaDB enables pre-retrieval authorization at the database level."
+  authors:
+    - Evan Sims

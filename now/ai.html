@@ -1,0 +1,7 @@
+---
+layout: now
+title: AI — InferaDB
+now_category: ai
+---
+{% assign filtered = site.data.now | where: "category", "ai" %}
+{% include now-cards.html entries=filtered %}

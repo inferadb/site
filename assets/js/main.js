@@ -10,7 +10,10 @@ if (nav) {
 const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
 if (toggle && links) {
+  var savedScroll = 0;
   function openNav() {
+    savedScroll = window.scrollY;
+    document.body.style.top = -savedScroll + 'px';
     toggle.setAttribute('aria-expanded', 'true');
     links.classList.add('open');
     document.body.classList.add('nav-open');
@@ -19,6 +22,8 @@ if (toggle && links) {
     toggle.setAttribute('aria-expanded', 'false');
     links.classList.remove('open');
     document.body.classList.remove('nav-open');
+    document.body.style.top = '';
+    window.scrollTo(0, savedScroll);
   }
 
   toggle.addEventListener('click', () => {
@@ -35,6 +40,11 @@ if (toggle && links) {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && links.classList.contains('open')) closeNav();
   });
+
+  // Close if viewport resizes beyond mobile breakpoint
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && links.classList.contains('open')) closeNav();
+  }, { passive: true });
 }
 
 // Scrollable code blocks — make keyboard-accessible
@@ -65,7 +75,7 @@ document.querySelectorAll('pre').forEach(function(pre) {
   if (!canvas) return;
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ctx = canvas.getContext('2d');
-  var W, H;
+  var W, H, isMobile;
   var nodes = [], edges = [], pulses = [];
   var mouseX = -1000, mouseY = -1000;
   var raf = null, running = false, time = 0;
@@ -85,6 +95,7 @@ document.querySelectorAll('pre').forEach(function(pre) {
   function resize() {
     W = canvas.offsetWidth;
     H = canvas.offsetHeight;
+    isMobile = W < 768;
     canvas.width = W;
     canvas.height = H;
   }
@@ -96,7 +107,8 @@ document.querySelectorAll('pre').forEach(function(pre) {
       for (var b = a + 1; b < nodes.length; b++) {
         if (c >= 4) break;
         var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
-        if (Math.sqrt(dx * dx + dy * dy) < 200 && Math.random() < 0.5) {
+        var maxDist = isMobile ? 120 : 200;
+        if (Math.sqrt(dx * dx + dy * dy) < maxDist && Math.random() < 0.5) {
           edges.push([a, b]);
           c++;
         }
@@ -107,7 +119,9 @@ document.querySelectorAll('pre').forEach(function(pre) {
   function init() {
     resize();
     nodes = []; pulses = [];
-    var count = Math.max(30, Math.min(70, Math.floor(W * H / 6000)));
+    var count = isMobile
+      ? Math.max(12, Math.min(25, Math.floor(W * H / 15000)))
+      : Math.max(30, Math.min(70, Math.floor(W * H / 6000)));
     for (var i = 0; i < count; i++) {
       var t = types[Math.floor(Math.random() * types.length)];
       nodes.push({
@@ -296,9 +310,13 @@ document.querySelectorAll('pre').forEach(function(pre) {
 
   function update() {
     time++;
-    if (time % 45 === 0) fireQuery();
-    if (time % 70 === 20) fireQuery();
-    if (time % 100 === 50) fireQuery();
+    if (isMobile) {
+      if (time % 120 === 0) fireQuery();
+    } else {
+      if (time % 45 === 0) fireQuery();
+      if (time % 70 === 20) fireQuery();
+      if (time % 100 === 50) fireQuery();
+    }
 
     for (var i = 0; i < nodes.length; i++) {
       nodes[i].glow *= 0.94;
@@ -336,8 +354,19 @@ document.querySelectorAll('pre').forEach(function(pre) {
   window.addEventListener('resize', function() { resize(); }, { passive: true });
 
   document.addEventListener('visibilitychange', function() {
-    if (document.hidden) stop(); else if (!reducedMotion) start();
+    if (document.hidden) stop(); else if (!reducedMotion && heroVisible) start();
   });
+
+  // Pause when hero is scrolled out of view
+  var heroVisible = true;
+  var heroObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      heroVisible = entry.isIntersecting;
+      if (heroVisible && !reducedMotion) start();
+      else stop();
+    });
+  }, { threshold: 0 });
+  heroObserver.observe(canvas.parentElement);
 
   init();
   if (reducedMotion) {
@@ -420,7 +449,17 @@ document.querySelectorAll('pre').forEach(function(pre) {
 
   function reset(el) {
     if (active.has(el)) { cancelAnimationFrame(active.get(el)); active.delete(el); }
-    el.textContent = '';
+    // Fill with scrambled text at correct length to preserve layout
+    var target = el.getAttribute('data-decrypt-num');
+    var out = '';
+    for (var i = 0; i < target.length; i++) {
+      if ('0123456789'.indexOf(target[i]) >= 0) {
+        out += digits[Math.floor(Math.random() * digits.length)];
+      } else {
+        out += target[i];
+      }
+    }
+    el.textContent = out;
   }
 
   var timeouts = new Map();
@@ -476,8 +515,18 @@ document.querySelectorAll('pre').forEach(function(pre) {
     });
   }, { threshold: 0.5 });
 
+  // Scramble on init — real text is in DOM for crawlers, JS scrambles for visual effect
   elements.forEach(function(el) {
-    el.textContent = '';
+    var target = el.getAttribute('data-decrypt-num');
+    var out = '';
+    for (var i = 0; i < target.length; i++) {
+      if ('0123456789'.indexOf(target[i]) >= 0) {
+        out += digits[Math.floor(Math.random() * digits.length)];
+      } else {
+        out += target[i];
+      }
+    }
+    el.textContent = out;
     observer.observe(el);
   });
 })();
@@ -768,7 +817,17 @@ document.querySelectorAll('pre').forEach(function(pre) {
       cancelAnimationFrame(active.get(el));
       active.delete(el);
     }
-    el.textContent = '';
+    // Fill with scrambled text at correct length to preserve layout
+    var target = el.getAttribute('data-decrypt');
+    var out = '';
+    for (var i = 0; i < target.length; i++) {
+      if (target[i] === ' ' || target[i] === '/') {
+        out += target[i];
+      } else {
+        out += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+    el.textContent = out;
   }
 
   var observer = new IntersectionObserver(function(entries) {
@@ -783,8 +842,18 @@ document.querySelectorAll('pre').forEach(function(pre) {
     threshold: 0.5
   });
 
+  // Scramble on init — real text is in DOM for crawlers, JS scrambles for visual effect
   elements.forEach(function(el) {
-    el.textContent = ''; // start empty
+    var target = el.getAttribute('data-decrypt');
+    var out = '';
+    for (var i = 0; i < target.length; i++) {
+      if (target[i] === ' ' || target[i] === '/') {
+        out += target[i];
+      } else {
+        out += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+    el.textContent = out;
     observer.observe(el);
   });
 })();

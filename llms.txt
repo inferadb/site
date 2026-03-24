@@ -1,0 +1,91 @@
+# InferaDB
+
+> InferaDB is a distributed authorization database for fine-grained access control. It answers "can user X do action Y on resource Z?" in 2.8µs p99. Built in Rust. Zanzibar-inspired. AuthZEN-compliant. Open source (MIT/Apache-2.0). Three services: Engine (authorization evaluation), Control (tenant administration), Ledger (blockchain persistence with Merkle proofs). Supports ReBAC, RBAC, and ABAC via the Infera Policy Language (IPL). Extensible with sandboxed WebAssembly modules.
+
+InferaDB is pre-revenue, under active development. The managed cloud service is not yet available. The open source core is functional.
+
+Key differentiators: purpose-built storage engine (not PostgreSQL), cryptographic per-vault tenant isolation (AES-256-GCM), tamper-proof audit trail (per-vault blockchain with Merkle proof verification), Raft consensus for distributed consistency, sub-microsecond read latency (2.8µs p99, 952K ops/sec).
+
+## Docs
+
+- [What is InferaDB?](https://inferadb.com/docs/overview/): Product overview, architecture, and capabilities
+- [Quick Start](https://inferadb.com/docs/quickstart/): Run InferaDB locally and make first authorization check
+- [Core Concepts](https://inferadb.com/docs/concepts/): Entities, relationships (tuples), permissions, revision tokens, multi-tenancy (organizations and vaults)
+- [IPL Overview](https://inferadb.com/docs/ipl/): Infera Policy Language — declarative schema for entities, relations, and permissions
+- [IPL Reference](https://inferadb.com/docs/ipl-reference/): Complete syntax — type, relation, forbid, union (|), intersection (&), exclusion (-), computed userset (from), WASM module()
+- [WASM Modules](https://inferadb.com/docs/wasm/): Sandboxed WebAssembly policy extensions — check() -> i32, 100ms timeout, 10MB memory, no I/O
+- [REST API](https://inferadb.com/docs/api-rest/): Port 8080 — /v1/evaluate, /v1/relationships:write, /v1/resources/list, /v1/subjects/list, /v1/simulate, /v1/watch
+- [gRPC API](https://inferadb.com/docs/api-grpc/): Port 8081 — AuthorizationService with Evaluate, Expand, WriteRelationships, ListResources, ListSubjects, Watch, Simulate
+- [AuthZEN API](https://inferadb.com/docs/api-authzen/): OpenID Foundation standard — /access/v1/evaluation, /access/v1/evaluations (batch), /access/v1/search/resource, /access/v1/search/subject
+- [CLI Reference](https://inferadb.com/docs/cli/): inferadb check/simulate/expand/explain-permission, schemas push/validate/test/diff, relationships add/remove, dev start/stop
+- [Rust SDK](https://inferadb.com/docs/sdk-rust/): crates.io — Client::builder(), vault.check(), vault.require(), vault.check_batch(), MockClient, InMemoryClient, TestVault
+- [TypeScript SDK](https://inferadb.com/docs/sdk-typescript/): @inferadb/sdk (planned) — Express and Next.js middleware
+- [Go SDK](https://inferadb.com/docs/sdk-go/): github.com/inferadb/go (planned) — net/http middleware, gRPC interceptor
+- [Python SDK](https://inferadb.com/docs/sdk-python/): inferadb (planned) — async/sync, FastAPI dependency, Django decorator
+- [Java SDK](https://inferadb.com/docs/sdk-java/): com.inferadb:inferadb-sdk (planned) — Spring Boot @RequirePermission
+- [.NET SDK](https://inferadb.com/docs/sdk-dotnet/): InferaDB.Sdk (planned) — ASP.NET Core authorization policies
+- [PHP SDK](https://inferadb.com/docs/sdk-php/): inferadb/inferadb-php (planned) — Laravel middleware, Symfony Voter
+- [Ruby SDK](https://inferadb.com/docs/sdk-ruby/): inferadb gem (planned) — Rails controller concern
+- [Elixir SDK](https://inferadb.com/docs/sdk-elixir/): inferadb (planned) — Phoenix Plug, LiveView
+- [C/C++ SDK](https://inferadb.com/docs/sdk-c/): libinferadb (planned) — C11 ABI + C++20 RAII wrapper
+- [Terraform Provider](https://inferadb.com/docs/terraform/): inferadb/inferadb — organizations, vaults, clients, certificates, teams, grants
+- [Dashboard](https://inferadb.com/docs/dashboard/): TanStack Start, React 19 — policy editor, graph visualizer, decision simulator
+- [System Architecture](https://inferadb.com/docs/architecture/): Engine (data plane) + Control (control plane) + Ledger (storage layer)
+- [Engine Architecture](https://inferadb.com/docs/architecture-engine/): Crates: api, core (evaluator, graph, IPL), auth (JWT, JWKS), cache (Moka), store, wasm (wasmtime), observe
+- [Control Architecture](https://inferadb.com/docs/architecture-control/): REST API at /v1/ — auth, users, organizations, vaults, clients, certificates, tokens, teams, audit-logs
+- [Ledger Architecture](https://inferadb.com/docs/architecture-ledger/): Per-vault blockchain, Raft consensus (OpenRaft), custom B+ tree, Merkle proofs, AES-256-GCM encryption
+- [Security Model](https://inferadb.com/docs/security/): Zero-trust, per-tenant encryption, WASM sandboxing, mTLS, hash-chained audit logs
+- [Authentication](https://inferadb.com/docs/authentication/): Ed25519 JWT (RFC 7523), OAuth 2.0, WebAuthn passkeys, PKCE CLI flow
+- [Compliance](https://inferadb.com/docs/compliance/): SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, EU AI Act — audit trail satisfies all
+- [Configuration](https://inferadb.com/docs/configuration/): INFERADB__ENGINE__ env vars, YAML config (--config), --validate dry-run
+- [Observability](https://inferadb.com/docs/observability/): Prometheus /metrics, OpenTelemetry OTLP, structured JSON logging, RUST_LOG
+- [Local Development](https://inferadb.com/docs/deploy-local/): inferadb dev start — Engine :8080, Control :9090, Dashboard :3000
+- [Docker Deployment](https://inferadb.com/docs/deploy-docker/): inferadb/inferadb-engine, inferadb-control, inferadb-ledger
+- [Kubernetes Deployment](https://inferadb.com/docs/deploy-kubernetes/): Helm charts, Talos Linux, Cilium CNI, Flux CD, Terraform
+
+## API Quick Reference
+
+Engine REST (port 8080): POST /v1/evaluate (check permission), POST /v1/relationships:write (write tuples), POST /v1/relationships:list, POST /v1/resources/list, POST /v1/subjects/list, POST /v1/simulate, POST /v1/watch (SSE), POST /v1/expand. AuthZEN: POST /access/v1/evaluation, POST /access/v1/evaluations (batch up to 100), POST /access/v1/search/resource, POST /access/v1/search/subject. Health: GET /health/live, /health/ready, /health/startup (no auth). Metrics: GET /metrics (Prometheus).
+
+Control REST (port 9090): POST /v1/auth/register, /login/password, /logout, /verify-email, /cli/authorize (PKCE), /cli/token. CRUD: /v1/organizations, /v1/organizations/{org}/vaults, /v1/organizations/{org}/clients, /v1/organizations/{org}/teams. Tokens: POST /v1/organizations/{org}/vaults/{vault}/tokens, POST /v1/tokens/refresh, POST /v1/token (client assertion).
+
+Ledger gRPC (port 50051): ReadService, WriteService, AdminService, OrganizationService, VaultService, UserService, TokenService, EventsService, HealthService, RaftService.
+
+## IPL Syntax
+
+```
+type <name> {
+    relation <name>                           // direct tuple
+    relation <name> = <expr>                  // computed
+    forbid <name>                             // explicit deny (evaluated first)
+}
+
+Expressions: a | b (union/OR), a & b (intersection/AND), a - b (exclusion), viewer from parent (tuple-to-userset), parent->can_edit (related object), module("name") (WASM)
+Wildcards: user:* for public resources
+Evaluation: forbid rules first, then permits. Union short-circuits on first Allow. Intersection short-circuits on first Deny.
+```
+
+## Site Navigation
+
+- [Homepage](https://inferadb.com/): Product overview, performance metrics, architecture, use cases, pricing teaser
+- [Pricing](https://inferadb.com/pricing/): Free (open source), Starter ($99/mo), Pro ($499/mo), Enterprise (custom)
+- [Docs](https://inferadb.com/docs/): Technical documentation hub — 34 pages across 8 sections
+- [Now](https://inferadb.com/now/): News, changelog, practices, AI, press
+- [Changelog](https://inferadb.com/changelog/): Product updates in chronological timeline
+- [About](https://inferadb.com/about/): Team (Evan Sims CTO, Jane Sims CEO), design principles, founding story
+- [Careers](https://inferadb.com/careers/): Open roles — Senior Rust Engineers, Senior Authorization Engineer, Developer Relations
+- [Contact](https://inferadb.com/contact/): Contact form (Formspree)
+- [Early Access](https://inferadb.com/waitlist/): Waitlist signup for managed cloud service
+- [GitHub](https://github.com/inferadb): Source code — engine, control, ledger, cli, dashboard, sdks, terraform-provider, deploy
+
+## Optional
+
+- [Practices: B+ Tree Storage Engine](https://inferadb.com/now/b-plus-tree-storage-engine/): Custom B+ tree, 21 tables, single-writer, XXH3 checksums, per-page AES-256-GCM
+- [Practices: Raft Consensus](https://inferadb.com/now/raft-consensus-authorization/): New enemy problem, revision tokens, linearizable writes, causal cross-region ordering
+- [Practices: WASM Modules](https://inferadb.com/now/wasm-policy-modules/): Wasmtime/Cranelift, 1M fuel limit, no I/O, deterministic execution
+- [Practices: IPL Design](https://inferadb.com/now/designing-ipl/): PEG grammar, union/intersection/exclusion, forbid-before-permit, three validation passes
+- [Practices: Cryptographic Isolation](https://inferadb.com/now/cryptographic-tenant-isolation/): Per-vault AES-256-GCM, cryptographic shredding for GDPR Art. 17
+- [AI: Agents Breaking Authorization](https://inferadb.com/now/ai-agents-breaking-authorization/): Traditional 1-2 checks/req vs agent dozens, 2.8µs makes it tractable
+- [AI: Securing RAG Pipelines](https://inferadb.com/now/securing-rag-pipelines/): Pre-retrieval authorization, per-user document scoping
+- [News: Why We're Building InferaDB](https://inferadb.com/now/why-were-building-inferadb/): Founding story, Auth0/Okta background, architectural motivation
+- [News: EU Regulation](https://inferadb.com/now/eu-regulation-authorization/): NIS2, DORA, EU AI Act convergence on mandatory fine-grained access controls

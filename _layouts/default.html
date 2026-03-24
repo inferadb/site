@@ -3,13 +3,41 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% if page.title %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }} — {{ site.description }}{% endif %}</title>
-    <meta name="description" content="{{ page.description | default: site.description }}" />
+    {% seo %}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}" />
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}" />
+    <link rel="author" href="{{ '/humans.txt' | relative_url }}" />
+    <link rel="help" href="{{ '/llms.txt' | relative_url }}" type="text/plain" />
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "InferaDB",
+      "description": "{{ page.description | default: site.description | escape }}",
+      "url": "{{ site.url }}",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Linux, macOS, Windows, Kubernetes",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Open source community edition"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "InferaDB",
+        "url": "https://inferadb.com",
+        "logo": "https://inferadb.com/assets/images/og-logo.png",
+        "sameAs": [
+          "https://github.com/inferadb",
+          "https://discord.gg/inferadb"
+        ]
+      }
+    }
+    </script>
   </head>
   <body class="{{ page.body_class }}" data-layout="{{ page.layout }}">
     <a href="#main-content" class="skip-link">Skip to content</a>

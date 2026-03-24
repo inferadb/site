@@ -7,6 +7,20 @@ markdown: kramdown
 highlighter: rouge
 permalink: pretty
 
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# SEO defaults
+twitter:
+  card: summary_large_image
+social:
+  name: InferaDB
+  links:
+    - https://github.com/inferadb
+    - https://discord.gg/inferadb
+logo: /assets/images/og-logo.png
+
 sass:
   sass_dir: _sass
   style: compressed
@@ -18,3 +32,4 @@ exclude:
   - CLAUDE.md
   - .jekyll-cache
   - vendor
+  - assets/images/og-source.svg

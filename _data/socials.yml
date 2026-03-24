@@ -1,0 +1,9 @@
+- site: GitHub
+  url: "https://github.com/inferadb"
+  icon: github
+- site: Discord
+  url: "https://discord.gg/inferadb"
+  icon: discord
+- site: Email
+  url: "mailto:open@inferadb.com"
+  icon: mail

@@ -1,0 +1,19 @@
+title: InferaDB
+description: "The Authorization Database. High-performance, fine-grained access control at scale."
+url: "https://inferadb.com"
+baseurl: ""
+
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - .jekyll-cache
+  - vendor

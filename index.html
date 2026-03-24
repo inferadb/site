@@ -1,0 +1,301 @@
+---
+layout: default
+body_class: home
+---
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="container">
+    <div class="hero-badge">
+      <span class="badge">Under Active Development</span>
+    </div>
+    <h1 class="hero-title">Authorization,<br/><span class="gradient-text">solved.</span></h1>
+    <p class="hero-subtitle">
+      Fine-grained access control that's fast, scalable, and auditable.
+      Hardware-accelerated graph traversal. Cryptographic audit trails.
+      Zanzibar-inspired. AuthZEN-compliant. Zero lock-in.
+    </p>
+    <div class="hero-actions">
+      <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+      <a href="https://github.com/inferadb/inferadb" class="btn btn-ghost" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+    <div class="hero-code">
+      <div class="code-window">
+        <div class="code-header">
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-dot"></span>
+          <span class="code-title">schema.ipl</span>
+        </div>
+        <pre><code><span class="kw">entity</span> <span class="type">document</span> {
+  <span class="kw">relation</span> <span class="fn">viewer</span>: <span class="type">user</span> | <span class="type">group</span>#member
+  <span class="kw">relation</span> <span class="fn">editor</span>: <span class="type">user</span>
+  <span class="kw">relation</span> <span class="fn">owner</span>: <span class="type">user</span>
+  <span class="kw">attribute</span> <span class="fn">is_public</span>: <span class="type">bool</span>
+
+  <span class="kw">permission</span> <span class="fn">view</span> = viewer <span class="op">or</span> editor <span class="op">or</span> (is_public == <span class="lit">true</span>)
+  <span class="kw">permission</span> <span class="fn">edit</span> = editor <span class="op">or</span> owner
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Built for the demands of<br/><span class="gradient-text">modern authorization</span></h2>
+      <p>Authorization shouldn't be fragile. InferaDB unifies relationship-based access control, logical policy reasoning, and standards compliance in a single system.</p>
+    </div>
+    <div class="features-grid">
+      {% for feature in site.data.features %}
+      <div class="feature-card">
+        <div class="feature-icon">
+          {% if feature.icon == "layers" %}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+          {% elsif feature.icon == "zap" %}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          {% elsif feature.icon == "shield" %}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          {% elsif feature.icon == "refresh" %}
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+          {% endif %}
+        </div>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+        <ul class="feature-details">
+          {% for detail in feature.details %}
+          <li>{{ detail }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section class="architecture" id="architecture">
+  <div class="container">
+    <div class="section-header">
+      <h2>Designed for<br/><span class="gradient-text">distributed scale</span></h2>
+      <p>Two planes, one system. The control plane manages tenants and policies. The data plane executes authorization checks in isolated PDP cells that co-locate computation with data.</p>
+    </div>
+    <div class="arch-diagram">
+      <div class="arch-layer arch-developer">
+        <div class="arch-label">Developer Layer</div>
+        <div class="arch-nodes">
+          <div class="arch-node">CLI</div>
+          <div class="arch-node">SDKs</div>
+          <div class="arch-node">Dashboard</div>
+        </div>
+      </div>
+      <div class="arch-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+      <div class="arch-layer arch-control">
+        <div class="arch-label">Control Plane</div>
+        <div class="arch-nodes">
+          <div class="arch-node">Tenant Registry</div>
+          <div class="arch-node">Policy Manager</div>
+          <div class="arch-node">Schema Store</div>
+          <div class="arch-node">Audit Log</div>
+        </div>
+      </div>
+      <div class="arch-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      </div>
+      <div class="arch-layer arch-data">
+        <div class="arch-label">Data Plane</div>
+        <div class="arch-cells">
+          <div class="arch-cell">
+            <div class="arch-cell-title">PDP Cell</div>
+            <div class="arch-cell-items">
+              <span>Tuple Store</span>
+              <span>Evaluator</span>
+              <span>WASM Sandbox</span>
+              <span>Cache</span>
+            </div>
+          </div>
+          <div class="arch-cell">
+            <div class="arch-cell-title">PDP Cell</div>
+            <div class="arch-cell-items">
+              <span>Tuple Store</span>
+              <span>Evaluator</span>
+              <span>WASM Sandbox</span>
+              <span>Cache</span>
+            </div>
+          </div>
+          <div class="arch-cell">
+            <div class="arch-cell-title">PDP Cell</div>
+            <div class="arch-cell-items">
+              <span>Tuple Store</span>
+              <span>Evaluator</span>
+              <span>WASM Sandbox</span>
+              <span>Cache</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Standards -->
+<section class="standards">
+  <div class="container">
+    <div class="standards-grid">
+      <div class="standard-card">
+        <h3>Zanzibar-Inspired</h3>
+        <p>Built on Google's proven consistency model with revision tokens for causal ordering, solving the "new enemy problem" that makes eventual consistency unacceptable for authorization.</p>
+      </div>
+      <div class="standard-card">
+        <h3>AuthZEN-Compliant</h3>
+        <p>First-class support for the OpenID Foundation's authorization API specification, enabling vendor-neutral interoperability and zero lock-in.</p>
+      </div>
+      <div class="standard-card">
+        <h3>Open Source</h3>
+        <p>Dual-licensed under MIT and Apache 2.0. Built in Rust for performance and correctness. Community-driven development on GitHub.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Developer Experience -->
+<section class="devex" id="developers">
+  <div class="container">
+    <div class="section-header">
+      <h2>Built for<br/><span class="gradient-text">developers</span></h2>
+      <p>Authorization should be understandable, testable, and observable. InferaDB provides the tooling to match.</p>
+    </div>
+    <div class="devex-grid">
+      <div class="devex-card">
+        <div class="code-window">
+          <div class="code-header">
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-title">terminal</span>
+          </div>
+          <pre><code><span class="cm">$ inferadb policy branch feature/new-rule</span>
+Branch created: feature/new-rule
+
+<span class="cm">$ inferadb simulate \
+    --resource document:1 \
+    --subject user:evan</span>
+<span class="lit">✓ ALLOWED</span> via: owner → edit → view
+  Revision: r_2026031400042
+  Latency:  2.3ms
+
+<span class="cm">$ inferadb merge feature/new-rule</span>
+Merged feature/new-rule → main</code></pre>
+        </div>
+        <h3>CLI</h3>
+        <p>Branch, simulate, and merge policies like code. Debug authorization decisions with full trace explanations.</p>
+      </div>
+      <div class="devex-card">
+        <div class="code-window">
+          <div class="code-header">
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-dot"></span>
+            <span class="code-title">check.rs</span>
+          </div>
+          <pre><code><span class="kw">use</span> inferadb::Client;
+
+<span class="kw">let</span> client = Client::connect(<span class="str">"localhost:9090"</span>).<span class="kw">await</span>?;
+
+<span class="kw">let</span> allowed = client
+    .check(<span class="str">"document:1"</span>, <span class="str">"view"</span>, <span class="str">"user:evan"</span>)
+    .<span class="kw">await</span>?;
+
+<span class="kw">assert!</span>(allowed.permitted);</code></pre>
+        </div>
+        <h3>Rust SDK</h3>
+        <p>Type-safe, idiomatic bindings for tuple operations, policy checks, and audit log queries.</p>
+      </div>
+      <div class="devex-card devex-card-wide">
+        <h3>Dashboard</h3>
+        <p>Visualize schemas, simulate access paths, and analyze decision traces in real time. Design policies without writing code.</p>
+        <div class="dashboard-preview">
+          <div class="dash-mock">
+            <div class="dash-sidebar">
+              <div class="dash-nav-item active">Schemas</div>
+              <div class="dash-nav-item">Policies</div>
+              <div class="dash-nav-item">Simulator</div>
+              <div class="dash-nav-item">Audit Log</div>
+              <div class="dash-nav-item">Settings</div>
+            </div>
+            <div class="dash-main">
+              <div class="dash-header">Policy Graph — document</div>
+              <div class="dash-graph">
+                <div class="dash-node dash-node-entity">document</div>
+                <div class="dash-edges">
+                  <div class="dash-edge">
+                    <span class="dash-rel">viewer</span>
+                    <div class="dash-node dash-node-ref">user | group#member</div>
+                  </div>
+                  <div class="dash-edge">
+                    <span class="dash-rel">editor</span>
+                    <div class="dash-node dash-node-ref">user</div>
+                  </div>
+                  <div class="dash-edge">
+                    <span class="dash-rel">owner</span>
+                    <div class="dash-node dash-node-ref">user</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Compliance -->
+<section class="compliance">
+  <div class="container">
+    <div class="section-header">
+      <h2>Compliance<br/><span class="gradient-text">by design</span></h2>
+      <p>Every authorization decision is revision-tracked, cryptographically signed, and replayable. Meet compliance requirements by default, not as an afterthought.</p>
+    </div>
+    <div class="compliance-grid">
+      <div class="compliance-item">
+        <span class="compliance-badge">SOC 2</span>
+        <p>Logical access controls and system monitoring</p>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-badge">HIPAA</span>
+        <p>Access controls and audit trail requirements</p>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-badge">GDPR</span>
+        <p>Data protection by design and processing records</p>
+      </div>
+      <div class="compliance-item">
+        <span class="compliance-badge">PCI DSS</span>
+        <p>Restricted access and comprehensive tracking</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to rethink<br/><span class="gradient-text">authorization?</span></h2>
+      <p>InferaDB is under active development. Join the waitlist for early access, or explore the source on GitHub.</p>
+      <div class="cta-actions">
+        <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+        <a href="https://discord.gg/inferadb" class="btn btn-ghost btn-lg" target="_blank" rel="noopener">Join Discord</a>
+      </div>
+    </div>
+  </div>
+</section>

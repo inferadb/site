@@ -1,0 +1,19 @@
+<nav class="site-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="InferaDB Home">
+      {% include logo.svg %}
+      <span>InferaDB</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="nav-links">
+      {% for item in site.data.nav %}
+      <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>
+      {% endfor %}
+      <a href="/waitlist" class="btn btn-sm">Get Early Access</a>
+    </div>
+  </div>
+</nav>

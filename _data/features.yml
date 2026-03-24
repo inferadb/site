@@ -1,0 +1,31 @@
+- title: Flexibility
+  icon: layers
+  description: "ReBAC, RBAC, and ABAC unified under one model. Design policies visually or extend with custom WebAssembly logic."
+  details:
+    - "Relationship-based, role-based, and attribute-based access control"
+    - "No-code visual policy designer"
+    - "Extensible via sandboxed WebAssembly modules"
+
+- title: Performance
+  icon: zap
+  description: "Hardware-accelerated graph traversal with parallel computation across distributed nodes. Sub-10ms median latency."
+  details:
+    - "Co-located computation with data in isolated PDP cells"
+    - "Graph-based permission resolution"
+    - "Horizontal scaling via decentralized architecture"
+
+- title: Operations
+  icon: shield
+  description: "Every decision is logged to a cryptographically signed, immutable ledger. Native observability built in."
+  details:
+    - "Cryptographically verifiable audit trails"
+    - "Hash-chained, append-only audit logs"
+    - "Native tracing and observability"
+
+- title: Reliability
+  icon: refresh
+  description: "Self-optimizing queries and indexes with self-healing fault tolerance. Built for zero-downtime deployments."
+  details:
+    - "Self-optimizing queries and indexes"
+    - "Self-healing and fault-tolerant"
+    - "Causal consistency across regions"

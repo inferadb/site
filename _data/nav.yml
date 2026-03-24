@@ -1,0 +1,11 @@
+- title: Features
+  url: "/#features"
+- title: Architecture
+  url: "/#architecture"
+- title: Developers
+  url: "/#developers"
+- title: About
+  url: "/about"
+- title: Docs
+  url: "https://github.com/inferadb/inferadb"
+  external: true

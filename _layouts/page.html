@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<section class="page-content">
+  <div class="container">
+    {% if page.header %}
+    <header class="page-header">
+      <h1>{{ page.header }}</h1>
+      {% if page.subtitle %}
+      <p class="subtitle">{{ page.subtitle }}</p>
+      {% endif %}
+    </header>
+    {% endif %}
+    <article>
+      {{ content }}
+    </article>
+  </div>
+</section>

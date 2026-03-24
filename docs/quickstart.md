@@ -118,6 +118,8 @@ Response:
 }
 ```
 
+> **Note:** `inferadb dev start` runs without authentication by default. For production deployments, include an `Authorization: Bearer <token>` header. See [Authentication](/docs/authentication) for details.
+
 ## 7. Integrate with Your Application
 
 The CLI and REST API are great for exploration. For production, use an SDK. Here's the same permission check from your application code:

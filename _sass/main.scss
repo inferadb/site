@@ -2175,9 +2175,9 @@ section {
   padding: 2rem 0;
   -webkit-overflow-scrolling: touch;
 
-  &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
 }
 
 // Global nav links wrapper
@@ -2714,6 +2714,32 @@ section {
   color: var(--text-secondary);
 }
 
+// Language label on code blocks — positioned on <pre> alongside copy button
+.code-lang {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+// When copy button is present, shift language label left
+pre:has(.code-copy) .code-lang {
+  right: 3.75rem;
+}
+
+pre:hover .code-lang {
+  opacity: 1;
+}
+
 // Copy button on code blocks
 .code-copy {
   position: absolute;
@@ -2817,58 +2843,71 @@ h3:hover .heading-anchor {
 }
 
 // ─── Rouge syntax highlighting ───────────────────────────────
-// Maps Rouge token classes to the mil-spec industrial palette.
-// Amber = keywords/control flow, Teal = types/builtins, Green = strings/literals.
+// Mil-spec code palette — each token type is visually distinct.
+// Amber = keywords, Teal = types, Green = strings, Warm gray = functions, Copper = numbers.
 
 .highlight {
-  // Keywords
+  // Keywords — amber (the strongest signal in authorization code)
   .k, .kd, .kn, .kp, .kr, .kc, .kt,
-  .kv  { color: var(--accent); }          // amber — keywords, declarations
-  .nb  { color: var(--accent); }          // amber — builtins (print, len)
-  .ow  { color: var(--accent); }          // amber — operator words (and, or, not)
+  .kv  { color: var(--accent); }
+  .ow  { color: var(--accent); }          // operator words (and, or, not)
+
+  // Builtins — slightly muted amber
+  .nb  { color: oklch(0.70 0.10 80); }
   .bp  { color: var(--text-secondary); }  // self, cls
 
-  // Types, classes, namespaces
+  // Types, classes, namespaces — teal
   .nc, .nn, .no, .nd,
-  .ni  { color: var(--accent-teal); }     // teal — class names, decorators
-  .nf, .fm { color: var(--text-bright); } // bright — function names
+  .ni  { color: var(--accent-teal); }
+  .kt  { color: var(--accent-teal); }     // keyword types (int, str, bool)
 
-  // Strings
+  // Functions — bright with slight warmth
+  .nf, .fm { color: oklch(0.82 0.06 70); }
+
+  // Attributes, properties — dimmer teal
+  .na  { color: oklch(0.65 0.08 200); }
+  .py  { color: var(--text-bright); }     // property names (TOML keys)
+
+  // Strings — green
   .s, .s1, .s2, .sb, .sc, .sd,
   .se, .sh, .si, .sx,
-  .sr, .ss { color: var(--accent-green); } // green — all string types
-  .sa  { color: var(--accent); }           // amber — string affix (f, b, r)
-  .dl  { color: var(--accent-green); }     // green — string delimiters
+  .sr, .ss { color: var(--accent-green); }
+  .sa  { color: var(--accent); }          // string affix (f, b, r)
+  .dl  { color: var(--accent-green); }    // string delimiters
 
-  // Numbers
+  // Numbers — distinct copper/orange (not green)
   .m, .mi, .mf, .mh, .mo,
-  .mb, .mx, .il { color: var(--accent-green); } // green — numeric literals
+  .mb, .mx, .il { color: oklch(0.72 0.12 55); }
 
-  // Comments
+  // Comments — muted, italic
   .c, .c1, .cm, .cp, .cs,
-  .ch  { color: var(--muted); font-style: italic; } // muted italic
+  .ch  { color: var(--muted); font-style: italic; }
 
-  // Operators, punctuation
-  .o, .p { color: var(--text-secondary); } // subtle
+  // Preprocessor — brighter than comments
+  .cp  { color: var(--text-secondary); font-style: normal; }
 
-  // Variables, identifiers
-  .n, .na, .nv, .vi, .vg, .vc,
-  .nx  { color: var(--text); }            // default text
+  // Operators — subtle but not invisible
+  .o   { color: oklch(0.65 0.04 240); }
+  .p   { color: var(--text-secondary); }  // punctuation
+
+  // Variables, identifiers — default text
+  .n, .nv, .vi, .vg, .vc,
+  .nx  { color: var(--text); }
   .nl  { color: var(--text-bright); }     // label names
 
   // Output, errors
-  .go  { color: var(--text-secondary); }  // generic output
-  .ge  { font-style: italic; }            // generic emphasis
-  .gs  { font-weight: bold; }             // generic strong
-  .gr, .gt { color: var(--accent-red); }  // errors, tracebacks
-  .gd  { color: var(--accent-red); }      // diff deleted
-  .gi  { color: var(--accent-green); }    // diff inserted
-  .gh  { color: var(--text-bright); font-weight: 600; } // heading
-  .gu  { color: var(--accent-teal); }     // diff subheading
+  .go  { color: var(--text-secondary); }
+  .ge  { font-style: italic; }
+  .gs  { font-weight: bold; }
+  .gr, .gt { color: var(--accent-red); }
+  .gd  { color: var(--accent-red); background: oklch(0.25 0.08 25 / 0.15); }
+  .gi  { color: var(--accent-green); background: oklch(0.25 0.08 140 / 0.15); }
+  .gh  { color: var(--text-bright); font-weight: 600; }
+  .gu  { color: var(--accent-teal); }
 
   // Special
-  .w   { color: var(--text); }            // whitespace
-  .err { color: var(--accent-red); }      // lexer error
+  .w   { color: var(--text); }
+  .err { color: var(--accent-red); text-decoration: underline; text-decoration-color: oklch(0.62 0.18 25 / 0.4); }
 }
 
 // ─── Careers ─────────────────────────────────────────────────
@@ -3864,6 +3903,9 @@ h3:hover .heading-anchor {
   overflow-y: auto;
   padding: 2.5rem 1rem 2rem 0;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
 }
 
 .docs-toc-inner {

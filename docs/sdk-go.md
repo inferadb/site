@@ -217,10 +217,10 @@ client, err := inferadbtesting.NewInMemoryClient(
 ```go
 import inferadbtesting "github.com/inferadb/go/testing"
 
-vault, cleanup := inferadbtesting.NewTestVault(t, org,
+vault := inferadbtesting.NewTestVault(t, org,
     inferadbtesting.WithSchema(schemaIPL),
 )
-defer cleanup()
+// cleanup registered automatically via t.Cleanup
 ```
 
 ## Error Handling
@@ -249,10 +249,14 @@ if err != nil {
 ### net/http Middleware (Go 1.22+)
 
 ```go
+// Use a typed context key (defined in your middleware package)
+type ctxKey struct{}
+var UserIDKey = ctxKey{}
+
 func AuthorizationMiddleware(vault *inferadb.VaultClient) func(http.Handler) http.Handler {
     return func(next http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-            userID := r.Context().Value("user_id").(string)
+            userID, _ := r.Context().Value(UserIDKey).(string)
             docID := r.PathValue("id") // Go 1.22+ stdlib routing
 
             if err := vault.Require(r.Context(),

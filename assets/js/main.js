@@ -192,11 +192,11 @@ document.querySelectorAll('pre').forEach(function(pre) {
 
   // Get heading text without child elements (anchor links, etc.)
   function headingText(h) {
-    var text = '';
-    h.childNodes.forEach(function(n) {
-      if (n.nodeType === 3) text += n.textContent; // text nodes only
-    });
-    return text.trim();
+    // Clone the heading, remove any anchor links we added, then read text
+    var clone = h.cloneNode(true);
+    var anchors = clone.querySelectorAll('.heading-anchor');
+    anchors.forEach(function(a) { a.remove(); });
+    return clone.textContent.trim();
   }
 
   headings.forEach(function(h) {
@@ -234,7 +234,42 @@ document.querySelectorAll('pre').forEach(function(pre) {
   headings.forEach(function(h) { observer.observe(h); });
 })();
 
-// 2. Copy-to-clipboard on code blocks
+// 2. Language labels on code blocks
+(function() {
+  var langNames = {
+    'rust': 'Rust', 'go': 'Go', 'python': 'Python', 'java': 'Java',
+    'typescript': 'TypeScript', 'javascript': 'JavaScript', 'ts': 'TypeScript',
+    'js': 'JavaScript', 'csharp': 'C#', 'cs': 'C#', 'ruby': 'Ruby',
+    'php': 'PHP', 'elixir': 'Elixir', 'c': 'C', 'cpp': 'C++',
+    'bash': 'Shell', 'shell': 'Shell', 'sh': 'Shell', 'zsh': 'Shell',
+    'yaml': 'YAML', 'yml': 'YAML', 'json': 'JSON', 'toml': 'TOML',
+    'ini': 'TOML', 'sql': 'SQL', 'hcl': 'HCL', 'terraform': 'HCL',
+    'xml': 'XML', 'html': 'HTML', 'css': 'CSS', 'scss': 'SCSS',
+    'markdown': 'Markdown', 'md': 'Markdown', 'protobuf': 'Protobuf',
+    'proto': 'Protobuf', 'wat': 'WAT', 'plaintext': '',
+  };
+  document.querySelectorAll('.highlighter-rouge').forEach(function(block) {
+    var classes = block.className.split(' ');
+    var lang = '';
+    classes.forEach(function(cls) {
+      var match = cls.match(/^language-(.+)$/);
+      if (match) lang = match[1];
+    });
+    var name = langNames[lang];
+    if (name) {
+      var label = document.createElement('span');
+      label.className = 'code-lang';
+      label.textContent = name;
+      var pre = block.querySelector('pre');
+      if (pre) {
+        pre.style.position = 'relative';
+        pre.appendChild(label);
+      }
+    }
+  });
+})();
+
+// 3. Copy-to-clipboard on code blocks
 (function() {
   document.querySelectorAll('.docs-content pre, .post-body pre').forEach(function(pre) {
     var btn = document.createElement('button');

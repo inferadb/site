@@ -103,11 +103,11 @@ bool allowed = await vault.CheckAsync("user:alice", "can_view", "document:readme
 ### Batch Check
 
 ```csharp
-var results = await vault.CheckBatchAsync(new[]
-{
+var results = await vault.CheckBatchAsync(
+[
     new CheckRequest("user:alice", "can_edit", "document:readme"),
     new CheckRequest("user:bob", "can_view", "document:readme"),
-});
+]);
 if (results.AllAllowed)
 {
     // all checks passed
@@ -127,11 +127,11 @@ var token = await vault.Relationships.WriteAsync(
 ### Batch Write
 
 ```csharp
-await vault.Relationships.WriteBatchAsync(new[]
-{
+await vault.Relationships.WriteBatchAsync(
+[
     new Relationship("document:readme", "editor", "user:alice"),
     new Relationship("document:readme", "viewer", "user:bob"),
-});
+]);
 ```
 
 ### List
@@ -205,11 +205,11 @@ var client = InMemoryClient.WithSchemaAndData(
             relation can_view = viewer | editor
         }
         """,
-    data: new[]
-    {
+    data:
+    [
         new Relationship("document:readme", "editor", "user:alice"),
         new Relationship("document:readme", "viewer", "user:bob"),
-    });
+    ]);
 ```
 
 ### TestVault (Real Instance)

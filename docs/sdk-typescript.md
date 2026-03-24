@@ -177,11 +177,11 @@ const client = new MockClient()
   .onCheck("user:alice", "can_edit", "document:readme").allow()
   .onCheck("user:bob", "can_edit", "document:readme").deny()
   .onCheckAnySubject("can_view", "document:readme").allow()
-  .defaultDeny()
-  .verifyOnDrop(true);
-```
+  .defaultDeny();
 
-Setting `verifyOnDrop(true)` asserts that all registered expectations were invoked when the client is garbage collected — preventing silent untested assumptions.
+// Verify all expectations were met at end of test
+client.assertExpectations();
+```
 
 ### InMemoryClient (Full Policy Evaluation)
 

@@ -9,7 +9,7 @@ The official Rust SDK (`inferadb` crate) provides idiomatic bindings for all Inf
 
 ## Installation
 
-```toml
+```ini
 [dependencies]
 inferadb = "0.1"
 ```

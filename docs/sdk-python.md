@@ -191,11 +191,11 @@ client = (
     .on_check("user:bob", "can_edit", "document:readme").deny()
     .on_check_any_subject("can_view", "document:readme").allow()
     .default_deny()
-    .verify_on_drop(True)
 )
-```
 
-Setting `verify_on_drop(True)` asserts that all registered expectations were invoked when the client is garbage collected.
+# At end of test, verify all expectations were met
+client.assert_expectations()
+```
 
 ### InMemoryClient (Full Policy Evaluation)
 
@@ -233,21 +233,21 @@ vault = await TestVault.create(org, schema=schema_ipl)
 
 ```python
 import pytest
-import pytest_asyncio
 from inferadb.testing import InMemoryClient
 
-@pytest_asyncio.fixture
-async def authz():
+@pytest.fixture
+def authz():
     return InMemoryClient.with_schema_and_data(
         schema="...",
         data=[("document:readme", "editor", "user:alice")],
     )
 
-@pytest.mark.asyncio
 async def test_alice_can_edit(authz):
     vault = authz.organization("test").vault("test")
     assert await vault.check("user:alice", "can_edit", "document:readme")
 ```
+
+Requires `asyncio_mode = "auto"` in `pyproject.toml`.
 
 ## Error Handling
 

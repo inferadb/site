@@ -76,6 +76,12 @@ inferadb_client_free(client);
 
 ```c
 inferadb_vault_t *vault = inferadb_vault_open(client, "my-org", "production", &err);
+if (!vault) {
+    fprintf(stderr, "Failed to open vault: %s\n", inferadb_error_message(err));
+    inferadb_error_free(err);
+    inferadb_client_free(client);
+    return 1;
+}
 
 bool allowed = false;
 if (inferadb_check(vault, "user:alice", "can_edit", "document:readme",
@@ -146,7 +152,9 @@ inferadb_delete_relationship(vault,
 ### Error Handling
 
 ```c
+/* assumes vault from the Permission Checks example above */
 inferadb_error_t *err = NULL;
+bool allowed = false;
 
 if (inferadb_check(vault, "user:alice", "can_edit", "document:readme",
                    NULL, &allowed, &err) != INFERADB_OK) {

@@ -85,7 +85,9 @@ Configured via the application config above, or explicitly:
 ## Permission Checks
 
 ```elixir
-vault = InferaDB.organization(MyApp.InferaDB, "my-org") |> InferaDB.vault("production")
+vault =
+  InferaDB.organization(MyApp.InferaDB, "my-org")
+  |> InferaDB.vault("production")
 
 # Simple check — returns {:ok, true} or {:ok, false}
 {:ok, true} = InferaDB.check(vault, "user:alice", "can_edit", "document:readme")
@@ -132,7 +134,7 @@ InferaDB.require!(vault, "user:alice", "can_edit", "document:readme")
   {"user:bob", "can_view", "document:readme"},
 ])
 
-results.all_allowed? # => true/false
+InferaDB.all_allowed?(results) # => true/false
 ```
 
 ## Relationships
@@ -253,7 +255,9 @@ defmodule MyApp.DocumentAuthorizationTest do
       data: [%{resource: "document:readme", relation: "editor", subject: "user:alice"}]
     )
 
-    vault = InferaDB.organization(client, "test") |> InferaDB.vault("test")
+    vault =
+      InferaDB.organization(client, "test")
+      |> InferaDB.vault("test")
     %{vault: vault}
   end
 
@@ -300,8 +304,9 @@ defmodule MyAppWeb.Plugs.InferaDBAuthorize do
     permission = Keyword.fetch!(opts, :permission)
     resource_fn = Keyword.fetch!(opts, :resource)
 
-    vault = InferaDB.organization(MyApp.InferaDB, "my-org")
-           |> InferaDB.vault("production")
+    vault =
+      InferaDB.organization(MyApp.InferaDB, "my-org")
+      |> InferaDB.vault("production")
 
     user_id = conn.assigns.current_user.id
     resource = resource_fn.(conn)
@@ -342,8 +347,9 @@ defmodule MyAppWeb.DocumentLive.Show do
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
-    vault = InferaDB.organization(MyApp.InferaDB, "my-org")
-           |> InferaDB.vault("production")
+    vault =
+      InferaDB.organization(MyApp.InferaDB, "my-org")
+      |> InferaDB.vault("production")
 
     user_id = socket.assigns.current_user.id
 

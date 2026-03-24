@@ -4,12 +4,12 @@ title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works — InferaDB
 post_title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works"
 date: 2026-03-12
 category: practices
-description: "InferaDB's custom Rust B+ tree delivers 2.8µs p99 reads and 952K ops/sec with per-page AES-256-GCM encryption — 1,000x faster than PostgreSQL-backed alternatives."
+description: "InferaDB's custom Rust B+ tree delivers 2.8µs p99 reads and 952K ops/sec with per-page AES-256-GCM encryption — 1,000x faster than alternatives backed by general-purpose databases."
 authors:
   - Evan Sims
 ---
 
-**2.8 microseconds.** That is InferaDB's p99 read latency for a permission check — roughly the time it takes light to travel 840 meters. A typical authorization check through PostgreSQL? 5 to 50 milliseconds. That is not an incremental improvement. It is a **1,000x reduction** that moves authorization from a visible bottleneck to an invisible operation.
+**2.8 microseconds.** That is InferaDB's p99 read latency for a permission check — roughly the time it takes light to travel 840 meters. A typical authorization check through a general-purpose database? 5 to 50 milliseconds. That is not an incremental improvement. It is a **1,000x reduction** that moves authorization from a visible bottleneck to an invisible operation.
 
 We did not get there with off-the-shelf components.
 
@@ -62,9 +62,9 @@ The result of these design choices on our benchmark hardware:
 - **2.8µs p99 read latency**
 - **952,000 operations per second**
 
-For context, a PostgreSQL-backed authorization check takes 5 to 50 milliseconds depending on query complexity and cache state. That gap is the difference between authorization being a **measurable bottleneck** in your application and authorization being invisible.
+For context, an authorization check through a general-purpose database takes 5 to 50 milliseconds depending on query complexity and cache state. That gap is the difference between authorization being a **measurable bottleneck** in your application and authorization being invisible.
 
-At these speeds, you can run a permission check on every row in a 10,000-item list response and add less than 30 milliseconds to total request time. With PostgreSQL, that same operation could take 50 to 500 seconds.
+At these speeds, you can run a permission check on every row in a 10,000-item list response and add less than 30 milliseconds to total request time. With a general-purpose database, that same operation could take 50 to 500 seconds.
 
 ## What This Means for Your Architecture
 

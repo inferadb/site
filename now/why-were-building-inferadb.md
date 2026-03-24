@@ -19,17 +19,17 @@ Our team built [OpenFGA](https://openfga.dev) at Auth0, then continued the work 
 
 We saw what worked. More importantly, **we saw what didn't.**
 
-OpenFGA and systems like it were a real step forward in authorization modeling. But they all share the same architectural bottleneck: they're policy engines, not databases. They delegate storage to PostgreSQL or MySQL. They need external caching to hit acceptable latency. They implement multi-tenancy at the application level instead of the storage level.
+OpenFGA and systems like it were a real step forward in authorization modeling. But they all share the same architectural bottleneck: they're policy engines, not databases. They delegate storage to general-purpose databases. They need external caching to hit acceptable latency. They implement multi-tenancy at the application level instead of the storage level.
 
 These aren't minor implementation details. They're **hard ceilings on performance, security, and operational simplicity.**
 
-## The PostgreSQL Problem
+## The General-Purpose Database Problem
 
 Every authorization system on the market today sits on top of a general-purpose database. That means every permission check pays the overhead of query parsing, transaction isolation, and storage abstractions designed for workloads that look nothing like permission evaluation.
 
-A simple "can user X access resource Y" query should resolve in microseconds. **Through PostgreSQL, it takes 5-50 milliseconds.**
+A simple "can user X access resource Y" query should resolve in microseconds. **Through a general-purpose database, it takes 5-50 milliseconds.**
 
-Caching helps, but it introduces its own failure modes: stale permissions, invalidation bugs, and the fundamental tension between consistency and performance that Google's original Zanzibar paper called the "new enemy problem." When you revoke an admin's access, can you guarantee no replica serves a stale grant? With a cache layer sitting between your policy engine and PostgreSQL, the honest answer is no.
+Caching helps, but it introduces its own failure modes: stale permissions, invalidation bugs, and the fundamental tension between consistency and performance that Google's original Zanzibar paper called the "new enemy problem." When you revoke an admin's access, can you guarantee no replica serves a stale grant? With a cache layer sitting between your policy engine and a general-purpose database, the honest answer is no.
 
 Application-level multi-tenancy is worse. A single bug in tenant isolation logic can expose one customer's permissions to another. These aren't theoretical risks — they're the failure modes we observed repeatedly in production.
 
@@ -37,7 +37,7 @@ Application-level multi-tenancy is worse. A single bug in tenant isolation logic
 
 InferaDB is our answer. It's a **purpose-built authorization database** designed from first principles for the permission evaluation workload.
 
-We didn't start with PostgreSQL and optimize. We started with the question: what does a storage engine look like when it only needs to answer access control queries?
+We didn't start with an off-the-shelf database and optimize. We started with the question: what does a storage engine look like when it only needs to answer access control queries?
 
 Here's what we built:
 
@@ -50,7 +50,7 @@ This is not incremental improvement. It's a different category of infrastructure
 
 ## Why the Distinction Matters
 
-The problems we're solving — sub-microsecond latency, cryptographic tenant isolation, linearizable consistency, tamper-evident audit trails — **cannot be retrofitted** onto a system that delegates storage to PostgreSQL.
+The problems we're solving — sub-microsecond latency, cryptographic tenant isolation, linearizable consistency, tamper-evident audit trails — **cannot be retrofitted** onto a system that delegates storage to a general-purpose database.
 
 They require control over every layer of the stack: from the page layout on disk to the consensus protocol that replicates writes across nodes.
 
@@ -64,7 +64,7 @@ We're building the authorization layer that modern applications actually need: o
 
 ## Get Started
 
-If you're tired of duct-taping authorization onto PostgreSQL, we'd like to show you what purpose-built looks like.
+If you're tired of duct-taping authorization onto a general-purpose database, we'd like to show you what purpose-built looks like.
 
 - **Try it now**: [Quickstart Guide](/docs/quickstart)
 - **Star the repo**: [InferaDB on GitHub](https://github.com/inferadb/inferadb)

@@ -1,6 +1,6 @@
 - title: Purpose-Built Storage Engine
   icon: database
-  description: "Custom B+ tree in Rust with per-page envelope encryption, XXH3 checksums, and page-level locking. Not bolted onto PostgreSQL."
+  description: "Custom B+ tree in Rust with per-page envelope encryption, XXH3 checksums, and page-level locking. Not bolted onto a general-purpose database."
   highlight: "2.8µs p99 read latency"
 
 - title: Cryptographic Tenant Isolation

@@ -7,224 +7,27 @@ description: "InferaDB documentation — quickstart guides, API reference (REST,
 
 <nav class="docs-hub-tabs" aria-label="Documentation categories">
   <a href="#" class="active" data-filter="all">All</a>
-  <a href="#" data-filter="start">Getting Started</a>
-  <a href="#" data-filter="lang">Policy Language</a>
-  <a href="#" data-filter="api">APIs</a>
-  <a href="#" data-filter="sdk">SDKs</a>
-  <a href="#" data-filter="arch">Architecture</a>
-  <a href="#" data-filter="ops">Deploy &amp; Operate</a>
-  <a href="#" data-filter="sec">Security</a>
+  {% for group in site.data.docs_nav %}
+  <a href="#" data-filter="{{ group.filter }}">{{ group.tab | default: group.section }}</a>
+  {% endfor %}
 </nav>
 
 <div class="docs-hub">
-
-  <div class="docs-hub-section" data-section="start">
-    <div class="docs-hub-label"><span>SEC.01</span> Getting Started</div>
+  {% for group in site.data.docs_nav %}
+  <div class="docs-hub-section" data-section="{{ group.filter }}">
+    <div class="docs-hub-label"><span>{{ group.code }}</span> {{ group.section }}</div>
     <div class="card-grid">
-      <a href="/docs/quickstart" class="card">
-        <span class="card-label">Quickstart</span>
-        <h3 class="card-title">Quick Start</h3>
-        <p class="card-excerpt">Run InferaDB locally and make your first authorization check in under 5 minutes.</p>
+      {% for item in group.items %}
+      <a href="{{ item.url }}" class="card">
+        <h3 class="card-title">{{ item.title }}</h3>
+        {% if item.excerpt %}
+        <p class="card-excerpt">{{ item.excerpt }}</p>
+        {% endif %}
       </a>
-      <a href="/docs/concepts" class="card">
-        <span class="card-label">Concepts</span>
-        <h3 class="card-title">Core Concepts</h3>
-        <p class="card-excerpt">Entities, relationships, permissions, revision tokens, and multi-tenancy.</p>
-      </a>
-      <a href="/docs/dashboard" class="card">
-        <span class="card-label">Dashboard</span>
-        <h3 class="card-title">Dashboard</h3>
-        <p class="card-excerpt">Visual policy editor, relationship graph explorer, and decision simulator.</p>
-      </a>
+      {% endfor %}
     </div>
   </div>
-
-  <div class="docs-hub-section" data-section="lang">
-    <div class="docs-hub-label"><span>SEC.02</span> Policy Language</div>
-    <div class="card-grid">
-      <a href="/docs/ipl" class="card">
-        <span class="card-label">IPL</span>
-        <h3 class="card-title">IPL Overview</h3>
-        <p class="card-excerpt">Define entities, relationships, and permissions with the Infera Policy Language.</p>
-      </a>
-      <a href="/docs/ipl-reference" class="card">
-        <span class="card-label">Reference</span>
-        <h3 class="card-title">Schema Reference</h3>
-        <p class="card-excerpt">Complete syntax reference — keywords, expressions, evaluation semantics, and AST.</p>
-      </a>
-      <a href="/docs/wasm" class="card">
-        <span class="card-label">WASM</span>
-        <h3 class="card-title">WASM Modules</h3>
-        <p class="card-excerpt">Extend authorization with sandboxed WebAssembly for custom domain logic.</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="docs-hub-section" data-section="api">
-    <div class="docs-hub-label"><span>SEC.03</span> APIs</div>
-    <div class="card-grid">
-      <a href="/docs/api-rest" class="card">
-        <span class="card-label">Port 8080</span>
-        <h3 class="card-title">REST API</h3>
-        <p class="card-excerpt">JSON endpoints for checks, relationships, lookups, simulation, and watch streams.</p>
-      </a>
-      <a href="/docs/api-grpc" class="card">
-        <span class="card-label">Port 8081</span>
-        <h3 class="card-title">gRPC API</h3>
-        <p class="card-excerpt">Binary protocol with bidirectional streaming. 20–30% faster than REST.</p>
-      </a>
-      <a href="/docs/api-authzen" class="card">
-        <span class="card-label">AuthZEN</span>
-        <h3 class="card-title">AuthZEN API</h3>
-        <p class="card-excerpt">OpenID Foundation standardized authorization API for vendor-neutral interop.</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="docs-hub-section" data-section="sdk">
-    <div class="docs-hub-label"><span>SEC.04</span> SDKs</div>
-    <div class="card-grid">
-      <a href="/docs/sdk-rust" class="card">
-        <span class="card-label-active">Available</span>
-        <h3 class="card-title">Rust</h3>
-        <p class="card-excerpt">Type-safe, async-first client with MockClient and InMemoryClient for testing.</p>
-      </a>
-      <a href="/docs/sdk-typescript" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">TypeScript</h3>
-        <p class="card-excerpt">Node.js 18+ with Express and Next.js middleware integrations.</p>
-      </a>
-      <a href="/docs/sdk-go" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">Go</h3>
-        <p class="card-excerpt">Context-aware client with net/http middleware and gRPC interceptor.</p>
-      </a>
-      <a href="/docs/sdk-python" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">Python</h3>
-        <p class="card-excerpt">Async and sync clients with FastAPI and Django integrations.</p>
-      </a>
-      <a href="/docs/sdk-java" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">Java</h3>
-        <p class="card-excerpt">Fluent builder pattern with Spring Boot and Spring Security integration.</p>
-      </a>
-      <a href="/docs/sdk-dotnet" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">.NET</h3>
-        <p class="card-excerpt">ASP.NET Core authorization policies and dependency injection.</p>
-      </a>
-      <a href="/docs/sdk-php" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">PHP</h3>
-        <p class="card-excerpt">Laravel middleware, Gate integration, and Symfony Voter.</p>
-      </a>
-      <a href="/docs/sdk-ruby" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">Ruby</h3>
-        <p class="card-excerpt">Rails controller concern with initializer-based configuration.</p>
-      </a>
-      <a href="/docs/sdk-elixir" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">Elixir</h3>
-        <p class="card-excerpt">OTP supervision tree client with Phoenix Plug and LiveView.</p>
-      </a>
-      <a href="/docs/sdk-c" class="card">
-        <span class="card-label">Planned</span>
-        <h3 class="card-title">C/C++</h3>
-        <p class="card-excerpt">Stable C ABI with C++20 RAII wrapper. Built on Rust via cxx.</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="docs-hub-section" data-section="arch">
-    <div class="docs-hub-label"><span>SEC.05</span> Architecture</div>
-    <div class="card-grid">
-      <a href="/docs/architecture" class="card">
-        <span class="card-label">Overview</span>
-        <h3 class="card-title">System Overview</h3>
-        <p class="card-excerpt">Three services — Engine, Control, Ledger — and how they fit together.</p>
-      </a>
-      <a href="/docs/architecture-engine" class="card">
-        <span class="card-label">Data Plane</span>
-        <h3 class="card-title">Engine</h3>
-        <p class="card-excerpt">Authorization evaluation, graph traversal, caching, and WASM sandbox.</p>
-      </a>
-      <a href="/docs/architecture-control" class="card">
-        <span class="card-label">Control Plane</span>
-        <h3 class="card-title">Control</h3>
-        <p class="card-excerpt">Tenant administration, authentication, token issuance, and audit logs.</p>
-      </a>
-      <a href="/docs/architecture-ledger" class="card">
-        <span class="card-label">Storage</span>
-        <h3 class="card-title">Ledger</h3>
-        <p class="card-excerpt">Per-vault blockchain, Raft consensus, Merkle proofs, and B+ tree storage.</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="docs-hub-section" data-section="ops">
-    <div class="docs-hub-label"><span>SEC.06</span> Deploy &amp; Operate</div>
-    <div class="card-grid">
-      <a href="/docs/deploy-local" class="card">
-        <span class="card-label">Local</span>
-        <h3 class="card-title">Local Development</h3>
-        <p class="card-excerpt">Start a complete stack with inferadb dev start.</p>
-      </a>
-      <a href="/docs/deploy-docker" class="card">
-        <span class="card-label">Container</span>
-        <h3 class="card-title">Docker</h3>
-        <p class="card-excerpt">Container images, configuration, and compose setups.</p>
-      </a>
-      <a href="/docs/deploy-kubernetes" class="card">
-        <span class="card-label">Orchestration</span>
-        <h3 class="card-title">Kubernetes</h3>
-        <p class="card-excerpt">Helm charts, multi-region, Talos Linux, and Cilium networking.</p>
-      </a>
-      <a href="/docs/configuration" class="card">
-        <span class="card-label">Config</span>
-        <h3 class="card-title">Configuration</h3>
-        <p class="card-excerpt">Environment variables, YAML config, and CLI flags for all services.</p>
-      </a>
-      <a href="/docs/observability" class="card">
-        <span class="card-label">Telemetry</span>
-        <h3 class="card-title">Observability</h3>
-        <p class="card-excerpt">Prometheus metrics, OpenTelemetry tracing, structured logging.</p>
-      </a>
-      <a href="/docs/terraform" class="card">
-        <span class="card-label">IaC</span>
-        <h3 class="card-title">Terraform</h3>
-        <p class="card-excerpt">Manage organizations, vaults, clients, and teams as code.</p>
-      </a>
-      <a href="/docs/cli" class="card">
-        <span class="card-label">CLI</span>
-        <h3 class="card-title">CLI Reference</h3>
-        <p class="card-excerpt">Check permissions, manage schemas, simulate access, and run diagnostics.</p>
-      </a>
-    </div>
-  </div>
-
-  <div class="docs-hub-section" data-section="sec">
-    <div class="docs-hub-label"><span>SEC.07</span> Security &amp; Compliance</div>
-    <div class="card-grid">
-      <a href="/docs/security" class="card">
-        <span class="card-label">Threat Model</span>
-        <h3 class="card-title">Security Model</h3>
-        <p class="card-excerpt">Zero-trust architecture, threat model, and defense in depth.</p>
-      </a>
-      <a href="/docs/authentication" class="card">
-        <span class="card-label">AuthN</span>
-        <h3 class="card-title">Authentication</h3>
-        <p class="card-excerpt">JWT, Ed25519, WebAuthn, OAuth, PKCE, and JWKS caching.</p>
-      </a>
-      <a href="/docs/compliance" class="card">
-        <span class="card-label">Regulatory</span>
-        <h3 class="card-title">Compliance</h3>
-        <p class="card-excerpt">SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, and EU AI Act mapping.</p>
-      </a>
-    </div>
-  </div>
-
+  {% endfor %}
 </div>
 
 <script>

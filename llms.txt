@@ -4,7 +4,7 @@
 
 InferaDB is pre-revenue, under active development. The managed cloud service is not yet available. The open source core is functional.
 
-Key differentiators: purpose-built storage engine (not PostgreSQL), cryptographic per-vault tenant isolation (AES-256-GCM), tamper-proof audit trail (per-vault blockchain with Merkle proof verification), Raft consensus for distributed consistency, sub-microsecond read latency (2.8µs p99, 952K ops/sec).
+Key differentiators: purpose-built storage engine (not a general-purpose database), cryptographic per-vault tenant isolation (AES-256-GCM), tamper-proof audit trail (per-vault blockchain with Merkle proof verification), Raft consensus for distributed consistency, sub-microsecond read latency (2.8µs p99, 952K ops/sec).
 
 ## Docs
 

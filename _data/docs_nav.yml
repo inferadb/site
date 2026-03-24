@@ -1,91 +1,138 @@
 - section: Getting Started
+  filter: start
+  code: "SEC.01"
   items:
     - title: What is InferaDB?
       url: /docs/overview
+      excerpt: "Understand InferaDB's approach to authorization — graph-based, Zanzibar-inspired, cryptographically verifiable."
     - title: Quick Start
       url: /docs/quickstart
+      excerpt: "Run InferaDB locally and make your first authorization check in under 5 minutes."
     - title: Core Concepts
       url: /docs/concepts
+      excerpt: "Entities, relationships, permissions, revision tokens, and multi-tenancy."
+    - title: Dashboard
+      url: /docs/dashboard
+      excerpt: "Visual policy editor, relationship graph explorer, and decision simulator."
 
 - section: Policy Language
+  filter: lang
+  code: "SEC.02"
   items:
     - title: IPL Overview
       url: /docs/ipl
+      excerpt: "Define entities, relationships, and permissions with the Infera Policy Language."
     - title: Schema Reference
       url: /docs/ipl-reference
+      excerpt: "Complete syntax reference — keywords, expressions, evaluation semantics, and AST."
     - title: WASM Modules
       url: /docs/wasm
+      excerpt: "Extend authorization with sandboxed WebAssembly for custom domain logic."
 
 - section: API Reference
+  filter: api
+  code: "SEC.03"
+  tab: APIs
   items:
     - title: REST API
       url: /docs/api-rest
+      excerpt: "JSON endpoints for checks, relationships, lookups, simulation, and watch streams."
     - title: gRPC API
       url: /docs/api-grpc
+      excerpt: "Binary protocol with bidirectional streaming. 20–30% faster than REST."
     - title: AuthZEN API
       url: /docs/api-authzen
+      excerpt: "OpenID Foundation standardized authorization API for vendor-neutral interop."
 
-- section: Developer Tools
+- section: SDKs
+  filter: sdk
+  code: "SEC.04"
   items:
-    - title: CLI
-      url: /docs/cli
     - title: Rust SDK
       url: /docs/sdk-rust
+      excerpt: "Type-safe, async-first client with MockClient and InMemoryClient for testing."
     - title: TypeScript SDK
       url: /docs/sdk-typescript
+      excerpt: "Node.js 18+ with Express and Next.js middleware integrations."
     - title: Go SDK
       url: /docs/sdk-go
+      excerpt: "Context-aware client with net/http middleware and gRPC interceptor."
     - title: Python SDK
       url: /docs/sdk-python
+      excerpt: "Async and sync clients with FastAPI and Django integrations."
     - title: Java SDK
       url: /docs/sdk-java
+      excerpt: "Fluent builder pattern with Spring Boot and Spring Security integration."
     - title: .NET SDK
       url: /docs/sdk-dotnet
+      excerpt: "ASP.NET Core authorization policies and dependency injection."
     - title: PHP SDK
       url: /docs/sdk-php
+      excerpt: "Laravel middleware, Gate integration, and Symfony Voter."
     - title: Ruby SDK
       url: /docs/sdk-ruby
+      excerpt: "Rails controller concern with initializer-based configuration."
     - title: Elixir SDK
       url: /docs/sdk-elixir
+      excerpt: "OTP supervision tree client with Phoenix Plug and LiveView."
     - title: C/C++ SDK
       url: /docs/sdk-c
-    - title: Terraform Provider
-      url: /docs/terraform
-    - title: Dashboard
-      url: /docs/dashboard
+      excerpt: "Stable C ABI with C++20 RAII wrapper. Built on Rust via cxx."
 
 - section: Architecture
+  filter: arch
+  code: "SEC.05"
   items:
     - title: System Overview
       url: /docs/architecture
+      excerpt: "Three services — Engine, Control, Ledger — and how they fit together."
     - title: Engine
       url: /docs/architecture-engine
+      excerpt: "Authorization evaluation, graph traversal, caching, and WASM sandbox."
     - title: Control Plane
       url: /docs/architecture-control
+      excerpt: "Tenant administration, authentication, token issuance, and audit logs."
     - title: Ledger
       url: /docs/architecture-ledger
+      excerpt: "Per-vault blockchain, Raft consensus, Merkle proofs, and B+ tree storage."
 
-- section: Deployment
+- section: Deploy & Operate
+  filter: ops
+  code: "SEC.06"
   items:
     - title: Local Development
       url: /docs/deploy-local
+      excerpt: "Start a complete stack with inferadb dev start."
     - title: Docker
       url: /docs/deploy-docker
+      excerpt: "Container images, configuration, and compose setups."
     - title: Kubernetes
       url: /docs/deploy-kubernetes
+      excerpt: "Helm charts, multi-region, Talos Linux, and Cilium networking."
+    - title: Configuration
+      url: /docs/configuration
+      excerpt: "Environment variables, YAML config, and CLI flags for all services."
+    - title: Observability
+      url: /docs/observability
+      excerpt: "Prometheus metrics, OpenTelemetry tracing, structured logging."
+    - title: Terraform Provider
+      url: /docs/terraform
+      excerpt: "Manage organizations, vaults, clients, and teams as code."
+    - title: CLI Reference
+      url: /docs/cli
+      excerpt: "Check permissions, manage schemas, simulate access, and run diagnostics."
 
 - section: Security & Compliance
+  filter: sec
+  code: "SEC.07"
+  tab: Security
   items:
     - title: Security Model
       url: /docs/security
+      excerpt: "Zero-trust architecture, threat model, and defense in depth."
     - title: Authentication
       url: /docs/authentication
+      excerpt: "JWT, Ed25519, WebAuthn, OAuth, PKCE, and JWKS caching."
     - title: Compliance
       url: /docs/compliance
-
-- section: Operations
-  items:
-    - title: Configuration
-      url: /docs/configuration
-    - title: Observability
-      url: /docs/observability
+      excerpt: "SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, and EU AI Act mapping."

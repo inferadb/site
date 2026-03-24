@@ -39,9 +39,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
 <section class="credibility">
     <div class="container">
         <div class="credibility-grid" data-reveal="fade">
-            <span class="credibility-value"
-                >From the engineers behind OpenFGA</span
-            >
+            <span class="credibility-value">From the engineers behind OpenFGA</span>
             <span class="credibility-sep">//</span>
             <span class="credibility-value">Zanzibar-inspired</span>
             <span class="credibility-sep">//</span>
@@ -67,41 +65,35 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
         <div class="stats-grid">
             <div class="stat-card" data-reveal data-reveal-delay="0">
                 <span class="stat-number" data-decrypt-num="94%" data-decrypt-delay="0">94%</span>
-                <span class="stat-label"
-                    >of applications tested exhibit broken access control</span
-                >
+                <span class="stat-label">of applications tested exhibit broken access control</span>
                 <span class="stat-source">OWASP, 2021</span>
             </div>
             <div class="stat-card" data-reveal data-reveal-delay="80">
                 <span class="stat-number" data-decrypt-num="$4.88M" data-decrypt-delay="400">$4.88M</span>
-                <span class="stat-label"
-                    >average cost of a data breach globally in 2024</span
-                >
+                <span class="stat-label">average cost of a data breach globally in 2024</span>
                 <span class="stat-source">IBM / Ponemon</span>
             </div>
             <div class="stat-card" data-reveal data-reveal-delay="160">
                 <span class="stat-number" data-decrypt-num="6+" data-decrypt-delay="800">6+</span>
-                <span class="stat-label"
-                    >engineers dedicated to authorization at companies that
-                    build in-house</span
-                >
+                <span class="stat-label">engineers dedicated to authorization at companies that build in-house</span>
                 <span class="stat-source">~$900K/year</span>
             </div>
         </div>
     </div>
 </section>
 
-{% include section-break.html id="02" label="PERFORMANCE METRICS" %}
-<!-- Performance -->
+{% include section-break.html id="02" label="THE SOLUTION" %}
+<!-- Performance + How It Works (merged) -->
 <section class="performance" id="product">
     <div class="container">
         <div class="section-header" data-reveal>
             <h2>Not another policy engine</h2>
             <p>
-                Competitors bolt authorization onto PostgreSQL or embed it in
+                Competitors bolt authorization onto general-purpose databases or embed it in
                 your application. InferaDB is a purpose-built authorization
-                database. The performance difference is architectural, not
-                incremental.
+                database — custom storage engine, distributed consensus,
+                cryptographic audit trails. The performance difference is
+                architectural, not incremental.
             </p>
         </div>
         <div class="perf-grid">
@@ -127,26 +119,10 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
             </div>
         </div>
         <div class="perf-badge">
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-            >
-                <path
-                    d="M1 14.5C1 14.5 5.5 0.5 12 0.5C18.5 0.5 23 14.5 23 14.5"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                />
-                <circle
-                    cx="12"
-                    cy="17.5"
-                    r="5"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                />
-                <circle cx="12" cy="17.5" r="2" fill="currentColor" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M1 14.5C1 14.5 5.5 0.5 12 0.5C18.5 0.5 23 14.5 23 14.5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="12" cy="17.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+                <circle cx="12" cy="17.5" r="2" fill="currentColor"/>
             </svg>
             <span>Built in Rust for memory safety and performance</span>
         </div>
@@ -184,7 +160,6 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
   <span class="kw">relation</span> <span class="fn">viewer</span>: <span class="type">user</span> | <span class="type">team</span>#member
   <span class="kw">relation</span> <span class="fn">editor</span>: <span class="type">user</span>
   <span class="kw">relation</span> <span class="fn">owner</span>: <span class="type">user</span>
-  <span class="kw">attribute</span> <span class="fn">classification</span>: <span class="type">string</span>
 
   <span class="cm">// Combine relationships, attributes, and modules</span>
   <span class="kw">permission</span> <span class="fn">view</span> = viewer
@@ -230,122 +205,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
     </div>
 </section>
 
-{% include section-break.html id="03" label="SYSTEM ARCHITECTURE" %}
-<!-- Architecture -->
-<section class="architecture" id="architecture">
-    <div class="container">
-        <div class="section-header" data-reveal>
-            <h2>Three services, one system</h2>
-            <p>
-                A clean separation between authorization evaluation,
-                administration, and cryptographic storage. Each service is
-                independently deployable, scalable, and observable.
-            </p>
-        </div>
-        <div class="arch-cards">
-            <div class="arch-service" data-reveal>
-                <div class="arch-service-header">
-                    <span class="arch-service-badge engine">Data Plane</span>
-                    <h3>Engine <span class="status-dot" aria-hidden="true"></span></h3>
-                </div>
-                <p>
-                    The core authorization engine. Evaluates permission checks
-                    against the relationship graph with sub-microsecond latency.
-                    Co-locates computation with data in isolated PDP cells.
-                </p>
-                <ul class="arch-features">
-                    <li>REST &amp; gRPC APIs</li>
-                    <li>AuthZEN-compliant evaluation</li>
-                    <li>Graph-based permission resolution</li>
-                    <li>WASM policy sandbox</li>
-                    <li>In-process caching</li>
-                    <li>OpenTelemetry observability</li>
-                </ul>
-                <a
-                    href="https://github.com/inferadb/engine"
-                    class="arch-link"
-                    target="_blank"
-                    rel="noopener"
-                    >View on GitHub →</a
-                >
-            </div>
-            <div class="arch-service" data-reveal>
-                <div class="arch-service-header">
-                    <span class="arch-service-badge control"
-                        >Control Plane</span
-                    >
-                    <h3>Control <span class="status-dot" aria-hidden="true"></span></h3>
-                </div>
-                <p>
-                    Multi-tenant administration. Manages organizations, vaults,
-                    users, teams, and client credentials. Issues vault-scoped
-                    JWTs with refresh token rotation.
-                </p>
-                <ul class="arch-features">
-                    <li>Organization &amp; vault management</li>
-                    <li>WebAuthn passkey authentication</li>
-                    <li>Ed25519 client certificates</li>
-                    <li>RBAC: Owner → Admin → Member</li>
-                    <li>PKCE CLI authentication flow</li>
-                    <li>OAuth &amp; token issuance</li>
-                </ul>
-                <a
-                    href="https://github.com/inferadb/control"
-                    class="arch-link"
-                    target="_blank"
-                    rel="noopener"
-                    >View on GitHub →</a
-                >
-            </div>
-            <div class="arch-service" data-reveal>
-                <div class="arch-service-header">
-                    <span class="arch-service-badge ledger">Storage Layer</span>
-                    <h3>Ledger <span class="status-dot" aria-hidden="true"></span></h3>
-                </div>
-                <p>
-                    Distributed blockchain persistence. Every permission change
-                    is committed to a per-vault chain with Merkle proof
-                    verification. Raft consensus for immediate consistency.
-                </p>
-                <ul class="arch-features">
-                    <li>Per-vault blockchain</li>
-                    <li>Merkle proof verification</li>
-                    <li>Raft consensus replication</li>
-                    <li>AES-256-GCM envelope encryption</li>
-                    <li>Data residency enforcement</li>
-                    <li>Sub-millisecond B+ tree reads</li>
-                </ul>
-                <a
-                    href="https://github.com/inferadb/ledger"
-                    class="arch-link"
-                    target="_blank"
-                    rel="noopener"
-                    >View on GitHub →</a
-                >
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Differentiators -->
-<section class="differentiators">
-    <div class="container">
-        <div class="section-header" data-reveal>
-            <h2>What makes InferaDB different</h2>
-        </div>
-        <div class="diff-grid">
-            {% for feature in site.data.features %}
-            <div class="diff-card" data-reveal>
-                <div class="diff-highlight">{{ feature.highlight }}</div>
-                <h3>{{ feature.title }}</h3>
-                <p>{{ feature.description }}</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-{% include section-break.html id="04" label="DEPLOYMENT SCENARIOS" %}
+{% include section-break.html id="03" label="USE CASES" %}
 <!-- Use Cases -->
 <section class="use-cases">
     <div class="container">
@@ -355,17 +215,9 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
         <div class="uc-grid">
             <div class="uc-card" data-reveal>
                 <span class="uc-icon">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        aria-hidden="true"
-                    >
-                        <rect x="2" y="3" width="20" height="14" rx="2" />
-                        <path d="M8 21h8M12 17v4" />
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <path d="M8 21h8M12 17v4"/>
                     </svg>
                 </span>
                 <h3>Multi-Tenant SaaS</h3>
@@ -384,18 +236,8 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
             </div>
             <div class="uc-card" data-reveal>
                 <span class="uc-icon">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
-                        />
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
                     </svg>
                 </span>
                 <h3>Compliance &amp; Regulation</h3>
@@ -414,22 +256,10 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
             </div>
             <div class="uc-card" data-reveal>
                 <span class="uc-icon">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M12 2a4 4 0 0 0-4 4c0 2 1.5 3.5 4 5 2.5-1.5 4-3 4-5a4 4 0 0 0-4-4z"
-                        />
-                        <path
-                            d="M4.5 15.5C2.5 16.5 1 18 1 20h22c0-2-1.5-3.5-3.5-4.5"
-                        />
-                        <circle cx="12" cy="17" r="3" />
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                        <path d="M12 2a4 4 0 0 0-4 4c0 2 1.5 3.5 4 5 2.5-1.5 4-3 4-5a4 4 0 0 0-4-4z"/>
+                        <path d="M4.5 15.5C2.5 16.5 1 18 1 20h22c0-2-1.5-3.5-3.5-4.5"/>
+                        <circle cx="12" cy="17" r="3"/>
                     </svg>
                 </span>
                 <h3>AI Agent Authorization</h3>
@@ -450,47 +280,15 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
     </div>
 </section>
 
-<!-- Compliance -->
-<section class="compliance">
-    <div class="container">
-        <div class="compliance-inner" data-reveal>
-            <div class="compliance-text">
-                <h2>Compliance by design</h2>
-                <p>
-                    Every authorization decision is revision-tracked,
-                    cryptographically signed, and replayable. Audit logs are
-                    append-only and hash-chained. Any historical decision can be
-                    independently verified by specifying its revision token.
-                </p>
-                <p class="compliance-detail">
-                    The EU is converging on mandatory fine-grained access
-                    controls: NIS2 (effective 2024), DORA (effective 2025), and
-                    the EU AI Act (high-risk provisions 2026–2027) all require
-                    precisely what InferaDB provides.
-                </p>
-            </div>
-            <div class="compliance-badges">
-                <div class="compliance-badge-item"><span>SOC 2</span></div>
-                <div class="compliance-badge-item"><span>HIPAA</span></div>
-                <div class="compliance-badge-item"><span>GDPR</span></div>
-                <div class="compliance-badge-item"><span>PCI DSS</span></div>
-                <div class="compliance-badge-item"><span>NIS2</span></div>
-                <div class="compliance-badge-item"><span>DORA</span></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{% include section-break.html id="05" label="DEVELOPER INTERFACE" %}
+{% include section-break.html id="04" label="DEVELOPER EXPERIENCE" %}
 <!-- Developer Experience -->
 <section class="devex" id="developers">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>Developer experience that doesn't get in the way</h2>
+            <h2>Integrate in minutes, not months</h2>
             <p>
-                Integrate in under 30 minutes. Branch, test, and merge policies
-                like code. SDKs for every major language. Infrastructure as code
-                from day one.
+                REST and gRPC APIs. SDKs for every major language. Branch, test,
+                and merge policies like code. Infrastructure as code from day one.
             </p>
         </div>
         <div class="devex-grid">
@@ -565,22 +363,21 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                 <h4>Dashboard</h4>
                 <p>
                     Visual policy editor, relationship graph explorer, decision
-                    simulator, and audit log viewer. Design policies without
-                    writing code.
+                    simulator, and audit log viewer.
                 </p>
             </div>
             <div class="devex-extra" data-reveal>
                 <h4>Terraform Provider</h4>
                 <p>
                     Manage organizations, vaults, clients, teams, and grants as
-                    infrastructure as code. Published in the Terraform registry.
+                    infrastructure as code.
                 </p>
             </div>
             <div class="devex-extra" data-reveal>
                 <h4>Framework Integrations</h4>
                 <p>
-                    Middleware for Axum, Actix-web, Next.js, Rails, Django,
-                    Spring, Express, and GraphQL. Coming in 2026.
+                    Express, Next.js, Rails, Django, Spring, FastAPI, Phoenix,
+                    Axum, and more.
                 </p>
             </div>
         </div>
@@ -596,8 +393,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                 <h3>Community Edition</h3>
                 <p>
                     The full authorization engine, dual-licensed MIT and Apache
-                    2.0. Run it yourself on any infrastructure. Self-host with
-                    complete control over your data and deployment.
+                    2.0. Run it yourself on any infrastructure.
                 </p>
                 <ul>
                     <li>Core authorization engine</li>
@@ -616,14 +412,13 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                     Explore on GitHub
                 </a>
             </div>
-            <div class="oss-card oss-card-cloud">
+            <div class="oss-card oss-card-cloud" data-reveal>
                 <div class="oss-card-badge">Managed Service</div>
                 <h3>InferaDB Cloud</h3>
                 <p>
                     Everything in the open source edition, plus managed
                     infrastructure, multi-tenant isolation, cryptographic audit
-                    trails, SLAs, and compliance reporting. Sign up and
-                    integrate in minutes.
+                    trails, SLAs, and compliance reporting.
                 </p>
                 <ul>
                     <li>Everything in Community Edition</li>
@@ -633,9 +428,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                     <li>SLA guarantees and priority support</li>
                     <li>Compliance reporting (SOC 2, HIPAA, GDPR)</li>
                 </ul>
-                <a href="/waitlist" class="btn btn-primary"
-                    >Join the Waitlist</a
-                >
+                <a href="/waitlist" class="btn btn-primary">Join the Waitlist</a>
             </div>
         </div>
     </div>
@@ -648,7 +441,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
             <div class="cta-glow"></div>
             <p class="cta-eyebrow">Ready to rethink authorization?</p>
             <h2>
-                Stop building permissions.<br />Start shipping
+                Stop building permissions.<br/>Start shipping
                 <span class="gradient-text">features</span>.
             </h2>
             <p>
@@ -656,9 +449,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                 with a single database that scales from day one.
             </p>
             <div class="cta-actions">
-                <a href="/waitlist" class="btn btn-primary btn-lg"
-                    >Get Early Access</a
-                >
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
                 <a href="/pricing" class="btn btn-ghost btn-lg">View Pricing</a>
             </div>
         </div>

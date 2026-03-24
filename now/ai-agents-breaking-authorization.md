@@ -13,7 +13,7 @@ authors:
 
 A single agent action — retrieving context, selecting tools, executing a multi-step workflow — can trigger **dozens of authorization checks in sequence**. The agent needs permission to access a knowledge base. Permission to read specific documents within it. Permission to invoke each tool in its chain. Permission to act on behalf of the user who started the request.
 
-At 5-50ms per check through a traditional authorization engine backed by PostgreSQL, that math gets ugly fast.
+At 5-50ms per check through a traditional authorization engine backed by a general-purpose database, that math gets ugly fast.
 
 ## The Latency Problem Nobody Talks About
 

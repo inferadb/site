@@ -540,7 +540,7 @@ section {
 // ─── Performance ─────────────────────────────────────────────
 
 .performance {
-  padding: 8rem 0;
+  padding: 7rem 0 4rem;
 }
 
 .perf-grid {
@@ -608,7 +608,7 @@ section {
 // ─── How it works ────────────────────────────────────────────
 
 .how-it-works {
-  padding: 6rem 0 7rem;
+  padding: 4rem 0 7rem;
 }
 
 .hiw-grid {
@@ -2156,6 +2156,8 @@ section {
   display: grid;
   grid-template-columns: 260px 1fr;
   min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
   padding-top: 3.5rem;
 }
 
@@ -2292,9 +2294,9 @@ section {
 }
 
 .docs-content {
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
-  min-width: 0; // prevent flex child from overflowing
+  min-width: 0;
   padding: 2.5rem 3rem 4rem;
   overflow-x: hidden;
 
@@ -3243,6 +3245,12 @@ section {
 }
 
 // ─── Responsive ──────────────────────────────────────────────
+
+@media (min-width: 1400px) {
+  .docs-layout { grid-template-columns: 280px 1fr; }
+  .docs-content { max-width: 1000px; padding: 2.5rem 4rem 4rem; }
+  .card-grid { grid-template-columns: repeat(4, 1fr); }
+}
 
 @media (max-width: 1024px) {
   .docs-layout { grid-template-columns: 220px 1fr; }

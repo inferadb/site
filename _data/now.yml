@@ -1,4 +1,12 @@
 # Posts — link to individual pages at /now/{slug}
+- title: "Google Zanzibar: The Authorization Model Behind Every Google Product"
+  date: 2026-03-24
+  category: practices
+  slug: google-zanzibar-authorization
+  excerpt: "Google built Zanzibar to check permissions 10 million times per second across Gmail, Drive, YouTube, and Cloud. Here's how it works, why ReBAC defeated RBAC, and why InferaDB takes Zanzibar further than open-source implementations can."
+  authors:
+    - Evan Sims
+
 - title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
   date: 2026-03-20
   category: news

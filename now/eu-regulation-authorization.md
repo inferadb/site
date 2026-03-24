@@ -81,7 +81,7 @@ And enforcement has teeth. Between NIS2's revenue-based fines, DORA's supervisor
 
 Most authorization systems can check permissions. Few can prove they did.
 
-Traditional approaches — role checks in application code, policy engines backed by PostgreSQL — can implement access control. But they can't produce the cryptographic proof that regulators increasingly demand.
+Traditional approaches — role checks in application code, policy engines backed by general-purpose databases — can implement access control. But they can't produce the cryptographic proof that regulators increasingly demand.
 
 **Append-only logs in a relational database aren't tamper-evident.** A database administrator can alter records. An attacker with write access can cover their tracks. When a regulator asks you to prove that an access log hasn't been modified, "trust us, it's append-only" is not a satisfying answer.
 

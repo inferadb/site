@@ -64,7 +64,7 @@ Three structural shifts make this moment distinct from anything the authorizatio
 
 **2. Zero-trust mandates are creating forced buyers.** NIS2, DORA, and the EU AI Act all require fine-grained, auditable access control. Enterprises that treated authorization as an afterthought now have regulatory deadlines.
 
-**3. The architectural ceiling is real.** Every existing authorization product is built on PostgreSQL. That works for demos and small deployments. It doesn't work at the scale and latency requirements that enterprise and AI workloads demand.
+**3. The architectural ceiling is real.** Every existing authorization product delegates storage to a general-purpose database. That works for demos and small deployments. It doesn't work at the scale and latency requirements that enterprise and AI workloads demand.
 
 ## The Investment Thesis
 

@@ -1,7 +1,7 @@
 - section: Getting Started
   items:
     - title: What is InferaDB?
-      url: /docs/
+      url: /docs/overview
     - title: Quick Start
       url: /docs/quickstart
     - title: Core Concepts

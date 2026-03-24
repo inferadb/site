@@ -15,5 +15,6 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - README.md
+  - CLAUDE.md
   - .jekyll-cache
   - vendor

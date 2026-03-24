@@ -25,6 +25,18 @@ if (toggle && links) {
   });
 }
 
+// Docs sidebar scroll persistence
+(function() {
+  var sidebar = document.querySelector('.docs-sidebar');
+  if (!sidebar) return;
+  var key = 'docs-sidebar-scroll';
+  var saved = sessionStorage.getItem(key);
+  if (saved) sidebar.scrollTop = parseInt(saved, 10);
+  sidebar.addEventListener('scroll', function() {
+    sessionStorage.setItem(key, sidebar.scrollTop);
+  }, { passive: true });
+})();
+
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="/#"]').forEach(link => {
   link.addEventListener('click', (e) => {

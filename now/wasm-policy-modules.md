@@ -4,18 +4,88 @@ title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language �
 post_title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
 date: 2026-03-01
 category: practices
+description: "InferaDB lets you write custom authorization logic in Rust, TypeScript, or any WASM-compatible language — sandboxed with strict resource limits and zero I/O access."
 authors:
   - Evan Sims
 ---
 
-Declarative authorization rules handle the vast majority of real-world access control requirements. Relationship-based checks, role hierarchies, attribute conditions — these patterns are well understood and can be expressed in a schema language without resorting to imperative code. But every authorization system eventually encounters a domain-specific requirement that does not fit neatly into a declarative model. Time-based access windows, geofencing, risk score thresholds, business-hours restrictions, escalation policies that depend on external state — these are the cases where teams either contort their schema into an unreadable mess or give up and move the logic into application code, where it becomes invisible to the authorization layer and impossible to audit centrally.
+What happens when your authorization logic does not fit into a declarative model? Time-based access windows. Geofencing. Risk score thresholds. Business-hours restrictions. Escalation policies that depend on external state. These are the cases where teams either **contort their schema into an unreadable mess** or move the logic into application code — where it becomes invisible to the authorization layer and impossible to audit.
 
-InferaDB solves this with WebAssembly policy modules. Developers write custom authorization logic in any language that compiles to WASM — Rust, Go, C, AssemblyScript, or any of the dozens of languages with WASM targets — and deploy the compiled module to InferaDB. The module is invoked during policy evaluation whenever a rule references it via the `module()` expression in the Infera Policy Language. For example, a policy might declare that access to a resource requires both a `viewer` relationship and a passing result from a `business_hours` WASM module. The declarative relationship check and the imperative WASM evaluation are composed in the same policy, evaluated in the same request, and recorded in the same audit trail.
+InferaDB gives you a third option: **write it in any language, deploy it as a WebAssembly module, and run it inside the authorization engine itself.**
 
-The execution environment is built on Wasmtime with the Cranelift JIT compiler, chosen for its mature security model and predictable performance characteristics. Every module execution is sandboxed with strict resource limits. The default execution timeout is 100 milliseconds, configurable up to a maximum of 5 seconds. Memory is capped at 10 megabytes by default, with a hard maximum of 256 megabytes. An instruction fuel limit of 1 million operations prevents infinite loops and algorithmic complexity attacks. Critically, WASM modules have no access to I/O, the network, or the filesystem. They cannot make HTTP requests, read environment variables, or access any state beyond what the host explicitly provides. Each invocation runs in an isolated Wasmtime store that is created for the request and destroyed after execution, ensuring that no state leaks between evaluations.
+## How It Works
 
-The module interface is deliberately minimal. A conforming module exports a single function: `check() -> i32`, which returns 0 for deny and 1 for allow. The host provides a single function to the module: `log(ptr, len)`, which allows the module to emit structured log entries that are captured in the authorization evaluation trace. Input data — the subject, resource, action, and any contextual attributes — is passed to the module via a shared memory region that the host populates before invocation. This minimal interface reduces the attack surface and makes modules easy to write, test, and reason about. A business-hours check module might be thirty lines of Rust that reads a timezone attribute from the input, computes the current local time, and returns 1 if the time falls within the configured window.
+Developers write custom authorization logic in any language that compiles to WASM — **Rust, TypeScript, AssemblyScript, C, Go**, or any of the dozens of languages with WASM targets. The compiled module is deployed to InferaDB and invoked during policy evaluation via the `module()` expression in the Infera Policy Language.
 
-The security model is layered. At the language level, WASM's linear memory model prevents buffer overflows and pointer arithmetic exploits. At the runtime level, Wasmtime's sandbox enforces resource limits and prevents host access. At the system level, InferaDB validates modules at upload time, rejecting any module that imports unauthorized host functions or exceeds size limits. Modules are deterministic by construction — given the same inputs, they must produce the same output — which means they can be safely cached, replayed during audit, and evaluated on any node in the cluster with identical results. This determinism guarantee is essential for a distributed authorization system where the same policy evaluation might execute on different nodes depending on load balancing and leader elections.
+A policy might declare that access to a resource requires both a `viewer` relationship AND a passing result from a `business_hours` WASM module. The declarative relationship check and the imperative WASM evaluation are **composed in the same policy**, evaluated in the same request, and recorded in the same audit trail.
 
-Integration with the Infera Policy Language is seamless. The `module("name")` expression can appear anywhere a boolean condition is expected in a policy rule. It composes with union, intersection, and exclusion operators, meaning developers can write rules like "users who have the `editor` role AND pass the `risk_score` module, EXCLUDING users flagged by the `sanctions_check` module." The evaluation engine handles module invocations as leaf nodes in the policy evaluation tree, executing them in parallel with other branches where data dependencies allow. This means that adding a WASM module to a policy does not serialize the entire evaluation — the relationship traversals and other declarative checks proceed concurrently while the module executes in its sandbox.
+No sidecar. No external policy engine. No network hop.
+
+## The Sandbox: Strict by Design
+
+The execution environment is built on **Wasmtime with the Cranelift JIT compiler**, chosen for its mature security model and predictable performance. Every module execution is sandboxed with hard resource limits:
+
+| Resource | Default | Maximum |
+|---|---|---|
+| Execution timeout | 100ms | 5s |
+| Memory | 10MB | 256MB |
+| Instruction fuel | 1M operations | — |
+
+Critically, WASM modules have **no access to I/O, the network, or the filesystem**. They cannot make HTTP requests, read environment variables, or access any state beyond what the host explicitly provides. Each invocation runs in an isolated Wasmtime store that is created for the request and destroyed after execution — **no state leaks between evaluations**.
+
+The instruction fuel limit prevents infinite loops and algorithmic complexity attacks. If a module exceeds its fuel budget, execution halts immediately with a deny result.
+
+## A Minimal, Auditable Interface
+
+The module contract is deliberately simple:
+
+**Module exports:**
+- `check() -> i32` — returns `0` for deny, `1` for allow
+
+**Host provides:**
+- `log(ptr, len)` — emit structured log entries captured in the evaluation trace
+
+Input data — the subject, resource, action, and contextual attributes — is passed via a shared memory region that the host populates before invocation. That is the entire interface.
+
+This minimalism is intentional. A business-hours check might be **thirty lines of Rust** that reads a timezone attribute, computes the current local time, and returns `1` if the time falls within the configured window. Simple to write, simple to test, simple to audit.
+
+## Layered Security Model
+
+Security is enforced at every level of the stack:
+
+**Language level.** WASM's linear memory model prevents buffer overflows and pointer arithmetic exploits. There is no `unsafe` memory access — the runtime enforces bounds checking on every memory operation.
+
+**Runtime level.** Wasmtime's sandbox enforces resource limits and prevents unauthorized host access. A module cannot call any function the host has not explicitly exported.
+
+**System level.** InferaDB validates modules at upload time, rejecting any module that imports unauthorized host functions or exceeds size limits. Malformed modules never reach the execution path.
+
+**Determinism guarantee.** Given the same inputs, a module must produce the same output. This means modules can be safely **cached, replayed during audit, and evaluated on any node** in the cluster with identical results. In a distributed authorization system where the same evaluation might execute on different nodes, determinism is not optional — it is a correctness requirement.
+
+## Composing WASM with Declarative Policy
+
+Integration with IPL is seamless. The `module("name")` expression can appear **anywhere a boolean condition is expected** in a policy rule. It composes with all IPL operators:
+
+```
+// Users with editor role who pass risk scoring,
+// excluding sanctioned users
+relation can_edit = editor & module("risk_score") - module("sanctions_check")
+```
+
+The evaluation engine handles module invocations as **leaf nodes in the policy evaluation tree**, executing them in parallel with other branches where data dependencies allow. Adding a WASM module to a policy does not serialize the entire evaluation — relationship traversals and other declarative checks proceed concurrently while the module runs in its sandbox.
+
+This means you get the **expressiveness of imperative code** with the **composability of declarative policy** — without sacrificing performance or auditability.
+
+## When to Use WASM Modules
+
+WASM modules are the right tool when your authorization logic depends on **runtime context that cannot be modeled as a relationship or attribute**:
+
+- **Time-based access:** Business hours, maintenance windows, time-limited grants
+- **Risk scoring:** Dynamic risk assessment based on request context
+- **Compliance checks:** Sanctions screening, geographic restrictions, regulatory holds
+- **Custom business logic:** Organization-specific rules that do not generalize
+
+For everything else — role hierarchies, relationship traversals, attribute conditions — the declarative IPL is faster, simpler, and easier to analyze statically. Use WASM for the 5% of logic that truly needs imperative code.
+
+---
+
+Want to write your first policy module? **[Follow the WASM quickstart guide](/docs/quickstart)** to deploy a module in under five minutes.

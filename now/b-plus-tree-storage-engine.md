@@ -4,16 +4,74 @@ title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works — InferaDB
 post_title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works"
 date: 2026-03-12
 category: practices
+description: "InferaDB's custom Rust B+ tree delivers 2.8µs p99 reads and 952K ops/sec with per-page AES-256-GCM encryption — 1,000x faster than PostgreSQL-backed alternatives."
 authors:
   - Evan Sims
 ---
 
-The storage engine is the most performance-critical component of any database, and for an authorization database, the constraints are extreme. Permission checks sit in the hot path of every API request, every page load, every agent action. They must be fast enough to be invisible. Our target was sub-microsecond median latency with single-digit microsecond p99, sustained across hundreds of thousands of concurrent operations. We benchmarked the alternatives — PostgreSQL, MySQL, SQLite, RocksDB, LMDB — and found that none of them could meet these requirements for our specific workload. General-purpose databases pay overhead for features that authorization does not need: query parsing, transaction isolation, schema flexibility, multi-statement transactions. We needed a storage engine designed exclusively for the authorization access pattern: point lookups, range scans over relationship tuples, and append-only writes serialized through Raft consensus.
+**2.8 microseconds.** That is InferaDB's p99 read latency for a permission check — roughly the time it takes light to travel 840 meters. A typical authorization check through PostgreSQL? 5 to 50 milliseconds. That is not an incremental improvement. It is a **1,000x reduction** that moves authorization from a visible bottleneck to an invisible operation.
 
-We built a custom B+ tree in Rust, optimized for the authorization workload from the page layout up. The engine manages 21 fixed tables that cover every data structure InferaDB needs: relationship tuples, type definitions, changelog entries, vault metadata, and more. Because all writes are serialized through the Raft log, the storage engine operates as a single-writer system. This is a significant simplification — there is no need for multi-version concurrency control, write-ahead logging for crash recovery (the Raft log serves that purpose), or lock managers. Reads are lock-free and can proceed concurrently without coordination. The single-writer model is not a limitation; it is a deliberate architectural choice that eliminates an entire class of complexity and overhead.
+We did not get there with off-the-shelf components.
 
-The key format encodes tenant isolation directly into the storage layer. Every key is prefixed with a vault ID (8 bytes) followed by a bucket ID (1 byte) that identifies the table, then the local key specific to that table. This layout means that all data for a single tenant is physically co-located on disk, which optimizes range scans for relationship traversal, and that cross-tenant data access requires constructing a key with a different vault prefix, which the storage engine can reject structurally rather than through application-level checks. Each page is independently encrypted with AES-256-GCM envelope encryption and verified with XXH3 checksums on every read. Corruption is detected at the page level before any data is returned to the query layer.
+## Why We Built a Custom Storage Engine
 
-The caching architecture operates in two layers. The first layer caches deserialized B+ tree pages in memory, avoiding repeated disk reads and deserialization for hot pages. The second layer caches the results of complete authorization evaluations — the fully resolved answer to "can user X perform action Y on resource Z" — keyed by the query parameters and the current revision token. This two-layer approach means that repeated checks against the same permission (common in list-filtering scenarios where many items share the same access policy) resolve from the evaluation cache without touching the tree at all, while novel queries that miss the evaluation cache still benefit from the page cache for the underlying tree traversal.
+Permission checks sit in the **hot path of every API request**, every page load, every agent action. They must be fast enough to be invisible. We benchmarked the alternatives — PostgreSQL, MySQL, SQLite, RocksDB, LMDB — and none met our requirements for the authorization workload.
 
-All I/O operations use position-based system calls — pread and pwrite on Unix — which allow the engine to read and write specific byte ranges without maintaining file position state or holding file descriptor locks. Combined with the single-writer model, this means that read operations never block on writes and never contend for I/O resources. The result is 2.8 microsecond p99 read latency and 952,000 operations per second on our benchmark hardware. For context, a typical authorization check through a PostgreSQL-backed engine takes 5 to 50 milliseconds depending on query complexity and cache state. That is not a difference in degree — it is a difference in kind. It is the difference between authorization being a measurable bottleneck in your application and authorization being invisible.
+General-purpose databases pay overhead for features authorization does not need: query parsing, transaction isolation, schema flexibility, multi-statement transactions. We needed an engine designed exclusively for the authorization access pattern: **point lookups, range scans over relationship tuples, and append-only writes** serialized through Raft consensus.
+
+So we built one from scratch in Rust.
+
+## The Architecture: 21 Tables, Zero MVCC
+
+InferaDB's B+ tree manages **21 fixed tables** covering every data structure the system needs: relationship tuples, type definitions, changelog entries, vault metadata, and more. The table set is fixed at compile time, which eliminates the overhead of dynamic schema management.
+
+Because all writes are serialized through the Raft log, the storage engine operates as a **single-writer system**. This is not a limitation — it is a deliberate architectural choice that eliminates an entire class of complexity. There is no need for multi-version concurrency control, no write-ahead logging for crash recovery (the Raft log serves that purpose), and no lock managers. Reads are lock-free and proceed concurrently without coordination.
+
+## Key Format: Tenant Isolation Baked Into the Byte Layout
+
+Every key in the tree encodes tenant isolation directly into its structure:
+
+- **Vault ID** (8 bytes) — tenant identifier
+- **Bucket ID** (1 byte) — table identifier
+- **Local key** — table-specific key data
+
+This layout means all data for a single tenant is **physically co-located on disk**, optimizing range scans for relationship traversal. More importantly, cross-tenant data access requires constructing a key with a different vault prefix — something the storage engine can reject structurally rather than through application-level checks.
+
+Every page is independently encrypted with **AES-256-GCM envelope encryption** and verified with **XXH3 checksums** on every read. Corruption is detected at the page level before any data reaches the query layer.
+
+## Two-Layer Caching: From Disk to Decision
+
+The caching architecture operates in two layers, each targeting a different access pattern.
+
+**Layer 1: Page cache.** Deserialized B+ tree pages are held in memory, avoiding repeated disk reads and deserialization for hot pages. This is the fast path for novel queries that need to traverse the tree.
+
+**Layer 2: Evaluation cache.** Complete authorization results — the fully resolved answer to "can user X perform action Y on resource Z" — are cached by query parameters and the current revision token. When many items share the same access policy (common in list-filtering scenarios), repeated checks resolve from this cache **without touching the tree at all**.
+
+The two layers compose: novel queries miss the evaluation cache but hit the page cache for their tree traversal. Repeated queries never reach the tree.
+
+## Lock-Free I/O with pread/pwrite
+
+All I/O operations use **position-based system calls** — `pread` and `pwrite` on Unix. These read and write specific byte ranges without maintaining file position state or holding file descriptor locks.
+
+Combined with the single-writer model, read operations **never block on writes** and never contend for I/O resources. There is no lock acquisition in the read path. Period.
+
+## The Numbers
+
+The result of these design choices on our benchmark hardware:
+
+- **2.8µs p99 read latency**
+- **952,000 operations per second**
+
+For context, a PostgreSQL-backed authorization check takes 5 to 50 milliseconds depending on query complexity and cache state. That gap is the difference between authorization being a **measurable bottleneck** in your application and authorization being invisible.
+
+At these speeds, you can run a permission check on every row in a 10,000-item list response and add less than 30 milliseconds to total request time. With PostgreSQL, that same operation could take 50 to 500 seconds.
+
+## What This Means for Your Architecture
+
+Sub-microsecond authorization changes what is architecturally possible. You stop batching permission checks. You stop pre-computing access lists. You stop caching authorization decisions in your application layer (where they go stale). You check permissions **inline, in real time, on every request** — and your users never notice.
+
+That is what authorization should feel like: not a tax on every request, but a guarantee that is too fast to measure.
+
+---
+
+Want to see these numbers on your own workload? **[Get started with InferaDB](/docs/quickstart)** and run the built-in benchmarks against your authorization schema.

@@ -4,16 +4,84 @@ title: "Authorization Market: $3.32B and No Dominant Player — InferaDB"
 post_title: "Authorization Market: $3.32B and No Dominant Player"
 date: 2026-02-20
 category: news
+description: "The fine-grained authorization market is $3.32B at 19.3% CAGR with no category leader. Here's why this is the biggest open opportunity in infrastructure."
 authors:
   - Jane Sims
 ---
 
-The fine-grained authorization market has reached $3.32 billion and is growing at a 19.3% compound annual growth rate — roughly twice the growth rate of the broader identity and access management market. This acceleration is not a coincidence. It reflects a structural shift in how organizations think about access control. For two decades, authorization was treated as a feature of identity providers: you authenticate a user, assign them a role, and the application checks that role at the door. That model worked when applications were monoliths and organizational structures were simple. It does not work when enterprises run hundreds of microservices, manage millions of resources, and need to express access policies that depend on relationships, attributes, time, geography, and business context simultaneously.
+**$3.32 billion.** That's the current size of the fine-grained authorization market, and it's growing at 19.3% CAGR — roughly **twice the growth rate of the broader IAM market.** Yet there is no dominant player. No default choice. No "Stripe of authorization."
 
-Gartner's publication of its first-ever "Innovation Insight: Authorization Management Platforms" report in 2025 marked an inflection point for the category. It signaled to enterprise buyers that authorization is not a niche concern but a foundational infrastructure requirement on par with authentication, observability, and service mesh. The report explicitly called out the limitations of embedding authorization logic in application code and recommended purpose-built authorization platforms as the path forward. For startups in this space, Gartner recognition is the difference between fighting for developer mindshare and being included in enterprise procurement evaluations. The market is moving from early adopter territory into mainstream enterprise adoption, and the window for establishing category leadership is narrowing.
+The category leader position is wide open.
 
-The competitive landscape is fragmented. AuthZed, the commercial entity behind SpiceDB, has raised $15.8 million and positions itself as the open-source Zanzibar implementation. Oso raised $25.9 million and focuses on developer-friendly policy-as-code with tight application integration. Permit.io raised $14 million and targets the low-code authorization layer for product teams. Cerbos raised $11 million and offers a self-hosted policy engine with a focus on developer experience. Total venture capital deployed into pure-play authorization companies is approximately $165 million — modest relative to the market size, which suggests the category is still in its early investment phase. None of these companies have achieved the scale or market position that would make them the default choice for enterprises evaluating authorization infrastructure.
+## A Market That Just Got Its Name
 
-The consolidation pattern is already visible. FusionAuth acquired Permify, absorbing a Zanzibar-inspired open-source project into a broader identity platform. Aserto shut down operations entirely, demonstrating that developer traction alone is insufficient without a clear path to enterprise revenue. Axiomatics, one of the oldest players in the attribute-based access control space, was acquired. These exits and acquisitions suggest that the market is entering the phase where standalone authorization companies either achieve escape velocity or get absorbed into larger identity and security platforms. The parallel to Auth0's trajectory is instructive: Auth0 grew to over $200 million in annual recurring revenue before Okta acquired it for $6.5 billion, validating that identity infrastructure can support massive standalone businesses when the product is foundational enough.
+For two decades, authorization was treated as a feature of identity providers. You authenticate a user, assign them a role, check that role at the door. That model worked for monoliths with simple org charts.
 
-The authorization market has all the characteristics of a category where a dominant platform has yet to emerge: large and growing TAM, fragmented competition, increasing regulatory pressure, and a fundamental technology shift (AI agents, zero-trust architectures) that invalidates existing approaches. The company that establishes itself as the default authorization infrastructure — the way Stripe became the default for payments or Twilio for communications — will capture a disproportionate share of a multi-billion dollar market. That is the opportunity we are pursuing with InferaDB, and we believe that a purpose-built database approach, rather than another policy engine or framework, is the architecture that can deliver the performance, security, and operational simplicity that will define the category leader.
+It doesn't work when enterprises run hundreds of microservices, manage millions of resources, and need access policies that depend on relationships, attributes, time, geography, and business context — all at once.
+
+**Gartner published its first-ever "Innovation Insight: Authorization Management Platforms" report in 2025.** That's the inflection point. It signals to enterprise buyers that authorization is foundational infrastructure on par with authentication, observability, and service mesh — not a niche concern buried inside application code.
+
+When Gartner names a category, budgets follow.
+
+## The Auth0 Parallel
+
+The most instructive comparison is Auth0's trajectory. Auth0 grew to **over $200 million in annual recurring revenue** before Okta acquired it for **$6.5 billion** in 2021. Authentication went from a "just use a library" problem to a platform category worth billions.
+
+Authorization is **5-7 years behind on the same curve.** The same forces are at work: increasing regulatory pressure, architectural complexity that outgrows DIY solutions, and a shift from "build it yourself" to "buy infrastructure."
+
+The difference is that authorization is arguably harder and stickier. Once your permission model is embedded in a database with cryptographic audit trails, switching costs are substantial. The company that wins this category will compound its position.
+
+## Fragmented Competition, Modest Funding
+
+The competitive landscape tells a clear story: lots of entrants, no breakout winner. Total venture capital deployed into pure-play authorization companies is approximately **$165 million**:
+
+| Company | Funding | Positioning |
+|---------|---------|-------------|
+| **Oso** | $25.9M | Policy-as-code, developer-focused |
+| **AuthZed** | $15.8M | Open-source Zanzibar (SpiceDB) |
+| **Permit.io** | $14M | Low-code authorization layer |
+| **Cerbos** | $11M | Self-hosted policy engine |
+
+$165 million is modest relative to a $3.32B market growing at 19.3%. For comparison, the observability market had already seen hundreds of millions in individual rounds by this stage of its growth curve. **The authorization category is still in its early investment phase.**
+
+None of these companies have achieved the scale or market position that would make them the default choice for enterprise procurement. The window is open.
+
+## Consolidation Is Already Happening
+
+The market is shaking out faster than most realize:
+
+- **FusionAuth acquired Permify**, absorbing a Zanzibar-inspired open-source project into a broader identity platform
+- **Aserto shut down operations entirely**, proving that developer traction alone doesn't guarantee a path to enterprise revenue
+- **Axiomatics was acquired**, removing one of the oldest ABAC players from the independent landscape
+
+This is the classic pattern. In an emerging category, the companies that don't achieve escape velocity get absorbed or die. **The consolidation window is the opportunity window** — it's the period where a well-positioned entrant can establish dominance before the market ossifies.
+
+## Why This Time Is Different
+
+Three structural shifts make this moment distinct from anything the authorization market has seen:
+
+**1. AI agents need authorization infrastructure.** When autonomous systems access data and invoke tools on behalf of users, the permission model can't live in application middleware. It needs to be a first-class data layer with sub-millisecond latency and cryptographic auditability.
+
+**2. Zero-trust mandates are creating forced buyers.** NIS2, DORA, and the EU AI Act all require fine-grained, auditable access control. Enterprises that treated authorization as an afterthought now have regulatory deadlines.
+
+**3. The architectural ceiling is real.** Every existing authorization product is built on PostgreSQL. That works for demos and small deployments. It doesn't work at the scale and latency requirements that enterprise and AI workloads demand.
+
+## The Investment Thesis
+
+The authorization market has every characteristic of a category where a dominant platform hasn't emerged:
+
+- **Large and growing TAM** — $3.32B at 19.3% CAGR
+- **Fragmented competition** — no player above $30M in funding
+- **Regulatory tailwinds** — three major EU regulations creating forced adoption
+- **Technology shift** — AI agents and zero-trust invalidating existing approaches
+- **Proven category economics** — Auth0's $6.5B exit validated that identity infrastructure supports massive standalone businesses
+
+**The company that becomes the default authorization infrastructure** — the way Stripe became default for payments or Datadog for observability — **will capture a disproportionate share of a multi-billion dollar market.**
+
+InferaDB is purpose-built for this moment: a database, not another policy engine, designed for the performance, security, and auditability that the next generation of applications and regulations demand.
+
+## Follow the Journey
+
+- **Technical deep dive**: [Quickstart Guide](/docs/quickstart)
+- **Star the repo**: [InferaDB on GitHub](https://github.com/inferadb/inferadb)
+- **Get early access** to InferaDB Cloud: [Join the waitlist](/waitlist)

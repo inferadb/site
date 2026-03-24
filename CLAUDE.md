@@ -21,10 +21,10 @@ This site MUST build on GitHub Pages' Jekyll 3.10.0 pipeline. Key restrictions:
 
 - **No custom plugins** — `safe: true` is enforced
 - **Sass 3.7.4 (LibSass)** — no `@use`/`@forward` (Dart Sass only), only `@import`
-- **Liquid 4.0.4** — no pipe filters inside `if`/`or` conditions; use `{% assign %}` first
+- **Liquid 4.0.4** — no pipe filters inside `if`/`or` conditions; use `assign` first
 - **No `clamp()` in Sass** — but CSS `clamp()` passes through as a literal and works fine
 - **Jekyll processes both `.md` and `.html`** with the same stem — only one can exist (e.g., `docs/index.md` and `docs/index.html` conflict; delete one)
-- **CLAUDE.md is excluded** in `_config.yml` because its Liquid-like code examples (`{% assign %}`) cause parse errors
+- **CLAUDE.md is excluded** in `_config.yml` because its Liquid-like code examples (`assign`) cause parse errors
 
 ## Visual Design System — Mil-Spec Hard Sci-Fi Industrial
 

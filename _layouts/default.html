@@ -12,8 +12,9 @@
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}" />
   </head>
   <body class="{{ page.body_class }}" data-layout="{{ page.layout }}">
+    <a href="#main-content" class="skip-link">Skip to content</a>
     {% include nav.html %}
-    <main>
+    <main id="main-content">
       {{ content }}
     </main>
     {% include footer.html %}

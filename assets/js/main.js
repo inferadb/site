@@ -142,6 +142,7 @@ document.querySelectorAll('pre').forEach(function(pre) {
 // 3. Heading anchor links
 (function() {
   document.querySelectorAll('.docs-content article h2, .docs-content article h3, .post-body h2, .post-body h3').forEach(function(h) {
+    if (h.closest('.card, .docs-hub-card, .docs-hub, .card-grid')) return;
     if (!h.id) {
       h.id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }

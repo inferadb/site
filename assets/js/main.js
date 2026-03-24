@@ -10,18 +10,30 @@ if (nav) {
 const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
 if (toggle && links) {
+  function openNav() {
+    toggle.setAttribute('aria-expanded', 'true');
+    links.classList.add('open');
+    document.body.classList.add('nav-open');
+  }
+  function closeNav() {
+    toggle.setAttribute('aria-expanded', 'false');
+    links.classList.remove('open');
+    document.body.classList.remove('nav-open');
+  }
+
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-expanded', !expanded);
-    links.classList.toggle('open');
+    if (expanded) closeNav(); else openNav();
   });
 
   // Close menu on link click
   links.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      links.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-    });
+    link.addEventListener('click', closeNav);
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && links.classList.contains('open')) closeNav();
   });
 }
 

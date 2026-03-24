@@ -21,6 +21,8 @@ type document {
 }
 ```
 
+{% include diagram-rebac.html %}
+
 ReBAC supports arbitrarily complex hierarchies — teams within teams, nested resources, inherited permissions — without role explosion.
 
 ### Role-Based Access Control (RBAC)

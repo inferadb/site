@@ -1,0 +1,43 @@
+<div class="auth-diagram" role="img" aria-label="Relationship-based access control diagram showing users connected to a document through editor and viewer relations, with computed can_view and can_edit permissions">
+  <svg viewBox="0 0 580 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 3.5 L 0 7 z" class="arrow" />
+      </marker>
+      <marker id="arrow-active" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 3.5 L 0 7 z" class="arrow-active" />
+      </marker>
+    </defs>
+
+    <!-- user:alice -->
+    <rect x="10" y="30" width="120" height="40" rx="3" class="entity-box-highlight" />
+    <text x="70" y="55" text-anchor="middle" class="entity-label">user:alice</text>
+
+    <!-- user:bob -->
+    <rect x="10" y="130" width="120" height="40" rx="3" class="entity-box" />
+    <text x="70" y="155" text-anchor="middle" class="entity-label">user:bob</text>
+
+    <!-- document:readme -->
+    <rect x="280" y="70" width="160" height="60" rx="3" class="entity-box-highlight" />
+    <text x="360" y="95" text-anchor="middle" class="entity-label">document:readme</text>
+    <text x="360" y="115" text-anchor="middle" class="relation-label">can_view = viewer | editor | owner</text>
+
+    <!-- alice → editor → document -->
+    <line x1="130" y1="50" x2="278" y2="85" class="relation-line-active" marker-end="url(#arrow-active)" />
+    <text x="195" y="58" text-anchor="middle" class="relation-label">editor</text>
+
+    <!-- bob → viewer → document -->
+    <line x1="130" y1="150" x2="278" y2="115" class="relation-line" marker-end="url(#arrow)" />
+    <text x="195" y="148" text-anchor="middle" class="relation-label">viewer</text>
+
+    <!-- Result annotations -->
+    <rect x="470" y="30" width="100" height="30" rx="3" class="entity-box-highlight" />
+    <text x="520" y="50" text-anchor="middle" class="relation-label">can_edit ✓</text>
+    <line x1="440" y1="90" x2="468" y2="50" class="relation-line-active" stroke-dasharray="4 3" />
+
+    <rect x="470" y="130" width="100" height="30" rx="3" class="entity-box" />
+    <text x="520" y="150" text-anchor="middle" style="fill: var(--accent-red); font-family: var(--font-mono); font-size: 10px;">can_edit ✗</text>
+    <line x1="440" y1="110" x2="468" y2="140" class="relation-line" stroke-dasharray="4 3" />
+  </svg>
+  <div class="auth-diagram-caption">ReBAC: Permissions derived from entity relationships</div>
+</div>

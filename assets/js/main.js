@@ -870,3 +870,114 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     }
   });
 });
+
+// ─── Code Tabs ───────────────────────────────────────────────
+(function () {
+  var STORAGE_KEY = 'inferadb-docs-lang';
+
+  function activateTab(group, lang) {
+    var buttons = group.querySelectorAll('.code-tabs-nav button');
+    var panels = group.querySelectorAll('.code-tabs-panel');
+    buttons.forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    panels.forEach(function (panel) {
+      panel.classList.toggle('active', panel.getAttribute('data-lang') === lang);
+    });
+  }
+
+  function syncAll(lang) {
+    document.querySelectorAll('.code-tabs').forEach(function (group) {
+      var hasLang = group.querySelector('[data-lang="' + lang + '"]');
+      if (hasLang) activateTab(group, lang);
+    });
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.code-tabs-nav button');
+    if (!btn) return;
+    var lang = btn.getAttribute('data-lang');
+    if (lang) syncAll(lang);
+  });
+
+  // On page load, restore preference or use first tab
+  var saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  document.querySelectorAll('.code-tabs').forEach(function (group) {
+    var first = group.querySelector('.code-tabs-nav button');
+    if (!first) return;
+    var lang = saved && group.querySelector('[data-lang="' + saved + '"]')
+      ? saved
+      : first.getAttribute('data-lang');
+    activateTab(group, lang);
+  });
+})();
+
+// ─── Table of Contents ───────────────────────────────────────
+(function () {
+  var tocList = document.querySelector('.docs-toc-list');
+  var tocAside = document.querySelector('.docs-toc');
+  if (!tocList || !tocAside) return;
+
+  var article = document.querySelector('.docs-content article');
+  if (!article) return;
+
+  var headings = article.querySelectorAll('h2, h3');
+  if (headings.length < 2) {
+    tocAside.style.display = 'none';
+    return;
+  }
+
+  // Build ToC links from headings
+  headings.forEach(function (h) {
+    if (!h.id) {
+      h.id = h.textContent.trim().toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+    }
+    var li = document.createElement('li');
+    if (h.tagName === 'H3') li.classList.add('toc-h3');
+    var a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    tocList.appendChild(li);
+  });
+
+  var tocLinks = tocList.querySelectorAll('a');
+  if (!tocLinks.length) return;
+
+  function updateIndicator(activeLink) {
+    if (!activeLink) return;
+    var li = activeLink.parentElement;
+    var listRect = tocList.getBoundingClientRect();
+    var liRect = li.getBoundingClientRect();
+    tocList.style.setProperty('--toc-indicator-y', (liRect.top - listRect.top) + 'px');
+    tocList.style.setProperty('--toc-indicator-h', liRect.height + 'px');
+  }
+
+  // IntersectionObserver to track which heading is in view
+  var activeId = null;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        activeId = entry.target.id;
+      }
+    });
+    tocLinks.forEach(function (link) {
+      var isActive = link.getAttribute('href') === '#' + activeId;
+      link.classList.toggle('active', isActive);
+      if (isActive) updateIndicator(link);
+    });
+  }, {
+    rootMargin: '-80px 0px -60% 0px',
+    threshold: 0
+  });
+
+  headings.forEach(function (h) { observer.observe(h); });
+
+  // Activate first link on load
+  tocLinks[0].classList.add('active');
+  updateIndicator(tocLinks[0]);
+})();

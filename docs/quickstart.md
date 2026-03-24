@@ -118,9 +118,102 @@ Response:
 }
 ```
 
+## 7. Integrate with Your Application
+
+The CLI and REST API are great for exploration. For production, use an SDK. Here's the same permission check from your application code:
+
+<div class="code-tabs">
+  <div class="code-tabs-nav">
+    <button class="active" data-lang="rust">Rust</button>
+    <button data-lang="typescript">TypeScript</button>
+    <button data-lang="go">Go</button>
+    <button data-lang="python">Python</button>
+  </div>
+  <div class="code-tabs-panel active" data-lang="rust">
+
+~~~rust
+use inferadb::Client;
+
+let client = Client::builder()
+    .url("http://localhost:8080")
+    .api_key("dev")
+    .build()
+    .await?;
+
+let vault = client.organization("default").vault("default");
+
+let allowed = vault
+    .check("user:alice", "can_edit", "document:readme")
+    .await?;
+
+assert!(allowed);
+~~~
+
+  </div>
+  <div class="code-tabs-panel" data-lang="typescript">
+
+~~~typescript
+import { InferaDB } from "@inferadb/sdk";
+
+const client = new InferaDB({
+  url: "http://localhost:8080",
+  apiKey: "dev",
+});
+
+const vault = client.organization("default").vault("default");
+
+const allowed = await vault.check(
+  "user:alice",
+  "can_edit",
+  "document:readme"
+);
+
+console.log(allowed); // true
+~~~
+
+  </div>
+  <div class="code-tabs-panel" data-lang="go">
+
+~~~go
+client, _ := inferadb.NewClient(
+    inferadb.WithURL("http://localhost:8080"),
+    inferadb.WithAPIKey("dev"),
+)
+defer client.Close()
+
+vault := client.Organization("default").Vault("default")
+
+allowed, _ := vault.Check(ctx, "user:alice", "can_edit", "document:readme")
+
+fmt.Println(allowed) // true
+~~~
+
+  </div>
+  <div class="code-tabs-panel" data-lang="python">
+
+~~~python
+from inferadb import InferaDB
+
+client = InferaDB(
+    url="http://localhost:8080",
+    api_key="dev",
+)
+
+vault = client.organization("default").vault("default")
+
+allowed = await vault.check("user:alice", "can_edit", "document:readme")
+
+print(allowed)  # True
+~~~
+
+  </div>
+</div>
+
+See the full SDK documentation for authentication, error handling, and framework integrations: [Rust](/docs/sdk-rust) · [TypeScript](/docs/sdk-typescript) · [Go](/docs/sdk-go) · [Python](/docs/sdk-python) · [All SDKs](/docs/)
+
 ## What's Next?
 
 - [Core Concepts](/docs/concepts) — Understand entities, relations, tuples, and revision tokens
+- [Modeling Guide](/docs/modeling) — Design a complete authorization schema for a real application
 - [IPL Overview](/docs/ipl) — Learn the full policy language syntax
-- [REST API Reference](/docs/api-rest) — Explore all available endpoints
-- [Rust SDK](/docs/sdk-rust) — Integrate InferaDB into your application
+- [SDK Documentation](/docs/) — Full SDK docs for all 10 supported languages

@@ -2150,11 +2150,15 @@ section {
   .about-cta-actions { flex-direction: column; align-items: center; }
 }
 
+// Hide footer on docs pages — the sticky sidebar/toc layout
+// makes the footer cause scroll jankiness
+[data-layout="docs"] .site-footer { display: none; }
+
 // ─── Documentation ───────────────────────────────────────────
 
 .docs-layout {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 260px 1fr 200px;
   min-height: 100vh;
   max-width: 1400px;
   margin: 0 auto;
@@ -3247,13 +3251,15 @@ section {
 // ─── Responsive ──────────────────────────────────────────────
 
 @media (min-width: 1400px) {
-  .docs-layout { grid-template-columns: 280px 1fr; }
+  .docs-layout { grid-template-columns: 280px 1fr 220px; }
   .docs-content { max-width: 1000px; padding: 2.5rem 4rem 4rem; }
+  .docs-toc { display: block; }
   .card-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 1024px) {
   .docs-layout { grid-template-columns: 220px 1fr; }
+  .docs-toc { display: none; }
   .docs-content { padding: 2rem; }
   .perf-grid { grid-template-columns: repeat(2, 1fr); }
   .arch-cards { grid-template-columns: 1fr; }
@@ -3373,6 +3379,7 @@ section {
 
   .docs-layout { grid-template-columns: 1fr; }
   .docs-sidebar { display: none; }
+  .docs-toc { display: none; }
   .docs-content { padding: 1.5rem; }
   .hero { padding: 6rem 0 3rem; padding-top: calc(3.5rem + 4rem); }
   .hero-actions { flex-direction: column; align-items: center; }
@@ -3392,4 +3399,305 @@ section {
   .form-row { grid-template-columns: 1fr; }
   .waitlist-inline { flex-direction: column; }
   .cta-actions { flex-direction: column; align-items: center; }
+}
+
+// ─── Code Tabs ───────────────────────────────────────────────
+
+.code-tabs {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.code-tabs-nav {
+  display: flex;
+  gap: 0;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  button {
+    padding: 0.5rem 0.875rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+    min-height: 2.75rem;
+
+    &:hover {
+      color: var(--text-white);
+    }
+
+    &.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+  }
+}
+
+.code-tabs-panel {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
+  .highlight,
+  pre {
+    margin: 0;
+    border: none;
+    border-radius: 0;
+  }
+}
+
+// ─── Authorization Diagrams ──────────────────────────────────
+
+.auth-diagram {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  overflow-x: auto;
+
+  svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--text);
+  }
+
+  text.entity-label {
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--text-white);
+  }
+
+  text.relation-label {
+    font-size: 10px;
+    fill: var(--accent);
+  }
+
+  .entity-box {
+    fill: var(--bg);
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .entity-box-highlight {
+    fill: var(--bg);
+    stroke: var(--accent);
+    stroke-width: 1.5;
+  }
+
+  .relation-line {
+    stroke: var(--text-secondary);
+    stroke-width: 1;
+    fill: none;
+  }
+
+  .relation-line-active {
+    stroke: var(--accent);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .arrow {
+    fill: var(--text-secondary);
+  }
+
+  .arrow-active {
+    fill: var(--accent);
+  }
+}
+
+.auth-diagram-caption {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.75rem;
+}
+
+// ─── Card Status Badges ──────────────────────────────────────
+
+.card-status {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.125rem 0.5rem;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.card-status-available {
+  color: var(--accent-green);
+  border: 1px solid var(--accent-green);
+}
+
+.card-status-planned {
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+// ─── Docs Callout ────────────────────────────────────────────
+
+.docs-callout {
+  margin-bottom: 2.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 3px;
+
+  p {
+    font-size: 0.875rem;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.6;
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+
+      &:hover {
+        border-bottom-color: var(--accent);
+      }
+    }
+  }
+}
+
+.docs-callout-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.375rem;
+
+  span {
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+}
+
+// ─── Table of Contents ───────────────────────────────────────
+
+.docs-toc {
+  position: sticky;
+  top: 3.5rem;
+  height: calc(100vh - 3.5rem);
+  overflow-y: auto;
+  padding: 2.5rem 1rem 2rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.docs-toc-inner {
+  padding-left: 1rem;
+}
+
+.docs-toc-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.docs-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  padding-left: 0.75rem;
+
+  // Track line
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  // Sliding indicator
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: var(--toc-indicator-h, 20px);
+    background: var(--accent);
+    transform: translateY(var(--toc-indicator-y, 0));
+    transition: transform 0.15s, height 0.15s;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.25rem 0;
+    transition: color 0.15s;
+
+    &:hover {
+      color: var(--text-white);
+    }
+
+    &.active {
+      color: var(--accent);
+    }
+  }
+
+  .toc-h3 {
+    padding-left: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-toc-list::after {
+    transition: none;
+  }
 }

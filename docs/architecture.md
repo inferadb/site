@@ -5,6 +5,18 @@ doc_title: Architecture
 doc_subtitle: System overview of InferaDB's three-service architecture.
 ---
 
+## How It Works
+
+When your application calls `vault.check("user:alice", "can_edit", "document:readme")`, here's what happens:
+
+1. **Your SDK** sends a gRPC or REST request to the **Engine**
+2. **The Engine** loads the IPL schema, resolves `can_edit = editor | owner`, and checks whether `user:alice` has either relation on `document:readme`
+3. **The Engine** reads relationship data from the **Ledger** (or from its local cache if fresh enough)
+4. **The Ledger** serves the data from its replicated B+ tree store, which is backed by Raft consensus for durability
+5. **The Engine** returns `ALLOWED` or `DENIED` with a revision token for causal consistency
+
+The rest of this section explains each component in detail.
+
 ## Service Overview
 
 InferaDB is composed of three Rust services, each with a distinct responsibility:

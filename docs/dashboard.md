@@ -9,8 +9,6 @@ doc_subtitle: A web-based management interface for InferaDB tenants, policies, a
 
 The InferaDB Dashboard is a single-page application for managing your authorization infrastructure. It provides visual tools for editing IPL policies, exploring relationships, simulating authorization decisions, and reviewing audit logs.
 
-**Stack:** TanStack Start, React 19, Tailwind CSS 4, Vite 7, Vitest.
-
 ## Features
 
 ### Tenant Management

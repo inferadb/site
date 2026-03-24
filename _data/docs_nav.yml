@@ -11,9 +11,15 @@
     - title: Core Concepts
       url: /docs/concepts
       excerpt: "Entities, relationships, permissions, revision tokens, and multi-tenancy."
+    - title: Modeling Guide
+      url: /docs/modeling
+      excerpt: "Design a complete authorization schema for a real application, step by step."
     - title: Dashboard
       url: /docs/dashboard
       excerpt: "Visual policy editor, relationship graph explorer, and decision simulator."
+    - title: Troubleshooting
+      url: /docs/troubleshooting
+      excerpt: "Debug unexpected ALLOW or DENY results with diagnostic commands and common fixes."
 
 - section: Policy Language
   filter: lang
@@ -28,6 +34,9 @@
     - title: WASM Modules
       url: /docs/wasm
       excerpt: "Extend authorization with sandboxed WebAssembly for custom domain logic."
+    - title: Schema Patterns
+      url: /docs/patterns
+      excerpt: "Reusable authorization patterns — team access, multi-level inheritance, conditional permissions, and more."
 
 - section: API Reference
   filter: api
@@ -51,33 +60,43 @@
     - title: Rust SDK
       url: /docs/sdk-rust
       excerpt: "Type-safe, async-first client with MockClient and InMemoryClient for testing."
+      status: available
     - title: TypeScript SDK
       url: /docs/sdk-typescript
       excerpt: "Node.js 18+ with Express and Next.js middleware integrations."
+      status: planned
     - title: Go SDK
       url: /docs/sdk-go
       excerpt: "Context-aware client with net/http middleware and gRPC interceptor."
+      status: planned
     - title: Python SDK
       url: /docs/sdk-python
       excerpt: "Async and sync clients with FastAPI and Django integrations."
+      status: planned
     - title: Java SDK
       url: /docs/sdk-java
       excerpt: "Fluent builder pattern with Spring Boot and Spring Security integration."
+      status: planned
     - title: .NET SDK
       url: /docs/sdk-dotnet
       excerpt: "ASP.NET Core authorization policies and dependency injection."
+      status: planned
     - title: PHP SDK
       url: /docs/sdk-php
       excerpt: "Laravel middleware, Gate integration, and Symfony Voter."
+      status: planned
     - title: Ruby SDK
       url: /docs/sdk-ruby
       excerpt: "Rails controller concern with initializer-based configuration."
+      status: planned
     - title: Elixir SDK
       url: /docs/sdk-elixir
       excerpt: "OTP supervision tree client with Phoenix Plug and LiveView."
+      status: planned
     - title: C/C++ SDK
       url: /docs/sdk-c
       excerpt: "Stable C ABI with C++20 RAII wrapper. Built on Rust via cxx."
+      status: planned
 
 - section: Architecture
   filter: arch

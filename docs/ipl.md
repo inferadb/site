@@ -97,6 +97,8 @@ type document {
 
 If `document:readme` → `parent` → `folder:specs`, and `user:alice` is a `viewer` of `folder:specs`, then Alice has `inherited` on `document:readme`.
 
+{% include diagram-inheritance.html %}
+
 ### Related Object Userset (`->`)
 
 ```rust

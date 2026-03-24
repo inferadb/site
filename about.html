@@ -1,0 +1,42 @@
+---
+title: About
+layout: default
+body_class: page-about
+---
+
+<section class="about-hero">
+  <div class="container">
+    <h1>We built this<br/><span class="gradient-text">market category.</span></h1>
+    <p class="lead">InferaDB's team previously built Auth0/Okta's fine-grained authorization solution and its open-source counterpart OpenFGA — now a CNCF incubating project used in production by Grafana Labs, Docker, and Canonical.</p>
+  </div>
+</section>
+
+<section class="about-content">
+  <div class="container">
+    <p>Authorization — the system that governs who can access what within software applications — is a hidden crisis in modern enterprise software. Authorization vulnerabilities are the #1 risk in the OWASP API Security Top 10. Ninety-four percent of applications tested exhibit broken access control. Organizations that build authorization in-house typically dedicate six or more engineers to maintaining it, representing roughly $900,000 per year in engineering budget alone.</p>
+
+    <p>We experienced this problem firsthand while building Auth0/Okta's authorization products. We identified fundamental architectural limitations in existing approaches — reliance on general-purpose databases, cache-dependent policy engines, and application-level multi-tenancy — and set out to build what we wished we could have built at Auth0: a true authorization database designed from the ground up for this workload.</p>
+
+    <h2>The Problem</h2>
+
+    <p>The rise of AI agents is exponentially increasing the number of fine-grained authorization decisions required per request. Traditional authorization systems were built for 1–2 permission checks per request. AI agent workflows require dozens. Meanwhile, three major EU regulations — NIS2, DORA, and the EU AI Act — are converging to mandate fine-grained, auditable access controls. The authorization infrastructure required to meet these demands does not exist in most organizations.</p>
+
+    <h2>Our Approach</h2>
+
+    <p><strong>InferaDB is not another policy engine — it's a purpose-built authorization database.</strong> Competitors either bolt authorization onto general-purpose databases or operate as policy engines without persistent storage. InferaDB's custom storage engine, cryptographic isolation, and consensus replication represent a fundamentally different architectural approach.</p>
+
+    <p>The result is sub-microsecond authorization decisions (2.8µs p99), cryptographic multi-tenant isolation at the storage layer, and tamper-proof audit trails with Merkle proof verification — capabilities that no existing product offers together.</p>
+
+    <h2>Open Source</h2>
+
+    <p>InferaDB's core authorization engine is open source, dual-licensed under <a href="https://github.com/inferadb/inferadb/blob/main/LICENSE-MIT">MIT</a> and <a href="https://github.com/inferadb/inferadb/blob/main/LICENSE-APACHE">Apache 2.0</a>. We believe authorization infrastructure should be transparent, auditable, and community-driven. The managed cloud service adds multi-tenant isolation, cryptographic audit trails, SLAs, and compliance reporting.</p>
+
+    <h2>Standards</h2>
+
+    <p>InferaDB implements the <a href="https://openid.net/wg/authzen/">OpenID AuthZEN</a> specification — the industry's first standardized authorization API — ensuring vendor-neutral interoperability. Our architecture is inspired by <a href="https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/">Google Zanzibar</a>, the internal system Google built to handle authorization for YouTube, Drive, and Cloud at trillions of checks per day.</p>
+
+    <h2>Community</h2>
+
+    <p>Join us on <a href="https://discord.gg/inferadb">Discord</a> for questions, discussions, and contributions. Follow our development on <a href="https://github.com/inferadb">GitHub</a>.</p>
+  </div>
+</section>

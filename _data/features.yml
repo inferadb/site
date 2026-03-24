@@ -1,31 +1,29 @@
-- title: Flexibility
-  icon: layers
-  description: "ReBAC, RBAC, and ABAC unified under one model. Design policies visually or extend with custom WebAssembly logic."
-  details:
-    - "Relationship-based, role-based, and attribute-based access control"
-    - "No-code visual policy designer"
-    - "Extensible via sandboxed WebAssembly modules"
+- title: Purpose-Built Storage Engine
+  icon: database
+  description: "Custom B+ tree in Rust with per-page envelope encryption, XXH3 checksums, and page-level locking. Not bolted onto PostgreSQL."
+  highlight: "2.8µs p99 read latency"
 
-- title: Performance
-  icon: zap
-  description: "Hardware-accelerated graph traversal with parallel computation across distributed nodes. Sub-10ms median latency."
-  details:
-    - "Co-located computation with data in isolated PDP cells"
-    - "Graph-based permission resolution"
-    - "Horizontal scaling via decentralized architecture"
+- title: Cryptographic Tenant Isolation
+  icon: lock
+  description: "Each vault is encrypted independently with AES-256-GCM envelope encryption. Cross-tenant data leakage is architecturally impossible."
+  highlight: "Per-vault encryption keys"
 
-- title: Operations
+- title: Tamper-Proof Audit Trail
   icon: shield
-  description: "Every decision is logged to a cryptographically signed, immutable ledger. Native observability built in."
-  details:
-    - "Cryptographically verifiable audit trails"
-    - "Hash-chained, append-only audit logs"
-    - "Native tracing and observability"
+  description: "Every permission change is committed to a per-vault blockchain with Merkle proof verification. Auditors can independently verify that no records have been altered."
+  highlight: "Blockchain + Merkle proofs"
 
-- title: Reliability
-  icon: refresh
-  description: "Self-optimizing queries and indexes with self-healing fault tolerance. Built for zero-downtime deployments."
-  details:
-    - "Self-optimizing queries and indexes"
-    - "Self-healing and fault-tolerant"
-    - "Causal consistency across regions"
+- title: Distributed Consensus
+  icon: globe
+  description: "Raft-based replication provides linearizable writes and configurable read consistency across regions. Data residency enforcement at the infrastructure level."
+  highlight: "Multi-region Raft consensus"
+
+- title: WebAssembly Extensibility
+  icon: code
+  description: "Custom authorization logic in any language, executed in a deterministic sandbox. Signed, versioned, resource-constrained. No I/O, no network, no filesystem."
+  highlight: "Sandboxed WASM modules"
+
+- title: Standards-Compliant APIs
+  icon: plug
+  description: "REST, gRPC, and OpenID AuthZEN interfaces. Integrate in under 30 minutes. Drop-in replacement for existing authorization layers."
+  highlight: "AuthZEN-native"

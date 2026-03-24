@@ -41,6 +41,14 @@
       url: /docs/sdk-java
     - title: .NET SDK
       url: /docs/sdk-dotnet
+    - title: PHP SDK
+      url: /docs/sdk-php
+    - title: Ruby SDK
+      url: /docs/sdk-ruby
+    - title: Elixir SDK
+      url: /docs/sdk-elixir
+    - title: C/C++ SDK
+      url: /docs/sdk-c
     - title: Terraform Provider
       url: /docs/terraform
     - title: Dashboard

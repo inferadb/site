@@ -3058,6 +3058,7 @@ h3:hover .heading-anchor {
 
   // Attributes, properties — dimmer teal
   .na  { color: oklch(0.65 0.08 200); }
+  .nt  { color: var(--accent-teal); }     // name.tag — flags in shell, tags in HTML/XML
   .py  { color: var(--text-bright); }     // property names (TOML keys)
 
   // Strings — green
@@ -3877,17 +3878,36 @@ h3:hover .heading-anchor {
   .cta-actions { flex-direction: column; align-items: center; }
 }
 
-// ─── Shell prompt indicator ──────────────────────────────────
-// Adds a non-selectable $ prompt to bash/shell code blocks.
+// ─── Shell / terminal code blocks ────────────────────────────
+// Thin header bar with terminal icon + label, distinguishing
+// shell blocks from language code blocks.
 
-.language-bash,
-.language-shell,
-.language-sh {
-  pre code::before {
-    content: '$ ';
+.docs-content article .language-bash,
+.docs-content article .language-shell,
+.docs-content article .language-sh {
+  > .highlight {
+    border-top: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  }
+
+  // Command name — highlighted by JS
+  .sh-cmd { color: var(--text-white); }
+
+  // Terminal header bar
+  &::before {
+    content: '\25B8  TERMINAL';
+    display: block;
+    padding: 0.4375rem 0.875rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     color: var(--muted);
-    user-select: none;
-    -webkit-user-select: none;
+    line-height: 1;
   }
 }
 

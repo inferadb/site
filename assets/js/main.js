@@ -281,6 +281,57 @@ document.querySelectorAll('pre').forEach(function(pre) {
   });
 })();
 
+// 2b. Shell command name highlighting
+// Wraps the first word of each line in shell blocks with a span for styling.
+(function() {
+  document.querySelectorAll('.language-bash .highlight code, .language-shell .highlight code, .language-sh .highlight code').forEach(function(code) {
+    var nodes = Array.prototype.slice.call(code.childNodes);
+    var atLineStart = true;
+
+    nodes.forEach(function(node) {
+      if (node.nodeType !== 3) {
+        // If it's a comment span (.c), next text node starts a new line
+        if (node.classList && node.classList.contains('c')) atLineStart = true;
+        return;
+      }
+      var text = node.textContent;
+      if (!text) return;
+
+      // Split on newlines to find line starts
+      var lines = text.split('\n');
+      if (lines.length <= 1 && !atLineStart) return;
+
+      var frag = document.createDocumentFragment();
+      lines.forEach(function(line, i) {
+        if (i > 0) frag.appendChild(document.createTextNode('\n'));
+
+        var isStart = (i > 0) || atLineStart;
+        var trimmed = line.replace(/^\s+/, '');
+        var leading = line.substring(0, line.length - trimmed.length);
+
+        if (isStart && trimmed.length > 0 && !trimmed.startsWith('#')) {
+          var firstSpace = trimmed.indexOf(' ');
+          var cmd = firstSpace >= 0 ? trimmed.substring(0, firstSpace) : trimmed;
+          var rest = firstSpace >= 0 ? trimmed.substring(firstSpace) : '';
+
+          if (leading) frag.appendChild(document.createTextNode(leading));
+          var span = document.createElement('span');
+          span.className = 'sh-cmd';
+          span.textContent = cmd;
+          frag.appendChild(span);
+          if (rest) frag.appendChild(document.createTextNode(rest));
+        } else {
+          frag.appendChild(document.createTextNode(line));
+        }
+      });
+
+      // Track whether next node starts a new line
+      atLineStart = text.endsWith('\n');
+      node.parentNode.replaceChild(frag, node);
+    });
+  });
+})();
+
 // 3. Copy-to-clipboard on code blocks
 (function() {
   document.querySelectorAll('.docs-content pre, .post-body pre').forEach(function(pre) {

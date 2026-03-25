@@ -7,7 +7,7 @@ doc_subtitle: Reusable recipes for common authorization models.
 
 ## Organization → Team → Resource
 
-Grant access through organizational hierarchy. Team members inherit access to team resources, org admins inherit access to everything.
+Hierarchical access: team members inherit resource access, org admins inherit everything.
 
 ```
 type user {}
@@ -34,7 +34,7 @@ type project {
 
 ## Folder Hierarchy (Recursive Inheritance)
 
-Documents inherit permissions from their parent folder. Folders can nest inside other folders.
+Permissions propagate down through nested folders to documents.
 
 ```
 type folder {
@@ -56,11 +56,11 @@ type document {
 
 **When to use:** File systems, CMS hierarchies, nested resource trees.
 
-**Watch out:** Deep nesting increases evaluation depth. InferaDB short-circuits on first match, so performance is bounded by the depth to the first granting ancestor — not total tree depth.
+**Watch out:** Deep nesting increases evaluation depth. InferaDB short-circuits on first match, so cost scales with depth to the nearest granting ancestor.
 
 ## Shared Resources (Direct + Inherited)
 
-Allow both direct grants (sharing a document with a specific user) and inherited grants (through team or folder membership).
+Combine per-user sharing with inherited container permissions.
 
 ```
 type document {
@@ -73,11 +73,11 @@ type document {
 }
 ```
 
-**When to use:** Google Drive, Notion, any system where resources can be shared individually or through containers.
+**When to use:** Google Drive, Notion, or any system with both individual and container-based sharing.
 
 ## Conditional Access (ABAC via WASM)
 
-Restrict access based on runtime context — IP ranges, time windows, subscription tiers — while keeping the core model relationship-based.
+Restrict access based on runtime context: IP ranges, time windows, subscription tiers.
 
 ```
 type resource {
@@ -86,11 +86,11 @@ type resource {
 }
 ```
 
-The WASM module receives the full evaluation context (subject, resource, permission) and can inspect custom fields passed via `with_context()`.
+The WASM module receives the full evaluation context and can inspect custom fields passed via `with_context()`.
 
-**When to use:** Compliance requirements (geo-fencing, business hours), tiered pricing, temporary access windows.
+**When to use:** Geo-fencing, business hours, tiered pricing, temporary access windows.
 
-**Prefer intersection (`&`) over standalone WASM:** Keep the relationship check as the first gate. WASM runs only if the relationship matches, which is cheaper and more auditable.
+**Prefer intersection (`&`) over standalone WASM.** The relationship check gates WASM execution — cheaper and more auditable.
 
 ## Public Resources (Wildcards)
 
@@ -114,7 +114,7 @@ type document {
 
 ## Mutual Exclusion (Separation of Duties)
 
-Ensure the same user cannot hold conflicting roles — e.g., a user who can approve payments must not also be able to initiate them.
+Prevent the same user from holding conflicting roles.
 
 ```
 type payment {
@@ -128,7 +128,7 @@ type payment {
 
 ## Temporal Access (WASM)
 
-Grant access only during specific time windows:
+Grant access only during specific time windows.
 
 ```
 type shift_resource {
@@ -137,8 +137,6 @@ type shift_resource {
 }
 ```
 
-The WASM module checks the current time against the user's shift schedule (passed via context).
-
 **When to use:** Healthcare shift access, time-limited API keys, scheduled maintenance windows.
 
 ## Anti-Patterns
@@ -146,14 +144,14 @@ The WASM module checks the current time against the user's shift schedule (passe
 ### Don't: Model permissions as direct relations
 
 ```
-// ✗ Avoid — hard to audit, no composability
+// ✗ Hard to audit, no composability
 type document {
     relation can_view    // stored directly as tuples
     relation can_edit    // stored directly as tuples
 }
 ```
 
-Model **who has access** (viewer, editor, owner) and **compute what they can do** (can_view, can_edit). This makes the schema auditable and refactorable.
+Store **who** (viewer, editor, owner), compute **what** (can_view, can_edit).
 
 ### Don't: Use exclusion where forbid is clearer
 
@@ -166,7 +164,7 @@ forbid suspended
 relation can_view = viewer
 ```
 
-`forbid` rules are explicit deny, evaluated before all permits. They're easier to reason about and appear in `explain-permission` output.
+`forbid` is evaluated before all permits and appears in `explain-permission` output.
 
 ### Don't: Deep WASM chains
 
@@ -175,7 +173,7 @@ relation can_view = viewer
 relation can_view = viewer & module("a") & module("b") & module("c")
 ```
 
-Consolidate context checks into a single WASM module. Each module invocation has sandbox startup overhead (~1-2ms).
+Consolidate into a single WASM module. Each invocation has ~1-2ms sandbox startup overhead.
 
 ## What's Next?
 

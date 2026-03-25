@@ -13,16 +13,16 @@ By the end, you'll have a production-quality schema that combines ReBAC, RBAC, a
 
 Workspace has these requirements:
 
-1. **Users** can be members of **teams** and **organizations**
-2. **Documents** live inside **folders** — permissions cascade down
-3. Organization **admins** can access everything in the org
-4. **Editors** can view and edit, **viewers** can only view
-5. An explicit **deny** can override any grant (e.g., suspended users)
-6. Access can be restricted to **business hours** or specific **IP ranges**
+1. **Users** belong to **teams** and **organizations**
+2. **Documents** live in **folders** with cascading permissions
+3. Org **admins** can access everything
+4. **Editors** can view and edit; **viewers** can only view
+5. Explicit **deny** overrides any grant (e.g., suspended users)
+6. Access can require **business hours** or specific **IP ranges**
 
 ## Phase 1: Identify Your Entities
 
-Start by listing the nouns in your application and the relationships between them. Every noun becomes a **type**. Every verb or association becomes a **relation**.
+List the nouns (types) and verbs (relations) in your application.
 
 | Entity       | Relations                                  |
 | ------------ | ------------------------------------------ |
@@ -32,7 +32,7 @@ Start by listing the nouns in your application and the relationships between the
 | folder       | org (parent), viewer, editor               |
 | document     | folder (parent), viewer, editor, owner     |
 
-Start your schema with empty type stubs:
+Start with empty type stubs:
 
 ```
 type user {}
@@ -48,7 +48,7 @@ type document {}
 
 ## Phase 2: Add Direct Relations
 
-Direct relations are the raw facts you'll write as relationship tuples. Think of them as the edges in your authorization graph.
+Direct relations are stored facts — the edges in your authorization graph.
 
 ```
 type user {}
@@ -77,7 +77,7 @@ type document {
 }
 ```
 
-Write some test data to see how this looks:
+Write some test data:
 
 ```bash
 inferadb relationships add user:alice admin organization:acme
@@ -86,13 +86,13 @@ inferadb relationships add team:engineering org organization:acme
 inferadb relationships add user:charlie editor document:roadmap
 ```
 
-At this point, each relation is independent — there's no inheritance, no computed permissions. Alice is an org admin, but that doesn't give her access to documents yet.
+At this point, each relation is independent — no inheritance or computed permissions. Alice is an org admin, but that doesn't give her document access yet.
 
 ## Phase 3: Compute Permissions
 
-Now derive permissions from relationships using IPL expressions. This is where the authorization model becomes useful.
+Derive permissions from relationships using IPL expressions.
 
-**Start with the simplest case — document access:**
+**Document access:**
 
 ```
 type document {
@@ -108,9 +108,7 @@ type document {
 }
 ```
 
-The `|` (union) operator means: _"can_view if you're a viewer OR an editor OR an owner."_
-
-**Test it:**
+`|` (union) means "any branch grants access."
 
 ```bash
 inferadb check document:roadmap can_view user:charlie
@@ -122,7 +120,7 @@ inferadb check document:roadmap can_delete user:charlie
 
 ## Phase 4: Inherit Permissions Through Hierarchies
 
-Documents live in folders. Folder editors should be able to edit documents in that folder. This is **tuple-to-userset** — follow a relation to a parent, then check a permission there.
+Folder editors should edit documents in that folder. This is **tuple-to-userset** — follow a relation to a parent, then check a permission there.
 
 ```
 type document {
@@ -136,9 +134,7 @@ type document {
 }
 ```
 
-`viewer from folder` means: _"follow the `folder` relation to find which folder this document is in, then check if the subject is a `viewer` of that folder."_
-
-**Test it:**
+`viewer from folder` means: follow the `folder` relation to the parent, then check `viewer` there.
 
 ```bash
 inferadb relationships add user:dana viewer folder:engineering
@@ -160,11 +156,11 @@ type folder {
 }
 ```
 
-Now organization members can view all folders in their org, and org admins can edit them.
+Org members can now view all folders in their org. Org admins can edit them.
 
 ## Phase 5: Add Deny Rules
 
-Workspace needs to suspend users. A suspended user should be denied access regardless of other permissions.
+Suspended users must be denied access regardless of other permissions.
 
 ```
 type document {
@@ -179,8 +175,6 @@ type document {
 }
 ```
 
-**Test it:**
-
 ```bash
 inferadb relationships add user:charlie suspended document:roadmap
 
@@ -190,7 +184,7 @@ inferadb check document:roadmap can_edit user:charlie
 
 ## Phase 6: Add Contextual Checks with WASM
 
-Requirement 6 says access can be restricted to business hours. This is ABAC — the decision depends on context, not just relationships. Use a WASM module:
+Business-hours restrictions are ABAC — decisions depend on context, not just relationships. Use a WASM module:
 
 ```
 type document {
@@ -205,7 +199,7 @@ type document {
 }
 ```
 
-The `&` (intersection) with `module("business_hours")` means: _"you need editor access AND the WASM module must approve."_ See [WASM Modules](/docs/wasm) for how to write the module.
+`&` (intersection) with `module("business_hours")` requires editor access AND WASM module approval. See [WASM Modules](/docs/wasm) for module implementation.
 
 ## The Complete Schema
 
@@ -250,8 +244,6 @@ inferadb schemas push schema.ipl
 ```
 
 ## Schema Design Checklist
-
-Use this checklist when designing your own schemas:
 
 - [ ] Every noun in your domain has a type
 - [ ] Relations are direct (stored) or computed (derived) — never both

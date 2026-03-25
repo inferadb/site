@@ -5,7 +5,7 @@ doc_title: gRPC API Reference
 doc_subtitle: Protocol Buffers service definition for the InferaDB Engine.
 ---
 
-The Engine exposes a gRPC API on port **8081** (default). gRPC is typically 20-30% faster than REST due to the binary protocol and HTTP/2 multiplexing.
+The Engine exposes a gRPC API on port **8081** (default). Typically 20-30% faster than REST.
 
 ## Service Definition
 
@@ -52,7 +52,7 @@ grpcurl -plaintext -d '{"resource":"document:readme","permission":"can_view","su
 
 ## Authentication
 
-Pass the JWT token as a gRPC metadata header:
+Pass the JWT as a metadata header:
 
 ```
 authorization: Bearer <token>

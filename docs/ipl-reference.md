@@ -5,10 +5,6 @@ doc_title: Schema Reference
 doc_subtitle: Complete syntax reference for the Infera Policy Language.
 ---
 
-## Grammar
-
-IPL uses a [PEG grammar](https://en.wikipedia.org/wiki/Parsing_expression_grammar). The formal definition is in `engine/crates/core/src/ipl.pest`.
-
 ## Keywords
 
 | Keyword    | Usage                                                            |
@@ -20,9 +16,13 @@ IPL uses a [PEG grammar](https://en.wikipedia.org/wiki/Parsing_expression_gramma
 | `from`     | Computed userset — follow relationship, check relation on target |
 | `module`   | Invoke a WASM module                                             |
 
+## Grammar
+
+IPL uses a [PEG grammar](https://en.wikipedia.org/wiki/Parsing_expression_grammar). Formal definition: `engine/crates/core/src/ipl.pest`.
+
 ## Identifiers
 
-Must start with a letter (`a-z`, `A-Z`), followed by letters, digits, or underscores. Case-sensitive.
+Start with a letter (`a-z`, `A-Z`), followed by letters, digits, or underscores. Case-sensitive.
 
 ## Type Definitions
 
@@ -51,7 +51,7 @@ Ordered by precedence (lowest to highest):
 
 ## AST Nodes
 
-The parser produces these AST types:
+Parser output types:
 
 - `Schema { types: Vec<TypeDef> }`
 - `TypeDef { name, relations: Vec<RelationDef>, forbids: Vec<ForbidDef> }`
@@ -69,13 +69,11 @@ The parser produces these AST types:
 
 ### Order of Evaluation
 
-1. **Forbid rules** are evaluated first. If any forbid matches, the result is `DENY` immediately.
-2. **Permit rules** (relations) are evaluated with short-circuit optimization.
-3. **Union** stops at the first `Allow`; **Intersection** stops at the first `Deny`.
+1. **Forbid rules** evaluate first. Any match returns `DENY` immediately.
+2. **Permit rules** evaluate with short-circuit: union stops at first `Allow`, intersection stops at first `Deny`.
+3. Union and intersection branches evaluate concurrently across threads.
 
 ### Query Cost Estimation
-
-The evaluator assigns costs to plan query execution:
 
 | Expression             | Cost |
 | ---------------------- | ---- |
@@ -86,11 +84,7 @@ The evaluator assigns costs to plan query execution:
 
 ### Cycle Detection
 
-The evaluator detects cycles in the relation graph and terminates with an error rather than looping. Circular relation references are rejected during validation.
-
-### Parallel Evaluation
-
-Union and intersection branches are evaluated concurrently across threads.
+Circular relation references are rejected during validation. Runtime cycles terminate with an error.
 
 ## Complete Example
 

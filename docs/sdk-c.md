@@ -7,9 +7,9 @@ doc_subtitle: Native C library with C++ wrapper for InferaDB.
 
 > **Coming soon.** The C/C++ SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official C/C++ SDK (`libinferadb`) provides a native client for InferaDB's authorization APIs. The C library (`inferadb.h`) offers a stable ABI suitable for FFI from any language. The C++ wrapper (`inferadb.hpp`) provides RAII-based resource management and modern C++20 idioms.
+Native client for InferaDB's authorization APIs. The C library (`inferadb.h`) offers a stable ABI suitable for FFI. The C++ wrapper (`inferadb.hpp`) adds RAII and C++20 idioms. Built on the Rust SDK via `cxx` for memory safety in the transport layer.
 
-Built on the Rust SDK via `cxx` for memory safety in the transport layer. Requires a C11-compatible compiler (C API) or C++20 (C++ wrapper).
+Requires C11 (C API) or C++20 (C++ wrapper).
 
 ## Installation
 
@@ -76,12 +76,6 @@ inferadb_client_free(client);
 
 ```c
 inferadb_vault_t *vault = inferadb_vault_open(client, "my-org", "production", &err);
-if (!vault) {
-    fprintf(stderr, "Failed to open vault: %s\n", inferadb_error_message(err));
-    inferadb_error_free(err);
-    inferadb_client_free(client);
-    return 1;
-}
 
 bool allowed = false;
 if (inferadb_check(vault, "user:alice", "can_edit", "document:readme",
@@ -152,15 +146,12 @@ inferadb_delete_relationship(vault,
 ### Error Handling
 
 ```c
-/* assumes vault from the Permission Checks example above */
 inferadb_error_t *err = NULL;
 bool allowed = false;
 
 if (inferadb_check(vault, "user:alice", "can_edit", "document:readme",
                    NULL, &allowed, &err) != INFERADB_OK) {
     inferadb_error_kind_t kind = inferadb_error_kind(err);
-    const char *message = inferadb_error_message(err);
-    const char *request_id = inferadb_error_request_id(err);
 
     if (inferadb_error_is_retriable(err)) {
         unsigned int retry_after_ms = inferadb_error_retry_after(err);
@@ -175,7 +166,7 @@ Error kinds: `INFERADB_ERR_UNAUTHORIZED`, `INFERADB_ERR_FORBIDDEN`, `INFERADB_ER
 
 ### Cleanup
 
-Every `inferadb_*_new` or `inferadb_*_open` has a corresponding `inferadb_*_free`. Every output parameter that allocates must be freed by the caller.
+Every `_new`/`_open` has a corresponding `_free`. Every output parameter that allocates must be freed by the caller.
 
 | Allocator                       | Deallocator                   |
 | ------------------------------- | ----------------------------- |
@@ -188,7 +179,7 @@ Every `inferadb_*_new` or `inferadb_*_open` has a corresponding `inferadb_*_free
 
 ## C++ API
 
-The C++ wrapper provides RAII resource management, exceptions, and modern idioms:
+RAII resource management, exceptions, and modern C++20 idioms:
 
 ### Client Initialization
 
@@ -279,9 +270,7 @@ try {
 
 ### RAII Guarantees
 
-All C++ types are RAII-compliant:
-
-- `inferadb::Client` — moves only (no copy), closes connection on destruction
+- `inferadb::Client` — move-only, closes connection on destruction
 - `inferadb::Vault` — lightweight handle, safe to copy
 - `inferadb::Revision` — copyable, movable, comparable
 
@@ -321,10 +310,9 @@ auto client = inferadb::testing::InMemoryClient::with_schema_and_data(
 
 ## Thread Safety
 
-- `inferadb::Client` is thread-safe — a single client can be shared across threads
-- `inferadb::Vault` handles are lightweight and safe to copy across threads
-- The C API is thread-safe when each thread uses its own `inferadb_vault_t*`, or when access to a shared vault is externally synchronized
-- All `inferadb_*_free` calls are safe to call from any thread
+- `inferadb::Client` and `inferadb::Vault` are thread-safe and shareable
+- C API is thread-safe with per-thread `inferadb_vault_t*` or external synchronization
+- All `inferadb_*_free` calls are safe from any thread
 
 ## Platform Support
 

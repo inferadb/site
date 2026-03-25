@@ -5,7 +5,7 @@ doc_title: CLI Reference
 doc_subtitle: "The inferadb command-line interface for managing authorization."
 ---
 
-The `inferadb` CLI provides full access to InferaDB's authorization, schema, and administration capabilities from the terminal.
+Full access to InferaDB's authorization, schema, and administration from the terminal.
 
 ## Installation
 

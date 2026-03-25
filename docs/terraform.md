@@ -5,7 +5,7 @@ doc_title: Terraform Provider
 doc_subtitle: Manage InferaDB infrastructure as code.
 ---
 
-The InferaDB Terraform provider enables you to manage organizations, vaults, clients, teams, and access grants declaratively.
+Manage organizations, vaults, clients, teams, and access grants declaratively.
 
 **Registry:** `inferadb/inferadb`
 
@@ -27,7 +27,7 @@ provider "inferadb" {
 }
 ```
 
-Authentication via `session_token` in the provider block or `INFERADB_SESSION_TOKEN` environment variable (obtained via `inferadb login`).
+Authenticate via `session_token` in the provider block or `INFERADB_SESSION_TOKEN` env var (from `inferadb login`).
 
 ## Resources
 

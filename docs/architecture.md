@@ -12,19 +12,14 @@ related:
 
 ## How It Works
 
-When your application calls `vault.check("user:alice", "can_edit", "document:readme")`, here's what happens:
+When your application calls `vault.check("user:alice", "can_edit", "document:readme")`:
 
-1. **Your SDK** sends a gRPC or REST request to the **Engine**
-2. **The Engine** loads the IPL schema, resolves `can_edit = editor | owner`, and checks whether `user:alice` has either relation on `document:readme`
-3. **The Engine** reads relationship data from the **Ledger** (or from its local cache if fresh enough)
-4. **The Ledger** serves the data from its replicated B+ tree store, which is backed by Raft consensus for durability
-5. **The Engine** returns `ALLOWED` or `DENIED` with a revision token for causal consistency
-
-The rest of this section explains each component in detail.
+1. **SDK** sends a gRPC or REST request to the **Engine**
+2. **Engine** resolves `can_edit = editor | owner` against the IPL schema, reads relationships from the **Ledger** (or local cache), and returns `ALLOWED` or `DENIED` with a revision token
 
 ## Service Overview
 
-InferaDB is composed of three Rust services, each with a distinct responsibility:
+InferaDB is composed of three Rust services:
 
 | Service                               | Role          | Ports            | Description                                       |
 | ------------------------------------- | ------------- | ---------------- | ------------------------------------------------- |
@@ -36,7 +31,7 @@ InferaDB is composed of three Rust services, each with a distinct responsibility
 
 ### Authorization Checks
 
-Clients send authorization requests to the **Engine**. The Engine evaluates the request against the loaded IPL schema and relationship data, returning an ALLOW or DENY decision.
+The Engine evaluates authorization requests against the IPL schema and relationship data.
 
 ```
 Client → Engine (gRPC/REST)
@@ -48,7 +43,7 @@ Client → Engine (gRPC/REST)
 
 ### Administration
 
-Clients send administrative requests — creating organizations, managing users, issuing tokens — to the **Control** service.
+Administrative requests flow through the **Control** service.
 
 ```
 Client → Control (REST)
@@ -59,12 +54,12 @@ Client → Control (REST)
 
 ### Engine ↔ Control Independence
 
-The Engine and Control services do **not** communicate directly over HTTP. Instead, they share state through the Ledger:
+The Engine and Control services do **not** communicate directly. They share state through the Ledger:
 
-- **JWKS synchronization** — The Control service publishes signing keys to the Ledger. The Engine reads them from the Ledger for JWT validation. This eliminates a runtime HTTP dependency between the two services.
-- **Both persist to Ledger** — Schema data, relationships, tenant configuration, and audit records all flow through the Ledger's Raft consensus protocol.
+- **JWKS synchronization** — Control publishes signing keys to the Ledger; the Engine reads them for JWT validation.
+- **Both persist to Ledger** — Schema, relationships, tenant config, and audit records all flow through Raft.
 
-This design means the Engine can continue serving authorization checks even if the Control service is temporarily unavailable.
+The Engine continues serving checks even if Control is temporarily unavailable.
 
 ## Multi-Tenancy
 
@@ -79,21 +74,21 @@ Organization
     └── Encryption scope
 ```
 
-- **Organizations** are the top-level billing and administrative boundary
-- **Vaults** are isolated authorization environments within an organization, each with its own schema, relationship data, and cryptographic scope
+- **Organizations** — top-level billing and administrative boundary
+- **Vaults** — isolated authorization environments with their own schema, relationships, and cryptographic scope
 
-All data is vault-scoped. A request to the Engine always targets a specific vault, and the Engine enforces strict tenant isolation at every layer.
+All data is vault-scoped. The Engine enforces strict tenant isolation at every layer.
 
 ## Storage Abstraction
 
-Both the Engine and Control share a common **storage abstraction trait**. This trait has two implementations:
+Both the Engine and Control use a **storage abstraction trait** with two implementations:
 
 | Backend  | Use Case    | Description                                                     |
 | -------- | ----------- | --------------------------------------------------------------- |
 | `memory` | Development | In-process storage with sub-microsecond latency, no persistence |
 | `ledger` | Production  | Distributed storage via the Ledger service with Raft consensus  |
 
-The storage backend is selected at startup via configuration. In development, the memory backend lets you run the Engine as a single binary with no external dependencies. In production, the Ledger backend provides durability, replication, and cryptographic integrity.
+Select the backend at startup via configuration. The memory backend runs as a single binary with no dependencies; the Ledger backend provides durability, replication, and cryptographic integrity.
 
 ## High-Level Diagram
 

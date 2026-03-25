@@ -9,11 +9,9 @@ related:
   - /docs/wasm
 ---
 
-The **Infera Policy Language (IPL)** defines your authorization model — what types of entities exist, how they relate to each other, and what permissions are derived from those relationships.
+**IPL** defines your authorization model: entity types, their relationships, and derived permissions.
 
 ## Basic Structure
-
-An IPL schema is a collection of type definitions:
 
 ```rust
 type user {}
@@ -40,57 +38,34 @@ type document {
 
 ## Types
 
-Types represent the kinds of entities in your system. Every type has a unique name (alphanumeric + underscores, starting with a letter).
-
-```rust
-type document {
-    // relations and permissions go here
-}
-```
+Types represent entities in your system. Names must be alphanumeric (plus underscores), starting with a letter.
 
 ## Relations
 
-**Direct relations** store explicit tuples — when you write `(user:alice, editor, document:readme)`, that's a direct relation.
+**Direct relations** are stored as tuples. **Computed relations** derive access from expressions:
 
 ```rust
-relation editor    // direct: stored as tuples
-```
-
-**Computed relations** derive access from expressions:
-
-```rust
-relation can_view = viewer | editor | owner
+relation editor                            // direct
+relation can_view = viewer | editor | owner  // computed
 ```
 
 ## Expressions
 
-### Union (`|`)
-
-Access is granted if **any** branch matches:
+| Operator | Name | Grants access when... |
+|----------|------|----------------------|
+| `\|` | Union | **any** branch matches |
+| `&` | Intersection | **all** branches match |
+| `-` | Exclusion | base matches **and** exclusion does not |
 
 ```rust
 relation can_view = viewer | editor | owner
-```
-
-### Intersection (`&`)
-
-Access is granted only if **all** branches match:
-
-```rust
 relation can_view_sensitive = viewer & has_clearance
-```
-
-### Exclusion (`-`)
-
-Access is granted by the base set but removed by the exclusion:
-
-```rust
 relation can_view_safe = viewer - blocked
 ```
 
 ### Tuple-to-Userset (`from`)
 
-Follow a relationship to a related object, then check a relation on that object:
+Follow a relation to a related object, then check a relation there:
 
 ```rust
 type document {
@@ -127,37 +102,31 @@ relation can_view = (viewer | editor) & module("check_ip")
 
 ## Forbid Rules
 
-Forbid rules are **explicit deny** directives. They are evaluated **before** all permit rules and override them unconditionally:
+Forbid rules are **explicit deny** — evaluated before all permits and override them unconditionally:
 
 ```rust
 type document {
     relation viewer
-    forbid suspended
+    forbid suspended          // denies access even if viewer matches
     relation can_view = viewer
 }
 ```
 
-If `user:bob` has the `suspended` relation on `document:readme`, he is denied access even if he also has `viewer`.
-
 ## Wildcards
 
-Use `type:*` to grant access to all entities of a type:
+Grant access to all entities of a type with `type:*`:
 
 ```bash
 inferadb relationships add "user:*" viewer document:public-faq
 ```
 
-This makes `document:public-faq` viewable by any user.
-
 ## Validation
 
-IPL schemas are validated across three passes before deployment:
+Three validation passes run before deployment:
 
-1. **Type checking** — All relation references resolve, no undefined relations, cycle detection
-2. **Conflict detection** — No permit-forbid conflicts on the same relation name
-3. **Coverage analysis** — Identifies unused relations and uncovered permissions
-
-Push and validate in a single step:
+1. **Type checking** — references resolve, no undefined relations, cycle detection
+2. **Conflict detection** — no permit-forbid conflicts on the same relation
+3. **Coverage analysis** — unused relations and uncovered permissions
 
 ```bash
 inferadb schemas validate schema.ipl

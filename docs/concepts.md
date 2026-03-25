@@ -12,11 +12,11 @@ related:
 
 ## Authorization Models
 
-InferaDB supports three authorization models simultaneously — you can mix and match within a single schema.
+InferaDB supports three authorization models simultaneously. Mix and match within a single schema.
 
 ### Relationship-Based Access Control (ReBAC)
 
-Permissions are derived from **relationships between entities**. Instead of "Alice has the editor role," you model "Alice is an editor of Document X" or "Alice is a member of Team Y, which has access to Folder Z."
+Permissions derive from **relationships between entities** — "Alice is an editor of Document X" or "Alice is a member of Team Y, which has access to Folder Z."
 
 ```
 type document {
@@ -28,19 +28,19 @@ type document {
 
 {% include diagram-rebac.html %}
 
-ReBAC supports arbitrarily complex hierarchies — teams within teams, nested resources, inherited permissions — without role explosion.
+ReBAC supports arbitrarily nested hierarchies without role explosion.
 
 ### Role-Based Access Control (RBAC)
 
-Traditional role assignments are modeled as relationships. "Alice is an admin of Organization X" is the tuple `(user:alice, admin, organization:x)`.
+Role assignments are modeled as relationships: `(user:alice, admin, organization:x)`.
 
 ### Attribute-Based Access Control (ABAC)
 
-Custom conditions and contextual checks are handled via [WASM modules](/docs/wasm) — sandboxed logic that can inspect IP ranges, subscription tiers, time windows, or any domain-specific attribute.
+Contextual checks run in sandboxed [WASM modules](/docs/wasm) — IP ranges, subscription tiers, time windows, or any domain-specific attribute.
 
 ## Entities and Types
 
-An **entity** is any object in your system — a user, a document, a team, an organization. Entities are identified by a **type and ID** in the format `type:id` (e.g., `user:alice`, `document:readme`).
+An **entity** is any object in your system — a user, document, team, or organization. Each entity has a **type and ID** in the format `type:id` (e.g., `user:alice`, `document:readme`).
 
 **Types** are defined in your [IPL schema](/docs/ipl). Each type declares its relations:
 
@@ -54,21 +54,17 @@ type document {
 
 ## Relationships (Tuples)
 
-A **relationship** (or tuple) is a statement of fact: _"this subject has this relation to this resource."_
+A **relationship** (tuple) is a fact: `(subject, relation, resource)`.
 
-Format: `(subject, relation, resource)`
-
-Examples:
-
-- `(user:alice, editor, document:readme)` — Alice is an editor of the readme document
-- `(team:engineering, viewer, folder:specs)` — The engineering team can view the specs folder
-- `(user:*, viewer, document:public-faq)` — All users can view the public FAQ (wildcard)
+- `(user:alice, editor, document:readme)` — Alice is an editor of the readme
+- `(team:engineering, viewer, folder:specs)` — Engineering can view specs
+- `(user:*, viewer, document:public-faq)` — Wildcard: all users can view the FAQ
 
 Relationships are stored in the [Ledger](/docs/architecture-ledger) and cryptographically committed to a per-vault blockchain.
 
 ## Permissions (Computed Relations)
 
-**Permissions** are computed relations defined as expressions over other relations:
+**Permissions** are computed relations — expressions over other relations:
 
 ```
 type document {
@@ -91,15 +87,13 @@ type document {
 
 ### Computed Usersets
 
-Reference another relation on the same type:
-
 ```
 relation can_view = editor   // editors can also view
 ```
 
 ### Tuple-to-Userset (Inherited Permissions)
 
-Follow a relationship to another entity, then check a relation there:
+Follow a relation to another entity, then check a relation there:
 
 ```
 type document {
@@ -108,11 +102,11 @@ type document {
 }
 ```
 
-If `document:readme` has `parent → folder:specs`, and `user:alice` is a `viewer` of `folder:specs`, then Alice inherits `inherited_view` on `document:readme`.
+If `document:readme` has `parent -> folder:specs` and Alice is a `viewer` of `folder:specs`, she inherits `inherited_view` on the document.
 
 ## Forbid Rules
 
-**Forbid** rules are explicit deny rules that override all permits. They are evaluated **before** permit rules — if any forbid matches, the result is `DENY` regardless of other permissions.
+**Forbid** rules are explicit denies evaluated **before** permits. Any matching forbid results in `DENY` regardless of other permissions.
 
 ```
 type document {
@@ -124,9 +118,9 @@ type document {
 
 ## Revision Tokens
 
-Every authorization decision references a **revision token** — a monotonically increasing identifier representing a consistent snapshot of the relationship graph.
+Every authorization decision references a **revision token** — a monotonically increasing snapshot identifier for the relationship graph.
 
-This solves the **"new enemy problem"** from the [Google Zanzibar paper](https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/): if Alice revokes Bob's access at T=10:00:00 and Bob's request at T=10:00:01 hits a stale replica, he would incorrectly retain access. Revision tokens prevent this.
+This solves the [Zanzibar](https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/) **"new enemy problem"**: if Alice revokes Bob's access at T=10:00:00 and Bob's request at T=10:00:01 hits a stale replica, he incorrectly retains access. Revision tokens prevent this.
 
 ### How to Use Revision Tokens
 
@@ -136,13 +130,13 @@ This solves the **"new enemy problem"** from the [Google Zanzibar paper](https:/
 
 ## Multi-Tenancy
 
-InferaDB isolates tenants through a two-level hierarchy:
+Two-level tenant isolation:
 
 - **Organization** — A tenant account (company, team)
-- **Vault** — An isolated data namespace within an organization
+- **Vault** — An isolated namespace within an organization
 
-Each vault maintains its own blockchain, encryption keys, and relationship graph. Cross-vault queries are architecturally impossible — isolation is enforced at the storage layer, not by application logic.
+Each vault has its own blockchain, encryption keys, and relationship graph. Cross-vault queries are architecturally impossible — isolation is at the storage layer, not application logic.
 
 ## WASM Modules
 
-For authorization logic that goes beyond declarative rules — IP ranges, subscription tiers, compliance checks, time-based access — InferaDB supports [WebAssembly modules](/docs/wasm) that execute in a deterministic, sandboxed environment with no I/O, network, or filesystem access.
+For logic beyond declarative rules, InferaDB runs [WebAssembly modules](/docs/wasm) in a deterministic sandbox with no I/O, network, or filesystem access.

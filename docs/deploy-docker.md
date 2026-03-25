@@ -19,11 +19,9 @@ Images are available for `linux/amd64` and `linux/arm64`.
 
 ## Engine Configuration
 
-The Engine is configured via environment variables with the `INFERADB__ENGINE__` prefix. Nested configuration keys use double underscores as separators.
+Configure the Engine via environment variables prefixed with `INFERADB__ENGINE__` (double underscores as separators).
 
 ### Storage Backend
-
-Set the storage backend to `memory` for development or `ledger` for production:
 
 ```bash
 # In-memory (development)
@@ -93,7 +91,7 @@ volumes:
 
 ## Pod Security
 
-All InferaDB images follow container security best practices:
+All images run as non-root with a read-only root filesystem:
 
 | Property             | Value                     |
 | -------------------- | ------------------------- |
@@ -102,7 +100,7 @@ All InferaDB images follow container security best practices:
 | Capabilities         | No added capabilities     |
 | Privilege escalation | Disabled                  |
 
-The containers run as a non-root user with UID 65532 and expect a read-only root filesystem. If you need writable storage (Ledger data directory), mount a volume at the data path.
+Mount a volume for writable storage (e.g., Ledger data directory).
 
 ```yaml
 securityContext:

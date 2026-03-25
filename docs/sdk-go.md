@@ -7,7 +7,7 @@ doc_subtitle: Idiomatic Go client for InferaDB.
 
 > **Coming soon.** The Go SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official Go SDK (`github.com/inferadb/go`) provides a typed, context-aware client for InferaDB's authorization APIs. Requires Go 1.22+.
+Typed, context-aware client for InferaDB. Requires Go 1.22+.
 
 ## Installation
 
@@ -78,7 +78,6 @@ client, err := inferadb.NewClient(
 vault := client.Organization("my-org").Vault("production")
 ctx := context.Background()
 
-// Simple check
 allowed, err := vault.Check(ctx, "user:alice", "can_edit", "document:readme")
 ```
 
@@ -176,9 +175,9 @@ subjects, err := vault.Subjects().WithPermission(ctx, "can_edit",
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
+
+Stub specific check results. Use `defer client.AssertExpectations(t)` to verify all stubs were hit.
 
 ```go
 import inferadbtesting "github.com/inferadb/go/testing"
@@ -190,7 +189,6 @@ client := inferadbtesting.NewMockClient().
     DefaultDeny().
     Build()
 
-// Call AssertExpectations at end of test to verify all expectations were met
 defer client.AssertExpectations(t)
 ```
 
@@ -214,13 +212,14 @@ client, err := inferadbtesting.NewInMemoryClient(
 
 ### TestVault (Real Instance)
 
+Cleanup registered automatically via `t.Cleanup`.
+
 ```go
 import inferadbtesting "github.com/inferadb/go/testing"
 
 vault := inferadbtesting.NewTestVault(t, org,
     inferadbtesting.WithSchema(schemaIPL),
 )
-// cleanup registered automatically via t.Cleanup
 ```
 
 ## Error Handling
@@ -249,7 +248,6 @@ if err != nil {
 ### net/http Middleware (Go 1.22+)
 
 ```go
-// Use a typed context key (defined in your middleware package)
 type ctxKey struct{}
 var UserIDKey = ctxKey{}
 

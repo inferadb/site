@@ -7,7 +7,7 @@ doc_subtitle: Deploy InferaDB on Kubernetes with Helm charts and production-grad
 
 ## Overview
 
-InferaDB provides Helm charts for deploying the full stack on Kubernetes. The reference infrastructure uses Talos Linux, Cilium CNI with WireGuard encryption, Flux CD for GitOps, and Terraform (or OpenTofu) for infrastructure provisioning.
+InferaDB provides Helm charts for Kubernetes deployment. See [Infrastructure Stack](#infrastructure-stack) for the reference toolchain.
 
 ## Helm Charts
 
@@ -19,7 +19,7 @@ helm repo update
 helm install inferadb inferadb/inferadb
 ```
 
-The chart deploys the Engine, Control, and Ledger as separate workloads with sensible defaults. Override values for production:
+Override values for production:
 
 ```bash
 helm install inferadb inferadb/inferadb \
@@ -80,11 +80,9 @@ ledger:
     storageClass: "fast-ssd"
 ```
 
-Ledger pods must **not** be scheduled on spot/preemptible instances — data durability depends on stable storage.
+Ledger pods must **not** run on spot/preemptible instances.
 
 ## Infrastructure Stack
-
-The reference deployment uses the following stack:
 
 | Component | Tool                 | Purpose                             |
 | --------- | -------------------- | ----------------------------------- |
@@ -105,7 +103,7 @@ InferaDB is tested on the following cloud providers:
 
 ### Spot Instances
 
-Spot (preemptible) instances can be used for **stateless workloads only** — the Engine and Control services. The Ledger must run on on-demand instances to prevent data loss during spot reclamation.
+Use spot instances for **stateless workloads only** (Engine, Control). Ledger requires on-demand instances.
 
 ```yaml
 engine:
@@ -118,18 +116,16 @@ ledger:
 
 ## Multi-Region Deployment
 
-InferaDB supports multi-region deployments for low-latency global access and data residency compliance.
+Each region runs independent Ledger Raft groups for low-latency access and data residency.
 
 ### Reference Topology
-
-A two-region deployment with independent Ledger Raft groups:
 
 | Region | Nodes | Purpose                    |
 | ------ | ----- | -------------------------- |
 | nyc1   | 3     | Primary region (US East)   |
 | sfo1   | 3     | Secondary region (US West) |
 
-Each region runs its own Ledger Raft group. Vaults are pinned to a region at creation time and their data never leaves that region.
+Vaults are pinned to a region at creation time. Data never leaves that region.
 
 ### Deploying
 
@@ -145,4 +141,4 @@ helm install inferadb-sfo1 inferadb/inferadb \
   --set ledger.peers="ledger-0.sfo1,ledger-1.sfo1,ledger-2.sfo1"
 ```
 
-Engine pods in each region connect to the local Ledger group, ensuring authorization checks are resolved within the region.
+Engine pods connect to the local Ledger group, resolving checks within-region.

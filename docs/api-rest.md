@@ -20,7 +20,7 @@ All endpoints except health checks require authentication via Bearer token (JWT)
 POST /v1/evaluate
 ```
 
-Check whether a subject has a permission on a resource. Supports batch evaluation, streaming (SSE), and trace mode.
+Check whether a subject has a permission on a resource. Batch, SSE streaming, and trace mode supported.
 
 **Request:**
 
@@ -47,7 +47,7 @@ Check whether a subject has a permission on a resource. Supports batch evaluatio
 POST /v1/expand
 ```
 
-Expand a relation to see all subjects that have it. Returns a userset tree. Supports streaming.
+Expand a relation to its userset tree. Supports streaming.
 
 ### List Resources
 
@@ -89,7 +89,7 @@ What-if testing with ephemeral relationships — test permission changes without
 POST /v1/watch
 ```
 
-Real-time Server-Sent Events (SSE) stream of relationship changes.
+SSE stream of real-time relationship changes.
 
 ## Relationship Endpoints
 

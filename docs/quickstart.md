@@ -23,13 +23,11 @@ related:
 
 ## 1. Start InferaDB Locally
 
-The fastest way to start is with the CLI's built-in development environment:
-
 ```bash
 inferadb dev start
 ```
 
-This bootstraps a complete local stack — Engine, Control, Ledger, and Dashboard — using Docker. Ports:
+This starts a complete local stack (Engine, Control, Ledger, Dashboard) via Docker:
 
 | Service       | Port             |
 | ------------- | ---------------- |
@@ -38,7 +36,7 @@ This bootstraps a complete local stack — Engine, Control, Ledger, and Dashboar
 | Control       | `localhost:9090` |
 | Dashboard     | `localhost:3000` |
 
-Alternatively, run the Engine directly with Docker and the in-memory storage backend:
+Or run the Engine standalone with in-memory storage:
 
 ```bash
 docker run -p 8080:8080 -p 8081:8081 inferadb/inferadb-engine:latest
@@ -46,7 +44,7 @@ docker run -p 8080:8080 -p 8081:8081 inferadb/inferadb-engine:latest
 
 ## 2. Define a Schema
 
-Create a file called `schema.ipl` with your authorization model:
+Create `schema.ipl` with your authorization model:
 
 ```
 type user {}
@@ -64,7 +62,7 @@ type document {
 }
 ```
 
-Push the schema:
+Push it:
 
 ```bash
 inferadb schemas push schema.ipl
@@ -72,7 +70,7 @@ inferadb schemas push schema.ipl
 
 ## 3. Write Relationships
 
-Add authorization data as relationship tuples:
+Add relationship tuples:
 
 ```bash
 inferadb relationships add user:alice editor document:readme
@@ -99,7 +97,7 @@ Exit codes: `0` = allowed, `20` = denied, `21` = indeterminate.
 
 ## 5. Simulate Changes
 
-Test hypothetical changes without writing them:
+Test hypothetical changes without persisting them:
 
 ```bash
 inferadb simulate \
@@ -108,10 +106,10 @@ inferadb simulate \
 # ✓ ALLOWED (simulated)
 ```
 
-## 6. Use the REST API Directly
+## 6. Use the REST API
 
 ```bash
-# Check permission via AuthZEN endpoint
+# AuthZEN evaluation endpoint
 curl -X POST http://localhost:8080/access/v1/evaluation \
   -H "Content-Type: application/json" \
   -d '{
@@ -129,11 +127,11 @@ Response:
 }
 ```
 
-> **Note:** `inferadb dev start` runs without authentication by default. For production deployments, include an `Authorization: Bearer <token>` header. See [Authentication](/docs/authentication) for details.
+> **Note:** `inferadb dev start` runs without authentication. For production, include an `Authorization: Bearer <token>` header. See [Authentication](/docs/authentication).
 
 ## 7. Integrate with Your Application
 
-The CLI and REST API are great for exploration. For production, use an SDK. Here's the same permission check from your application code:
+For production, use an SDK. The same permission check:
 
 <div class="code-tabs">
   <div class="code-tabs-nav">

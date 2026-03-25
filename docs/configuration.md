@@ -7,11 +7,7 @@ doc_subtitle: Complete reference for Engine, Control, and Ledger configuration.
 
 ## Engine Configuration
 
-The Engine accepts configuration from three sources, in order of precedence (highest first):
-
-1. **Environment variables** — Prefixed with `INFERADB__ENGINE__`, double underscores as separators
-2. **YAML config file** — Passed via `--config path/to/config.yaml`
-3. **CLI flags** — Including `--validate` to check configuration without starting
+Precedence (highest first): **environment variables** (`INFERADB__ENGINE__*`) > **YAML config** (`--config`) > **CLI flags**.
 
 ### Engine Settings
 
@@ -77,8 +73,6 @@ auth:
 ```
 
 ### Validate Configuration
-
-Check the configuration without starting the Engine:
 
 ```bash
 inferadb-engine --config config.yaml --validate

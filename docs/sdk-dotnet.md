@@ -7,7 +7,7 @@ doc_subtitle: Async C# client for InferaDB with ASP.NET Core integration.
 
 > **Coming soon.** The .NET SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official .NET SDK (`InferaDB.Sdk`) provides an async, strongly-typed client for InferaDB's authorization APIs. Targets .NET 8+ and integrates with ASP.NET Core's authorization system.
+Async, strongly-typed client for InferaDB's authorization APIs. Targets .NET 8+ with ASP.NET Core integration.
 
 ## Installation
 
@@ -136,9 +136,8 @@ await vault.Relationships.WriteBatchAsync(
 
 ### List
 
-`List` returns an `IAsyncEnumerable<Relationship>`:
-
 ```csharp
+// Returns IAsyncEnumerable<Relationship>
 var rels = await vault.Relationships
     .List(resource: "document:readme")
     .ToListAsync();
@@ -155,7 +154,7 @@ await vault.Relationships.DeleteWhereAsync(
 
 ## Lookups
 
-`AccessibleBy` and `WithPermission` return `IAsyncEnumerable<T>`:
+Both return `IAsyncEnumerable<T>`:
 
 ```csharp
 // What resources can Alice view?
@@ -174,8 +173,6 @@ var subjects = await vault.Subjects
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
 
 ```csharp
@@ -186,11 +183,9 @@ var client = MockClient.Builder()
     .OnCheck("user:bob", "can_edit", "document:readme").Deny()
     .OnCheckAnySubject("can_view", "document:readme").Allow()
     .DefaultDeny()
-    .VerifyOnDispose(true)
+    .VerifyOnDispose(true) // asserts all expectations were invoked on dispose
     .Build();
 ```
-
-Setting `VerifyOnDispose(true)` asserts that all registered expectations were invoked when the client is disposed — preventing silent untested assumptions. Use with `using` for automatic verification.
 
 ### InMemoryClient (Full Policy Evaluation)
 
@@ -250,7 +245,7 @@ catch (InferaDBException ex)
 
 ## Framework Integrations
 
-### ASP.NET Core Authorization Policy
+### ASP.NET Core Policy
 
 ```csharp
 using InferaDB.AspNetCore;

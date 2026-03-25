@@ -5,18 +5,17 @@ doc_title: WASM Policy Modules
 doc_subtitle: Extend authorization logic with sandboxed WebAssembly.
 ---
 
-For authorization logic that goes beyond declarative relations — IP ranges, subscription tiers, time windows, compliance rules — InferaDB supports WebAssembly modules that execute in a deterministic, sandboxed environment.
+InferaDB supports sandboxed WebAssembly modules for context-dependent authorization: IP ranges, subscription tiers, time windows, compliance rules.
 
 ## How It Works
 
-1. Write a module that exports a `check()` function returning `i32`
+1. Export a `check()` function returning `i32`
 2. Load the module into InferaDB
-3. Reference it in your IPL schema with `module("name")`
-4. The module is invoked during permission evaluation
+3. Reference it in IPL with `module("name")`
 
 ## Module Contract
 
-Your WASM module must export a function named `check` that returns `i32`:
+Export a function named `check` returning `i32`:
 
 - Return `0` → **deny**
 - Return non-zero → **allow**
@@ -57,7 +56,7 @@ type document {
 }
 ```
 
-The `module("business_hours")` expression is evaluated as part of the intersection — the user must be a `viewer` **and** the WASM module must return allow.
+The user must be a `viewer` **and** the WASM module must return allow.
 
 ## Host Functions
 
@@ -67,12 +66,14 @@ The `module("business_hours")` expression is evaluated as part of the intersecti
 
 ## Execution Context
 
-Each module invocation receives an `ExecutionContext`:
+Each invocation receives an `ExecutionContext`:
 
-- `subject` — The subject being checked (e.g., `"user:alice"`)
-- `resource` — The resource being accessed (e.g., `"document:readme"`)
-- `permission` — The permission being evaluated (e.g., `"can_view"`)
-- `context` — Optional JSON context data (IP address, time, custom attributes)
+| Field        | Example              | Description                    |
+| ------------ | -------------------- | ------------------------------ |
+| `subject`    | `"user:alice"`       | Subject being checked          |
+| `resource`   | `"document:readme"`  | Resource being accessed        |
+| `permission` | `"can_view"`         | Permission being evaluated     |
+| `context`    | `{...}`              | Optional JSON (IP, time, etc.) |
 
 ## Sandbox Limits
 
@@ -97,15 +98,10 @@ Each module invocation receives an `ExecutionContext`:
 
 ## Languages
 
-Write modules in any language that compiles to WebAssembly:
-
-- **Rust** (recommended) — `wasm32-unknown-unknown` target
-- **AssemblyScript** — TypeScript-like syntax
-- **C/C++** — via Emscripten or wasi-sdk
-- **WAT** — WebAssembly Text format (for simple modules)
+Any language that compiles to WebAssembly works: **Rust** (recommended, `wasm32-unknown-unknown`), **AssemblyScript**, **C/C++** (Emscripten/wasi-sdk), or **WAT**.
 
 ## Limitations
 
-- WASM modules can only be used in `check` operations — they cannot enumerate users (expand/list operations will return an error)
-- The `check()` function signature is `() -> i32` with no parameters; context is accessed via host functions
-- Module signing and versioning (described in the whitepaper) is planned but not yet implemented
+- Only usable in `check` operations — expand/list operations return an error
+- `check()` signature is `() -> i32`; access context via host functions
+- Module signing and versioning is planned but not yet implemented

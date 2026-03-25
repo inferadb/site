@@ -5,7 +5,7 @@ doc_title: AuthZEN API
 doc_subtitle: OpenID Foundation Authorization API specification endpoints.
 ---
 
-InferaDB implements the [OpenID AuthZEN](https://openid.net/wg/authzen/) specification — the industry's first standardized authorization API. AuthZEN enables vendor-neutral interoperability, meaning you can swap authorization providers without changing your integration code.
+InferaDB implements the [OpenID AuthZEN](https://openid.net/wg/authzen/) specification. AuthZEN provides vendor-neutral interoperability — swap authorization providers without changing integration code.
 
 ## Service Discovery
 
@@ -13,7 +13,7 @@ InferaDB implements the [OpenID AuthZEN](https://openid.net/wg/authzen/) specifi
 GET /.well-known/authzen-configuration
 ```
 
-Returns the capabilities of this InferaDB instance, including supported endpoints and extensions.
+Returns supported endpoints and extensions for this instance.
 
 ## Evaluation
 
@@ -94,7 +94,7 @@ Find subjects with access to a resource for a given action.
 
 ## InferaDB Extensions
 
-InferaDB advertises additional capabilities beyond the AuthZEN base spec via the well-known endpoint:
+Extensions beyond the AuthZEN base spec, advertised via the well-known endpoint:
 
 | Extension                          | Description                            |
 | ---------------------------------- | -------------------------------------- |
@@ -105,4 +105,4 @@ InferaDB advertises additional capabilities beyond the AuthZEN base spec via the
 
 ## Identifier Format
 
-AuthZEN uses typed identifiers (`{"type": "user", "id": "alice"}`), while InferaDB's native API uses string format (`"user:alice"`). Both formats are fully supported — use whichever matches your integration.
+AuthZEN uses typed identifiers (`{"type": "user", "id": "alice"}`); the native API uses `"user:alice"`. Both are accepted on all endpoints.

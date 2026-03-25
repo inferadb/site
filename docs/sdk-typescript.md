@@ -7,7 +7,7 @@ doc_subtitle: Idiomatic Node.js and TypeScript client for InferaDB.
 
 > **Coming soon.** The TypeScript SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official TypeScript SDK (`@inferadb/sdk`) provides a fully typed, async client for InferaDB's authorization APIs. Works with Node.js 18+ (ES modules) and modern runtimes (Bun, Deno).
+Fully typed async client for InferaDB. Works with Node.js 18+, Bun, and Deno.
 
 ## Installation
 
@@ -65,15 +65,13 @@ const client = new InferaDB({
 ```typescript
 const vault = client.organization("my-org").vault("production");
 
-// Simple check
 const allowed = await vault.check("user:alice", "can_edit", "document:readme");
 ```
 
 ### With ABAC Context
 
-Context keys are schema-defined and may use any casing convention:
-
 ```typescript
+// Context keys are schema-defined
 const allowed = await vault.check("user:alice", "can_view", "document:readme", {
   context: { ip_address: "10.0.0.1" },
 });
@@ -166,9 +164,9 @@ const subjects = await vault.subjects
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
+
+Stub specific check results. Call `assertExpectations()` to verify all stubs were hit.
 
 ```typescript
 import { MockClient } from "@inferadb/sdk/testing";
@@ -179,7 +177,6 @@ const client = new MockClient()
   .onCheckAnySubject("can_view", "document:readme").allow()
   .defaultDeny();
 
-// Verify all expectations were met at end of test
 client.assertExpectations();
 ```
 
@@ -205,12 +202,12 @@ const client = await InMemoryClient.withSchemaAndData(
 
 ### TestVault (Real Instance)
 
+Auto-cleans up on dispose. Call `vault.preserve()` to keep data for debugging.
+
 ```typescript
 import { TestVault } from "@inferadb/sdk/testing";
 
 const vault = await TestVault.create(org, { schema: schemaIpl });
-// vault auto-cleans up when disposed
-// call vault.preserve() to keep data for debugging
 ```
 
 ## Error Handling

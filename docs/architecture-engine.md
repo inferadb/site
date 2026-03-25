@@ -7,11 +7,11 @@ doc_subtitle: Deep dive into InferaDB's data plane — the authorization evaluat
 
 ## Overview
 
-The Engine is InferaDB's **data plane**. It receives authorization requests, evaluates them against IPL policies and stored relationships, and returns decisions. It is written in Rust and designed for low-latency, high-throughput operation.
+The Engine is InferaDB's **data plane**. It evaluates authorization requests against IPL policies and stored relationships, returning ALLOW or DENY decisions. Written in Rust for low-latency, high-throughput operation.
 
 ## Crate Structure
 
-The Engine is organized into the following internal crates:
+Internal crates:
 
 | Crate        | Responsibility                                           |
 | ------------ | -------------------------------------------------------- |
@@ -29,35 +29,35 @@ The Engine is organized into the following internal crates:
 
 ## Core Services
 
-The Engine exposes six internal services through its API layer:
+Six services exposed through the API layer:
 
 ### EvaluationService
 
-Handles `Check` and `BatchCheck` operations. Parses the IPL schema into an evaluation plan, traverses the relationship graph, and returns ALLOW or DENY with a revision token.
+`Check` and `BatchCheck`. Parses IPL into an evaluation plan, traverses the relationship graph, returns a decision with a revision token.
 
 ### ExpansionService
 
-Expands a computed relation into the full tree of contributing relations and entities. Used for debugging and the Dashboard's decision trace view.
+Expands a computed relation into the full tree of contributing relations and entities. Powers the Dashboard's decision trace view.
 
 ### RelationshipService
 
-Reads and writes relationship tuples. Write operations are forwarded to the Ledger for durable storage.
+CRUD for relationship tuples. Writes are forwarded to the Ledger.
 
 ### ResourceService
 
-Lists resources that a given subject has access to via a specified relation.
+Lists resources accessible to a subject via a given relation.
 
 ### SubjectService
 
-Lists subjects that have a given relation to a specified resource.
+Lists subjects with a given relation to a resource.
 
 ### WatchService
 
-Streams real-time updates when relationships change, enabling clients to invalidate local caches.
+Streams real-time relationship change events for client-side cache invalidation.
 
 ## Listen Ports
 
-The Engine binds to three ports:
+Three listen ports:
 
 | Port | Protocol | Purpose                                   |
 | ---- | -------- | ----------------------------------------- |
@@ -69,7 +69,7 @@ The Engine binds to three ports:
 
 ### Memory
 
-An in-process backend using concurrent hash maps. Provides **sub-microsecond** read latency and requires no external dependencies. Intended for development and testing — data does not survive restarts.
+In-process concurrent hash maps. Sub-microsecond reads, no external dependencies. Data does not survive restarts.
 
 ```yaml
 storage: memory
@@ -77,7 +77,7 @@ storage: memory
 
 ### Ledger
 
-The production backend. Connects to the [Ledger](/docs/architecture-ledger) service over gRPC. Provides durability, replication, and cryptographic integrity through Raft consensus.
+Production backend. Connects to the [Ledger](/docs/architecture-ledger) over gRPC for durability, replication, and cryptographic integrity.
 
 ```yaml
 storage: ledger
@@ -87,14 +87,12 @@ ledger:
 
 ## Caching
 
-The Engine uses a **two-layer cache** to minimize storage reads:
+Two-layer [Moka](https://github.com/moka-rs/moka) LRU cache, invalidated on writes and schema updates:
 
-1. **Relationship cache** — Caches individual relationship lookups. Keyed by `(vault, resource, relation, subject)`.
-2. **Evaluation cache** — Caches full check results. Keyed by `(vault, resource, relation, subject, schema_version)`.
+1. **Relationship cache** — keyed by `(vault, resource, relation, subject)`
+2. **Evaluation cache** — keyed by `(vault, resource, relation, subject, schema_version)`
 
-Both layers use [Moka](https://github.com/moka-rs/moka), a high-performance concurrent LRU cache. Cache entries are invalidated on relationship writes and schema updates.
-
-Configure caching via:
+Configuration:
 
 ```yaml
 cache:
@@ -114,4 +112,4 @@ cache:
 
 **Availability target:** 99.9%
 
-These SLOs apply to authorization check operations under normal load. Expansion and list operations may have higher latency depending on graph depth.
+SLOs apply to check operations under normal load. Expansion and list operations vary with graph depth.

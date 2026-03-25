@@ -7,7 +7,7 @@ doc_subtitle: Idiomatic Ruby client for InferaDB with Rails integration.
 
 > **Coming soon.** The Ruby SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official Ruby SDK (`inferadb`) provides an idiomatic client for InferaDB's authorization APIs. Requires Ruby 3.2+ and works with Rails, Sinatra, and any Rack-based framework.
+Idiomatic Ruby client for InferaDB's authorization APIs. Requires Ruby 3.2+. Works with Rails, Sinatra, and any Rack-based framework.
 
 ## Installation
 
@@ -162,8 +162,6 @@ subjects = vault.subjects
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
 
 ```ruby
@@ -174,11 +172,9 @@ client = InferaDB::Testing::MockClient.new do |mock|
   mock.on_check("user:bob", "can_edit", "document:readme").deny
   mock.on_check_any_subject("can_view", "document:readme").allow
   mock.default_deny
-  mock.verify_on_teardown!
+  mock.verify_on_teardown! # asserts all expectations were invoked on teardown
 end
 ```
-
-Calling `verify_on_teardown!` asserts that all registered expectations were invoked when the mock is torn down.
 
 ### InMemoryClient (Full Policy Evaluation)
 
@@ -285,12 +281,7 @@ module InferadbAuthorization
   private
 
   def authorize_inferadb!(permission, resource)
-    vault = InferaDB.vault
-    vault.require!(
-      "user:#{current_user.id}",
-      permission,
-      resource
-    )
+    InferaDB.vault.require!("user:#{current_user.id}", permission, resource)
   rescue InferaDB::AccessDeniedError
     head :forbidden
   end
@@ -298,10 +289,8 @@ end
 ```
 
 ```ruby
-# app/controllers/documents_controller.rb
 class DocumentsController < ApplicationController
   include InferadbAuthorization
-
   before_action :set_document
 
   def show
@@ -315,9 +304,7 @@ class DocumentsController < ApplicationController
 
   private
 
-  def set_document
-    @document = Document.find(params[:id])
-  end
+  def set_document = Document.find(params[:id])
 end
 ```
 

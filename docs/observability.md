@@ -5,10 +5,6 @@ doc_title: Observability
 doc_subtitle: Metrics, tracing, and logging across InferaDB services.
 ---
 
-## Overview
-
-InferaDB exposes Prometheus metrics, OpenTelemetry distributed traces, and structured JSON logs across all three services. Pre-built Grafana dashboards are included for common monitoring scenarios.
-
 ## Prometheus Metrics
 
 Each service exposes a `/metrics` endpoint in Prometheus exposition format.
@@ -84,11 +80,11 @@ engine:
 
 ## OpenTelemetry Tracing
 
-InferaDB exports distributed traces via the **OTLP protocol**. Traces span the full request lifecycle — from API ingestion through authentication, evaluation, storage reads, and response.
+Traces are exported via **OTLP**, spanning the full request lifecycle (API ingestion through evaluation and response).
 
 ### Configuration
 
-Tracing is configured via standard OpenTelemetry environment variables:
+Standard OpenTelemetry environment variables:
 
 | Variable                      | Default                    | Description                                                  |
 | ----------------------------- | -------------------------- | ------------------------------------------------------------ |
@@ -110,7 +106,7 @@ Traces are compatible with any OTLP-capable backend — Jaeger, Tempo, Honeycomb
 
 ## Structured Logging
 
-All services emit structured JSON logs to stdout. Log levels are controlled per-module using the `RUST_LOG` environment variable:
+Log levels are controlled per-module via `RUST_LOG`:
 
 ```bash
 # Set global level to info, with debug for the evaluator
@@ -139,7 +135,7 @@ Each log line is a JSON object:
 
 ### Audit Logging
 
-Security-relevant events are emitted as structured audit log entries in addition to being persisted to the Ledger:
+Security events are logged and persisted to the Ledger:
 
 | Event                      | Description                                      |
 | -------------------------- | ------------------------------------------------ |
@@ -152,11 +148,11 @@ These events are always logged at `WARN` or `ERROR` level regardless of the conf
 
 ## Grafana Dashboards
 
-InferaDB ships pre-built Grafana dashboards for common monitoring scenarios:
+Pre-built Grafana dashboards:
 
 - **Engine Overview** — Check rate, latency percentiles, cache hit ratio, error rate
 - **Ledger Health** — Raft leader status, write latency, replication lag, snapshot status
 - **Authentication** — Auth success/failure rate, JWKS cache performance, JWT error breakdown
 - **Tenant Activity** — Per-vault check volume, write rate, and cache efficiency
 
-Dashboards are available as JSON files in the repository and can be imported into Grafana directly or provisioned via Grafana's dashboard provisioning.
+Available as JSON files in the repository. Import directly or use Grafana dashboard provisioning.

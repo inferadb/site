@@ -7,7 +7,7 @@ doc_subtitle: PHP client for InferaDB with Laravel and Symfony integration.
 
 > **Coming soon.** The PHP SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official PHP SDK (`inferadb/inferadb-php`) provides a typed client for InferaDB's authorization APIs. Requires PHP 8.2+ and works with Laravel, Symfony, and any PSR-18 HTTP client.
+Typed client for InferaDB's authorization APIs. Requires PHP 8.2+. Works with Laravel, Symfony, and any PSR-18 HTTP client.
 
 ## Installation
 
@@ -170,8 +170,6 @@ $subjects = $vault->subjects()
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
 
 ```php
@@ -182,11 +180,9 @@ $client = MockClient::builder()
     ->onCheck('user:bob', 'can_edit', 'document:readme')->deny()
     ->onCheckAnySubject('can_view', 'document:readme')->allow()
     ->defaultDeny()
-    ->verifyOnDestruct(true)
+    ->verifyOnDestruct(true) // asserts all expectations were invoked on destruct
     ->build();
 ```
-
-Setting `verifyOnDestruct(true)` asserts that all registered expectations were invoked when the client is destroyed — preventing silent untested assumptions.
 
 ### InMemoryClient (Full Policy Evaluation)
 
@@ -302,8 +298,6 @@ class InferaDBAuthorize
 }
 ```
 
-Register in routes:
-
 ```php
 Route::get('/documents/{document}', [DocumentController::class, 'show'])
     ->middleware('inferadb:can_view');
@@ -312,7 +306,7 @@ Route::put('/documents/{document}', [DocumentController::class, 'update'])
     ->middleware('inferadb:can_edit');
 ```
 
-### Laravel Gate Integration
+### Laravel Gate
 
 ```php
 // app/Providers/AuthServiceProvider.php

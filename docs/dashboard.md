@@ -7,16 +7,15 @@ doc_subtitle: A web-based management interface for InferaDB tenants, policies, a
 
 ## Overview
 
-The InferaDB Dashboard is a single-page application for managing your authorization infrastructure. It provides visual tools for editing IPL policies, exploring relationships, simulating authorization decisions, and reviewing audit logs.
+The InferaDB Dashboard is a single-page application for managing authorization infrastructure. Edit IPL policies, explore relationships, simulate decisions, and review audit logs.
 
 ## Features
 
 ### Tenant Management
 
-Create, configure, and manage organizations and vaults from a unified interface. The dashboard supports the full Organization → Vault hierarchy, letting you:
+Manage the full Organization → Vault hierarchy:
 
-- Create and configure organizations
-- Provision and manage vaults within each organization
+- Create and configure organizations and vaults
 - Manage team membership and user grants
 - View vault-level metrics and health status
 
@@ -24,31 +23,31 @@ Create, configure, and manage organizations and vaults from a unified interface.
 
 A built-in code editor for writing and managing [IPL schemas](/docs/ipl):
 
-- **Syntax highlighting** — IPL keywords, types, relations, and operators are highlighted for readability
-- **Real-time validation** — Schema errors are surfaced inline as you type, with line-level diagnostics
+- **Syntax highlighting** — IPL keywords, types, relations, and operators
+- **Real-time validation** — See schema errors inline as you type, with line-level diagnostics
 - **Push to Engine** — Deploy schema changes directly from the editor
 
 ### Decision Simulator
 
-Test authorization checks interactively without writing code:
+Test authorization checks interactively:
 
 1. Select a vault and schema version
 2. Enter a subject, relation, and resource
-3. Run the check and inspect the result, including the evaluation trace and timing
+3. Run the check and inspect the result, evaluation trace, and timing
 
-The simulator is useful for debugging unexpected ALLOW or DENY results — the evaluation trace shows exactly which relations were traversed.
+Debug unexpected ALLOW or DENY results — the trace shows exactly which relations were traversed.
 
 ### Relationship Graph Visualizer
 
-An interactive graph view of your authorization data. Entities are rendered as nodes and relationships as directed edges, making it straightforward to:
+Interactive graph view of authorization data. Entities render as nodes, relationships as directed edges.
 
-- Explore how permissions are connected across your entity hierarchy
+- Explore permission connections across your entity hierarchy
 - Identify unexpected paths between subjects and resources
 - Filter by type, relation, or entity ID
 
 ### Audit Explorer
 
-Browse and search the immutable audit trail. Each entry includes:
+Browse and search the immutable audit trail. Entries include:
 
 - Timestamp
 - Decision result (ALLOW / DENY)
@@ -60,7 +59,7 @@ Filter by time range, subject, resource, result, or vault.
 
 ## Configuration
 
-The dashboard connects to the Engine and Control APIs via two environment variables:
+Configure Engine and Control API endpoints via environment variables:
 
 | Variable          | Default                 | Description                      |
 | ----------------- | ----------------------- | -------------------------------- |
@@ -69,7 +68,7 @@ The dashboard connects to the Engine and Control APIs via two environment variab
 
 ## Development
 
-Start the dashboard development server:
+Start the development server:
 
 ```bash
 cd dashboard
@@ -77,7 +76,7 @@ npm install
 npm run dev
 ```
 
-The dev server runs at [http://localhost:5173](http://localhost:5173) with hot module replacement enabled.
+Runs at [http://localhost:5173](http://localhost:5173) with hot module replacement.
 
 ### Running Tests
 
@@ -88,7 +87,7 @@ npm run test:watch  # Watch mode
 
 ## Accessing the Dashboard
 
-When running the full local stack via `inferadb dev start`, the dashboard is available at [http://localhost:3000](http://localhost:3000). In Kubernetes deployments, use `kubectl port-forward` to access it:
+With `inferadb dev start`, the dashboard is at [http://localhost:3000](http://localhost:3000). For Kubernetes deployments:
 
 ```bash
 kubectl port-forward svc/inferadb-dashboard 3000:3000

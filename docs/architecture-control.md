@@ -7,7 +7,7 @@ doc_subtitle: Deep dive into InferaDB's control plane — tenant management, aut
 
 ## Overview
 
-The Control service is InferaDB's **control plane**. It exposes a REST API at `/v1/` for managing organizations, vaults, users, clients, tokens, and audit logs. It handles all administrative operations and issues the credentials that clients use to authenticate with the Engine.
+The Control service is InferaDB's **control plane**. It exposes a REST API at `/v1/` for managing organizations, vaults, users, clients, tokens, and audit logs. It issues the credentials clients use to authenticate with the Engine.
 
 ## API Endpoints
 
@@ -90,18 +90,18 @@ The Control service is InferaDB's **control plane**. It exposes a REST API at `/
 
 ### Two-Token Design
 
-The Control service uses a two-token architecture:
+Two-token architecture:
 
-1. **Session tokens** — 256-bit cryptographically random tokens used for browser and CLI sessions. Stored in the OS keychain for CLI users.
-2. **Vault-scoped JWTs** — Ed25519-signed JWTs scoped to a specific vault. Used by API clients to authenticate with the Engine.
+1. **Session tokens** — 256-bit random tokens for browser and CLI sessions. Stored in the OS keychain for CLI.
+2. **Vault-scoped JWTs** — Ed25519-signed, vault-scoped. Used by API clients to authenticate with the Engine.
 
 ### Refresh Token Rotation
 
-When a client refreshes a token, the old refresh token is immediately invalidated and a new one is issued. If a previously-used refresh token is presented (replay), all tokens in the family are revoked — this detects token theft.
+On refresh, the old token is immediately invalidated. Replay of a used refresh token revokes the entire token family, detecting theft.
 
 ### Password Hashing
 
-Passwords are hashed with **Argon2id** using the following parameters:
+**Argon2id** password hashing:
 
 | Parameter   | Value   |
 | ----------- | ------- |
@@ -111,7 +111,7 @@ Passwords are hashed with **Argon2id** using the following parameters:
 
 ## Entity IDs
 
-All entities (users, organizations, vaults, clients) use **Twitter Snowflake** IDs — 64-bit integers that encode a timestamp, machine ID, and sequence number. Snowflake IDs are globally unique, roughly time-ordered, and fit in a single 64-bit integer.
+All entities use **Snowflake IDs** — 64-bit integers encoding timestamp, machine ID, and sequence. Globally unique and roughly time-ordered.
 
 ## Organization Tiers
 
@@ -128,4 +128,4 @@ All entities (users, organizations, vaults, clients) use **Twitter Snowflake** I
 | Login        | 100 / hour |
 | Registration | 5 / day    |
 
-Rate limits are applied per-IP and are designed to prevent brute-force attacks without impacting normal usage.
+Per-IP rate limits to prevent brute-force attacks.

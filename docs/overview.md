@@ -10,9 +10,7 @@ related:
   - /docs/architecture
 ---
 
-InferaDB is an inference-driven authorization database that answers the question every application must ask — *"can this user do this?"* — in microseconds.
-
-It unifies **Relationship-Based Access Control (ReBAC)**, **Role-Based Access Control (RBAC)**, and **Attribute-Based Access Control (ABAC)** in a single system, with cryptographic audit trails and multi-tenant isolation at the storage layer.
+InferaDB is a distributed authorization database. It answers *"can this user do this?"* in microseconds, unifying ReBAC, RBAC, and ABAC with cryptographic audit trails and per-tenant storage isolation.
 
 ## Key Capabilities
 
@@ -25,7 +23,7 @@ It unifies **Relationship-Based Access Control (ReBAC)**, **Role-Based Access Co
 
 ## Architecture
 
-InferaDB consists of three server components:
+Three server components:
 
 | Component | Role | Port(s) |
 |-----------|------|---------|
@@ -35,11 +33,11 @@ InferaDB consists of three server components:
 
 ## How It Works
 
-1. **Define your model** in the [Infera Policy Language (IPL)](/docs/ipl) — a declarative syntax for entities, relations, and permissions.
-2. **Write relationships** (tuples) via the [REST](/docs/api-rest) or [gRPC](/docs/api-grpc) APIs — e.g., `(user:alice, editor, document:readme)`.
-3. **Check permissions** — ask "can user X do Y on resource Z?" and get a sub-millisecond answer with a full explanation path.
+1. **Define your model** in the [Infera Policy Language (IPL)](/docs/ipl) — entities, relations, and permissions.
+2. **Write relationships** (tuples) via [REST](/docs/api-rest) or [gRPC](/docs/api-grpc) — e.g., `(user:alice, editor, document:readme)`.
+3. **Check permissions** — sub-millisecond answers with full explanation paths.
 
-## Developer Tools
+## Tooling
 
 - **[CLI](/docs/cli)** — `inferadb check`, `inferadb simulate`, `inferadb policy branch`
 - **[Rust SDK](/docs/sdk-rust)** — Type-safe, async-first client with MockClient for testing
@@ -48,4 +46,4 @@ InferaDB consists of three server components:
 
 ## Open Source
 
-InferaDB is dual-licensed under [MIT](https://github.com/inferadb/inferadb/blob/main/LICENSE-MIT) and [Apache 2.0](https://github.com/inferadb/inferadb/blob/main/LICENSE-APACHE). The source code is on [GitHub](https://github.com/inferadb).
+Dual-licensed under [MIT](https://github.com/inferadb/inferadb/blob/main/LICENSE-MIT) and [Apache 2.0](https://github.com/inferadb/inferadb/blob/main/LICENSE-APACHE). Source on [GitHub](https://github.com/inferadb).

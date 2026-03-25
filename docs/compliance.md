@@ -7,7 +7,7 @@ doc_subtitle: How InferaDB maps to common regulatory and compliance frameworks.
 
 ## Overview
 
-InferaDB's architecture — immutable audit trails, cryptographic integrity, fine-grained access control, and tenant isolation — maps directly to requirements in major compliance frameworks. This page documents the specific controls and how InferaDB addresses them.
+InferaDB's built-in controls map directly to major compliance frameworks.
 
 ## Framework Mapping
 
@@ -62,7 +62,7 @@ InferaDB's architecture — immutable audit trails, cryptographic integrity, fin
 
 ## Audit Trail
 
-The audit trail is the foundation of InferaDB's compliance story. Every authorization decision produces an audit entry containing:
+Every authorization decision produces an audit entry:
 
 | Field            | Description                                      |
 | ---------------- | ------------------------------------------------ |
@@ -76,25 +76,23 @@ The audit trail is the foundation of InferaDB's compliance story. Every authoriz
 
 ### Integrity Properties
 
-- **Append-only** — Entries cannot be modified or deleted after creation
-- **Hash-chained** — Each entry includes the hash of the previous entry, forming a tamper-evident chain
-- **Anchored** — The chain is committed to the Ledger's per-vault blockchain
-
-These properties mean any attempt to modify historical audit data would break the hash chain, making tampering detectable.
+- **Append-only** — Entries cannot be modified or deleted
+- **Hash-chained** — Each entry includes the previous entry's hash, forming a tamper-evident chain
+- **Anchored** — Committed to the Ledger's per-vault blockchain
 
 ## Cryptographic Shredding
 
-For GDPR Article 17 (Right to Erasure), InferaDB supports **cryptographic shredding**. Each vault's data is encrypted with a vault-specific key. Deleting the key renders all vault data unrecoverable without needing to locate and delete individual records.
+Each vault's data is encrypted with a vault-specific key. Deleting the key renders all vault data unrecoverable (GDPR Article 17).
 
 ## Data Residency
 
-InferaDB enforces data residency at the vault level. Vaults are pinned to a specific region using the Ledger's region-based Raft groups:
+Vaults are pinned to a region via the Ledger's region-based Raft groups:
 
 ```bash
 # Create a vault pinned to EU region
 inferadb vaults create --name "eu-customers" --region eu-west-1
 ```
 
-Data for a region-pinned vault is only stored on Ledger nodes within that region. This satisfies GDPR data residency requirements and similar regulations that mandate geographic data boundaries.
+Data for a region-pinned vault never leaves that region's Ledger nodes.
 
 See [Ledger Architecture](/docs/architecture-ledger) for details on multi-region Raft groups.

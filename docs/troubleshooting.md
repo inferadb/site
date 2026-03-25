@@ -7,7 +7,7 @@ doc_subtitle: Debug unexpected authorization decisions.
 
 ## Unexpected DENIED
 
-Your check returned `DENIED` when you expected `ALLOWED`. Work through these steps in order.
+Your check returned `DENIED` when you expected `ALLOWED`.
 
 ### 1. Verify the Relationship Exists
 
@@ -15,7 +15,7 @@ Your check returned `DENIED` when you expected `ALLOWED`. Work through these ste
 inferadb relationships list --resource document:readme --subject user:alice
 ```
 
-If the relationship isn't listed, it was never written — or it was written to a different vault.
+If missing, the relationship was never written or was written to a different vault.
 
 ### 2. Check the Schema
 
@@ -23,7 +23,7 @@ If the relationship isn't listed, it was never written — or it was written to 
 inferadb schemas diff
 ```
 
-Make sure your schema has been pushed. A common mistake: editing `schema.ipl` locally without running `inferadb schemas push`.
+Verify your schema has been pushed. Common mistake: editing `schema.ipl` locally without running `inferadb schemas push`.
 
 ### 3. Trace the Permission
 
@@ -31,11 +31,11 @@ Make sure your schema has been pushed. A common mistake: editing `schema.ipl` lo
 inferadb explain-permission document:readme can_edit user:alice
 ```
 
-This shows the full evaluation tree — which branches were evaluated, which matched, and which didn't. Look for:
+Shows the full evaluation tree. Look for:
 
-- **Missing intermediate relationships** — e.g., `viewer from folder` requires both a `folder` relation on the document AND a `viewer` relation on that folder
-- **Forbid rules** — if a `forbid` matches, it overrides all permits
-- **WASM module returning deny** — check module logs with `inferadb dev logs engine`
+- **Missing intermediate relationships** — `viewer from folder` requires both a `folder` relation on the document AND a `viewer` relation on that folder
+- **Forbid rules** — a matching `forbid` overrides all permits
+- **WASM module returning deny** — check logs with `inferadb dev logs engine`
 
 ### 4. Check Revision Freshness
 
@@ -43,9 +43,9 @@ This shows the full evaluation tree — which branches were evaluated, which mat
 inferadb check document:readme can_edit user:alice --revision latest
 ```
 
-If this succeeds but the original check failed, your client may be holding a stale revision token. The check was evaluated against an older snapshot that didn't include the relationship write.
+If this succeeds but the original check failed, your client is holding a stale revision token.
 
-**Fix:** Pass the revision token from your most recent write to subsequent reads using `at_least_as_fresh`.
+**Fix:** Pass the write response token to subsequent reads using `at_least_as_fresh`.
 
 ### 5. Check Vault Scope
 
@@ -53,7 +53,7 @@ If this succeeds but the original check failed, your client may be holding a sta
 inferadb whoami
 ```
 
-Confirm you're authenticated against the correct organization and vault. A JWT scoped to Vault A cannot see relationships in Vault B.
+Confirm the correct organization and vault. A JWT scoped to Vault A cannot see Vault B relationships.
 
 ## Unexpected ALLOWED
 
@@ -65,7 +65,7 @@ Your check returned `ALLOWED` when you expected `DENIED`.
 inferadb relationships list --resource document:readme --subject "user:*"
 ```
 
-A wildcard grant (`user:*`) gives all users the relation. This is common for public resources but easy to set accidentally.
+A wildcard grant (`user:*`) gives all users the relation. Common for public resources but easy to set accidentally.
 
 ### 2. Trace the Permission
 
@@ -73,11 +73,11 @@ A wildcard grant (`user:*`) gives all users the relation. This is common for pub
 inferadb explain-permission document:readme can_view user:bob
 ```
 
-Look at which branch of the permission expression matched. Common surprises:
+Check which branch matched. Common surprises:
 
-- **Inherited access** — a `viewer from folder` or `member from org` grant that you forgot about
+- **Inherited access** — a forgotten `viewer from folder` or `member from org` grant
 - **Union (`|`) is additive** — any single branch granting access means ALLOWED
-- **WASM module returning allow** — the module may be approving based on context you didn't expect
+- **WASM module returning allow** — the module may approve on unexpected context
 
 ### 3. Check for Missing Forbid Rules
 
@@ -91,11 +91,11 @@ Forbid rules only trigger if the relationship tuple exists.
 
 ## Indeterminate Results
 
-Exit code `21` means the check couldn't be resolved. This is rare and usually indicates:
+Exit code `21` means the check couldn't resolve. Usually indicates:
 
-- **Cycle in the schema** — run `inferadb schemas validate` to detect cycles
-- **WASM module timeout** — check engine logs for `wasm_timeout` entries
-- **Ledger unavailable** — the Engine couldn't reach the Ledger for fresh data
+- **Schema cycle** — run `inferadb schemas validate` to detect
+- **WASM module timeout** — check engine logs for `wasm_timeout`
+- **Ledger unavailable** — Engine couldn't reach Ledger for fresh data
 
 ```bash
 inferadb dev logs engine | grep -i "error\|timeout\|unavailable"

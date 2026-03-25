@@ -7,7 +7,7 @@ doc_subtitle: Type-safe Java client for InferaDB.
 
 > **Coming soon.** The Java SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official Java SDK (`com.inferadb:inferadb-sdk`) provides a typed, fluent client for InferaDB's authorization APIs. Requires Java 17+.
+Typed, fluent client for InferaDB. Requires Java 17+.
 
 ## Installation
 
@@ -77,7 +77,6 @@ var client = InferaDB.builder()
 ```java
 var vault = client.organization("my-org").vault("production");
 
-// Simple check
 boolean allowed = vault.check("user:alice", "can_edit", "document:readme");
 ```
 
@@ -180,9 +179,9 @@ var subjects = vault.subjects()
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
+
+Stub specific check results. With `verifyOnClose(true)`, all expectations are asserted on `client.close()` -- use with try-with-resources.
 
 ```java
 import com.inferadb.testing.MockClient;
@@ -195,8 +194,6 @@ var client = MockClient.builder()
     .verifyOnClose(true)
     .build();
 ```
-
-Setting `verifyOnClose(true)` asserts that all registered expectations were invoked when `client.close()` is called — preventing silent untested assumptions. Use with try-with-resources for automatic verification.
 
 ### InMemoryClient (Full Policy Evaluation)
 
@@ -220,11 +217,12 @@ var client = InMemoryClient.withSchemaAndData(
 
 ### TestVault (Real Instance)
 
+Auto-cleans up on close via try-with-resources.
+
 ```java
 import com.inferadb.testing.TestVault;
 
 try (var vault = TestVault.create(org, schemaIpl)) {
-    // vault auto-cleans up on close
     boolean allowed = vault.check("user:alice", "can_edit", "document:readme");
 }
 ```

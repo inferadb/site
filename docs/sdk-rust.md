@@ -5,7 +5,7 @@ doc_title: Rust SDK
 doc_subtitle: Type-safe, async-first client library for InferaDB.
 ---
 
-The official Rust SDK (`inferadb` crate) provides idiomatic bindings for all InferaDB APIs. Published on [crates.io](https://crates.io/crates/inferadb). MSRV: Rust 1.88.0.
+Idiomatic bindings for all InferaDB APIs. Published on [crates.io](https://crates.io/crates/inferadb). MSRV: 1.88.0.
 
 ## Installation
 
@@ -45,7 +45,6 @@ let client = Client::builder()
 ```rust
 let vault = client.organization("my-org").vault("production");
 
-// Simple check
 let allowed = vault.check("user:alice", "can_edit", "document:readme").await?;
 
 // With ABAC context
@@ -126,8 +125,6 @@ let subjects = vault.subjects()
 
 ## Testing
 
-Three approaches, each with different trade-offs:
-
 ### MockClient (Fastest)
 
 ```rust
@@ -160,9 +157,10 @@ let client = InMemoryClient::with_schema_and_data(
 
 ### TestVault (Real Instance)
 
+Auto-cleans up on drop.
+
 ```rust
 let vault = TestVault::create_with_schema(&org, schema_ipl).await;
-// vault auto-cleans up on drop
 ```
 
 ## Error Handling

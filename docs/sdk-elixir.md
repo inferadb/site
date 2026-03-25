@@ -7,7 +7,7 @@ doc_subtitle: Idiomatic Elixir client for InferaDB with Phoenix integration.
 
 > **Coming soon.** The Elixir SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official Elixir SDK (`inferadb`) provides a fault-tolerant, process-based client for InferaDB's authorization APIs. Requires Elixir 1.16+ / OTP 26+ and integrates with Phoenix and any Plug-based application.
+Fault-tolerant, process-based client for InferaDB's authorization APIs. Requires Elixir 1.16+ / OTP 26+. Integrates with Phoenix and any Plug-based application.
 
 ## Installation
 
@@ -60,7 +60,7 @@ Three authentication methods:
 
 ### Client Credentials (Recommended)
 
-Configured via the application config above, or explicitly:
+Via application config above, or explicitly:
 
 ```elixir
 {:ok, client} = InferaDB.start_link(
@@ -194,12 +194,9 @@ InferaDB.all_allowed?(results) # => true/false
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
 
 ```elixir
-# test/support/inferadb_mock.ex
 alias InferaDB.Testing.MockClient
 
 client = MockClient.new()
@@ -208,8 +205,7 @@ client = MockClient.new()
   |> MockClient.on_check_any_subject("can_view", "document:readme", :allow)
   |> MockClient.default_deny()
 
-# Verify all expectations were met
-MockClient.verify!(client)
+MockClient.verify!(client) # asserts all expectations were met
 ```
 
 ### InMemoryClient (Full Policy Evaluation)
@@ -273,7 +269,7 @@ end
 
 ## Error Handling
 
-InferaDB follows Elixir conventions with `{:ok, result}` / `{:error, reason}` tuples and bang (`!`) variants that raise:
+Standard `{:ok, result}` / `{:error, reason}` tuples with bang variants that raise:
 
 ```elixir
 case InferaDB.check(vault, "user:alice", "can_edit", "document:readme") do

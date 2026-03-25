@@ -7,7 +7,7 @@ doc_subtitle: InferaDB's security model, threat mitigations, and defense-in-dept
 
 ## Zero-Trust Architecture
 
-InferaDB is built on a zero-trust security model. No component implicitly trusts another — every request is authenticated, every action is authorized, and every decision is logged.
+InferaDB enforces zero trust: every request is authenticated, authorized, and logged.
 
 ## Threat Model
 
@@ -33,7 +33,7 @@ All data in InferaDB is **vault-scoped**. A vault is the fundamental isolation b
 
 ### Immutable Audit Trail
 
-Every authorization decision is logged to an append-only, hash-chained audit trail. Each entry contains:
+Every authorization decision is logged to an append-only, hash-chained audit trail:
 
 | Field            | Description                                     |
 | ---------------- | ----------------------------------------------- |
@@ -45,7 +45,7 @@ Every authorization decision is logged to an append-only, hash-chained audit tra
 | Timestamp        | When the decision was made                      |
 | Signature        | Cryptographic signature over the entry          |
 
-Entries are hash-chained — each entry includes the hash of the previous entry, making retroactive modification detectable. The chain is anchored in the Ledger's per-vault blockchain.
+Each entry includes the previous entry's hash, making retroactive modification detectable. The chain is anchored in the Ledger's per-vault blockchain.
 
 ### WASM Sandbox Security
 
@@ -63,7 +63,7 @@ Modules are validated at upload time and rejected if they import disallowed host
 
 ### Signed Releases
 
-All InferaDB releases are cryptographically signed. Verify release signatures before deploying:
+All releases are cryptographically signed:
 
 ```bash
 inferadb verify v1.2.3
@@ -71,22 +71,19 @@ inferadb verify v1.2.3
 
 ### Software Bill of Materials (SBOM)
 
-Every release ships with an SBOM in SPDX format, listing all dependencies and their versions.
+Every release includes an SBOM in SPDX format.
 
 ### Dependency Scanning
 
-Dependencies are continuously scanned for known vulnerabilities using automated tooling in CI.
+Dependencies are scanned for known vulnerabilities in CI.
 
 ### Container Image Signing
 
-Container images are signed and can be verified using admission controllers:
-
-- **Kyverno** policies enforce that only signed InferaDB images are admitted to the cluster
-- Image signatures are published alongside each release
+Container images are signed. Use Kyverno admission policies to enforce signature verification.
 
 ### Vulnerability Scanning
 
-All container images are scanned with **Trivy** before publication. Images with critical or high-severity vulnerabilities are not released.
+All images are scanned with **Trivy** before publication. Critical/high-severity vulnerabilities block release.
 
 ## Reporting Security Issues
 

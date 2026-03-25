@@ -7,7 +7,7 @@ doc_subtitle: Async and sync Python client for InferaDB.
 
 > **Coming soon.** The Python SDK is under active development. The API surface shown here is based on the [Rust SDK](/docs/sdk-rust) and may change before release.
 
-The official Python SDK (`inferadb`) provides both async (`asyncio`) and synchronous clients for InferaDB's authorization APIs. Requires Python 3.10+.
+Async and sync clients for InferaDB's authorization APIs. Requires Python 3.10+.
 
 ## Installation
 
@@ -66,12 +66,9 @@ client = InferaDB(
 
 ## Permission Checks
 
-### Async API
-
 ```python
 vault = client.organization("my-org").vault("production")
 
-# Simple check
 allowed = await vault.check("user:alice", "can_edit", "document:readme")
 ```
 
@@ -178,9 +175,9 @@ subjects = await vault.subjects.with_permission(
 
 ## Testing
 
-Three approaches with different trade-offs:
-
 ### MockClient (Fastest)
+
+Stub specific check results. Call `assert_expectations()` to verify all stubs were hit.
 
 ```python
 from inferadb.testing import MockClient
@@ -193,13 +190,12 @@ client = (
     .default_deny()
 )
 
-# At end of test, verify all expectations were met
 client.assert_expectations()
 ```
 
 ### InMemoryClient (Full Policy Evaluation)
 
-The `InMemoryClient` evaluates policies locally with no I/O. Construction is synchronous:
+Evaluates policies locally with no I/O. Synchronous construction.
 
 ```python
 from inferadb.testing import InMemoryClient
@@ -221,12 +217,12 @@ client = InMemoryClient.with_schema_and_data(
 
 ### TestVault (Real Instance)
 
+Runs against a live InferaDB instance. Auto-cleans up on GC; call `vault.preserve()` to keep data for debugging.
+
 ```python
 from inferadb.testing import TestVault
 
 vault = await TestVault.create(org, schema=schema_ipl)
-# vault auto-cleans up when garbage collected
-# call vault.preserve() to keep data for debugging
 ```
 
 ### pytest Integration
@@ -289,7 +285,7 @@ async def get_document(
     return {"id": doc_id}
 ```
 
-The `require_permission` dependency resolves the resource from the path parameters automatically via the route definition. Pass an explicit `resource` callback to override:
+Resource is resolved from path parameters automatically. Override with an explicit `resource` callback:
 
 ```python
 require_permission(

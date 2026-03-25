@@ -17,16 +17,17 @@ body_class: page-docs
 <div class="docs-layout">
   <aside class="docs-sidebar">
     <div class="docs-sidebar-inner">
-      <a href="/docs/" class="docs-sidebar-title">Documentation</a>
       <button class="search-trigger" id="search-trigger" aria-label="Search documentation">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
         <span>Search</span>
-        <kbd>⌘K</kbd>
       </button>
       <nav class="docs-nav" aria-label="Documentation navigation">
         {% for group in site.data.docs_nav %}
-        <div class="docs-nav-group">
-          <h4 class="docs-nav-heading">{{ group.section }}</h4>
+        <div class="docs-nav-group{% for item in group.items %}{% assign item_url_slash = item.url | append: '/' %}{% if page.url == item.url or page.url == item_url_slash %} open{% endif %}{% endfor %}">
+          <button class="docs-nav-heading" aria-expanded="false">
+            <span>{{ group.section }}</span>
+            <svg class="docs-nav-chevron" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+          </button>
           <ul>
             {% for item in group.items %}
             <li>
@@ -41,6 +42,21 @@ body_class: page-docs
     </div>
   </aside>
   <main class="docs-content">
+    {% for group in site.data.docs_nav %}
+      {% for item in group.items %}
+        {% assign item_url_slash = item.url | append: '/' %}
+        {% if page.url == item.url or page.url == item_url_slash %}
+          {% assign breadcrumb_section = group.section %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    {% if breadcrumb_section %}
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <a href="/docs/">Docs</a>
+      <span class="docs-breadcrumb-sep">/</span>
+      <span>{{ breadcrumb_section }}</span>
+    </nav>
+    {% endif %}
     <article>
       {% if page.doc_title %}
       <header class="docs-header">
@@ -50,7 +66,6 @@ body_class: page-docs
         {% endif %}
       </header>
       {% endif %}
-
       {% comment %}Build flat list of all doc pages for prev/next{% endcomment %}
       {% assign all_docs = "" | split: "" %}
       {% for group in site.data.docs_nav %}
@@ -69,6 +84,44 @@ body_class: page-docs
       {% endfor %}
 
       {{ content }}
+
+      {% if page.related %}
+      {% assign related_items = "" | split: "" %}
+      {% for rel_url in page.related %}
+        {% for group in site.data.docs_nav %}
+          {% for item in group.items %}
+            {% if item.url == rel_url %}
+              {% assign related_items = related_items | push: item %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+      {% if related_items.size > 0 %}
+      <nav class="docs-related" aria-label="Related pages">
+        <h4 class="docs-related-label">Related</h4>
+        <div class="docs-related-grid">
+          {% for item in related_items %}
+          <a href="{{ item.url }}" class="docs-related-link">
+            <span class="docs-related-title">{{ item.title }}</span>
+            <span class="docs-related-excerpt">{{ item.excerpt }}</span>
+          </a>
+          {% endfor %}
+        </div>
+      </nav>
+      {% endif %}
+      {% endif %}
+
+      {% if current_idx >= 0 %}
+      <div class="docs-footer-meta">
+        <a href="{{ site.github_repo }}/edit/main/{{ page.path }}" class="docs-edit-link" target="_blank" rel="noopener">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Edit on GitHub
+        </a>
+        {% if page.last_updated %}
+        <span class="docs-updated">Last updated {{ page.last_updated | date: "%B %d, %Y" }}</span>
+        {% endif %}
+      </div>
+      {% endif %}
 
       {% comment %}Previous/Next pager{% endcomment %}
       {% if current_idx >= 0 %}

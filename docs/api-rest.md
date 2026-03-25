@@ -3,6 +3,7 @@ layout: docs
 title: REST API — InferaDB
 doc_title: REST API Reference
 doc_subtitle: HTTP endpoints for the InferaDB Engine.
+last_updated: 2026-03-24
 ---
 
 The Engine exposes a REST API on port **8080** (default). All endpoints accept and return JSON.

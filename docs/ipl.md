@@ -3,6 +3,10 @@ layout: docs
 title: IPL Overview — InferaDB
 doc_title: Infera Policy Language
 doc_subtitle: A declarative language for modeling entities, relationships, and permissions.
+related:
+  - /docs/ipl-reference
+  - /docs/patterns
+  - /docs/wasm
 ---
 
 The **Infera Policy Language (IPL)** defines your authorization model — what types of entities exist, how they relate to each other, and what permissions are derived from those relationships.

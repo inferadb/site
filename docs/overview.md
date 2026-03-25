@@ -3,6 +3,11 @@ layout: docs
 title: What is InferaDB? — InferaDB
 doc_title: What is InferaDB?
 doc_subtitle: A distributed authorization database for fine-grained access control at scale.
+last_updated: 2026-03-24
+related:
+  - /docs/quickstart
+  - /docs/concepts
+  - /docs/architecture
 ---
 
 InferaDB is an inference-driven authorization database that answers the question every application must ask — *"can this user do this?"* — in microseconds.

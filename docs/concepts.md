@@ -3,6 +3,11 @@ layout: docs
 title: Core Concepts — InferaDB
 doc_title: Core Concepts
 doc_subtitle: The foundational ideas behind InferaDB's authorization model.
+last_updated: 2026-03-24
+related:
+  - /docs/ipl
+  - /docs/modeling
+  - /docs/overview
 ---
 
 ## Authorization Models

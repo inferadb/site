@@ -100,10 +100,21 @@ document.querySelectorAll('pre').forEach(function(pre) {
     a.appendChild(section);
     a.appendChild(title);
 
-    if (item.excerpt) {
+    var snippetText = item.excerpt || '';
+    var q = query.toLowerCase();
+    if (item.content && item.content.toLowerCase().indexOf(q) >= 0
+        && item.title.toLowerCase().indexOf(q) < 0
+        && (!item.excerpt || item.excerpt.toLowerCase().indexOf(q) < 0)) {
+      var idx = item.content.toLowerCase().indexOf(q);
+      var start = Math.max(0, idx - 40);
+      var end = Math.min(item.content.length, idx + query.length + 60);
+      snippetText = (start > 0 ? '\u2026' : '') + item.content.substring(start, end) + (end < item.content.length ? '\u2026' : '');
+    }
+
+    if (snippetText) {
       var excerpt = document.createElement('div');
       excerpt.className = 'search-result-excerpt';
-      excerpt.textContent = item.excerpt;
+      excerpt.textContent = snippetText;
       a.appendChild(excerpt);
     }
 
@@ -118,7 +129,8 @@ document.querySelectorAll('pre').forEach(function(pre) {
     var matches = index.filter(function(item) {
       return item.title.toLowerCase().indexOf(q) >= 0
         || item.excerpt.toLowerCase().indexOf(q) >= 0
-        || item.section.toLowerCase().indexOf(q) >= 0;
+        || item.section.toLowerCase().indexOf(q) >= 0
+        || (item.content && item.content.toLowerCase().indexOf(q) >= 0);
     }).slice(0, 10);
 
     if (!matches.length) {
@@ -293,8 +305,28 @@ document.querySelectorAll('pre').forEach(function(pre) {
   });
 })();
 
-// 3. Heading anchor links
+// Heading anchor links
 (function() {
+  function createLinkIcon() {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '16');
+    svg.setAttribute('height', '16');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+    var p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p1.setAttribute('d', 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71');
+    var p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p2.setAttribute('d', 'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71');
+    svg.appendChild(p1);
+    svg.appendChild(p2);
+    return svg;
+  }
+
   document.querySelectorAll('.docs-content article h2, .docs-content article h3, .post-body h2, .post-body h3').forEach(function(h) {
     if (h.closest('.card, .docs-hub-card, .docs-hub, .card-grid')) return;
     if (!h.id) {
@@ -303,8 +335,8 @@ document.querySelectorAll('pre').forEach(function(pre) {
     var anchor = document.createElement('a');
     anchor.className = 'heading-anchor';
     anchor.href = '#' + h.id;
-    anchor.textContent = '#';
-    anchor.setAttribute('aria-label', 'Link to this section');
+    anchor.setAttribute('aria-label', 'Copy link to ' + h.textContent.trim());
+    anchor.appendChild(createLinkIcon());
     h.appendChild(anchor);
   });
 })();
@@ -319,6 +351,91 @@ document.querySelectorAll('pre').forEach(function(pre) {
   sidebar.addEventListener('scroll', function() {
     sessionStorage.setItem(key, sidebar.scrollTop);
   }, { passive: true });
+})();
+
+// Collapsible sidebar sections (with sessionStorage persistence)
+(function() {
+  var groups = document.querySelectorAll('.docs-nav-group');
+  if (!groups.length) return;
+
+  var storageKey = 'docs-sidebar-sections';
+  var saved = sessionStorage.getItem(storageKey);
+  var savedState = null;
+
+  if (saved) {
+    try { savedState = JSON.parse(saved); } catch (e) { /* ignore */ }
+  }
+
+  // Restore saved state if available, otherwise keep Liquid-rendered defaults
+  if (savedState && savedState.length === groups.length) {
+    groups.forEach(function(group, i) {
+      if (savedState[i]) {
+        group.classList.add('open');
+      } else {
+        group.classList.remove('open');
+      }
+    });
+  }
+
+  // Always ensure the section containing the active page is open
+  groups.forEach(function(group) {
+    if (group.querySelector('a.active')) {
+      group.classList.add('open');
+    }
+  });
+
+  function persistState() {
+    var state = [];
+    groups.forEach(function(group) {
+      state.push(group.classList.contains('open'));
+    });
+    sessionStorage.setItem(storageKey, JSON.stringify(state));
+  }
+
+  groups.forEach(function(group) {
+    var btn = group.querySelector('.docs-nav-heading');
+    if (!btn) return;
+    var isOpen = group.classList.contains('open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+    btn.addEventListener('click', function() {
+      var wasOpen = group.classList.contains('open');
+      group.classList.toggle('open');
+      btn.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
+      persistState();
+    });
+  });
+})();
+
+// Docs feedback widget
+(function() {
+  var container = document.getElementById('docs-feedback');
+  if (!container) return;
+
+  var key = 'docs-feedback:' + window.location.pathname;
+  var saved = localStorage.getItem(key);
+  var thanks = container.querySelector('.docs-feedback-thanks');
+  var buttons = container.querySelectorAll('.docs-feedback-btn');
+
+  if (saved) {
+    buttons.forEach(function(btn) {
+      if (btn.dataset.value === saved) btn.classList.add('selected');
+      btn.disabled = true;
+    });
+    thanks.hidden = false;
+  }
+
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var value = btn.dataset.value;
+      localStorage.setItem(key, value);
+      buttons.forEach(function(b) {
+        b.classList.toggle('selected', b.dataset.value === value);
+        b.disabled = true;
+      });
+      thanks.hidden = false;
+    });
+  });
 })();
 
 // ─── Authorization Graph Visualization ───────────────────────
@@ -1124,6 +1241,41 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   });
 });
 
+// ─── Docs Tabs ──────────────────────────────────────────────
+(function() {
+  var tabGroups = document.querySelectorAll('.docs-tabs');
+  if (!tabGroups.length) return;
+
+  tabGroups.forEach(function(group) {
+    var tabs = group.querySelectorAll('.docs-tab');
+    var panels = group.querySelectorAll('.docs-tab-panel');
+    var id = group.dataset.tabsId;
+
+    var saved = localStorage.getItem('docs-tab:' + id);
+    if (saved !== null) {
+      var idx = parseInt(saved, 10);
+      if (idx >= 0 && idx < tabs.length) {
+        tabs.forEach(function(t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        tabs[idx].classList.add('active');
+        tabs[idx].setAttribute('aria-selected', 'true');
+        panels[idx].classList.add('active');
+      }
+    }
+
+    tabs.forEach(function(tab, i) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        panels[i].classList.add('active');
+        localStorage.setItem('docs-tab:' + id, i);
+      });
+    });
+  });
+})();
+
 // ─── Code Tabs ───────────────────────────────────────────────
 (function () {
   var STORAGE_KEY = 'inferadb-docs-lang';
@@ -1137,6 +1289,20 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     panels.forEach(function (panel) {
       panel.classList.toggle('active', panel.getAttribute('data-lang') === lang);
     });
+    // Update SDK link if present
+    var activeBtn = group.querySelector('.code-tabs-nav button.active');
+    var sdkLink = group.querySelector('.code-tabs-sdk-link');
+    if (activeBtn && sdkLink) {
+      var url = activeBtn.getAttribute('data-sdk-url');
+      var name = activeBtn.getAttribute('data-sdk-name');
+      if (url && name) {
+        var a = sdkLink.querySelector('a');
+        if (a) {
+          a.href = url;
+          a.textContent = name;
+        }
+      }
+    }
   }
 
   function syncAll(lang) {
@@ -1166,4 +1332,5 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     activateTab(group, lang);
   });
 })();
+
 

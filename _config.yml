@@ -2,6 +2,7 @@ title: InferaDB
 description: "The Authorization Database. High-performance, fine-grained access control at scale."
 url: "https://inferadb.com"
 baseurl: ""
+github_repo: "https://github.com/inferadb/site"
 
 markdown: kramdown
 highlighter: rouge

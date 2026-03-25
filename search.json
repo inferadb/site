@@ -3,11 +3,19 @@
 [
 {% for group in site.data.docs_nav %}
   {% for item in group.items %}
+  {% assign found_page = nil %}
+  {% assign item_url_slash = item.url | append: '/' %}
+  {% for p in site.pages %}
+    {% if p.url == item.url or p.url == item_url_slash %}
+      {% assign found_page = p %}
+    {% endif %}
+  {% endfor %}
   {
     "title": {{ item.title | jsonify }},
     "url": {{ item.url | jsonify }},
     "section": {{ group.section | jsonify }},
-    "excerpt": {{ item.excerpt | default: "" | jsonify }}
+    "excerpt": {{ item.excerpt | default: "" | jsonify }},
+    "content": {% if found_page %}{{ found_page.content | strip_html | strip_newlines | truncatewords: 300 | jsonify }}{% else %}""{% endif %}
   }{% unless forloop.last and forloop.parentloop.last %},{% endunless %}
   {% endfor %}
 {% endfor %}

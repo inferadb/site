@@ -1,0 +1,11 @@
+{% assign callout_type = include.type | default: "info" %}
+<div class="docs-callout docs-callout-{{ callout_type }}">
+  <div class="docs-callout-label">
+    {% if callout_type == "warning" %}<span>&#9888;</span>{% endif %}
+    {% if callout_type == "danger" %}<span>&#9888;</span>{% endif %}
+    {% if callout_type == "info" %}<span>&#9432;</span>{% endif %}
+    {% if callout_type == "tip" %}<span>&#10003;</span>{% endif %}
+    {{ include.title | default: callout_type }}
+  </div>
+  <p>{{ include.body }}</p>
+</div>

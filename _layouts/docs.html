@@ -151,6 +151,12 @@ body_class: page-docs
     <nav class="docs-toc-inner">
       <ul class="docs-toc-list"></ul>
     </nav>
+    <div class="docs-toc-actions">
+      <button class="docs-toc-action" id="toc-copy-link">Copy link</button>
+      <button class="docs-toc-action" id="toc-copy-md" data-src="{{ site.github_repo }}/raw/main/{{ page.path }}">Copy markdown</button>
+      <a class="docs-toc-action" href="https://chatgpt.com/?q=Help%20me%20understand%20this%20InferaDB%20documentation%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Open in ChatGPT</a>
+      <a class="docs-toc-action" href="https://claude.ai/new?q=Help%20me%20understand%20this%20InferaDB%20documentation%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Open in Claude</a>
+    </div>
   </aside>
   {% endunless %}
 </div>

@@ -204,11 +204,19 @@ document.querySelectorAll('pre').forEach(function(pre) {
 
   // Get heading text without child elements (anchor links, etc.)
   function headingText(h) {
-    // Clone the heading, remove any anchor links we added, then read text
     var clone = h.cloneNode(true);
     var anchors = clone.querySelectorAll('.heading-anchor');
     anchors.forEach(function(a) { a.remove(); });
     return clone.textContent.trim();
+  }
+
+  // Detect step number from heading text (e.g., "1. Title" or "Phase 3: Title")
+  function parseStepNumber(text) {
+    var m = text.match(/^(\d+)[\.\:\)]\s/);
+    if (m) return m[1];
+    m = text.match(/^(?:Phase|Step)\s+(\d+)/i);
+    if (m) return m[1];
+    return null;
   }
 
   headings.forEach(function(h) {
@@ -220,7 +228,23 @@ document.querySelectorAll('pre').forEach(function(pre) {
     if (h.tagName === 'H3') li.className = 'toc-h3';
     var a = document.createElement('a');
     a.href = '#' + h.id;
-    a.textContent = text;
+
+    // Step number in TOC
+    var stepNum = (h.tagName === 'H2') ? parseStepNumber(text) : null;
+    if (stepNum) {
+      li.className = 'toc-step';
+      var numSpan = document.createElement('span');
+      numSpan.className = 'toc-step-number';
+      numSpan.textContent = stepNum;
+      a.appendChild(numSpan);
+      // Show title without the number prefix
+      var titleSpan = document.createElement('span');
+      titleSpan.textContent = text.replace(/^(\d+[\.\:\)]\s*|(?:Phase|Step)\s+\d+[:\s]*)/i, '');
+      a.appendChild(titleSpan);
+    } else {
+      a.textContent = text;
+    }
+
     li.appendChild(a);
     tocList.appendChild(li);
   });
@@ -244,6 +268,123 @@ document.querySelectorAll('pre').forEach(function(pre) {
   }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
 
   headings.forEach(function(h) { observer.observe(h); });
+})();
+
+// 1b. Stepped guide layout — wrap numbered h2 sections in timeline chrome
+(function() {
+  var article = document.querySelector('.docs-content article');
+  if (!article) return;
+
+  function headingText(h) {
+    var clone = h.cloneNode(true);
+    var anchors = clone.querySelectorAll('.heading-anchor');
+    anchors.forEach(function(a) { a.remove(); });
+    return clone.textContent.trim();
+  }
+
+  function parseStepNumber(text) {
+    var m = text.match(/^(\d+)[\.\:\)]\s/);
+    if (m) return m[1];
+    m = text.match(/^(?:Phase|Step)\s+(\d+)/i);
+    if (m) return m[1];
+    return null;
+  }
+
+  var h2s = article.querySelectorAll('h2');
+  var stepHeadings = [];
+  h2s.forEach(function(h) {
+    var num = parseStepNumber(headingText(h));
+    if (num) stepHeadings.push({ el: h, num: num });
+  });
+
+  if (stepHeadings.length < 2) return;
+
+  // For each step heading, collect all sibling elements until the next h2
+  stepHeadings.forEach(function(step) {
+    var h = step.el;
+
+    // Create step wrapper
+    var wrapper = document.createElement('div');
+    wrapper.className = 'docs-step';
+
+    // Create number circle
+    var circle = document.createElement('span');
+    circle.className = 'docs-step-number';
+    circle.textContent = step.num;
+
+    // Strip number prefix from heading text
+    var firstText = h.firstChild;
+    if (firstText && firstText.nodeType === 3) {
+      firstText.textContent = firstText.textContent.replace(/^(\d+[\.\:\)]\s*|(?:Phase|Step)\s+\d+[:\s]*)/i, '');
+    }
+
+    // Insert wrapper before the heading
+    h.parentNode.insertBefore(wrapper, h);
+    wrapper.appendChild(circle);
+    wrapper.appendChild(h);
+
+    // Move siblings into wrapper until next h2 or another docs-step
+    var next = wrapper.nextSibling;
+    while (next) {
+      var curr = next;
+      next = curr.nextSibling;
+      if (curr.nodeType === 1 && (curr.tagName === 'H2' || curr.classList.contains('docs-step'))) break;
+      wrapper.appendChild(curr);
+    }
+  });
+
+  // Highlight active step circle on scroll
+  var steps = article.querySelectorAll('.docs-step');
+  var stepObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      entry.target.classList.toggle('active', entry.isIntersecting);
+    });
+  }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
+
+  steps.forEach(function(s) {
+    var h = s.querySelector('h2');
+    if (h) stepObserver.observe(h);
+  });
+})();
+
+// TOC actions — copy link, copy markdown
+(function() {
+  function flashCopied(btn) {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied';
+    btn.classList.add('docs-toc-action-copied');
+    setTimeout(function() {
+      btn.textContent = orig;
+      btn.classList.remove('docs-toc-action-copied');
+    }, 1500);
+  }
+
+  var copyLink = document.getElementById('toc-copy-link');
+  if (copyLink) {
+    copyLink.addEventListener('click', function() {
+      navigator.clipboard.writeText(window.location.href).then(function() {
+        flashCopied(copyLink);
+      });
+    });
+  }
+
+  var copyMd = document.getElementById('toc-copy-md');
+  if (copyMd) {
+    copyMd.addEventListener('click', function() {
+      var src = copyMd.getAttribute('data-src');
+      if (!src) return;
+      copyMd.textContent = 'Fetching...';
+      fetch(src)
+        .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
+        .then(function(text) {
+          return navigator.clipboard.writeText(text);
+        })
+        .then(function() { flashCopied(copyMd); })
+        .catch(function() {
+          copyMd.textContent = 'Copy as Markdown';
+        });
+    });
+  }
 })();
 
 // 2. Language labels on code blocks

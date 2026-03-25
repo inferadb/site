@@ -3879,8 +3879,8 @@ h3:hover .heading-anchor {
 }
 
 // ─── Shell / terminal code blocks ────────────────────────────
-// Thin header bar with terminal icon + label, distinguishing
-// shell blocks from language code blocks.
+// Mil-spec terminal chrome — status LED, system designation,
+// and amber accent strip echoing the nav top-border pattern.
 
 .docs-content article .language-bash,
 .docs-content article .language-shell,
@@ -3895,19 +3895,37 @@ h3:hover .heading-anchor {
 
   // Terminal header bar
   &::before {
-    content: '\25B8  TERMINAL';
-    display: block;
-    padding: 0.4375rem 0.875rem;
-    background: rgba(255, 255, 255, 0.02);
+    content: 'TERMINAL //';
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.875rem;
+    background: var(--bg);
     border: 1px solid var(--border);
+    border-top: 1px solid var(--border);
     border-bottom: none;
     border-radius: var(--radius-sm) var(--radius-sm) 0 0;
     font-family: var(--font-mono);
     font-size: 0.5625rem;
     font-weight: 500;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     color: var(--muted);
     line-height: 1;
+  }
+
+}
+
+// Suppress terminal chrome inside tab panels
+.docs-content article .docs-tab-panel,
+.docs-content article .code-tabs-panel {
+  .language-bash,
+  .language-shell,
+  .language-sh {
+    &::before { display: none; }
+
+    > .highlight {
+      border-top: 1px solid var(--border);
+      border-radius: 0;
+    }
   }
 }
 
@@ -4245,16 +4263,12 @@ h3:hover .heading-anchor {
   &:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 }
 
-.docs-content .docs-tab-panel {
+.docs-content article .docs-tab-panel {
   display: none;
   &.active { display: block; }
 
-  .highlighter-rouge {
-    margin: 0;
-    border: none;
-    border-radius: 0;
-  }
-
+  .highlighter-rouge,
+  .highlight,
   pre {
     margin: 0;
     border: none;

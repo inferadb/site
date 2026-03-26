@@ -141,7 +141,13 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                 further.
             </p>
         </div>
-        <div class="hiw-grid">
+        <div class="hiw-tabs" data-reveal>
+            <button class="hiw-tab active" data-hiw-tab="dev">For Developers</button>
+            <button class="hiw-tab" data-hiw-tab="sec">For Security Teams</button>
+        </div>
+
+        <!-- Developer perspective -->
+        <div class="hiw-grid hiw-panel active" data-hiw-panel="dev">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -198,6 +204,60 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                         Ask "can user X do Y on resource Z?" and get an answer
                         in microseconds with a full explanation path and
                         revision token for consistency.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security & compliance perspective -->
+        <div class="hiw-grid hiw-panel" data-hiw-panel="sec">
+            <div class="hiw-code" data-reveal>
+                <div class="code-window">
+                    <div class="code-header">
+                        <span class="code-dot"></span>
+                        <span class="code-dot"></span>
+                        <span class="code-dot"></span>
+                        <span class="code-title">audit-trail.json</span>
+                    </div>
+                    <pre><code>{
+  <span class="fn">"decision"</span>: <span class="lit">"ALLOWED"</span>,
+  <span class="fn">"subject"</span>: <span class="lit">"user:alice"</span>,
+  <span class="fn">"permission"</span>: <span class="lit">"edit"</span>,
+  <span class="fn">"resource"</span>: <span class="lit">"document:roadmap"</span>,
+  <span class="fn">"revision"</span>: <span class="lit">"r_a1b2c3"</span>,
+  <span class="fn">"latency_us"</span>: <span class="lit">2.4</span>,
+  <span class="fn">"trace"</span>: [
+    <span class="lit">"editor → MATCH (direct)"</span>
+  ],
+  <span class="fn">"hash"</span>: <span class="lit">"e3b0c44298fc..."</span>,
+  <span class="fn">"prev_hash"</span>: <span class="lit">"5f2b8d1ca9..."</span>,
+  <span class="fn">"vault"</span>: <span class="lit">"prod-us-east"</span>
+}</code></pre>
+                </div>
+            </div>
+            <div class="hiw-steps" data-reveal data-reveal-delay="100">
+                <div class="hiw-step">
+                    <span class="hiw-step-num">01</span>
+                    <h3>Every decision recorded</h3>
+                    <p>
+                        Each permission check produces a hash-chained audit entry.
+                        Tamper-evident, append-only, per-tenant isolation.
+                    </p>
+                </div>
+                <div class="hiw-step">
+                    <span class="hiw-step-num">02</span>
+                    <h3>Cryptographic proof</h3>
+                    <p>
+                        Merkle proofs verify that no audit entry has been altered
+                        or deleted. Export to your SIEM or compliance toolchain.
+                    </p>
+                </div>
+                <div class="hiw-step">
+                    <span class="hiw-step-num">03</span>
+                    <h3>Framework-ready compliance</h3>
+                    <p>
+                        Maps directly to SOC 2, HIPAA, GDPR, PCI DSS, and
+                        NIS2 controls. Purpose-built for regulated environments.
                     </p>
                 </div>
             </div>

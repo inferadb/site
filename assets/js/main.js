@@ -72,6 +72,21 @@ if (toggle && links) {
   }, { passive: true });
 }
 
+// How-it-works perspective tabs
+(function() {
+  var tabs = document.querySelectorAll('.hiw-tab');
+  var panels = document.querySelectorAll('.hiw-panel');
+  if (!tabs.length) return;
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = tab.getAttribute('data-hiw-tab');
+      tabs.forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-hiw-tab') === target); });
+      panels.forEach(function(p) { p.classList.toggle('active', p.getAttribute('data-hiw-panel') === target); });
+    });
+  });
+})();
+
 // Mega-menu dropdowns
 (function() {
   var dropdowns = document.querySelectorAll('.nav-dropdown');

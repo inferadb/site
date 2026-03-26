@@ -272,6 +272,83 @@ section {
   &-lg { padding: 0.875rem 1.75rem; font-size: 0.9375rem; }
 }
 
+// ─── Announcement Banner ─────────────────────────────────────
+
+.site-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101; // above nav
+  background: var(--accent);
+}
+
+// Reuses .nav-inner for max-width and horizontal padding; overrides layout
+.site-banner .site-banner-inner {
+  width: 100%;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+}
+
+.site-banner-text {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--bg);
+  letter-spacing: 0.02em;
+
+  a {
+    color: var(--bg);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(11, 13, 17, 0.4);
+    transition: text-decoration-color 0.15s;
+    &:hover { text-decoration-color: var(--bg); }
+  }
+}
+
+.site-banner-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: var(--bg);
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+
+  &:hover { opacity: 0.8; }
+  &:focus-visible { outline: 2px solid var(--bg); outline-offset: 2px; border-radius: 2px; }
+}
+
+// When banner is visible, push nav down and remove its amber top-border
+.has-banner .site-nav {
+  top: 2.875rem; // banner height (~46px)
+  border-top: none;
+}
+
+.has-banner .docs-layout {
+  padding-top: calc(3.5rem + 2.875rem);
+}
+
+.has-banner .docs-sidebar {
+  top: calc(3.5rem + 2.875rem);
+  height: calc(100vh - 3.5rem - 2.875rem);
+}
+
+.has-banner .docs-toc {
+  top: calc(3.5rem + 2.875rem);
+  height: calc(100vh - 3.5rem - 2.875rem);
+}
+
+.has-banner .hero {
+  padding-top: calc(3.5rem + 2.875rem + 4rem);
+}
+
 // ─── Navigation ──────────────────────────────────────────────
 
 .site-nav {
@@ -334,6 +411,131 @@ section {
     gap: 0.75rem;
     margin-left: 0.75rem;
   }
+}
+
+// ─── Mega-menu dropdowns ─────────────────────────────────────
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s;
+
+  &:hover { color: var(--text-white); }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
+}
+
+.nav-dropdown-chevron {
+  transition: transform 0.2s;
+  opacity: 0.5;
+}
+
+.nav-dropdown.open .nav-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-mega {
+  position: absolute;
+  top: calc(100% + 0.875rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 480px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 200;
+
+  // Arrow nub
+  &::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+}
+
+.nav-dropdown.open .nav-mega {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mega-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.nav-mega-label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 0.625rem 0.5rem;
+}
+
+.nav-mega-item {
+  display: block;
+  padding: 0.5rem 0.625rem;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+}
+
+.nav-mega-title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-bright);
+  margin-bottom: 0.125rem;
+}
+
+.nav-mega-desc {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+// Hide mega-menus on mobile — dropdown triggers behave as links
+@media (max-width: 768px) {
+  .nav-mega { display: none !important; }
+  .nav-dropdown-chevron { display: none; }
 }
 
 .nav-toggle {
@@ -2456,9 +2658,15 @@ section {
 
 // Docs prose styling
 .docs-content article {
-  // Anchor scroll offset — clear the fixed nav
+  // Anchor scroll offset — clear the fixed nav (+ banner when present)
   h2, h3, h4 {
     scroll-margin-top: 4.5rem;
+  }
+
+  .has-banner & h2,
+  .has-banner & h3,
+  .has-banner & h4 {
+    scroll-margin-top: calc(4.5rem + 2.875rem);
   }
 
   h2 {

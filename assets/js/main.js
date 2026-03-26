@@ -1,3 +1,28 @@
+// Announcement banner
+(function() {
+  var banner = document.getElementById('site-banner');
+  if (!banner) return;
+
+  var id = banner.getAttribute('data-banner-id');
+  var key = 'banner-dismissed:' + id;
+
+  if (localStorage.getItem(key)) {
+    banner.remove();
+    return;
+  }
+
+  document.body.classList.add('has-banner');
+
+  var close = document.getElementById('site-banner-close');
+  if (close) {
+    close.addEventListener('click', function() {
+      localStorage.setItem(key, '1');
+      banner.remove();
+      document.body.classList.remove('has-banner');
+    });
+  }
+})();
+
 // Navigation scroll effect
 const nav = document.querySelector('.site-nav');
 if (nav) {
@@ -46,6 +71,55 @@ if (toggle && links) {
     if (window.innerWidth > 768 && links.classList.contains('open')) closeNav();
   }, { passive: true });
 }
+
+// Mega-menu dropdowns
+(function() {
+  var dropdowns = document.querySelectorAll('.nav-dropdown');
+  if (!dropdowns.length) return;
+
+  function closeAll() {
+    dropdowns.forEach(function(d) {
+      d.classList.remove('open');
+      var trigger = d.querySelector('.nav-dropdown-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  dropdowns.forEach(function(dropdown) {
+    var trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isOpen = dropdown.classList.contains('open');
+      closeAll();
+      if (!isOpen) {
+        dropdown.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close on mouse leave (with delay for tolerance)
+    var closeTimer;
+    dropdown.addEventListener('mouseenter', function() {
+      clearTimeout(closeTimer);
+    });
+    dropdown.addEventListener('mouseleave', function() {
+      closeTimer = setTimeout(function() {
+        dropdown.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }, 200);
+    });
+  });
+
+  // Close on click outside
+  document.addEventListener('click', function() { closeAll(); });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeAll();
+  });
+})();
 
 // Scrollable code blocks — make keyboard-accessible
 document.querySelectorAll('pre').forEach(function(pre) {

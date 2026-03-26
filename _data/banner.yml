@@ -1,0 +1,7 @@
+# Set enabled: true to show the announcement banner site-wide.
+# Change the id when updating the message — this resets the dismiss state.
+enabled: false
+id: "launch-2026"
+text: "InferaDB is now open source"
+link_text: "View on GitHub"
+link_url: "https://github.com/inferadb/inferadb"

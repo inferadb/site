@@ -1,10 +1,58 @@
 - title: Product
-  url: "/#product"
+  groups:
+    - label: Platform
+      items:
+        - title: Authorization Engine
+          desc: Sub-microsecond permission checks at scale
+          url: "/docs/architecture-engine"
+        - title: Policy Language (IPL)
+          desc: Define models with relations and computed permissions
+          url: "/docs/ipl"
+        - title: Audit & Compliance
+          desc: Cryptographic audit trails for SOC 2, HIPAA, GDPR
+          url: "/docs/compliance"
+    - label: Integrate
+      items:
+        - title: SDKs
+          desc: Python, TypeScript, Go, Rust, Java, and more
+          url: "/docs/#sdks"
+        - title: REST & gRPC APIs
+          desc: AuthZEN-compliant evaluation endpoints
+          url: "/docs/api-rest"
+        - title: Terraform Provider
+          desc: Infrastructure-as-code for authorization
+          url: "/docs/terraform"
+
+- title: Docs
+  groups:
+    - label: Learn
+      items:
+        - title: Quick Start
+          desc: From zero to permission checks in 5 minutes
+          url: "/docs/quickstart"
+        - title: Core Concepts
+          desc: Entities, relations, permissions, and tuples
+          url: "/docs/concepts"
+        - title: Modeling Guide
+          desc: Design an authorization schema step by step
+          url: "/docs/modeling"
+    - label: Reference
+      items:
+        - title: Architecture
+          desc: Engine, Control, and Ledger components
+          url: "/docs/architecture"
+        - title: Deploy & Operate
+          desc: Docker, Kubernetes, observability, and config
+          url: "/docs/deploy-docker"
+        - title: API Reference
+          desc: REST, gRPC, and AuthZEN endpoints
+          url: "/docs/api-rest"
+
 - title: Pricing
   url: "/pricing"
-- title: Docs
-  url: "/docs/"
+
 - title: Now
   url: "/now/"
+
 - title: About
   url: "/about"

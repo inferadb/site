@@ -1,3 +1,13 @@
+{% if site.data.banner.enabled %}
+<div class="site-banner" id="site-banner" data-banner-id="{{ site.data.banner.id }}">
+  <div class="nav-inner site-banner-inner">
+    <span class="site-banner-text">{{ site.data.banner.text }}{% if site.data.banner.link_text %} — <a href="{{ site.data.banner.link_url }}">{{ site.data.banner.link_text }} &rarr;</a>{% endif %}</span>
+    <button class="site-banner-close" id="site-banner-close" aria-label="Dismiss announcement">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+</div>
+{% endif %}
 <nav class="site-nav" role="navigation">
   <div class="nav-inner">
     <a href="/" class="nav-logo" aria-label="InferaDB Home">
@@ -13,7 +23,29 @@
       <!-- Global nav — always visible on desktop, hidden on mobile docs pages -->
       <div class="nav-global">
         {% for item in site.data.nav %}
-        <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>
+          {% if item.groups %}
+          <div class="nav-dropdown">
+            <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+              {{ item.title }}
+              <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+            </button>
+            <div class="nav-mega" role="menu">
+              {% for group in item.groups %}
+              <div class="nav-mega-group">
+                <div class="nav-mega-label">{{ group.label }}</div>
+                {% for link in group.items %}
+                <a href="{{ link.url }}" class="nav-mega-item" role="menuitem">
+                  <span class="nav-mega-title">{{ link.title }}</span>
+                  <span class="nav-mega-desc">{{ link.desc }}</span>
+                </a>
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% else %}
+          <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>
+          {% endif %}
         {% endfor %}
       </div>
       {% if page.layout == 'docs' %}

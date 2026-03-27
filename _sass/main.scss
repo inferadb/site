@@ -3066,6 +3066,15 @@ section {
   border-radius: var(--radius-sm);
 }
 
+.about-person-photo {
+  float: right;
+  width: 80px;
+  height: 80px;
+  border-radius: 3px;
+  object-fit: cover;
+  margin: 0 0 0.75rem 1rem;
+}
+
 .about-person-info {
   margin-bottom: 0.75rem;
 

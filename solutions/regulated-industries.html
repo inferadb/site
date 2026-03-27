@@ -1,0 +1,190 @@
+---
+title: "Authorization for Regulated Industries | InferaDB"
+layout: default
+body_class: page-solution
+description: "Cryptographic audit trails, Merkle proof verification, and data residency controls for HIPAA, GDPR, SOC 2, PCI DSS, NIS2, and DORA compliance. Authorization that satisfies auditors by default."
+---
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:SOLUTIONS // Regulated Industries</p>
+        <h1>Prove to auditors that access control is correct</h1>
+        <p class="lead">
+            Compliance frameworks demand evidence that access decisions are accurate,
+            complete, and tamper-proof. Most authorization systems produce logs.
+            InferaDB produces cryptographic proof — every decision hash-chained,
+            Merkle-verified, and independently auditable.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/compliance" class="btn btn-ghost">Compliance Docs</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Challenge</div>
+        <h2 data-reveal>Auditors want proof, not promises</h2>
+        <p data-reveal>
+            When a SOC 2 auditor asks "can you prove that User X could not access
+            Resource Y on March 14th?", most systems produce application logs that
+            could have been altered. That's not proof. That's a promise. Regulators
+            are increasingly demanding cryptographic evidence that access control
+            decisions are accurate and complete.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Log integrity is assumed, not verified</h3>
+                <p>
+                    Traditional audit logs live in mutable databases. Anyone with
+                    admin access can alter or delete entries. Auditors have to trust
+                    your word that logs are complete.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Compliance is bolted on</h3>
+                <p>
+                    Most authorization systems treat compliance as an afterthought —
+                    a reporting layer added on top. When regulators ask hard
+                    questions, the answers require manual investigation.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Multi-framework complexity</h3>
+                <p>
+                    SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA — each framework has
+                    different access control requirements. Mapping one authorization
+                    system to multiple frameworks is painful.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> Merkle Proof Audit Trails</div>
+        <h2 data-reveal>Tamper-evident, cryptographically verifiable decision logs</h2>
+        <p data-reveal>
+            Every permission decision InferaDB makes is recorded in a hash-chained,
+            append-only ledger. Each entry includes a Merkle proof that auditors can
+            independently verify — no trust in the server required. If a single entry
+            is altered or deleted, the chain breaks and the tampering is detectable.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Hash-chained entries</h3>
+                <p>
+                    Every audit record links cryptographically to its predecessor.
+                    Altering any entry invalidates every subsequent hash.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Independent verification</h3>
+                <p>
+                    Auditors can verify proof chains with open-source tooling.
+                    No proprietary software, no vendor lock-in for compliance.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>SIEM export</h3>
+                <p>
+                    Stream audit events to Splunk, Datadog, or your existing
+                    compliance toolchain. Proofs travel with the data.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Framework Mapping</div>
+        <h2 data-reveal>Purpose-built for regulated environments</h2>
+        <p data-reveal>
+            InferaDB's architecture maps directly to the access control requirements
+            of major compliance frameworks.
+        </p>
+        <div class="solution-features solution-features--wide" data-reveal>
+            <div class="solution-feature">
+                <h3>SOC 2</h3>
+                <p>
+                    Logical access controls (CC6.1), system monitoring (CC7.2),
+                    and change management (CC8.1) addressed by cryptographic
+                    audit trails and policy versioning.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>HIPAA</h3>
+                <p>
+                    Access controls (164.312(a)), audit controls (164.312(b)),
+                    and person authentication (164.312(d)) built into the core
+                    authorization engine.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>GDPR</h3>
+                <p>
+                    Data minimization (Art. 5), right to erasure (Art. 17) via
+                    cryptographic shredding, and accountability (Art. 5(2)) via
+                    verifiable audit trails.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>PCI DSS</h3>
+                <p>
+                    Requirement 7 (restrict access), Requirement 10 (track and
+                    monitor access), and Requirement 12 (information security
+                    policies) natively supported.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>NIS2</h3>
+                <p>
+                    Access control policies, incident handling, and supply chain
+                    security requirements addressed through policy versioning and
+                    cryptographic audit trails.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>DORA</h3>
+                <p>
+                    ICT risk management, incident reporting, and operational
+                    resilience testing supported by distributed consensus and
+                    tamper-proof logging.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Data Residency</div>
+        <h2 data-reveal>Region-pinned authorization data</h2>
+        <p data-reveal>
+            Authorization data stays where regulators require it. Pin vaults to
+            specific regions — EU data stays in EU, US data stays in US. Raft
+            consensus ensures consistency across regions without cross-border data
+            transfers.
+        </p>
+
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Cryptographic Shredding</div>
+        <h2 data-reveal>GDPR Article 17 right to erasure, done correctly</h2>
+        <p data-reveal>
+            When a user requests deletion, InferaDB destroys the encryption keys
+            for their authorization data. The data becomes cryptographically
+            irrecoverable — satisfying erasure requirements without the risk of
+            incomplete deletion across distributed systems.
+        </p>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Ready for audit-proof authorization?</p>
+            <h2>Replace promises with cryptographic proof.</h2>
+            <p>
+                Give auditors verifiable evidence of every access decision.
+                SOC 2, HIPAA, GDPR, PCI DSS, NIS2, and DORA — addressed by
+                architecture, not afterthought.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/compliance" class="btn btn-ghost btn-lg">Compliance Docs</a>
+            </div>
+        </div>
+    </div>
+</section>

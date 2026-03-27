@@ -1,0 +1,181 @@
+---
+title: "Authorization for Platform Teams | InferaDB"
+layout: default
+body_class: page-solution
+description: "Centralized authorization for microservice architectures. Replace fragmented per-service permission systems with a single authorization database. Terraform provider, zero-downtime deploys, multi-region support."
+---
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:SOLUTIONS // Platform Engineering</p>
+        <h1>Stop every team from building their own permission system</h1>
+        <p class="lead">
+            In a microservice architecture, authorization fragments across services.
+            Each team builds their own permission checks, their own role tables, their
+            own audit logs. Policies drift. Gaps emerge. Nobody has a complete picture
+            of who can access what. InferaDB centralizes authorization as shared
+            infrastructure.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/architecture" class="btn btn-ghost">Architecture Docs</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
+        <h2 data-reveal>Authorization fragmentation in microservice architectures</h2>
+        <p data-reveal>
+            Every service has its own authorization logic. The billing service checks
+            roles in its database. The content service has its own ACL table. The
+            admin dashboard hardcodes permission checks. When someone asks "what can
+            User X access across all services?" — nobody can answer.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Duplicated logic</h3>
+                <p>
+                    Authorization code is copy-pasted across services in different
+                    languages by different teams. Bugs are fixed in one service
+                    and remain in three others.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Policy drift</h3>
+                <p>
+                    Without a central policy engine, each service interprets access
+                    rules differently. The same user gets different permissions
+                    depending on which service they hit.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>No unified audit trail</h3>
+                <p>
+                    When security needs to investigate an access incident, they
+                    have to correlate logs across a dozen services with different
+                    formats and retention policies.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> Centralized Policy Engine</div>
+        <h2 data-reveal>One authorization database for every service</h2>
+        <p data-reveal>
+            InferaDB serves as the single source of truth for authorization across
+            your entire platform. Every service queries the same engine, evaluates
+            the same policies, and produces audit entries in the same ledger. Define
+            policies once, enforce everywhere.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Unified policy language</h3>
+                <p>
+                    Define all authorization logic in IPL — the Infera Policy
+                    Language. One schema for your entire platform, versioned and
+                    testable like code.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>REST and gRPC APIs</h3>
+                <p>
+                    Every service integrates via the same API. AuthZEN-compliant
+                    evaluation endpoints work with any language and framework.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Centralized audit ledger</h3>
+                <p>
+                    Every authorization decision across every service lands in a
+                    single, hash-chained audit trail. One place to investigate,
+                    one place to report.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Infrastructure as Code</div>
+        <h2 data-reveal>Terraform provider for authorization infrastructure</h2>
+        <p data-reveal>
+            Manage organizations, vaults, clients, teams, and grants through
+            Terraform. Authorization configuration lives in your infrastructure
+            repo, reviewed through pull requests, applied through CI/CD pipelines.
+            No ClickOps. No drift.
+        </p>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Zero-Downtime Deploys</div>
+        <h2 data-reveal>Policy changes without service interruption</h2>
+        <p data-reveal>
+            Branch, test, and merge authorization policies like application code.
+            Policy updates are applied atomically via Raft consensus — every node
+            transitions to the new policy simultaneously. No rolling restarts, no
+            inconsistency windows, no downtime.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Policy branching</h3>
+                <p>
+                    Create branches to test policy changes against production
+                    data without affecting live traffic. Merge when validated.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Assertion testing</h3>
+                <p>
+                    Write test assertions that validate policy behavior before
+                    deployment. CI fails if a policy change breaks expected access
+                    patterns.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Atomic rollout</h3>
+                <p>
+                    Raft consensus ensures all nodes apply policy changes at the
+                    same revision. No split-brain, no stale policy evaluation.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Multi-Region</div>
+        <h2 data-reveal>Global authorization for global teams</h2>
+        <p data-reveal>
+            Deploy InferaDB nodes across regions for low-latency authorization
+            everywhere your services run. Raft consensus maintains strong consistency
+            across regions. 47ms cross-region replication (US East to EU West) means
+            policy changes propagate globally in under 50 milliseconds.
+        </p>
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">2.8us</span>
+                <span class="solution-stat-label">p99 read latency</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">47ms</span>
+                <span class="solution-stat-label">cross-region replication</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">952K</span>
+                <span class="solution-stat-label">checks/sec per node</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Ready to centralize authorization?</p>
+            <h2>One database. Every service. Every decision.</h2>
+            <p>
+                Replace fragmented per-service permission systems with shared
+                authorization infrastructure that scales with your platform.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/architecture" class="btn btn-ghost btn-lg">Architecture Docs</a>
+            </div>
+        </div>
+    </div>
+</section>

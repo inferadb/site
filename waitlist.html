@@ -2,67 +2,108 @@
 title: Early Access
 layout: default
 body_class: page-waitlist
-description: "Join the InferaDB waitlist for early access to the first purpose-built authorization database. Free for open source, managed cloud coming soon."
+description: "Join the InferaDB waitlist — lock in launch-day pricing, get priority onboarding, and be first to deploy the authorization database built for modern software."
 ---
 
 <section class="waitlist-section">
     <div class="container">
         <div class="waitlist-content">
-            <h1>Get early access</h1>
-            <p>
-                InferaDB is under active development. Join the waitlist to be
-                among the first to try it when it's ready.
+            <span class="hero-eyebrow">Early Access</span>
+            <h1>Be first to deploy authorization that scales</h1>
+            <p class="waitlist-lead">
+                200+ teams are already on the list. Lock in launch-day pricing
+                and get priority access to the authorization database built by
+                the engineers behind OpenFGA.
             </p>
-            <form
-                class="waitlist-form"
-                action="https://formspree.io/f/xqeyryaq"
-                method="POST"
-            >
-                <div class="form-group">
-                    <label class="form-label" for="waitlist-name">Name</label>
-                    <input
-                        class="form-input"
-                        type="text"
-                        id="waitlist-name"
-                        name="name"
-                        placeholder="Jane Doe"
-                        required
-                        autocomplete="name"
-                    />
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="waitlist-email">Email</label>
-                    <div class="waitlist-inline">
-                        <input
-                            class="form-input"
-                            type="email"
-                            id="waitlist-email"
-                            name="email"
-                            placeholder="jane@example.com"
-                            required
-                            autocomplete="email"
-                        />
-                        <button type="submit" class="btn btn-primary">
-                            Join Waitlist
+
+            <div class="waitlist-grid">
+                <div class="waitlist-form-wrap">
+                    <form
+                        class="waitlist-form"
+                        action="https://formspree.io/f/xqeyryaq"
+                        method="POST"
+                    >
+                        <div class="form-group">
+                            <label class="form-label" for="waitlist-name">Name</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="waitlist-name"
+                                name="name"
+                                placeholder="Jane Doe"
+                                required
+                                autocomplete="name"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="waitlist-email">Work email</label>
+                            <input
+                                class="form-input"
+                                type="email"
+                                id="waitlist-email"
+                                name="email"
+                                placeholder="jane@company.com"
+                                required
+                                autocomplete="email"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="waitlist-use-case"
+                                >What are you building?
+                                <span style="color: var(--muted); font-weight: 400"
+                                    >(optional)</span
+                                ></label
+                            >
+                            <textarea
+                                class="form-textarea"
+                                id="waitlist-use-case"
+                                name="use-case"
+                                placeholder="Multi-tenant SaaS, AI agents, regulated workloads..."
+                                rows="3"
+                            ></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg waitlist-submit">
+                            Join the Waitlist
                         </button>
+                    </form>
+                </div>
+
+                <div class="waitlist-benefits">
+                    <h3>What early access gets you</h3>
+                    <ul>
+                        <li>
+                            <strong>Launch-day pricing, locked in.</strong>
+                            Prices go up at general availability. Your rate stays.
+                        </li>
+                        <li>
+                            <strong>Priority onboarding.</strong>
+                            Direct access to the engineering team for integration support.
+                        </li>
+                        <li>
+                            <strong>Shape the product.</strong>
+                            Early feedback goes straight into the roadmap.
+                        </li>
+                        <li>
+                            <strong>Free tier from day one.</strong>
+                            Start with 100K checks/month at no cost. Scale when you're ready.
+                        </li>
+                    </ul>
+                    <div class="waitlist-stats">
+                        <div class="waitlist-stat">
+                            <span class="waitlist-stat-num">2.8&micro;s</span>
+                            <span class="waitlist-stat-label">p99 latency</span>
+                        </div>
+                        <div class="waitlist-stat">
+                            <span class="waitlist-stat-num">952K</span>
+                            <span class="waitlist-stat-label">checks/second</span>
+                        </div>
+                        <div class="waitlist-stat">
+                            <span class="waitlist-stat-num">$0</span>
+                            <span class="waitlist-stat-label">to start</span>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label" for="waitlist-use-case"
-                        >What are you building?
-                        <span style="color: var(--muted); font-weight: 400"
-                            >(optional)</span
-                        ></label
-                    >
-                    <textarea
-                        class="form-textarea"
-                        id="waitlist-use-case"
-                        name="use-case"
-                        placeholder="Tell us about your authorization needs..."
-                        rows="3"
-                    ></textarea>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </section>

@@ -30,6 +30,12 @@
               <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
             </button>
             <div class="nav-mega" role="menu">
+              {% if item.hub %}
+              <a href="{{ item.hub.url }}" class="nav-mega-hub" role="menuitem">
+                <span class="nav-mega-title">{{ item.hub.title }}</span>
+                <span class="nav-mega-desc">{{ item.hub.desc }}</span>
+              </a>
+              {% endif %}
               {% for group in item.groups %}
               <div class="nav-mega-group">
                 <div class="nav-mega-label">{{ group.label }}</div>

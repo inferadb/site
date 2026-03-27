@@ -1,0 +1,164 @@
+---
+title: "Multi-Tenant SaaS Authorization | InferaDB"
+layout: default
+body_class: page-solution
+description: "Build multi-tenant authorization that scales. Per-tenant permissions, team hierarchies, customer-managed roles, and permission-aware search — without role explosion."
+---
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:SOLUTIONS // Multi-Tenant SaaS</p>
+        <h1>Per-tenant permissions that scale without role explosion</h1>
+        <p class="lead">
+            Your customers expect nested teams, custom roles, and granular sharing
+            controls. Building this from scratch means months of engineering, fragile
+            role hierarchies, and constant fear of cross-tenant data leaks. InferaDB
+            models arbitrarily complex multi-tenant authorization natively.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/quickstart" class="btn btn-ghost">Read the Docs</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
+        <h2 data-reveal>Multi-tenant authorization is deceptively hard</h2>
+        <p data-reveal>
+            Every SaaS product starts with simple roles: admin, editor, viewer. Then
+            customers want per-team permissions. Then nested organizations. Then
+            custom roles they define themselves. Then sharing links. The role matrix
+            explodes, and suddenly your authorization layer is the most fragile part
+            of your system.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Role explosion</h3>
+                <p>
+                    N customers times M roles times P resources. Traditional RBAC
+                    collapses under combinatorial complexity. You end up with
+                    thousands of roles that nobody can reason about.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Cross-tenant data leaks</h3>
+                <p>
+                    Application-level tenant isolation is one missed WHERE clause
+                    away from a breach. A single query bug exposes Customer A's
+                    data to Customer B.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>N+1 permission queries</h3>
+                <p>
+                    Listing "all documents this user can see" turns into hundreds
+                    of database queries. Search results become painfully slow or
+                    dangerously inaccurate.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> The Solution</div>
+        <h2 data-reveal>Relationship-based access control, built into the database</h2>
+        <p data-reveal>
+            InferaDB replaces brittle role matrices with a relationship graph. Define
+            entities, relations, and computed permissions once — the engine resolves
+            arbitrarily deep hierarchies in microseconds.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>ReBAC modeling</h3>
+                <p>
+                    Express "user is member of team, team belongs to org, org owns
+                    workspace" as first-class relationships. Permissions compose
+                    through the graph — no role explosion.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Cryptographic vault isolation</h3>
+                <p>
+                    Each tenant's authorization data lives in a cryptographically
+                    isolated vault. Cross-tenant leaks are architecturally
+                    impossible, not just unlikely.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Permission-aware search</h3>
+                <p>
+                    Ask "which documents can user X view?" and get results in
+                    milliseconds. No N+1 queries, no post-filtering, no stale
+                    caches.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Key Features</div>
+        <h2 data-reveal>Everything SaaS authorization demands</h2>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Team hierarchies</h3>
+                <p>
+                    Nested teams, departments, and business units. Permissions
+                    inherit through the hierarchy automatically.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Customer-managed roles</h3>
+                <p>
+                    Let your customers define their own roles and permissions
+                    without touching your codebase. Sandboxed to their tenant.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Sharing and link access</h3>
+                <p>
+                    Model "anyone with this link can view" or "shared with
+                    user@example.com" as first-class relationships.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Performance at Scale</div>
+        <h2 data-reveal>952,471 checks per second on commodity hardware</h2>
+        <p data-reveal>
+            InferaDB is a purpose-built authorization database written in Rust.
+            2.8 microsecond p99 latency means permission checks add zero perceptible
+            overhead to your API calls — whether you have 100 users or 10 million.
+        </p>
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">2.8us</span>
+                <span class="solution-stat-label">p99 read latency</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">952K</span>
+                <span class="solution-stat-label">checks/sec</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">47ms</span>
+                <span class="solution-stat-label">cross-region replication</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Ready to simplify multi-tenant authorization?</p>
+            <h2>Stop building permission systems. Start shipping features.</h2>
+            <p>
+                Replace months of custom authorization engineering with a database
+                purpose-built for multi-tenant SaaS.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/quickstart" class="btn btn-ghost btn-lg">Read the Docs</a>
+            </div>
+        </div>
+    </div>
+</section>

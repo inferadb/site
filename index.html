@@ -16,9 +16,9 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
               data-phrases="modern software,AI-native products,teams that ship,regulated industries,every scale,what comes next">modern software</span>
         </h1>
         <p class="hero-subtitle">
-            Broken access control is the #1 API security risk. InferaDB is
-            the authorization database purpose-built to fix that — deploys
-            in minutes, scales to millions, satisfies auditors by default.
+            The authorization database purpose-built for fine-grained access
+            control — deploys in minutes, scales to millions of checks,
+            and satisfies auditors by default.
         </p>
         <div class="hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -31,21 +31,6 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                 {% include icon-github.svg %}
                 View on GitHub
             </a>
-        </div>
-    </div>
-</section>
-
-<!-- Credibility bar -->
-<section class="credibility">
-    <div class="container">
-        <div class="credibility-grid" data-reveal="fade">
-            <span class="credibility-value">From the engineers behind OpenFGA</span>
-            <span class="credibility-sep">//</span>
-            <span class="credibility-value">Zanzibar-inspired</span>
-            <span class="credibility-sep">//</span>
-            <span class="credibility-value">AuthZEN-compliant</span>
-            <span class="credibility-sep">//</span>
-            <span class="credibility-value">Open source</span>
         </div>
     </div>
 </section>
@@ -142,12 +127,12 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
             </p>
         </div>
         <div class="hiw-tabs" data-reveal>
-            <button class="hiw-tab active" data-hiw-tab="dev">For Developers</button>
-            <button class="hiw-tab" data-hiw-tab="sec">For Security Teams</button>
+            <button class="hiw-tab" data-hiw-tab="dev">For Developers</button>
+            <button class="hiw-tab active" data-hiw-tab="sec">For Security Teams</button>
         </div>
 
         <!-- Developer perspective -->
-        <div class="hiw-grid hiw-panel active" data-hiw-panel="dev">
+        <div class="hiw-grid hiw-panel" data-hiw-panel="dev">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -210,7 +195,7 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
         </div>
 
         <!-- Security & compliance perspective -->
-        <div class="hiw-grid hiw-panel" data-hiw-panel="sec">
+        <div class="hiw-grid hiw-panel active" data-hiw-panel="sec">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -336,6 +321,84 @@ description: "InferaDB is the first purpose-built authorization database. Sub-mi
                     <li>Sub-microsecond check latency</li>
                 </ul>
             </div>
+        </div>
+    </div>
+</section>
+
+{% include section-break.html id="03b" label="WHY INFERADB" %}
+<!-- Comparison Matrix -->
+<section class="compare" id="compare">
+    <div class="container">
+        <div class="section-header" data-reveal>
+            <h2>How InferaDB stacks up</h2>
+            <p>
+                Every approach to authorization has trade-offs. Here's an honest
+                look at what you get with InferaDB versus the alternatives.
+            </p>
+        </div>
+        <div class="compare-wrap" data-reveal>
+            <table class="compare-matrix">
+                <thead>
+                    <tr>
+                        <th class="compare-dimension-head">Dimension</th>
+                        <th class="compare-col-inhouse">Built In-House</th>
+                        <th class="compare-col-policy">Policy Engines<span class="compare-col-sub">OPA / Cedar</span></th>
+                        <th class="compare-col-managed">Managed Services<span class="compare-col-sub">AuthZed / Oso</span></th>
+                        <th class="compare-col-infera">InferaDB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-reveal data-reveal-delay="0">
+                        <td class="compare-dimension">Setup time</td>
+                        <td class="compare-weak">Months</td>
+                        <td class="compare-neutral">Weeks</td>
+                        <td class="compare-neutral">Days</td>
+                        <td class="compare-win">Minutes</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="40">
+                        <td class="compare-dimension">Latency</td>
+                        <td class="compare-neutral">Varies</td>
+                        <td class="compare-neutral">1-10 ms</td>
+                        <td class="compare-weak">Network hop</td>
+                        <td class="compare-win">&lt;1 &#181;s</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="80">
+                        <td class="compare-dimension">Audit trail</td>
+                        <td class="compare-weak">Build it yourself</td>
+                        <td class="compare-weak">Decision logs only</td>
+                        <td class="compare-neutral">Basic logging</td>
+                        <td class="compare-win">Full lineage</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="120">
+                        <td class="compare-dimension">Tenant isolation</td>
+                        <td class="compare-weak">DIY per-tenant</td>
+                        <td class="compare-weak">Not built-in</td>
+                        <td class="compare-neutral">Namespace-level</td>
+                        <td class="compare-win">Native multi-tenant</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="160">
+                        <td class="compare-dimension">Compliance readiness</td>
+                        <td class="compare-weak">Manual effort</td>
+                        <td class="compare-weak">Policy-only</td>
+                        <td class="compare-neutral">Partial</td>
+                        <td class="compare-win">SOC 2 / HIPAA ready</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="200">
+                        <td class="compare-dimension">Ongoing maintenance</td>
+                        <td class="compare-weak">Dedicated team</td>
+                        <td class="compare-neutral">Rego / Cedar upkeep</td>
+                        <td class="compare-neutral">Vendor-managed</td>
+                        <td class="compare-win">Zero ops</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="240">
+                        <td class="compare-dimension">Cost at scale</td>
+                        <td class="compare-weak">$900K+ / year</td>
+                        <td class="compare-neutral">Infra + team</td>
+                        <td class="compare-weak">Per-check pricing</td>
+                        <td class="compare-win">Flat, predictable</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </section>

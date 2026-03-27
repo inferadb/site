@@ -1,5 +1,19 @@
 - title: Product
   groups:
+    - label: Solutions
+      items:
+        - title: Multi-Tenant SaaS
+          desc: Per-tenant permissions that scale without role explosion
+          url: "/solutions/multi-tenant-saas"
+        - title: Regulated Industries
+          desc: Cryptographic audit trails for compliance frameworks
+          url: "/solutions/regulated-industries"
+        - title: AI Agents
+          desc: Microsecond authorization for agent workflows
+          url: "/solutions/ai-agents"
+        - title: Platform Engineering
+          desc: Centralized authorization for microservice architectures
+          url: "/solutions/platform-engineering"
     - label: Platform
       items:
         - title: Authorization Engine
@@ -11,19 +25,12 @@
         - title: Audit & Compliance
           desc: Cryptographic audit trails for SOC 2, HIPAA, GDPR
           url: "/docs/compliance"
-    - label: Integrate
-      items:
-        - title: SDKs
-          desc: Python, TypeScript, Go, Rust, Java, and more
-          url: "/docs/#sdks"
-        - title: REST & gRPC APIs
-          desc: AuthZEN-compliant evaluation endpoints
-          url: "/docs/api-rest"
-        - title: Terraform Provider
-          desc: Infrastructure-as-code for authorization
-          url: "/docs/terraform"
 
 - title: Docs
+  hub:
+    title: Documentation Hub
+    desc: Guides, references, and SDK docs
+    url: "/docs/"
   groups:
     - label: Learn
       items:
@@ -36,17 +43,28 @@
         - title: Modeling Guide
           desc: Design an authorization schema step by step
           url: "/docs/modeling"
-    - label: Reference
+    - label: Integrate
+      items:
+        - title: SDKs
+          desc: Python, TypeScript, Go, Rust, Java, and more
+          url: "/docs/#sdks"
+        - title: REST & gRPC APIs
+          desc: AuthZEN-compliant evaluation endpoints
+          url: "/docs/api-rest"
+        - title: Terraform Provider
+          desc: Infrastructure-as-code for authorization
+          url: "/docs/terraform"
+    - label: Architecture & Security
       items:
         - title: Architecture
           desc: Engine, Control, and Ledger components
           url: "/docs/architecture"
-        - title: Deploy & Operate
-          desc: Docker, Kubernetes, observability, and config
-          url: "/docs/deploy-docker"
-        - title: API Reference
-          desc: REST, gRPC, and AuthZEN endpoints
-          url: "/docs/api-rest"
+        - title: Security
+          desc: Encryption, isolation, and threat model
+          url: "/docs/security"
+        - title: Compliance
+          desc: SOC 2, HIPAA, GDPR, and audit readiness
+          url: "/docs/compliance"
 
 - title: Pricing
   url: "/pricing"

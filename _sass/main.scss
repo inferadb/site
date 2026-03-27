@@ -1643,23 +1643,26 @@ section {
   grid-template-columns: repeat(3, 1fr);
 }
 
-.pricing-oss {
+
+.pricing-enterprise {
   margin-bottom: 3rem;
-  padding: 1.5rem;
+  padding: 1.5rem 2rem;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  background: var(--bg-card);
 }
 
-.pricing-oss-inner {
+.pricing-enterprise-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+
+  .btn { flex-shrink: 0; }
 }
 
-.pricing-oss-text {
-  .pricing-tier { margin-bottom: 0.125rem; }
-  .pricing-name { margin-bottom: 0.5rem; }
+.pricing-enterprise-text {
+  .pricing-tier { margin-bottom: 0.375rem; }
   p {
     font-size: 0.875rem;
     color: var(--text);
@@ -1679,7 +1682,25 @@ section {
   &.featured {
     background: var(--accent-gradient-subtle);
     border-color: rgba(200, 164, 78, 0.2);
+    position: relative;
   }
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -0.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 0.1875rem 0.75rem;
+  border-radius: 2px;
+  white-space: nowrap;
 }
 
 .pricing-tier {
@@ -1715,6 +1736,19 @@ section {
   }
 }
 
+.pricing-usage {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+
+  .pricing-rate {
+    color: var(--text-white);
+    font-weight: 600;
+  }
+}
+
 .pricing-desc {
   font-size: 0.8125rem;
   line-height: 1.5;
@@ -1742,6 +1776,13 @@ section {
       color: var(--accent);
       font-size: 0.75rem;
     }
+    &.pricing-excluded {
+      color: var(--muted);
+      &::before {
+        content: "—";
+        color: var(--muted);
+      }
+    }
     & + li { margin-top: 0.375rem; }
   }
 }
@@ -1759,6 +1800,154 @@ section {
     text-decoration: underline;
     text-underline-offset: 2px;
   }
+}
+
+// ─── Pricing: Special Programs ───────────────────────────────
+
+.pricing-programs {
+  margin-bottom: 3rem;
+}
+
+.pricing-programs-heading {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 1.5rem;
+}
+
+.pricing-programs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.pricing-program {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+
+  p {
+    font-size: 0.8125rem;
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0.5rem 0 1rem;
+  }
+
+  a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-decoration: none;
+    &:hover { text-decoration: underline; text-underline-offset: 2px; }
+  }
+}
+
+.pricing-program-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+// ─── Pricing: Comparison Table ──────────────────────────────
+
+.pricing-compare {
+  margin-bottom: 3rem;
+}
+
+.pricing-compare-heading {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 1.5rem;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+
+  th, td {
+    padding: 0.625rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  thead th {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--text-white);
+    font-size: 0.875rem;
+    padding-bottom: 0.75rem;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 1;
+  }
+
+  // First column (feature name) is wider
+  th:first-child,
+  td:first-child {
+    width: 34%;
+    color: var(--text);
+  }
+
+  // Value columns equally distributed
+  th:not(:first-child),
+  td:not(:first-child) {
+    width: 22%;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-white);
+  }
+
+  // Highlighted Launch column (3rd column)
+  th:nth-child(3),
+  td:nth-child(3) {
+    background: rgba(200, 164, 78, 0.04);
+  }
+
+  thead th:nth-child(3) {
+    color: var(--accent);
+    background: rgba(200, 164, 78, 0.06);
+    box-shadow: inset 0 2px 0 var(--accent);
+  }
+}
+
+.pricing-table-section td {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  padding-top: 1.5rem;
+  border-bottom: 1px solid rgba(200, 164, 78, 0.15);
+}
+
+.pricing-table-no {
+  color: var(--muted) !important;
+}
+
+.pricing-table-yes {
+  color: var(--text-white) !important;
+}
+
+.pricing-table-addon {
+  color: var(--accent) !important;
+}
+
+.pricing-table-addon-note {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-left: 0.5em;
 }
 
 // ─── Now ─────────────────────────────────────────────────────
@@ -4075,6 +4264,10 @@ h3:hover .heading-anchor {
   .devex-extras { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: repeat(2, 1fr); }
   .pricing-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .pricing-programs-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-table { font-size: 0.75rem;
+    th, td { padding: 0.5rem 0.625rem; }
+  }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
 }
 
@@ -4199,7 +4392,10 @@ h3:hover .heading-anchor {
   .devex-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
   .pricing-grid-3 { grid-template-columns: 1fr; }
-  .pricing-oss-inner { flex-direction: column; align-items: flex-start; }
+  .pricing-programs-grid { grid-template-columns: 1fr; }
+  .pricing-compare { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .pricing-table { min-width: 600px; }
+.pricing-enterprise-inner { flex-direction: column; align-items: flex-start; }
   .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
   .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
   .form-row { grid-template-columns: 1fr; }

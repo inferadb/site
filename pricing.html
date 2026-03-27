@@ -2,7 +2,7 @@
 title: Pricing
 layout: default
 body_class: page-pricing
-description: "InferaDB pricing — free open source community edition, managed cloud from $99/month. Usage-based, no per-seat charges. Enterprise plans with SLAs and compliance reporting."
+description: "InferaDB pricing — free tier with 100K checks/month, usage-based cloud plans from $29/month. No per-seat charges, no MAU billing. Enterprise add-ons for dedicated infrastructure and compliance."
 ---
 
 <section class="pricing-section">
@@ -11,101 +11,361 @@ description: "InferaDB pricing — free open source community edition, managed c
             <h1>Simple, usage-based pricing</h1>
             <p>
                 Pay for what you use. No per-seat charges. No MAU surprises.
-                Authorization checks scale linearly with your application — and
-                so does InferaDB.
+                Start free, scale to millions of checks — your bill grows
+                linearly with your application.
             </p>
         </div>
 
         <div class="pricing-grid pricing-grid-3">
+            <!-- Free -->
             <div class="pricing-card">
                 <span class="pricing-tier">Cloud</span>
-                <div class="pricing-name">Starter</div>
+                <div class="pricing-name">Free</div>
                 <div class="pricing-price">
-                    <span class="price-amount">$99</span>
+                    <span class="price-amount">$0</span>
                     <span class="price-period">/month</span>
                 </div>
                 <p class="pricing-desc">
-                    Managed hosting with 5M authorization checks/month. Perfect
-                    for small teams and early-stage products.
+                    Zero-ops authorization for hobby projects and prototypes.
+                    No credit card required.
                 </p>
                 <ul class="pricing-features">
-                    <li>Everything in Community Edition</li>
-                    <li>5M checks/month included</li>
-                    <li>3 environments</li>
-                    <li>Managed infrastructure</li>
+                    <li>100K checks/month</li>
+                    <li>10K relationships stored</li>
+                    <li>1 vault</li>
+                    <li>50 req/s rate limit</li>
+                    <li>72-hour audit trail</li>
+                    <li>7-day metrics retention</li>
+                    <li class="pricing-excluded">No webhooks</li>
+                    <li class="pricing-excluded">No policy versioning</li>
+                    <li>Community support</li>
+                </ul>
+                <a href="/waitlist" class="btn btn-primary">Get Started Free</a>
+            </div>
+
+            <!-- Launch -->
+            <div class="pricing-card featured">
+                <span class="pricing-badge">Most popular</span>
+                <span class="pricing-tier">Cloud</span>
+                <div class="pricing-name">Launch</div>
+                <div class="pricing-price">
+                    <span class="price-amount">$29</span>
+                    <span class="price-period">/month</span>
+                </div>
+                <p class="pricing-usage">
+                    + <span class="pricing-rate">$0.50</span> / 100K checks
+                </p>
+                <p class="pricing-desc">
+                    For startups going to production. Usage-based pricing
+                    that scales with your app.
+                </p>
+                <ul class="pricing-features">
+                    <li>1M checks/month included</li>
+                    <li>100K relationships included</li>
+                    <li>5 vaults</li>
+                    <li>500 req/s rate limit</li>
+                    <li>7-day audit trail</li>
+                    <li>30-day metrics retention</li>
+                    <li>Webhooks</li>
+                    <li>30-day policy version history</li>
+                    <li>99.5% SLA</li>
                     <li>Email support</li>
                 </ul>
                 <a href="/waitlist" class="btn btn-ghost">Join Waitlist</a>
             </div>
 
-            <div class="pricing-card featured">
+            <!-- Scale -->
+            <div class="pricing-card">
                 <span class="pricing-tier">Cloud</span>
-                <div class="pricing-name">Pro</div>
+                <div class="pricing-name">Scale</div>
                 <div class="pricing-price">
-                    <span class="price-amount">$499</span>
+                    <span class="price-amount">$199</span>
                     <span class="price-period">/month</span>
                 </div>
+                <p class="pricing-usage">
+                    + <span class="pricing-rate">$0.35</span> / 100K checks
+                    &middot; <span class="pricing-rate">$0.75</span> / 100K relationships
+                </p>
                 <p class="pricing-desc">
-                    For growth-stage SaaS. Unlimited environments, multi-tenant
-                    isolation, and priority support.
+                    For growth-stage SaaS. Cryptographic tenant isolation,
+                    extended audit history, and priority support.
                 </p>
                 <ul class="pricing-features">
-                    <li>Everything in Starter</li>
-                    <li>10–100M checks/month</li>
-                    <li>Unlimited environments</li>
+                    <li>10M checks/month included</li>
+                    <li>1M relationships included</li>
+                    <li>50 vaults</li>
+                    <li>5K req/s rate limit</li>
+                    <li>30-day audit trail</li>
+                    <li>60-day metrics retention</li>
+                    <li>Webhooks + event streaming</li>
+                    <li>Unlimited policy version history</li>
                     <li>Cryptographic tenant isolation</li>
                     <li>Audit trail with Merkle proofs</li>
+                    <li>99.9% SLA</li>
                     <li>Priority support</li>
                 </ul>
                 <a href="/waitlist" class="btn btn-primary">Join Waitlist</a>
             </div>
+        </div>
 
-            <div class="pricing-card">
-                <span class="pricing-tier">Cloud</span>
-                <div class="pricing-name">Enterprise</div>
-                <div class="pricing-price">
-                    <span class="price-amount">Custom</span>
+        <!-- Enterprise callout -->
+        <div class="pricing-enterprise">
+            <div class="pricing-enterprise-inner">
+                <div class="pricing-enterprise-text">
+                    <span class="pricing-tier">Enterprise</span>
+                    <p>Need dedicated infrastructure, custom SLAs, multi-region replication, or compliance reporting? These are available as add-ons on the Scale plan with custom volume rates.</p>
                 </div>
-                <p class="pricing-desc">
-                    Dedicated infrastructure, SLA guarantees, compliance
-                    reporting, and data residency controls.
-                </p>
-                <ul class="pricing-features">
-                    <li>Everything in Pro</li>
-                    <li>Custom volume</li>
-                    <li>Dedicated infrastructure</li>
-                    <li>SLA guarantees (99.99%)</li>
-                    <li>Compliance reporting</li>
-                    <li>Data residency enforcement</li>
-                    <li>SSO &amp; SCIM provisioning</li>
-                    <li>24/7 priority support</li>
-                </ul>
                 <a href="/contact" class="btn btn-ghost">Contact Sales</a>
             </div>
         </div>
 
-        <div class="pricing-oss">
-            <div class="pricing-oss-inner">
-                <div class="pricing-oss-text">
-                    <span class="pricing-tier">Open Source</span>
-                    <div class="pricing-name">Community Edition</div>
-                    <p>The full authorization engine, dual-licensed MIT and Apache 2.0. Run it yourself on any infrastructure — IPL policy language, REST &amp; gRPC APIs, CLI, SDKs, and Dashboard included.</p>
+        <!-- Special Programs -->
+        <div class="pricing-programs">
+            <h2 class="pricing-programs-heading">Special Programs</h2>
+            <div class="pricing-programs-grid">
+                <div class="pricing-program">
+                    <span class="pricing-program-label">Startups</span>
+                    <p>Up to $10K in credits for early-stage startups. Ship authorization without worrying about your bill.</p>
+                    <a href="/contact">Apply for startup credits</a>
                 </div>
-                <a
-                    href="https://github.com/inferadb/inferadb"
-                    class="btn btn-ghost"
-                    target="_blank"
-                    rel="noopener"
-                >
-                    {% include icon-github.svg %}
-                    Get Started on GitHub
-                </a>
+                <div class="pricing-program">
+                    <span class="pricing-program-label">Open Source</span>
+                    <p>Free Scale-tier access for open source projects building on InferaDB.</p>
+                    <a href="/contact">Apply for OSS program</a>
+                </div>
+                <div class="pricing-program">
+                    <span class="pricing-program-label">Education</span>
+                    <p>Free cloud access for students, educators, and academic research projects.</p>
+                    <a href="/contact">Apply for education access</a>
+                </div>
             </div>
+        </div>
+
+        <!-- Detailed Plan Comparison -->
+        <div class="pricing-compare">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Free</th>
+                        <th>Launch</th>
+                        <th>Scale</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="pricing-table-section">
+                        <td colspan="4">Usage &amp; Limits</td>
+                    </tr>
+                    <tr>
+                        <td>Platform fee</td>
+                        <td>$0</td>
+                        <td>$29/mo</td>
+                        <td>$199/mo</td>
+                    </tr>
+                    <tr>
+                        <td>Checks included</td>
+                        <td>100K/mo</td>
+                        <td>1M/mo</td>
+                        <td>10M/mo</td>
+                    </tr>
+                    <tr>
+                        <td>Additional checks</td>
+                        <td>Soft cap</td>
+                        <td>$0.50 / 100K</td>
+                        <td>$0.35 / 100K</td>
+                    </tr>
+                    <tr>
+                        <td>Relationships included</td>
+                        <td>10K</td>
+                        <td>100K</td>
+                        <td>1M</td>
+                    </tr>
+                    <tr>
+                        <td>Additional relationships</td>
+                        <td>Soft cap</td>
+                        <td>Included</td>
+                        <td>$0.75 / 100K</td>
+                    </tr>
+                    <tr>
+                        <td>Vaults</td>
+                        <td>1</td>
+                        <td>5</td>
+                        <td>50</td>
+                    </tr>
+                    <tr>
+                        <td>Rate limit</td>
+                        <td>50 req/s</td>
+                        <td>500 req/s</td>
+                        <td>5K req/s</td>
+                    </tr>
+
+                    <tr class="pricing-table-section">
+                        <td colspan="4">History &amp; Observability</td>
+                    </tr>
+                    <tr>
+                        <td>Audit trail retention</td>
+                        <td>72 hours</td>
+                        <td>7 days</td>
+                        <td>30 days</td>
+                    </tr>
+                    <tr>
+                        <td>Metrics retention</td>
+                        <td>7 days</td>
+                        <td>30 days</td>
+                        <td>60 days</td>
+                    </tr>
+                    <tr>
+                        <td>Merkle proof audit</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+
+                    <tr class="pricing-table-section">
+                        <td colspan="4">Features</td>
+                    </tr>
+                    <tr>
+                        <td>REST &amp; gRPC APIs</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>SDKs</td>
+                        <td class="pricing-table-yes">All languages</td>
+                        <td class="pricing-table-yes">All languages</td>
+                        <td class="pricing-table-yes">All languages</td>
+                    </tr>
+                    <tr>
+                        <td>Dashboard</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>Webhooks</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>Event streaming</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>Policy version history</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td>30 days</td>
+                        <td>Unlimited</td>
+                    </tr>
+
+                    <tr class="pricing-table-section">
+                        <td colspan="4">Security &amp; Compliance</td>
+                    </tr>
+                    <tr>
+                        <td>Tenant isolation</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-yes">Cryptographic</td>
+                    </tr>
+                    <tr>
+                        <td>SLA</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td>99.5%</td>
+                        <td>99.9%</td>
+                    </tr>
+
+                    <tr class="pricing-table-section">
+                        <td colspan="4">Support</td>
+                    </tr>
+                    <tr>
+                        <td>Community (Discord)</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>Email support</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-yes">Included</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>Priority support</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-yes">Included</td>
+                    </tr>
+                    <tr>
+                        <td>Team members</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                        <td>Unlimited</td>
+                    </tr>
+
+                    <tr class="pricing-table-section">
+                        <td colspan="4">Enterprise Add-ons <span class="pricing-table-addon-note">Scale plan</span></td>
+                    </tr>
+                    <tr>
+                        <td>Dedicated infrastructure</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>Multi-region replication</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>Data residency enforcement</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>Compliance reporting</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>SSO &amp; SCIM</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>Custom SLA (99.99%)</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>24/7 support</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                    <tr>
+                        <td>Custom volume rates</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-no">&mdash;</td>
+                        <td class="pricing-table-addon">Contact Sales</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <p class="pricing-note">
             All cloud plans include usage-based pricing that scales with your
-            application. No per-seat or per-MAU charges.<br />
+            application. No per-seat or per-MAU charges. Overage is billed
+            monthly — your app never stops working. Free tier usage degrades
+            gracefully with increased latency instead of hard-cutting requests.<br />
             Need help deciding? <a href="/contact">Talk to us</a> or
             <a href="https://discord.gg/inferadb" target="_blank" rel="noopener"
                 >ask on Discord</a

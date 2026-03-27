@@ -1,6 +1,9 @@
 - site: GitHub
   url: "https://github.com/inferadb"
   icon: github
+- site: LinkedIn
+  url: "https://linkedin.com/company/inferadb"
+  icon: linkedin
 - site: Discord
   url: "https://discord.gg/inferadb"
   icon: discord

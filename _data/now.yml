@@ -3,6 +3,7 @@
   date: 2026-03-28
   category: engineering
   slug: authorization-infrastructure-compared
+  teaser: /assets/images/dispatch/authorization-compared.svg
   excerpt: "Choosing authorization infrastructure is a high-stakes decision with real lock-in. We compare InferaDB, OpenFGA, SpiceDB, and Oso on performance, security, pricing, and operational burden — honestly."
   authors:
     - Evan Sims

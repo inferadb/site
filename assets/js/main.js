@@ -1656,3 +1656,236 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     updateHash();
   });
 })();
+
+// SVG teaser injection + draw animation
+(function() {
+  function getLength(el) {
+    try { if (el.getTotalLength) return el.getTotalLength(); } catch(e) {}
+    var tag = el.tagName.toLowerCase();
+    if (tag === 'line') {
+      var dx = (parseFloat(el.getAttribute('x2')) || 0) - (parseFloat(el.getAttribute('x1')) || 0);
+      var dy = (parseFloat(el.getAttribute('y2')) || 0) - (parseFloat(el.getAttribute('y1')) || 0);
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    if (tag === 'circle') return 2 * Math.PI * (parseFloat(el.getAttribute('r')) || 0);
+    if (tag === 'rect') {
+      var w = parseFloat(el.getAttribute('width')) || 0;
+      var h = parseFloat(el.getAttribute('height')) || 0;
+      return 2 * (w + h);
+    }
+    return 300;
+  }
+
+  function setupDraw(svg) {
+    var items = [];
+    var all = svg.querySelectorAll('line, circle, rect, polygon, polyline, path');
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      var stroke = el.getAttribute('stroke');
+      var fill = el.getAttribute('fill');
+      if (stroke && stroke !== 'none') {
+        var len = getLength(el);
+        el.style.strokeDasharray = len;
+        el.style.strokeDashoffset = len;
+        items.push({ el: el, len: len, type: 'stroke' });
+      }
+      if (fill && fill !== 'none') {
+        el.style.opacity = '0';
+        items.push({ el: el, type: 'fill' });
+      }
+    }
+    return items;
+  }
+
+  function play(items, dur) {
+    dur = dur || 800;
+    var sd = dur * 0.75;
+    var fd = dur * 0.5;
+    for (var i = 0; i < items.length; i++) {
+      items[i].el.style.transition = 'none';
+      if (items[i].type === 'stroke') items[i].el.style.strokeDashoffset = items[i].len;
+      else items[i].el.style.opacity = '0';
+    }
+    if (items.length) items[0].el.getBoundingClientRect();
+    for (var j = 0; j < items.length; j++) {
+      if (items[j].type === 'stroke') {
+        items[j].el.style.transition = 'stroke-dashoffset ' + sd + 'ms cubic-bezier(0.4,0,0.2,1)';
+        items[j].el.style.strokeDashoffset = '0';
+      } else {
+        items[j].el.style.transition = 'opacity ' + (dur * 0.4) + 'ms ease ' + fd + 'ms';
+        items[j].el.style.opacity = '1';
+      }
+    }
+  }
+
+  function injectSvg(img, cb) {
+    var src = img.getAttribute('src');
+    if (!src || src.indexOf('.svg') === -1) return;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', src, true);
+    xhr.onload = function() {
+      if (xhr.status !== 200) return;
+      var doc = new DOMParser().parseFromString(xhr.responseText, 'image/svg+xml');
+      var svg = doc.querySelector('svg');
+      if (!svg) return;
+      var cls = img.className;
+      svg.setAttribute('class', cls);
+      svg.removeAttribute('width');
+      svg.removeAttribute('height');
+      img.parentNode.replaceChild(svg, img);
+      cb(svg);
+    };
+    xhr.send();
+  }
+
+  // Dispatch teasers
+  var teasers = document.querySelectorAll('.dispatch-entry-teaser');
+  teasers.forEach(function(img) {
+    if (img.tagName !== 'IMG') return;
+    injectSvg(img, function(svg) {
+      var items = setupDraw(svg);
+      var entry = svg.closest('.dispatch-entry');
+      var ob = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) { play(items, 800); ob.disconnect(); }
+      }, { threshold: 0.3 });
+      ob.observe(svg);
+      if (entry) entry.addEventListener('mouseenter', function() { play(items, 600); });
+    });
+  });
+
+  // Post hero
+  var hero = document.querySelector('img.post-hero');
+  if (hero) {
+    injectSvg(hero, function(svg) {
+      var items = setupDraw(svg);
+      play(items, 1000);
+    });
+  }
+})();
+
+// Changelog sticky dates + dots
+(function() {
+  var MOBILE = 768;
+  var cols = document.querySelectorAll('.changelog-date-col');
+  if (!cols.length) return;
+
+  var nav = document.querySelector('.site-nav');
+  var entries = [];
+
+  for (var i = 0; i < cols.length; i++) {
+    var col = cols[i];
+    var date = col.querySelector('.changelog-date');
+    if (!date) continue;
+    var rail = col.nextElementSibling;
+    var node = rail ? rail.querySelector('.changelog-node') : null;
+    var content = rail ? rail.nextElementSibling : null;
+    entries.push({ col: col, date: date, rail: rail, node: node, content: content, stuck: false, active: false });
+  }
+
+  var ticking = false;
+  function update() {
+    // Skip on mobile — date is inline above content, no sticky needed
+    if (window.innerWidth <= MOBILE) {
+      for (var k = 0; k < entries.length; k++) {
+        unstick(entries[k]);
+        setActive(entries[k], false);
+      }
+      ticking = false;
+      return;
+    }
+
+    var navBottom = nav ? nav.getBoundingClientRect().bottom : 60;
+    var pin = navBottom + 8;
+    var viewMid = window.innerHeight / 2;
+
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+
+      // Temporarily unstick to measure natural positions
+      if (e.stuck) {
+        unstick(e);
+      }
+
+      var dateRect = e.date.getBoundingClientRect();
+      var nodeRect = e.node ? e.node.getBoundingClientRect() : null;
+      var contentRect = e.content ? e.content.getBoundingClientRect() : dateRect;
+      var dateHeight = dateRect.height;
+
+      // Stick: natural position above pin AND content still visible below
+      var shouldStick = dateRect.top < pin && contentRect.bottom > pin + dateHeight + 16;
+
+      if (shouldStick) {
+        e.date.style.position = 'fixed';
+        e.date.style.top = pin + 'px';
+        e.date.style.left = dateRect.left + 'px';
+        e.date.style.width = dateRect.width + 'px';
+
+        if (e.node && nodeRect) {
+          e.node.style.position = 'fixed';
+          e.node.style.top = pin + 'px';
+          e.node.style.left = (nodeRect.left + nodeRect.width / 2 - 4) + 'px';
+          e.node.style.marginTop = '0';
+        }
+
+        e.stuck = true;
+      }
+
+      // Active: content is currently in the viewport center region
+      var isActive = contentRect.top < viewMid && contentRect.bottom > pin;
+      setActive(e, isActive);
+    }
+    ticking = false;
+  }
+
+  function unstick(e) {
+    e.date.style.position = '';
+    e.date.style.top = '';
+    e.date.style.left = '';
+    e.date.style.width = '';
+    if (e.node) {
+      e.node.style.position = '';
+      e.node.style.top = '';
+      e.node.style.left = '';
+      e.node.style.marginTop = '';
+    }
+    e.stuck = false;
+  }
+
+  function setActive(e, active) {
+    if (e.active === active) return;
+    e.active = active;
+    if (e.node) {
+      if (active) e.node.classList.add('is-active');
+      else e.node.classList.remove('is-active');
+    }
+  }
+
+  function onScroll() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+})();
+
+// Changelog deep-link: open + scroll to entry on hash
+(function() {
+  function openFromHash() {
+    var hash = location.hash.replace('#', '');
+    if (!hash) return;
+    var target = document.getElementById(hash);
+    if (!target || target.tagName !== 'DETAILS') return;
+    target.open = true;
+    // Scroll after layout reflow
+    requestAnimationFrame(function() {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  openFromHash();
+  window.addEventListener('hashchange', openFromHash);
+})();

@@ -1,12 +1,14 @@
-<div class="card-grid">
+<div class="dispatch-list">
 {% for entry in include.entries %}
-<a href="{{ entry.url }}" class="card"{% if entry.url contains "://" %} target="_blank" rel="noopener"{% endif %}>
-  <div class="card-meta">
-    <span class="card-label-accent">{{ entry.source }}</span>
-    <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+<a href="{{ entry.url }}" class="dispatch-entry"{% if entry.url contains "://" %} target="_blank" rel="noopener"{% endif %}>
+  <div class="dispatch-entry-content">
+    <div class="dispatch-entry-meta">
+      <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+      <span class="dispatch-entry-cat">{{ entry.source }}</span>
+    </div>
+    <h2 class="dispatch-entry-title">{{ entry.title }}</h2>
+    <p class="dispatch-entry-excerpt">{{ entry.excerpt }}</p>
   </div>
-  <h2 class="card-title">{{ entry.title }}</h2>
-  <p class="card-excerpt">{{ entry.excerpt }}</p>
 </a>
 {% endfor %}
 </div>

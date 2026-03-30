@@ -3,13 +3,14 @@
   <div class="changelog-date-col{% if forloop.first %} is-first{% endif %}">
     <time class="changelog-date" datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
   </div>
-  <div class="changelog-rail{% if forloop.first %} is-first{% endif %}{% if forloop.last %} is-last{% endif %}{% if entry.expanded %} is-expanded{% endif %}">
+  <div class="changelog-rail{% if forloop.first %} is-first{% endif %}{% if forloop.last %} is-last{% endif %}">
     <span class="changelog-node"></span>
   </div>
-  <details class="changelog-content{% if forloop.first %} is-first{% endif %}"{% if entry.expanded %} open{% endif %}>
+  {% if entry.slug %}{% assign entry_id = entry.slug %}{% else %}{% assign entry_id = entry.title | slugify | prepend: "-" | prepend: entry.date %}{% endif %}
+  <details class="changelog-content{% if forloop.first %} is-first{% endif %}" id="{{ entry_id }}"{% if entry.expanded %} open{% endif %}>
     <summary class="changelog-summary">
       <div class="changelog-summary-inner">
-        <h2 class="changelog-entry-title">{{ entry.title }}</h2>
+        <h2 class="changelog-entry-title"><a href="#{{ entry_id }}" class="changelog-entry-link">{{ entry.title }}</a></h2>
         {% if entry.tags %}
         <div class="changelog-entry-tags">
           {% for tag in entry.tags %}<span class="changelog-tag">{{ tag }}</span>{% endfor %}

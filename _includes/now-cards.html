@@ -7,11 +7,6 @@
   </div>
   <h2 class="card-title">{{ entry.title }}</h2>
   <p class="card-excerpt">{{ entry.excerpt }}</p>
-  {% if entry.authors %}
-  <div class="card-authors">
-    {% for author in entry.authors %}<span>{{ author }}</span>{% endfor %}
-  </div>
-  {% endif %}
 </a>
 {% endfor %}
 </div>

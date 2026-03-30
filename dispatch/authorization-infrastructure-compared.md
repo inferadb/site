@@ -110,18 +110,104 @@ The most common "choice" is no choice at all: teams embed authorization logic di
 
 ## Comparison Table
 
-| | OpenFGA | SpiceDB / AuthZed | Oso | In-House | InferaDB |
-|---|---|---|---|---|---|
-| **License** | Apache 2.0 | Apache 2.0 (SpiceDB) | Apache 2.0 (library, deprecated); Cloud is proprietary | N/A | MIT + Apache 2.0 |
-| **Managed Service** | Auth0 FGA (built on OpenFGA) | Yes (AuthZed) | Yes (Oso Cloud) | N/A | Yes (InferaDB Cloud) |
-| **Auth Model** | ReBAC (Zanzibar) | ReBAC (Zanzibar) | Policy engine (Polar) | Ad hoc | ReBAC + ABAC + RBAC (IPL) |
-| **Storage** | PostgreSQL / MySQL | PostgreSQL / CockroachDB / Spanner | Proprietary | Your database | Purpose-built B+ tree |
-| **Read Latency (p99)** | 5-20ms | 5-15ms | 10-50ms | Varies | 2.8 microseconds |
-| **Consistency** | Tunable (DB-dependent) | Snapshot (zed tokens) | Eventual | Varies | Linearizable (Raft) |
-| **Multi-Tenancy** | Application-level (store IDs) | Logical isolation | Logical isolation | Application-level | Cryptographic (per-vault encryption) |
-| **Audit Trail** | Application-level logging | Application-level logging | Built-in logs | Manual | Merkle proof (tamper-evident) |
-| **Pricing Model** | Free (self-hosted) / Auth0 FGA pricing | Resource-based (managed) | MAU-based | Engineering time | Usage-based (per-check) |
-| **Extensibility** | Limited | Caveats / Assertions | Polar language | Unlimited | WASM modules |
+<div class="compare-wrap">
+<table class="compare-matrix">
+<thead>
+<tr>
+<th class="compare-dimension-head">Dimension</th>
+<th>OpenFGA</th>
+<th>SpiceDB / AuthZed</th>
+<th>Oso</th>
+<th>In-House</th>
+<th class="compare-col-infera">InferaDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="compare-dimension">License</td>
+<td class="compare-neutral">Apache 2.0</td>
+<td class="compare-neutral">Apache 2.0 (SpiceDB)</td>
+<td class="compare-neutral">Apache 2.0 (library, deprecated); Cloud is proprietary</td>
+<td class="compare-weak">N/A</td>
+<td class="compare-win">MIT + Apache 2.0</td>
+</tr>
+<tr>
+<td class="compare-dimension">Managed Service</td>
+<td class="compare-neutral">Auth0 FGA (built on OpenFGA)</td>
+<td class="compare-neutral">Yes (AuthZed)</td>
+<td class="compare-neutral">Yes (Oso Cloud)</td>
+<td class="compare-weak">N/A</td>
+<td class="compare-win">Yes (InferaDB Cloud)</td>
+</tr>
+<tr>
+<td class="compare-dimension">Auth Model</td>
+<td class="compare-neutral">ReBAC (Zanzibar)</td>
+<td class="compare-neutral">ReBAC (Zanzibar)</td>
+<td class="compare-neutral">Policy engine (Polar)</td>
+<td class="compare-weak">Ad hoc</td>
+<td class="compare-win">ReBAC + ABAC + RBAC (IPL)</td>
+</tr>
+<tr>
+<td class="compare-dimension">Storage</td>
+<td class="compare-weak">PostgreSQL / MySQL</td>
+<td class="compare-neutral">PostgreSQL / CockroachDB / Spanner</td>
+<td class="compare-neutral">Proprietary</td>
+<td class="compare-weak">Your database</td>
+<td class="compare-win">Purpose-built engine</td>
+</tr>
+<tr>
+<td class="compare-dimension">Read Latency (p99)</td>
+<td class="compare-weak">5-20ms</td>
+<td class="compare-neutral">5-15ms</td>
+<td class="compare-weak">10-50ms</td>
+<td class="compare-neutral">Varies</td>
+<td class="compare-win">~3 &micro;s</td>
+</tr>
+<tr>
+<td class="compare-dimension">Consistency</td>
+<td class="compare-weak">Tunable (DB-dependent)</td>
+<td class="compare-neutral">Snapshot (zed tokens)</td>
+<td class="compare-weak">Eventual</td>
+<td class="compare-neutral">Varies</td>
+<td class="compare-win">Linearizable (Raft)</td>
+</tr>
+<tr>
+<td class="compare-dimension">Multi-Tenancy</td>
+<td class="compare-weak">Application-level (store IDs)</td>
+<td class="compare-neutral">Logical isolation</td>
+<td class="compare-neutral">Logical isolation</td>
+<td class="compare-weak">Application-level</td>
+<td class="compare-win">Cryptographic (per-vault)</td>
+</tr>
+<tr>
+<td class="compare-dimension">Audit Trail</td>
+<td class="compare-weak">Application-level logging</td>
+<td class="compare-neutral">Audit logging</td>
+<td class="compare-neutral">Built-in logs</td>
+<td class="compare-weak">Manual</td>
+<td class="compare-win">Merkle proof (tamper-evident)</td>
+</tr>
+<tr>
+<td class="compare-dimension">Pricing</td>
+<td class="compare-neutral">Free (self-hosted) / Auth0 FGA</td>
+<td class="compare-neutral">Resource-based (managed)</td>
+<td class="compare-neutral">MAU-based</td>
+<td class="compare-weak">Engineering time</td>
+<td class="compare-win">Usage-based, from $0</td>
+</tr>
+<tr>
+<td class="compare-dimension">Extensibility</td>
+<td class="compare-weak">Limited</td>
+<td class="compare-neutral">Caveats / Assertions</td>
+<td class="compare-neutral">Polar language</td>
+<td class="compare-neutral">Unlimited</td>
+<td class="compare-win">WASM modules</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p class="perf-note">Latency figures are core engine benchmarks where available. Production latency varies by deployment topology.</p>
 
 ## Where InferaDB Fits
 

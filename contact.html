@@ -52,6 +52,7 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                         <input type="hidden" name="inquiry-type" id="inquiry-type" value="technical" />
                     </div>
 
+                    <!-- Always visible: name + email -->
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label" for="first-name">First Name</label>
@@ -77,32 +78,33 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="email">Work Email</label>
-                            <input
-                                class="form-input"
-                                type="email"
-                                id="email"
-                                name="email"
-                                required
-                                autocomplete="email"
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="company-website">Company Website <span class="form-optional">(optional)</span></label>
-                            <input
-                                class="form-input"
-                                type="url"
-                                id="company-website"
-                                name="company-website"
-                                placeholder="acme.com"
-                                autocomplete="url"
-                            />
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">Work Email</label>
+                        <input
+                            class="form-input"
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            autocomplete="email"
+                        />
                     </div>
 
-                    <div class="form-row">
+                    <!-- Company website: enterprise, partnership -->
+                    <div class="form-group contact-field" data-show-for="enterprise partnership">
+                        <label class="form-label" for="company-website">Company Website <span class="form-optional">(optional)</span></label>
+                        <input
+                            class="form-input"
+                            type="url"
+                            id="company-website"
+                            name="company-website"
+                            placeholder="acme.com"
+                            autocomplete="url"
+                        />
+                    </div>
+
+                    <!-- Region + company size: enterprise only -->
+                    <div class="form-row contact-field" data-show-for="enterprise">
                         <div class="form-group">
                             <label class="form-label" for="region">Region <span class="form-optional">(optional)</span></label>
                             <select class="form-input form-select" id="region" name="region">
@@ -128,18 +130,19 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="use-case">What are you building? <span class="form-optional">(optional)</span></label>
-                        <div class="contact-usecase-selector" role="group" aria-label="Use case" id="usecase-selector">
-                            <button type="button" class="contact-usecase-btn" data-usecase="multi-tenant-saas" aria-pressed="false">Multi-Tenant SaaS</button>
-                            <button type="button" class="contact-usecase-btn" data-usecase="ai-agents" aria-pressed="false">AI Agents</button>
-                            <button type="button" class="contact-usecase-btn" data-usecase="regulated-workloads" aria-pressed="false">Regulated Workloads</button>
-                            <button type="button" class="contact-usecase-btn" data-usecase="platform-internal" aria-pressed="false">Platform / Internal</button>
-                            <button type="button" class="contact-usecase-btn" data-usecase="other" aria-pressed="false">Other</button>
+                    <!-- Use case checkboxes: technical, enterprise -->
+                    <fieldset class="form-group contact-field contact-checkboxes" data-show-for="technical enterprise">
+                        <legend class="form-label">What are you building? <span class="form-optional">(optional)</span></legend>
+                        <div class="contact-checkbox-row">
+                            <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Multi-Tenant SaaS" /> Multi-Tenant SaaS</label>
+                            <label class="contact-checkbox"><input type="checkbox" name="use-case" value="AI Agents" /> AI Agents</label>
+                            <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Regulated Workloads" /> Regulated Workloads</label>
+                            <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Platform / Internal" /> Platform / Internal</label>
+                            <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Other" /> Other</label>
                         </div>
-                        <input type="hidden" name="use-case" id="use-case" value="" />
-                    </div>
+                    </fieldset>
 
+                    <!-- Always visible: message + submit -->
                     <div class="form-group">
                         <label class="form-label" for="message">Message</label>
                         <textarea
@@ -328,12 +331,29 @@ description: "Get in touch with the InferaDB team — technical questions, enter
         security: 'Describe the vulnerability and how to reproduce it...'
     };
 
-    // Inquiry type selector
+    var conditionalFields = document.querySelectorAll('.contact-field');
     var selector = document.getElementById('inquiry-selector');
     var hidden = document.getElementById('inquiry-type');
     var panels = document.querySelectorAll('.contact-panel');
     var buttons = selector.querySelectorAll('.contact-type-btn');
     var messageEl = document.getElementById('message');
+
+    function updateFieldVisibility(type) {
+        for (var i = 0; i < conditionalFields.length; i++) {
+            var showFor = conditionalFields[i].getAttribute('data-show-for').split(' ');
+            var visible = showFor.indexOf(type) !== -1;
+            conditionalFields[i].style.display = visible ? '' : 'none';
+
+            // Disable hidden inputs so they don't submit empty values
+            var inputs = conditionalFields[i].querySelectorAll('input, select, textarea');
+            for (var j = 0; j < inputs.length; j++) {
+                inputs[j].disabled = !visible;
+            }
+        }
+    }
+
+    // Set initial state
+    updateFieldVisibility('technical');
 
     selector.addEventListener('click', function(e) {
         var btn = e.target.closest('.contact-type-btn');
@@ -351,31 +371,12 @@ description: "Get in touch with the InferaDB team — technical questions, enter
             panels[j].classList.toggle('active', panels[j].getAttribute('data-panel') === type);
         }
 
-        // Update message placeholder if the user hasn't started typing
+        updateFieldVisibility(type);
+
         if (!messageEl.value.trim()) {
             messageEl.placeholder = messagePlaceholders[type] || messagePlaceholders.technical;
         }
     });
 
-    // Use-case chip selector (multi-select toggle)
-    var usecaseSelector = document.getElementById('usecase-selector');
-    var usecaseHidden = document.getElementById('use-case');
-    var usecaseBtns = usecaseSelector.querySelectorAll('.contact-usecase-btn');
-
-    usecaseSelector.addEventListener('click', function(e) {
-        var btn = e.target.closest('.contact-usecase-btn');
-        if (!btn) return;
-        var isActive = !btn.classList.contains('active');
-        btn.classList.toggle('active');
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-
-        var selected = [];
-        for (var i = 0; i < usecaseBtns.length; i++) {
-            if (usecaseBtns[i].classList.contains('active')) {
-                selected.push(usecaseBtns[i].getAttribute('data-usecase'));
-            }
-        }
-        usecaseHidden.value = selected.join(', ');
-    });
 })();
 </script>

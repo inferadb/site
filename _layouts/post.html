@@ -8,7 +8,7 @@ body_class: page-post
       <div class="post-meta">
         <a href="/dispatch/" class="post-back">Dispatch</a>
         <span class="post-sep">/</span>
-        <span class="post-cat">{{ page.category }}</span>
+        {% if page.category == "company" %}{% assign cat_url = "/dispatch/news/" %}{% else %}{% assign cat_url = "/dispatch/" | append: page.category | append: "/" %}{% endif %}<a href="{{ cat_url }}" class="post-cat">{{ page.category }}</a>
         <span class="post-sep">/</span>
         <time datetime="{{ page.date }}">{{ page.date | date: "%b %d, %Y" }}</time>
       </div>

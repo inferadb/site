@@ -1,7 +1,7 @@
 ---
 layout: default
 body_class: home
-description: "InferaDB — managed authorization infrastructure for modern software. Sub-microsecond permission checks, cryptographic audit trails, and tenant isolation. Start free."
+description: "InferaDB — managed authorization infrastructure for modern software. Microsecond-scale permission checks, cryptographic audit trails, and tenant isolation. Start free."
 ---
 
 <!-- Hero -->
@@ -9,7 +9,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
     <canvas class="hero-constellation" id="constellation" aria-hidden="true"></canvas>
     <div class="hero-glow"></div>
     <div class="container">
-        <p class="hero-eyebrow">SYS:INFERADB // The Authorization Database</p>
+        <p class="hero-eyebrow">SYS:INFERADB // Authorization Infrastructure</p>
         <h1 class="hero-title" data-hero-decrypt>
             <span data-hero-static>Permissions infrastructure</span><br/>
             <span data-hero-static>for </span><span class="gradient-text" data-hero-cycle
@@ -34,16 +34,17 @@ description: "InferaDB — managed authorization infrastructure for modern softw
         <div class="section-header" data-reveal>
             <h2>Authorization is a hidden crisis</h2>
             <p>
-                Broken access control is the #1 risk in the OWASP API Security
-                Top 10 and occupies three of the top five positions. Most
-                companies are still building it from scratch.
+                Broken access control is the #1 risk on the OWASP Top 10
+                and three of the top five positions on the OWASP API Security
+                Top 10 are authorization failures. Most companies are still
+                building it from scratch.
             </p>
         </div>
         <div class="stats-grid">
             <div class="stat-card" data-reveal data-reveal-delay="0">
                 <span class="stat-number" data-decrypt-num="#1" data-decrypt-delay="0">#1</span>
                 <span class="stat-label">API security risk: broken access control</span>
-                <span class="stat-source">OWASP Top 10, 2021 &amp; 2025</span>
+                <span class="stat-source">OWASP Top 10 (2021, 2025) &amp; API Security Top 10 (2023)</span>
             </div>
             <div class="stat-card" data-reveal data-reveal-delay="80">
                 <span class="stat-number" data-decrypt-num="$4.88M" data-decrypt-delay="400">$4.88M</span>
@@ -77,7 +78,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
             <div class="perf-card perf-hero" data-reveal data-reveal-delay="0">
                 <span class="perf-number" data-decrypt-num="2.8µs" data-decrypt-delay="0">2.8µs</span>
                 <span class="perf-label">p99 read latency</span>
-                <span class="perf-context">1,780x faster than competitors</span>
+                <span class="perf-context">Orders of magnitude faster than alternatives</span>
             </div>
             <div class="perf-card" data-reveal data-reveal-delay="60">
                 <span class="perf-number" data-decrypt-num="4.9b" data-decrypt-delay="500">4.9b</span>
@@ -95,6 +96,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
                 <span class="perf-context">Global consistency, not eventual</span>
             </div>
         </div>
+        <p class="perf-note">Core engine benchmarks. Production latency through InferaDB Cloud includes network round-trip.</p>
         <div class="perf-badge">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" stroke="currentColor" stroke-width="1.5"/>
@@ -308,7 +310,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
                     <li>Per-user RAG scoping</li>
                     <li>Agent tool authorization</li>
                     <li>Chain-of-thought permission traces</li>
-                    <li>Sub-microsecond check latency</li>
+                    <li>Microsecond-scale check latency</li>
                 </ul>
             </div>
         </div>
@@ -349,14 +351,14 @@ description: "InferaDB — managed authorization infrastructure for modern softw
                         <td class="compare-dimension">Latency</td>
                         <td class="compare-neutral">Varies</td>
                         <td class="compare-neutral">1-10 ms</td>
-                        <td class="compare-weak">Network hop</td>
-                        <td class="compare-win">&lt;1 &#181;s</td>
+                        <td class="compare-neutral">5-10 ms</td>
+                        <td class="compare-win">~3 &#181;s</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="80">
                         <td class="compare-dimension">Audit trail</td>
                         <td class="compare-weak">Build it yourself</td>
                         <td class="compare-weak">Decision logs only</td>
-                        <td class="compare-neutral">Basic logging</td>
+                        <td class="compare-neutral">Audit logging</td>
                         <td class="compare-win">Full lineage</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="120">
@@ -384,8 +386,8 @@ description: "InferaDB — managed authorization infrastructure for modern softw
                         <td class="compare-dimension">Cost at scale</td>
                         <td class="compare-weak">$900K+ / year</td>
                         <td class="compare-neutral">Infra + team</td>
-                        <td class="compare-weak">Per-check pricing</td>
-                        <td class="compare-win">Flat, predictable</td>
+                        <td class="compare-neutral">Resource / MAU-based</td>
+                        <td class="compare-win">Usage-based, from $0</td>
                     </tr>
                 </tbody>
             </table>
@@ -489,8 +491,8 @@ description: "InferaDB — managed authorization infrastructure for modern softw
             <div class="devex-extra" data-reveal>
                 <h4>Framework Integrations</h4>
                 <p>
-                    Express, Next.js, Rails, Django, Spring, FastAPI, Phoenix,
-                    Axum, and more.
+                    Middleware for Express, Next.js, Rails, Django, Spring,
+                    FastAPI, Phoenix, Axum, and more — planned or in development.
                 </p>
             </div>
         </div>

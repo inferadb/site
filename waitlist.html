@@ -57,17 +57,16 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                                 autocomplete="url"
                             />
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">What are you building? <span class="form-optional">(optional)</span></label>
-                            <div class="contact-usecase-selector" role="group" aria-label="Use case" id="waitlist-usecase-selector">
-                                <button type="button" class="contact-usecase-btn" data-usecase="multi-tenant-saas" aria-pressed="false">Multi-Tenant SaaS</button>
-                                <button type="button" class="contact-usecase-btn" data-usecase="ai-agents" aria-pressed="false">AI Agents</button>
-                                <button type="button" class="contact-usecase-btn" data-usecase="regulated-workloads" aria-pressed="false">Regulated Workloads</button>
-                                <button type="button" class="contact-usecase-btn" data-usecase="platform-internal" aria-pressed="false">Platform / Internal</button>
-                                <button type="button" class="contact-usecase-btn" data-usecase="other" aria-pressed="false">Other</button>
+                        <fieldset class="form-group contact-checkboxes">
+                            <legend class="form-label">What are you building? <span class="form-optional">(optional)</span></legend>
+                            <div class="contact-checkbox-row">
+                                <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Multi-Tenant SaaS" /> Multi-Tenant SaaS</label>
+                                <label class="contact-checkbox"><input type="checkbox" name="use-case" value="AI Agents" /> AI Agents</label>
+                                <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Regulated Workloads" /> Regulated Workloads</label>
+                                <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Platform / Internal" /> Platform / Internal</label>
+                                <label class="contact-checkbox"><input type="checkbox" name="use-case" value="Other" /> Other</label>
                             </div>
-                            <input type="hidden" name="use-case" id="waitlist-use-case" value="" />
-                        </div>
+                        </fieldset>
                         <button type="submit" class="btn btn-primary btn-lg waitlist-submit">
                             Join the Waitlist
                         </button>
@@ -113,27 +112,3 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
         </div>
     </div>
 </section>
-
-<script>
-(function() {
-    var selector = document.getElementById('waitlist-usecase-selector');
-    var hidden = document.getElementById('waitlist-use-case');
-    var btns = selector.querySelectorAll('.contact-usecase-btn');
-
-    selector.addEventListener('click', function(e) {
-        var btn = e.target.closest('.contact-usecase-btn');
-        if (!btn) return;
-        var isActive = !btn.classList.contains('active');
-        btn.classList.toggle('active');
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-
-        var selected = [];
-        for (var i = 0; i < btns.length; i++) {
-            if (btns[i].classList.contains('active')) {
-                selected.push(btns[i].getAttribute('data-usecase'));
-            }
-        }
-        hidden.value = selected.join(', ');
-    });
-})();
-</script>

@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works — InferaDB"
-post_title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works"
+title: "How InferaDB Achieves 1,000x Faster Permission Checks — InferaDB"
+post_title: "How InferaDB Achieves 1,000x Faster Permission Checks"
 date: 2026-03-12
-category: practices
+category: engineering
 description: "InferaDB's custom Rust B+ tree delivers 2.8µs p99 reads and 952K ops/sec with per-page AES-256-GCM encryption — 1,000x faster than alternatives backed by general-purpose databases."
 authors:
   - Evan Sims
 ---
+
+*You don't need to understand any of this to use InferaDB — this is what runs under the hood of InferaDB Cloud. But if you care about why your authorization checks resolve in microseconds instead of milliseconds, read on.*
 
 **2.8 microseconds.** That is InferaDB's p99 read latency for a permission check — roughly the time it takes light to travel 840 meters. A typical authorization check through a general-purpose database? 5 to 50 milliseconds. That is not an incremental improvement. It is a **1,000x reduction** that moves authorization from a visible bottleneck to an invisible operation.
 
@@ -74,4 +76,4 @@ That is what authorization should feel like: not a tax on every request, but a g
 
 ---
 
-Want to see these numbers on your own workload? **[Get started with InferaDB](/docs/quickstart)** and run the built-in benchmarks against your authorization schema.
+Want to see these numbers on your workload? **[Join the InferaDB Cloud waitlist](/waitlist)** for managed authorization at microsecond speed — or **[explore the open-source benchmarks](/docs/quickstart)** yourself.

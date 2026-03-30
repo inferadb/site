@@ -1,17 +1,49 @@
-# Posts — link to individual pages at /now/{slug}
+# Posts — link to individual pages at /dispatch/{slug}
+- title: "InferaDB vs. OpenFGA vs. SpiceDB vs. Oso: Authorization Infrastructure Compared"
+  date: 2026-03-28
+  category: engineering
+  slug: authorization-infrastructure-compared
+  excerpt: "Choosing authorization infrastructure is a high-stakes decision with real lock-in. We compare InferaDB, OpenFGA, SpiceDB, and Oso on performance, security, pricing, and operational burden — honestly."
+  authors:
+    - Evan Sims
+
+- title: "The CISO's Guide to Fine-Grained Authorization"
+  date: 2026-03-27
+  category: security
+  slug: ciso-guide-fine-grained-authorization
+  excerpt: "Broken access control is the #1 API security risk — and most organizations still treat authorization as application logic, not infrastructure. A practical guide for security leaders evaluating fine-grained authorization."
+  authors:
+    - Jane Sims
+
+- title: "How to Evaluate Authorization Infrastructure: A Buyer's Checklist"
+  date: 2026-03-26
+  category: security
+  slug: evaluating-authorization-infrastructure
+  excerpt: "Choosing authorization infrastructure locks you in for years. Here's a structured evaluation framework covering performance, security, compliance, pricing, and lock-in risk — the questions to ask and what good answers look like."
+  authors:
+    - Jane Sims
+
+- title: "Migrating from Home-Grown RBAC to InferaDB"
+  date: 2026-03-25
+  category: engineering
+  slug: migrating-from-homegrown-rbac
+  excerpt: "You started with a user_roles table. Now you have a maze of role matrices, permission overrides, and sharing logic nobody can reason about. Here's the concrete migration path from home-grown RBAC to InferaDB — step by step, with a rollback plan."
+  authors:
+    - Evan Sims
+
 - title: "Google Zanzibar: The Authorization Model Behind Every Google Product"
   date: 2026-03-24
-  category: practices
+  category: engineering
   slug: google-zanzibar-authorization
-  excerpt: "Google built Zanzibar to check permissions 10 million times per second across Gmail, Drive, YouTube, and Cloud. Here's how it works, why ReBAC defeated RBAC, and why InferaDB takes Zanzibar further than open-source implementations can."
+  excerpt: "Google's Zanzibar handles 10 million permission checks per second across every Google product. Every open-source implementation since has hit the same ceiling: general-purpose databases. Here's how Zanzibar works and why InferaDB removes that ceiling."
   authors:
     - Evan Sims
 
 - title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
   date: 2026-03-20
-  category: news
+  category: company
   slug: why-were-building-inferadb
-  excerpt: "Authorization is a hidden crisis in modern software. We built OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished we could have built — a true authorization database."
+  excerpt: "Authorization is a hidden crisis in modern software. We helped build OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished we could have built — a true authorization database."
   authors:
     - Evan Sims
 
@@ -19,21 +51,21 @@
   date: 2026-03-14
   category: ai
   slug: ai-agents-breaking-authorization
-  excerpt: "Traditional systems handle 1–2 permission checks per request. Agent workflows require dozens. At 5–50ms per check, that's seconds of latency. At 2.8µs, InferaDB makes agent-scale authorization tractable."
+  excerpt: "Traditional authorization handles 1-2 checks per request. AI agent workflows need dozens — and at 5-50ms each, that's seconds of latency before any work happens. The agent era needs authorization infrastructure built for machine-speed decisions."
   authors:
     - Evan Sims
 
-- title: "Sub-Microsecond Reads: How Our B+ Tree Storage Engine Works"
+- title: "How InferaDB Achieves 1,000x Faster Permission Checks"
   date: 2026-03-12
-  category: practices
+  category: engineering
   slug: b-plus-tree-storage-engine
-  excerpt: "2.8µs p99 read latency and 952K ops/sec on commodity hardware. This post explains the architectural decisions — per-page envelope encryption, XXH3 checksums, and a two-layer caching architecture."
+  excerpt: "Authorization checks through general-purpose databases take 5-50ms. InferaDB's purpose-built storage engine delivers 2.8 microsecond p99 reads. Here's the architecture that makes it possible."
   authors:
     - Evan Sims
 
-- title: "Raft Consensus for Authorization: Why Eventual Consistency Is Unacceptable"
+- title: "Why Eventual Consistency in Authorization Is a Security Vulnerability"
   date: 2026-03-10
-  category: practices
+  category: engineering
   slug: raft-consensus-authorization
   excerpt: "If Alice revokes Bob's access at 10:00:00 and Bob's request at 10:00:01 hits a stale replica, he retains access. This is the 'new enemy problem.' InferaDB uses Raft consensus with revision tokens to solve it."
   authors:
@@ -41,23 +73,23 @@
 
 - title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
   date: 2026-03-01
-  category: practices
+  category: engineering
   slug: wasm-policy-modules
   excerpt: "For logic beyond declarative rules — IP ranges, subscription tiers, time windows — InferaDB supports WASM modules. Sandboxed, deterministic, fuel-limited, with no I/O access."
   authors:
     - Evan Sims
 
-- title: "The Infera Policy Language: Designing a Schema for Authorization"
+- title: "The Infera Policy Language: One Schema for Every Authorization Model"
   date: 2026-02-25
-  category: practices
+  category: engineering
   slug: designing-ipl
-  excerpt: "IPL unifies ReBAC, RBAC, and ABAC in a single declarative syntax. Union, intersection, exclusion, tuple-to-userset, and WASM module invocation — all composable."
+  excerpt: "Most teams stitch together RBAC, ReBAC, and ABAC with application code. IPL unifies all three in a single declarative language — statically analyzed at deploy time, evaluated in parallel at query time. One schema, one evaluation, one audit trail."
   authors:
     - Evan Sims
 
 - title: "Authorization Market: $3.32B and No Dominant Player"
   date: 2026-02-20
-  category: news
+  category: company
   slug: authorization-market-analysis
   excerpt: "The fine-grained authorization market is growing at 19.3% CAGR — nearly twice the broader IAM market. Total VC investment across all pure-play authorization companies is approximately $165M."
   authors:
@@ -65,25 +97,25 @@
 
 - title: "NIS2, DORA, and the EU AI Act: Why Authorization Is Now a Compliance Requirement"
   date: 2026-02-15
-  category: news
+  category: security
   slug: eu-regulation-authorization
-  excerpt: "Three major EU regulations are converging on mandatory fine-grained access controls. NIS2, DORA, and the EU AI Act all require precisely what InferaDB provides."
+  excerpt: "NIS2, DORA, and the EU AI Act all mandate fine-grained, auditable access control — with enforcement deadlines already passing. Here's what each regulation requires and why most authorization systems can't deliver it."
   authors:
     - Jane Sims
 
-- title: "Why We Chose Rust for a Distributed Authorization Database"
+- title: "Why We Chose Rust for InferaDB"
   date: 2026-02-08
-  category: ai
+  category: engineering
   slug: why-rust-for-authorization
-  excerpt: "Memory safety without garbage collection. Fearless concurrency for parallel graph traversal. Zero-cost abstractions for hot-path optimization."
+  excerpt: "An authorization service has a brutal performance contract: sub-microsecond reads, zero latency spikes, memory safety without compromise. We evaluated Go, Java, and C# seriously. Here's why Rust was the only language that met all three requirements."
   authors:
     - Evan Sims
 
 - title: "Cryptographic Tenant Isolation: Why Application-Level Multi-Tenancy Isn't Enough"
   date: 2026-02-05
-  category: practices
+  category: security
   slug: cryptographic-tenant-isolation
-  excerpt: "Most authorization systems rely on application logic to prevent cross-tenant data leakage. InferaDB encrypts each vault independently with AES-256-GCM. Cross-tenant access is architecturally impossible."
+  excerpt: "Every multi-tenant authorization system promises tenant isolation. Most enforce it with WHERE clauses. One missing filter and data leaks across tenant boundaries. InferaDB enforces isolation with cryptography — cross-tenant access isn't prevented, it's architecturally impossible."
   authors:
     - Evan Sims
 
@@ -91,6 +123,6 @@
   date: 2026-01-25
   category: ai
   slug: securing-rag-pipelines
-  excerpt: "When an LLM retrieves documents for a user, every document must be authorized. InferaDB enables pre-retrieval authorization at the database level."
+  excerpt: "When an LLM retrieves documents for a user, every document must be authorized. InferaDB enables pre-retrieval authorization so your agent never sees data the requesting user can't access."
   authors:
     - Evan Sims

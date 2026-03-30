@@ -3,13 +3,13 @@ layout: post
 title: "Authorization Market: $3.32B and No Dominant Player — InferaDB"
 post_title: "Authorization Market: $3.32B and No Dominant Player"
 date: 2026-02-20
-category: news
+category: company
 description: "The fine-grained authorization market is $3.32B at 19.3% CAGR with no category leader. Here's why this is the biggest open opportunity in infrastructure."
 authors:
   - Jane Sims
 ---
 
-**$3.32 billion.** That's the current size of the fine-grained authorization market, and it's growing at 19.3% CAGR — roughly **twice the growth rate of the broader IAM market.** Yet there is no dominant player. No default choice. No "Stripe of authorization."
+**$3.32 billion.** That's the current size of the granular permissions market (The Business Research Company, 2025), and it's growing at 19.3% CAGR — **significantly outpacing the broader IAM market** (10-13% CAGR depending on source). Yet there is no dominant player. No default choice. No "Stripe of authorization."
 
 The category leader position is wide open.
 
@@ -33,7 +33,7 @@ The difference is that authorization is arguably harder and stickier. Once your 
 
 ## Fragmented Competition, Modest Funding
 
-The competitive landscape tells a clear story: lots of entrants, no breakout winner. Total venture capital deployed into pure-play authorization companies is approximately **$165 million**:
+The competitive landscape tells a clear story: lots of entrants, no breakout winner. Publicly disclosed funding for the most prominent pure-play authorization companies totals roughly **$67 million** (with additional undisclosed rounds across smaller players like Axiomatics, PlainID, Styra, and others bringing estimated industry-wide investment higher):
 
 | Company | Funding | Positioning |
 |---------|---------|-------------|
@@ -42,7 +42,7 @@ The competitive landscape tells a clear story: lots of entrants, no breakout win
 | **Permit.io** | $14M | Low-code authorization layer |
 | **Cerbos** | $11M | Self-hosted policy engine |
 
-$165 million is modest relative to a $3.32B market growing at 19.3%. For comparison, the observability market had already seen hundreds of millions in individual rounds by this stage of its growth curve. **The authorization category is still in its early investment phase.**
+Even the higher estimates are modest relative to a $3.32B market growing at 19.3%. For comparison, the observability market had already seen hundreds of millions in individual rounds by this stage of its growth curve. **The authorization category is still in its early investment phase.**
 
 None of these companies have achieved the scale or market position that would make them the default choice for enterprise procurement. The window is open.
 
@@ -51,7 +51,7 @@ None of these companies have achieved the scale or market position that would ma
 The market is shaking out faster than most realize:
 
 - **FusionAuth acquired Permify**, absorbing a Zanzibar-inspired open-source project into a broader identity platform
-- **Aserto shut down operations entirely**, proving that developer traction alone doesn't guarantee a path to enterprise revenue
+- **Aserto shut down its commercial operations** (the open-source Topaz project continues under community maintenance), proving that developer traction alone doesn't guarantee a path to enterprise revenue
 - **Axiomatics was acquired**, removing one of the oldest ABAC players from the independent landscape
 
 This is the classic pattern. In an emerging category, the companies that don't achieve escape velocity get absorbed or die. **The consolidation window is the opportunity window** — it's the period where a well-positioned entrant can establish dominance before the market ossifies.
@@ -78,10 +78,10 @@ The authorization market has every characteristic of a category where a dominant
 
 **The company that becomes the default authorization infrastructure** — the way Stripe became default for payments or Datadog for observability — **will capture a disproportionate share of a multi-billion dollar market.**
 
-InferaDB is purpose-built for this moment: a database, not another policy engine, designed for the performance, security, and auditability that the next generation of applications and regulations demand.
+InferaDB is purpose-built for this moment: managed authorization infrastructure designed for the performance, security, and auditability that the next generation of applications and regulations demand.
 
-## Follow the Journey
+## Learn More
 
-- **Technical deep dive**: [Quickstart Guide](/docs/quickstart)
-- **Star the repo**: [InferaDB on GitHub](https://github.com/inferadb/inferadb)
-- **Get early access** to InferaDB Cloud: [Join the waitlist](/waitlist)
+- **Get in touch**: [Contact the team](/contact)
+- **Get early access**: [Join the InferaDB Cloud waitlist](/waitlist)
+- **Read the docs**: [How InferaDB works](/docs/)

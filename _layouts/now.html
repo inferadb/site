@@ -5,15 +5,16 @@ body_class: page-now
 <section class="now-section">
   <div class="container">
     <header class="now-header">
-      <h1>Now</h1>
+      <h1>Dispatch</h1>
     </header>
     <nav class="now-tabs" aria-label="Content categories">
-      <a href="/now/"{% if page.now_category == nil %} class="active"{% endif %}>All</a>
+      <a href="/dispatch/"{% if page.now_category == nil %} class="active"{% endif %}>All</a>
       <a href="/changelog/"{% if page.now_category == "changelog" %} class="active"{% endif %}>Changelog</a>
-      <a href="/now/news/"{% if page.now_category == "news" %} class="active"{% endif %}>News</a>
-      <a href="/now/ai/"{% if page.now_category == "ai" %} class="active"{% endif %}>AI</a>
-      <a href="/now/practices/"{% if page.now_category == "practices" %} class="active"{% endif %}>Practices</a>
-      <a href="/now/press/"{% if page.now_category == "press" %} class="active"{% endif %}>Press</a>
+      <a href="/dispatch/news/"{% if page.now_category == "company" %} class="active"{% endif %}>Company</a>
+      <a href="/dispatch/ai/"{% if page.now_category == "ai" %} class="active"{% endif %}>AI</a>
+      <a href="/dispatch/engineering/"{% if page.now_category == "engineering" %} class="active"{% endif %}>Engineering</a>
+      <a href="/dispatch/security/"{% if page.now_category == "security" %} class="active"{% endif %}>Security</a>
+      <a href="/dispatch/press/"{% if page.now_category == "press" %} class="active"{% endif %}>Press</a>
     </nav>
     <div class="now-entries">
       {{ content }}

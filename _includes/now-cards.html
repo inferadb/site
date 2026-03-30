@@ -1,6 +1,6 @@
 <div class="card-grid">
 {% for entry in include.entries %}
-<a href="/now/{{ entry.slug }}" class="card">
+<a href="/dispatch/{{ entry.slug }}" class="card">
   <div class="card-meta">
     <span class="card-label-accent">{{ entry.category }}</span>
     <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>

@@ -23,6 +23,7 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                         action="https://formspree.io/f/xqeyryaq"
                         method="POST"
                     >
+                        <input type="hidden" name="_next" value="https://inferadb.com/waitlist/thanks" />
                         <div class="form-group">
                             <label class="form-label" for="waitlist-name">Name</label>
                             <input
@@ -30,7 +31,6 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                                 type="text"
                                 id="waitlist-name"
                                 name="name"
-                                placeholder="Jane Doe"
                                 required
                                 autocomplete="name"
                             />
@@ -42,25 +42,31 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                                 type="email"
                                 id="waitlist-email"
                                 name="email"
-                                placeholder="jane@company.com"
                                 required
                                 autocomplete="email"
                             />
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="waitlist-use-case"
-                                >What are you building?
-                                <span style="color: var(--muted); font-weight: 400"
-                                    >(optional)</span
-                                ></label
-                            >
-                            <textarea
-                                class="form-textarea"
-                                id="waitlist-use-case"
-                                name="use-case"
-                                placeholder="Multi-tenant SaaS, AI agents, regulated workloads..."
-                                rows="3"
-                            ></textarea>
+                            <label class="form-label" for="waitlist-website">Company Website <span class="form-optional">(optional)</span></label>
+                            <input
+                                class="form-input"
+                                type="url"
+                                id="waitlist-website"
+                                name="company-website"
+                                placeholder="acme.com"
+                                autocomplete="url"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">What are you building? <span class="form-optional">(optional)</span></label>
+                            <div class="contact-usecase-selector" role="group" aria-label="Use case" id="waitlist-usecase-selector">
+                                <button type="button" class="contact-usecase-btn" data-usecase="multi-tenant-saas" aria-pressed="false">Multi-Tenant SaaS</button>
+                                <button type="button" class="contact-usecase-btn" data-usecase="ai-agents" aria-pressed="false">AI Agents</button>
+                                <button type="button" class="contact-usecase-btn" data-usecase="regulated-workloads" aria-pressed="false">Regulated Workloads</button>
+                                <button type="button" class="contact-usecase-btn" data-usecase="platform-internal" aria-pressed="false">Platform / Internal</button>
+                                <button type="button" class="contact-usecase-btn" data-usecase="other" aria-pressed="false">Other</button>
+                            </div>
+                            <input type="hidden" name="use-case" id="waitlist-use-case" value="" />
                         </div>
                         <button type="submit" class="btn btn-primary btn-lg waitlist-submit">
                             Join the Waitlist
@@ -107,3 +113,27 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
         </div>
     </div>
 </section>
+
+<script>
+(function() {
+    var selector = document.getElementById('waitlist-usecase-selector');
+    var hidden = document.getElementById('waitlist-use-case');
+    var btns = selector.querySelectorAll('.contact-usecase-btn');
+
+    selector.addEventListener('click', function(e) {
+        var btn = e.target.closest('.contact-usecase-btn');
+        if (!btn) return;
+        var isActive = !btn.classList.contains('active');
+        btn.classList.toggle('active');
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+
+        var selected = [];
+        for (var i = 0; i < btns.length; i++) {
+            if (btns[i].classList.contains('active')) {
+                selected.push(btns[i].getAttribute('data-usecase'));
+            }
+        }
+        hidden.value = selected.join(', ');
+    });
+})();
+</script>

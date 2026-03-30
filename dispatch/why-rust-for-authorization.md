@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "Why We Chose Rust for a Distributed Authorization Database — InferaDB"
-post_title: "Why We Chose Rust for a Distributed Authorization Database"
+title: "Why We Chose Rust for InferaDB — InferaDB"
+post_title: "Why We Chose Rust for InferaDB"
 date: 2026-02-08
-category: ai
+category: engineering
 description: "Rust's memory safety without GC pauses, fearless concurrency, and zero-cost abstractions make sub-microsecond authorization possible. Here's why we chose it."
 authors:
   - Evan Sims
 ---
+
+*When you use InferaDB Cloud, you don't think about what language it's written in. But the language choice is the reason your authorization checks resolve in microseconds, not milliseconds. Here's why we chose Rust.*
 
 **The difference between 2.8 microseconds and 5 milliseconds isn't optimization. It's architecture.** And that architectural gap is why InferaDB is written in Rust — not because we prefer the language, but because our requirements eliminated every alternative.
 

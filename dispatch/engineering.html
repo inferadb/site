@@ -1,0 +1,7 @@
+---
+layout: now
+title: Engineering — InferaDB
+now_category: engineering
+---
+{% assign filtered = site.data.now | where: "category", "engineering" %}
+{% include now-cards.html entries=filtered %}

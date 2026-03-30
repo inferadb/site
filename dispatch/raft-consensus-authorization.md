@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "Raft Consensus for Authorization: Why Eventual Consistency Is Unacceptable — InferaDB"
-post_title: "Raft Consensus for Authorization: Why Eventual Consistency Is Unacceptable"
+title: "Why Eventual Consistency in Authorization Is a Security Vulnerability — InferaDB"
+post_title: "Why Eventual Consistency in Authorization Is a Security Vulnerability"
 date: 2026-03-10
-category: practices
+category: engineering
 description: "Eventual consistency in authorization means stale grants — security violations you can't undo. InferaDB uses Raft consensus with revision tokens to guarantee linearizable writes."
 authors:
   - Evan Sims
 ---
+
+*This post explains why InferaDB Cloud guarantees linearizable consistency for every authorization decision — and why that guarantee is non-negotiable for production systems.*
 
 Alice revokes Bob's access to a document at 10:00:00. At 10:00:01, Bob's request hits a replica that has not yet received the revocation. **The stale replica grants access.** Bob sees the document. The permission was revoked, but the system served a stale grant because eventual consistency allowed a window where different replicas disagreed about the state of the world.
 

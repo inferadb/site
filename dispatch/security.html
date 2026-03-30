@@ -1,0 +1,7 @@
+---
+layout: now
+title: Security — InferaDB
+now_category: security
+---
+{% assign filtered = site.data.now | where: "category", "security" %}
+{% include now-cards.html entries=filtered %}

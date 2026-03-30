@@ -3,13 +3,13 @@ layout: post
 title: "InferaDB: Why We're Building a Purpose-Built Authorization Database — InferaDB"
 post_title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
 date: 2026-03-20
-category: news
-description: "94% of apps fail access control — OWASP's #1 risk. InferaDB is a purpose-built authorization database with 2.8µs p99 latency and 952K ops/sec."
+category: company
+description: "Broken access control is OWASP's #1 risk. InferaDB is purpose-built managed authorization infrastructure with sub-microsecond latency."
 authors:
   - Evan Sims
 ---
 
-**94% of audited applications fail access control.** It has been the number one risk on the OWASP Top 10 since 2021. The average breach costs $4.88 million, and the root cause is almost always the same: a permission check that was missing, stale, or wrong.
+**Broken access control has been the #1 risk on the OWASP Top 10 since the 2021 edition.** The average breach costs $4.88 million (IBM, 2024), and the root cause is almost always the same: a permission check that was missing, stale, or wrong.
 
 And yet the infrastructure behind those checks has barely changed in decades.
 
@@ -52,20 +52,22 @@ This is not incremental improvement. It's a different category of infrastructure
 
 The problems we're solving — sub-microsecond latency, cryptographic tenant isolation, linearizable consistency, tamper-evident audit trails — **cannot be retrofitted** onto a system that delegates storage to a general-purpose database.
 
-They require control over every layer of the stack: from the page layout on disk to the consensus protocol that replicates writes across nodes.
+They require control over every layer of the stack: from the storage engine to the consensus protocol that replicates writes across regions.
 
-A policy engine can tell you *what* the rules are. A database can enforce them at the speed and consistency level that production systems actually need. That's the gap in the market, and it's the gap we're closing.
+A policy engine can tell you *what* the rules are. Purpose-built infrastructure can enforce them at the speed and consistency level that production systems actually need. That's the gap in the market, and it's the gap we're closing.
+
+## InferaDB Cloud: The Service, Not Just the Engine
+
+The open-source core is one half of the story. **InferaDB Cloud** is the managed service that runs it for you — no deployment, no scaling, no ops. You get an API. We handle infrastructure, replication, upgrades, and audit trail retention.
+
+Start free with 100K checks/month. Scale to millions with usage-based pricing. Never think about the authorization layer again — except when your auditors are impressed by it.
 
 ## Open Source, Open Architecture
 
-InferaDB is dual-licensed under **MIT and Apache-2.0**. The core database is open source. We believe authorization infrastructure is too important to be a black box — security-critical systems need to be auditable, forkable, and free from vendor lock-in.
-
-We're building the authorization layer that modern applications actually need: one that treats permissions as a first-class data problem, not an afterthought bolted onto application code.
+InferaDB's core engine is dual-licensed under **MIT and Apache-2.0**. We believe authorization infrastructure is too important to be a black box — security-critical systems need to be auditable, forkable, and free from vendor lock-in.
 
 ## Get Started
 
-If you're tired of duct-taping authorization onto a general-purpose database, we'd like to show you what purpose-built looks like.
-
-- **Try it now**: [Quickstart Guide](/docs/quickstart)
-- **Star the repo**: [InferaDB on GitHub](https://github.com/inferadb/inferadb)
-- **Join the waitlist** for InferaDB Cloud: [Sign up here](/waitlist)
+- **Get early access**: [Join the InferaDB Cloud waitlist](/waitlist)
+- **Read the docs**: [Quickstart Guide](/docs/quickstart)
+- **Explore the source**: [InferaDB on GitHub](https://github.com/inferadb/inferadb)

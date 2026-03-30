@@ -3,13 +3,13 @@ layout: post
 title: "Google Zanzibar: The Authorization Model Behind Every Google Product — InferaDB"
 post_title: "Google Zanzibar: The Authorization Model Behind Every Google Product"
 date: 2026-03-24
-category: practices
+category: engineering
 description: "Google built Zanzibar to check permissions 10 million times per second across Gmail, Drive, YouTube, and Cloud. Here's how it works, why it won, and why InferaDB takes it further."
 authors:
   - Evan Sims
 ---
 
-**Every time you share a Google Doc, upload to YouTube, or grant access to a GCP project, the same system decides whether it's allowed.** That system is Zanzibar — Google's globally distributed authorization service, handling over 10 million permission checks per second across trillions of access control rules for billions of users.
+**Every time you share a Google Doc, upload to YouTube, or grant access to a GCP project, the same system decides whether it's allowed.** That system is Zanzibar — Google's globally distributed authorization service, handling over 10 million permission checks per second across more than 2 trillion stored relation tuples for billions of users.
 
 Google published the [Zanzibar paper](https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/) in 2019. It described an architecture so far ahead of conventional authorization that every serious authorization system built since — including InferaDB — traces its lineage back to that paper.
 
@@ -133,7 +133,7 @@ We helped build [OpenFGA](https://openfga.dev). We saw the database ceiling from
 InferaDB's custom **B+ tree storage engine**, written in Rust, is optimized for the authorization access pattern: small key-value lookups across relationship tuples, with read-heavy workloads and graph traversal.
 
 - **2.8µs p99 read latency** — not milliseconds, microseconds
-- **952,000+ operations per second** on commodity hardware
+- **952,000+ operations per second** per node
 - **Per-page envelope encryption** with AES-256-GCM
 
 This is not an incremental improvement over a general-purpose database. It is three orders of magnitude faster on the operation that matters most: resolving a permission check.

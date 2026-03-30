@@ -9,18 +9,18 @@
           desc: Cryptographic audit trails for compliance frameworks
           url: "/solutions/regulated-industries"
         - title: AI Agents
-          desc: Microsecond authorization for agent workflows
+          desc: Secure agent actions without slowing them down
           url: "/solutions/ai-agents"
         - title: Platform Engineering
-          desc: Centralized authorization for microservice architectures
+          desc: One authorization service for every team
           url: "/solutions/platform-engineering"
     - label: Platform
       items:
         - title: Authorization Engine
-          desc: Sub-microsecond permission checks at scale
+          desc: Permission checks that never bottleneck your app
           url: "/docs/architecture-engine"
         - title: Policy Language (IPL)
-          desc: Define models with relations and computed permissions
+          desc: Express any permission model in one language
           url: "/docs/ipl"
         - title: Audit & Compliance
           desc: Cryptographic audit trails for SOC 2, HIPAA, GDPR
@@ -69,8 +69,8 @@
 - title: Pricing
   url: "/pricing"
 
-- title: Now
-  url: "/now/"
+- title: Dispatch
+  url: "/dispatch/"
 
 - title: About
   url: "/about"

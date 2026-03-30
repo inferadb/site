@@ -1,0 +1,7 @@
+---
+layout: now
+title: Company — InferaDB
+now_category: company
+---
+{% assign filtered = site.data.now | where: "category", "company" %}
+{% include now-cards.html entries=filtered %}

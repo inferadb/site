@@ -1,0 +1,32 @@
+---
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>InferaDB Dispatch</title>
+  <subtitle>{{ site.description | xml_escape }}</subtitle>
+  <link href="{{ site.url }}/dispatch/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="{{ site.url }}/dispatch/" rel="alternate" type="text/html"/>
+  <id>{{ site.url }}/dispatch/</id>
+  <updated>{{ site.data.now.first.date | date_to_xmlschema }}</updated>
+  <author>
+    <name>InferaDB</name>
+    <uri>{{ site.url }}</uri>
+  </author>
+  {% for entry in site.data.now %}
+  <entry>
+    <title>{{ entry.title | xml_escape }}</title>
+    <link href="{{ site.url }}/dispatch/{{ entry.slug }}" rel="alternate" type="text/html"/>
+    <id>{{ site.url }}/dispatch/{{ entry.slug }}</id>
+    <published>{{ entry.date | date_to_xmlschema }}</published>
+    <updated>{{ entry.date | date_to_xmlschema }}</updated>
+    {% for author in entry.authors %}
+    <author>
+      <name>{{ author | xml_escape }}</name>
+    </author>
+    {% endfor %}
+    <category term="{{ entry.category | xml_escape }}"/>
+    <summary>{{ entry.excerpt | xml_escape }}</summary>
+  </entry>
+  {% endfor %}
+</feed>

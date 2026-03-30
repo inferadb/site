@@ -2,102 +2,380 @@
 title: Contact
 layout: default
 body_class: page-contact
+description: "Get in touch with the InferaDB team — technical questions, enterprise inquiries, partnerships, or security disclosures. We respond within 24 hours."
 ---
 
-<section class="page-content">
+<section class="contact-hero">
+    <div class="contact-glow"></div>
     <div class="container">
-        <header class="page-header">
-            <h1>Get in Touch</h1>
-            <p class="subtitle">
-                Have questions about InferaDB? We'd love to hear from you.
-            </p>
-        </header>
-        <article>
-            <form
-                class="contact-form"
-                action="https://formspree.io/f/xzdjnjza"
-                method="POST"
-            >
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label" for="first-name"
-                            >First Name</label
-                        >
-                        <input
-                            class="form-input"
-                            type="text"
-                            id="first-name"
-                            name="first-name"
-                            placeholder="Jane"
-                            required
-                            autocomplete="given-name"
-                        />
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="last-name"
-                            >Last Name</label
-                        >
-                        <input
-                            class="form-input"
-                            type="text"
-                            id="last-name"
-                            name="last-name"
-                            placeholder="Doe"
-                            required
-                            autocomplete="family-name"
-                        />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="email">Email</label>
-                    <input
-                        class="form-input"
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="jane@example.com"
-                        required
-                        autocomplete="email"
-                    />
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="message">Message</label>
-                    <textarea
-                        class="form-textarea"
-                        id="message"
-                        name="message"
-                        placeholder="Tell us what you're working on..."
-                        required
-                    ></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    Send Message
-                </button>
-            </form>
-            <div style="margin-top: 3rem">
-                <p>You can also reach us at:</p>
-                <ul>
-                    <li>
-                        <a href="mailto:open@inferadb.com">open@inferadb.com</a>
-                        — General inquiries
-                    </li>
-                    <li>
-                        <a href="mailto:security@inferadb.com"
-                            >security@inferadb.com</a
-                        >
-                        — Security disclosures
-                    </li>
-                    <li>
-                        <a
-                            href="https://discord.gg/inferadb"
-                            target="_blank"
-                            rel="noopener"
-                            >Discord</a
-                        >
-                        — Community chat
-                    </li>
-                </ul>
-            </div>
-        </article>
+        <p class="contact-eyebrow">SYS:CONTACT // Direct Line</p>
+        <h1>Every message reaches an engineer. Every reply within 24 hours.</h1>
+        <p class="contact-lead">
+            No ticket queues, no chatbots, no sales theater. Tell us what you're
+            building and an engineer who worked on the system will respond.
+        </p>
     </div>
 </section>
+
+<section class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-form-wrap">
+                <form
+                    class="contact-form"
+                    action="https://formspree.io/f/xzdjnjza"
+                    method="POST"
+                    id="contact-form"
+                >
+                    <input type="hidden" name="_next" value="https://inferadb.com/contact/thanks" />
+
+                    <div class="form-group">
+                        <label class="form-label" for="inquiry-type">What can we help with?</label>
+                        <div class="contact-type-selector" role="group" aria-label="Inquiry type" id="inquiry-selector">
+                            <button type="button" class="contact-type-btn active" data-type="technical" aria-pressed="true">
+                                <span class="contact-type-icon" aria-hidden="true">&gt;_</span>
+                                Technical
+                            </button>
+                            <button type="button" class="contact-type-btn" data-type="enterprise" aria-pressed="false">
+                                <span class="contact-type-icon" aria-hidden="true">//</span>
+                                Enterprise
+                            </button>
+                            <button type="button" class="contact-type-btn" data-type="partnership" aria-pressed="false">
+                                <span class="contact-type-icon" aria-hidden="true">&amp;&amp;</span>
+                                Partnership
+                            </button>
+                            <button type="button" class="contact-type-btn" data-type="security" aria-pressed="false">
+                                <span class="contact-type-icon" aria-hidden="true">!!</span>
+                                Security
+                            </button>
+                        </div>
+                        <input type="hidden" name="inquiry-type" id="inquiry-type" value="technical" />
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="first-name">First Name</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="first-name"
+                                name="first-name"
+                                required
+                                autocomplete="given-name"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="last-name">Last Name</label>
+                            <input
+                                class="form-input"
+                                type="text"
+                                id="last-name"
+                                name="last-name"
+                                required
+                                autocomplete="family-name"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="email">Work Email</label>
+                            <input
+                                class="form-input"
+                                type="email"
+                                id="email"
+                                name="email"
+                                required
+                                autocomplete="email"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="company-website">Company Website <span class="form-optional">(optional)</span></label>
+                            <input
+                                class="form-input"
+                                type="url"
+                                id="company-website"
+                                name="company-website"
+                                placeholder="acme.com"
+                                autocomplete="url"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="region">Region <span class="form-optional">(optional)</span></label>
+                            <select class="form-input form-select" id="region" name="region">
+                                <option value="">Select region</option>
+                                <option value="north-america">North America</option>
+                                <option value="europe">Europe</option>
+                                <option value="asia-pacific">Asia-Pacific</option>
+                                <option value="latin-america">Latin America</option>
+                                <option value="middle-east-africa">Middle East &amp; Africa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="company-size">Company Size <span class="form-optional">(optional)</span></label>
+                            <select class="form-input form-select" id="company-size" name="company-size">
+                                <option value="">Select size</option>
+                                <option value="1-10">1 &ndash; 10</option>
+                                <option value="11-50">11 &ndash; 50</option>
+                                <option value="51-200">51 &ndash; 200</option>
+                                <option value="201-1000">201 &ndash; 1,000</option>
+                                <option value="1001-5000">1,001 &ndash; 5,000</option>
+                                <option value="5001+">5,001+</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="use-case">What are you building? <span class="form-optional">(optional)</span></label>
+                        <div class="contact-usecase-selector" role="group" aria-label="Use case" id="usecase-selector">
+                            <button type="button" class="contact-usecase-btn" data-usecase="multi-tenant-saas" aria-pressed="false">Multi-Tenant SaaS</button>
+                            <button type="button" class="contact-usecase-btn" data-usecase="ai-agents" aria-pressed="false">AI Agents</button>
+                            <button type="button" class="contact-usecase-btn" data-usecase="regulated-workloads" aria-pressed="false">Regulated Workloads</button>
+                            <button type="button" class="contact-usecase-btn" data-usecase="platform-internal" aria-pressed="false">Platform / Internal</button>
+                            <button type="button" class="contact-usecase-btn" data-usecase="other" aria-pressed="false">Other</button>
+                        </div>
+                        <input type="hidden" name="use-case" id="use-case" value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="message">Message</label>
+                        <textarea
+                            class="form-textarea"
+                            id="message"
+                            name="message"
+                            required
+                            rows="5"
+                            placeholder="Tell us about your stack and what you're evaluating..."
+                        ></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg contact-submit">
+                        Send Message
+                    </button>
+                    <p class="contact-response-note">We respond to every message within 24 hours.</p>
+                </form>
+            </div>
+
+            <div class="contact-context" id="contact-context">
+                <!-- Technical (default) -->
+                <div class="contact-panel active" data-panel="technical">
+                    <div class="contact-panel-header">
+                        <span class="contact-panel-label">SYS:TECHNICAL</span>
+                    </div>
+                    <h3>For developers and engineering teams</h3>
+                    <p>
+                        Questions about integration, SDK usage, performance
+                        characteristics, or authorization modeling — we're engineers
+                        too, and we'll give you a straight answer.
+                    </p>
+                    <ul class="contact-links">
+                        <li>
+                            <a href="/docs/quickstart">Quick Start Guide</a>
+                            <span>From zero to permission checks in 5 minutes</span>
+                        </li>
+                        <li>
+                            <a href="/docs/">Documentation Hub</a>
+                            <span>SDKs, APIs, architecture, and modeling guides</span>
+                        </li>
+                        <li>
+                            <a href="https://discord.gg/inferadb" target="_blank" rel="noopener">Discord Community</a>
+                            <span>Real-time help from the team and community</span>
+                        </li>
+                        <li>
+                            <a href="https://github.com/inferadb" target="_blank" rel="noopener">GitHub</a>
+                            <span>Open issues, contribute, and follow development</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="contact-panel" data-panel="enterprise">
+                    <div class="contact-panel-header">
+                        <span class="contact-panel-label">SYS:ENTERPRISE</span>
+                    </div>
+                    <h3>For security leaders and enterprise buyers</h3>
+                    <p>
+                        Evaluating authorization infrastructure for your organization?
+                        We'll walk you through architecture, compliance posture, and
+                        deployment options — no sales theater.
+                    </p>
+                    <ul class="contact-features">
+                        <li>
+                            <strong>SOC 2 Type II and HIPAA ready</strong>
+                            Cryptographic audit trails satisfy compliance frameworks by default
+                        </li>
+                        <li>
+                            <strong>Dedicated deployment options</strong>
+                            Single-tenant instances with your encryption keys
+                        </li>
+                        <li>
+                            <strong>Volume pricing</strong>
+                            Custom plans for high-throughput authorization workloads
+                        </li>
+                        <li>
+                            <strong>Priority engineering support</strong>
+                            Direct access to the team that built the system
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Partnership -->
+                <div class="contact-panel" data-panel="partnership">
+                    <div class="contact-panel-header">
+                        <span class="contact-panel-label">SYS:PARTNERSHIP</span>
+                    </div>
+                    <h3>For investors, integrators, and collaborators</h3>
+                    <p>
+                        Building something that intersects with authorization
+                        infrastructure? We're interested in technical partnerships,
+                        integration opportunities, and strategic conversations.
+                    </p>
+                    <ul class="contact-features">
+                        <li>
+                            <strong>Integration partners</strong>
+                            Embed InferaDB authorization into your platform
+                        </li>
+                        <li>
+                            <strong>Technology partners</strong>
+                            Joint solutions for shared customer segments
+                        </li>
+                        <li>
+                            <strong>Investors</strong>
+                            Learn about our vision for authorization infrastructure
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Security -->
+                <div class="contact-panel" data-panel="security">
+                    <div class="contact-panel-header">
+                        <span class="contact-panel-label">SYS:SECURITY</span>
+                    </div>
+                    <h3>Responsible disclosure</h3>
+                    <p>
+                        Found a security vulnerability? We take every report seriously
+                        and follow responsible disclosure practices. For sensitive
+                        issues, use our security email directly.
+                    </p>
+                    <div class="contact-security-direct">
+                        <a href="mailto:security@inferadb.com" class="btn btn-ghost">
+                            security@inferadb.com
+                        </a>
+                        <span>Preferred for sensitive disclosures</span>
+                    </div>
+                    <ul class="contact-features">
+                        <li>
+                            <strong>Acknowledgement within 24 hours</strong>
+                            We confirm receipt and begin triage immediately
+                        </li>
+                        <li>
+                            <strong>Coordinated disclosure</strong>
+                            We work with reporters on fix timelines before any public disclosure
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Social proof -->
+                <div class="contact-proof">
+                    <div class="contact-proof-stats">
+                        <div class="contact-proof-stat">
+                            <span class="contact-proof-num">2.8&micro;s</span>
+                            <span class="contact-proof-label">p99 latency</span>
+                        </div>
+                        <div class="contact-proof-stat">
+                            <span class="contact-proof-num">4.9B</span>
+                            <span class="contact-proof-label">checks/sec</span>
+                        </div>
+                        <div class="contact-proof-stat">
+                            <span class="contact-proof-num">200+</span>
+                            <span class="contact-proof-label">teams on waitlist</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direct channels — always visible -->
+                <div class="contact-direct">
+                    <h4>Direct channels</h4>
+                    <div class="contact-direct-links">
+                        <a href="mailto:hello@inferadb.com">
+                            <span class="contact-direct-label">General</span>
+                            hello@inferadb.com
+                        </a>
+                        <a href="mailto:security@inferadb.com">
+                            <span class="contact-direct-label">Security</span>
+                            security@inferadb.com
+                        </a>
+                        <a href="https://discord.gg/inferadb" target="_blank" rel="noopener">
+                            <span class="contact-direct-label">Community</span>
+                            Discord
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function() {
+    var messagePlaceholders = {
+        technical: 'Tell us about your stack and what you\u2019re evaluating...',
+        enterprise: 'Describe your authorization requirements and timeline...',
+        partnership: 'Tell us about your product and the opportunity...',
+        security: 'Describe the vulnerability and how to reproduce it...'
+    };
+
+    // Inquiry type selector
+    var selector = document.getElementById('inquiry-selector');
+    var hidden = document.getElementById('inquiry-type');
+    var panels = document.querySelectorAll('.contact-panel');
+    var buttons = selector.querySelectorAll('.contact-type-btn');
+    var messageEl = document.getElementById('message');
+
+    selector.addEventListener('click', function(e) {
+        var btn = e.target.closest('.contact-type-btn');
+        if (!btn) return;
+        var type = btn.getAttribute('data-type');
+
+        for (var i = 0; i < buttons.length; i++) {
+            var isActive = buttons[i] === btn;
+            buttons[i].classList.toggle('active', isActive);
+            buttons[i].setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        }
+        hidden.value = type;
+
+        for (var j = 0; j < panels.length; j++) {
+            panels[j].classList.toggle('active', panels[j].getAttribute('data-panel') === type);
+        }
+
+        // Update message placeholder if the user hasn't started typing
+        if (!messageEl.value.trim()) {
+            messageEl.placeholder = messagePlaceholders[type] || messagePlaceholders.technical;
+        }
+    });
+
+    // Use-case chip selector (multi-select toggle)
+    var usecaseSelector = document.getElementById('usecase-selector');
+    var usecaseHidden = document.getElementById('use-case');
+    var usecaseBtns = usecaseSelector.querySelectorAll('.contact-usecase-btn');
+
+    usecaseSelector.addEventListener('click', function(e) {
+        var btn = e.target.closest('.contact-usecase-btn');
+        if (!btn) return;
+        var isActive = !btn.classList.contains('active');
+        btn.classList.toggle('active');
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+
+        var selected = [];
+        for (var i = 0; i < usecaseBtns.length; i++) {
+            if (usecaseBtns[i].classList.contains('active')) {
+                selected.push(usecaseBtns[i].getAttribute('data-usecase'));
+            }
+        }
+        usecaseHidden.value = selected.join(', ');
+    });
+})();
+</script>

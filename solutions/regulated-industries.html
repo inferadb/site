@@ -62,33 +62,36 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
         </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.02</span> Merkle Proof Audit Trails</div>
-        <h2 data-reveal>Tamper-evident, cryptographically verifiable decision logs</h2>
+        <h2 data-reveal>Every access decision is independently verifiable — no trust in InferaDB required</h2>
         <p data-reveal>
-            Every permission decision InferaDB makes is recorded in a hash-chained,
-            append-only ledger. Each entry includes a Merkle proof that auditors can
-            independently verify — no trust in the server required. If a single entry
-            is altered or deleted, the chain breaks and the tampering is detectable.
+            Every permission decision is recorded in a hash-chained, append-only ledger.
+            Each entry includes a Merkle proof that your auditors can verify independently
+            using open-source tooling. If a single entry is altered or deleted, the chain
+            breaks and the tampering is immediately detectable — by you, not just by us.
         </p>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
                 <h3>Hash-chained entries</h3>
                 <p>
                     Every audit record links cryptographically to its predecessor.
-                    Altering any entry invalidates every subsequent hash.
+                    Altering any entry invalidates every subsequent hash — giving
+                    your compliance team a continuous, verifiable chain of evidence.
                 </p>
             </div>
             <div class="solution-feature">
                 <h3>Independent verification</h3>
                 <p>
-                    Auditors can verify proof chains with open-source tooling.
-                    No proprietary software, no vendor lock-in for compliance.
+                    Auditors verify proof chains with open-source tooling. No
+                    proprietary software, no vendor dependency for compliance
+                    evidence. You never have to take our word for it.
                 </p>
             </div>
             <div class="solution-feature">
                 <h3>SIEM export</h3>
                 <p>
                     Stream audit events to Splunk, Datadog, or your existing
-                    compliance toolchain. Proofs travel with the data.
+                    compliance toolchain. Cryptographic proofs travel with the
+                    data, so verification works wherever the logs land.
                 </p>
             </div>
         </div>
@@ -97,7 +100,8 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
         <h2 data-reveal>Purpose-built for regulated environments</h2>
         <p data-reveal>
             InferaDB's architecture maps directly to the access control requirements
-            of major compliance frameworks.
+            of major compliance frameworks. Evidence generation is automatic — not a
+            quarterly scramble before audit season.
         </p>
         <div class="solution-features solution-features--wide" data-reveal>
             <div class="solution-feature">
@@ -105,7 +109,9 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
                 <p>
                     Logical access controls (CC6.1), system monitoring (CC7.2),
                     and change management (CC8.1) addressed by cryptographic
-                    audit trails and policy versioning.
+                    audit trails and policy versioning. InferaDB's hash-chained
+                    audit trail provides the continuous monitoring evidence CC6.1
+                    requires — exportable on demand, not reconstructed after the fact.
                 </p>
             </div>
             <div class="solution-feature">
@@ -113,7 +119,9 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
                 <p>
                     Access controls (164.312(a)), audit controls (164.312(b)),
                     and person authentication (164.312(d)) built into the core
-                    authorization engine.
+                    authorization engine. Every access decision affecting ePHI is
+                    logged with full subject, resource, and action context — ready
+                    for HHS audit requests without manual log correlation.
                 </p>
             </div>
             <div class="solution-feature">
@@ -121,7 +129,9 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
                 <p>
                     Data minimization (Art. 5), right to erasure (Art. 17) via
                     cryptographic shredding, and accountability (Art. 5(2)) via
-                    verifiable audit trails.
+                    verifiable audit trails. InferaDB's region-pinned data residency
+                    eliminates cross-border authorization data transfers, directly
+                    satisfying Chapter V transfer restrictions.
                 </p>
             </div>
             <div class="solution-feature">
@@ -129,7 +139,9 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
                 <p>
                     Requirement 7 (restrict access), Requirement 10 (track and
                     monitor access), and Requirement 12 (information security
-                    policies) natively supported.
+                    policies) natively supported. Merkle-verified logs satisfy
+                    Requirement 10.5's log integrity mandate without additional
+                    file integrity monitoring tools.
                 </p>
             </div>
             <div class="solution-feature">
@@ -137,36 +149,105 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
                 <p>
                     Access control policies, incident handling, and supply chain
                     security requirements addressed through policy versioning and
-                    cryptographic audit trails.
+                    cryptographic audit trails. Immutable decision logs provide
+                    the forensic evidence NIS2 Article 21 requires for incident
+                    analysis and post-breach reporting.
                 </p>
             </div>
             <div class="solution-feature">
                 <h3>DORA</h3>
                 <p>
                     ICT risk management, incident reporting, and operational
-                    resilience testing supported by distributed consensus and
-                    tamper-proof logging.
+                    resilience testing supported by tamper-proof logging and
+                    multi-region deployment. Verifiable audit trails give financial
+                    entities the evidence trail DORA Article 11 demands for ICT
+                    incident classification and reporting.
                 </p>
             </div>
         </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.04</span> Data Residency</div>
-        <h2 data-reveal>Region-pinned authorization data</h2>
+        <h2 data-reveal>Authorization data stays where regulators require it</h2>
         <p data-reveal>
-            Authorization data stays where regulators require it. Pin vaults to
-            specific regions — EU data stays in EU, US data stays in US. Raft
-            consensus ensures consistency across regions without cross-border data
-            transfers.
+            Pin authorization data to specific regions. EU data stays in the EU.
+            US data stays in the US. Cross-border transfers for authorization
+            decisions are architecturally eliminated — not managed by policy, but
+            prevented by infrastructure. Your DPO gets a clean answer when
+            regulators ask where personal data flows.
         </p>
 
         <div class="solution-section-label" data-reveal><span>SEC.05</span> Cryptographic Shredding</div>
-        <h2 data-reveal>GDPR Article 17 right to erasure, done correctly</h2>
+        <h2 data-reveal>Honor erasure requests completely, not approximately</h2>
         <p data-reveal>
-            When a user requests deletion, InferaDB destroys the encryption keys
-            for their authorization data. The data becomes cryptographically
-            irrecoverable — satisfying erasure requirements without the risk of
-            incomplete deletion across distributed systems.
+            When a data subject exercises their right to erasure under GDPR Article 17,
+            InferaDB destroys the encryption keys for their authorization data. The
+            data becomes cryptographically irrecoverable — satisfying erasure
+            requirements completely, without the risk of incomplete deletion across
+            distributed storage. Your DPA response is "data destroyed", not "we
+            believe we found all copies."
         </p>
+
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Compliance Posture</div>
+        <h2 data-reveal>Your compliance posture with InferaDB Cloud</h2>
+        <p data-reveal>
+            InferaDB Cloud is designed to meet the security and privacy requirements
+            of regulated organizations on every plan. Compliance is not a premium
+            add-on.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>GDPR compliant on every plan</h3>
+                <p>
+                    Data processing agreements available. Region-pinned storage,
+                    cryptographic shredding, and verifiable audit trails are
+                    standard capabilities — not enterprise upsells.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Encryption everywhere</h3>
+                <p>
+                    All authorization data is encrypted at rest with AES-256 and
+                    in transit with TLS 1.3. Encryption is always on, with no
+                    configuration required.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Shared responsibility model</h3>
+                <p>
+                    InferaDB secures the infrastructure: storage encryption,
+                    network isolation, access logging, and platform availability.
+                    You own your authorization policy logic and access patterns.
+                    Clear boundaries, no ambiguity.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>SOC 2 Type II in progress</h3>
+                <p>
+                    SOC 2 Type II certification is underway. Contact us for
+                    current status, security questionnaire responses, or to
+                    schedule a security review with our team.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Every</span>
+                <span class="solution-stat-label">decision logged with full context</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Immutable</span>
+                <span class="solution-stat-label">hash-chained audit entries</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">6</span>
+                <span class="solution-stat-label">compliance frameworks mapped</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Zero</span>
+                <span class="solution-stat-label">trust required to verify</span>
+            </div>
+        </div>
 
     </div>
 </section>

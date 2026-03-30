@@ -2,18 +2,19 @@
 title: "AI Agent Authorization | InferaDB"
 layout: default
 body_class: page-solution
-description: "Microsecond authorization for AI agent workflows. Per-user RAG scoping, agent tool authorization, and chain-of-thought permission traces at 2.8 microsecond p99 latency."
+description: "Authorization for AI agent workflows. Delegation modeling, per-user RAG scoping, tool authorization, and resolution traces for every agent action. Works with LangChain, CrewAI, AutoGen."
 ---
 
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:SOLUTIONS // AI Agents</p>
-        <h1>AI agents need permission decisions at machine speed</h1>
+        <h1>Authorization that keeps pace with autonomous agents</h1>
         <p class="lead">
             Every agent action — every tool call, every document retrieval, every
-            API request — requires an authorization check. Traditional systems handle
-            1-2 checks per request. Agent workflows require dozens. At 2.8 microsecond
-            p99 latency, InferaDB makes this tractable.
+            API request — needs a permission check scoped to the invoking user.
+            Traditional authorization systems buckle under this workload. InferaDB
+            handles dozens of checks per agent turn with no perceptible latency,
+            full delegation modeling, and a complete audit trail.
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -26,114 +27,263 @@ description: "Microsecond authorization for AI agent workflows. Per-user RAG sco
     <div class="container solution-narrow">
 
         <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
-        <h2 data-reveal>Agent authorization is a different workload</h2>
+        <h2 data-reveal>Agent authorization is a fundamentally different problem</h2>
         <p data-reveal>
-            A human user makes a few API calls per interaction. An AI agent can make
-            dozens of tool calls, each requiring fine-grained permission checks against
-            the delegating user's access. When your authorization layer adds 5-50ms
-            per check, agent workflows become unusably slow — or dangerously unchecked.
+            A human clicks a button. An authorization check fires. Simple. An AI agent
+            reasons through a multi-step plan — retrieving documents, calling tools,
+            making API requests — and every one of those actions must be authorized
+            against the permissions of the user who invoked the agent. When your
+            authorization layer adds 5-50ms per check, you have two choices: make
+            agents unusably slow, or skip the checks entirely and pray.
         </p>
+        <div class="solution-callout" data-reveal>
+            <h3>What happens without proper agent authorization</h3>
+            <p>
+                Most teams today give agents broad service-account permissions and
+                hope the prompt engineering holds. It will not. An agent with
+                overly broad access will eventually retrieve documents the requesting
+                user cannot see, invoke tools the user is not authorized to use, or
+                take actions across tenant boundaries. The result is not a bug report — it
+                is a breach disclosure, a regulatory finding, or both. The question is
+                not whether it will happen, but whether you will know when it does.
+            </p>
+        </div>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
-                <h3>Dozens of checks per request</h3>
+                <h3>Dozens of checks per turn</h3>
                 <p>
                     An agent reasoning over a user's documents might check permissions
                     on 20+ resources in a single turn. Traditional policy engines
-                    turn this into 100ms+ of latency.
+                    turn this into 100ms+ of blocking latency per turn.
                 </p>
             </div>
             <div class="solution-feature">
                 <h3>User-scoped delegation</h3>
                 <p>
-                    Agents act on behalf of users. Every action must be constrained
-                    to what the delegating user can access — not what the agent's
-                    service account allows.
+                    Agents act on behalf of users, not as autonomous principals.
+                    Every action must be constrained to the delegating user's
+                    access — not the agent's service account.
                 </p>
             </div>
             <div class="solution-feature">
                 <h3>Auditability requirements</h3>
                 <p>
-                    When an agent accesses sensitive data, you need to prove why it
-                    was allowed. "The AI did it" is not an acceptable answer for
-                    compliance.
+                    When an agent accesses sensitive data, you need to prove exactly
+                    why it was allowed. "The AI did it" is not an acceptable answer
+                    for compliance or incident response.
                 </p>
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.02</span> Microsecond Latency</div>
-        <h2 data-reveal>2.8 microseconds p99 means agents do not wait</h2>
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> Delegation Modeling</div>
+        <h2 data-reveal>The agent acts as the user — not beside the user</h2>
         <p data-reveal>
-            InferaDB's purpose-built storage engine resolves permission checks in
-            microseconds, not milliseconds. An agent making 30 authorization checks
-            in a single turn adds less than 0.1ms of total authorization overhead.
-            Permission checks become invisible to agent performance.
+            Delegation modeling is the conceptual foundation of secure agent authorization.
+            When a user invokes an agent, that agent should inherit exactly the user's
+            permissions — no more, no less. InferaDB models this as a first-class
+            relationship in its authorization graph, so every downstream action is
+            evaluated against the delegating user's actual access.
         </p>
-        <div class="solution-stats" data-reveal>
-            <div class="solution-stat">
-                <span class="solution-stat-value">2.8us</span>
-                <span class="solution-stat-label">p99 read latency</span>
-            </div>
-            <div class="solution-stat">
-                <span class="solution-stat-value">4.9B</span>
-                <span class="solution-stat-label">checks/sec</span>
-            </div>
-            <div class="solution-stat">
-                <span class="solution-stat-value">&lt;0.1ms</span>
-                <span class="solution-stat-label">30 checks total overhead</span>
-            </div>
+        <div class="solution-example" data-reveal>
+            <p class="solution-example-label">Concrete example: delegation in action</p>
+            <p>
+                User Alice invokes an agent. The agent decides to call Tool X, which
+                reads from Database Y. InferaDB evaluates two checks: can Alice use
+                Tool X? Can Alice access the specific records in Database Y that Tool X
+                would touch? Both must pass. If Alice's access to Database Y was revoked
+                five seconds ago, the agent is denied immediately — not on the next
+                token refresh, not eventually. Immediately.
+            </p>
         </div>
-
-        <div class="solution-section-label" data-reveal><span>SEC.03</span> Per-User RAG Scoping</div>
-        <h2 data-reveal>Retrieval-augmented generation with access control</h2>
-        <p data-reveal>
-            When your agent retrieves documents for context, it should only see what
-            the requesting user can see. InferaDB's permission-aware search returns
-            only authorized results — no post-filtering, no data leaks through
-            context windows.
-        </p>
-
-        <div class="solution-section-label" data-reveal><span>SEC.04</span> Agent Tool Authorization</div>
-        <h2 data-reveal>Fine-grained control over what agents can do</h2>
-        <p data-reveal>
-            Model which tools each agent can invoke, scoped to the delegating user's
-            permissions. An agent with access to the "send email" tool can only send
-            as the user who authorized it — and only to recipients the user has
-            permission to contact.
-        </p>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
-                <h3>Tool-level permissions</h3>
+                <h3>Transitive permission checks</h3>
                 <p>
-                    Define which tools each agent type can access. Restrict
-                    sensitive operations (delete, transfer, admin) to specific
-                    agent configurations.
+                    InferaDB traces the full delegation chain — user to agent to tool
+                    to resource — and verifies permissions at every link. No implicit
+                    trust between layers.
                 </p>
             </div>
             <div class="solution-feature">
-                <h3>Delegated access scoping</h3>
+                <h3>No privilege escalation through indirection</h3>
                 <p>
-                    Agents inherit and are constrained by the permissions of the
-                    user who invoked them. No privilege escalation through agent
-                    indirection.
+                    An agent cannot access resources that its invoking user cannot
+                    access. Period. The delegation model makes escalation structurally
+                    impossible, not just policy-forbidden.
                 </p>
             </div>
             <div class="solution-feature">
                 <h3>Real-time revocation</h3>
                 <p>
                     Revoke a user's access and every agent acting on their behalf
-                    loses access immediately. Not eventually. Immediately.
+                    loses that access immediately. Not eventually. Not on the next
+                    sync cycle. Immediately.
                 </p>
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.05</span> Permission Traces</div>
-        <h2 data-reveal>Chain-of-thought permission traces for every agent action</h2>
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> RAG Scoping</div>
+        <h2 data-reveal>Retrieval-augmented generation that respects access control</h2>
         <p data-reveal>
-            Every authorization decision includes a full resolution trace — which
-            relationships were traversed, which conditions were evaluated, why the
-            decision was allowed or denied. When an agent accesses sensitive data,
-            you can reconstruct exactly why it was permitted.
+            RAG without authorization is a data leak waiting to happen. When your agent
+            retrieves documents to answer a question, InferaDB ensures it only sees
+            documents the requesting user has access to. No vector store post-filtering.
+            No prompt injection through unauthorized context. No hope-based security.
         </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Pre-retrieval authorization</h3>
+                <p>
+                    InferaDB checks document-level permissions before retrieval, not
+                    after. Your vector store never returns results the user should not
+                    see — eliminating the window where unauthorized content could
+                    influence the agent's reasoning.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>No context window contamination</h3>
+                <p>
+                    Post-filtering is not enough. If an unauthorized document enters
+                    the context window — even briefly, even if you strip it before
+                    the response — the model has already seen it. Pre-retrieval
+                    authorization eliminates this class of leaks entirely.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Cross-tenant RAG isolation</h3>
+                <p>
+                    In multi-tenant environments, RAG scoping ensures one tenant's
+                    documents never enter another tenant's agent context. InferaDB
+                    enforces this at the authorization layer, so your retrieval
+                    pipeline does not need to be tenant-aware.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Tool Authorization</div>
+        <h2 data-reveal>Fine-grained control over every tool invocation</h2>
+        <p data-reveal>
+            Every tool an agent can invoke is an authorization decision. InferaDB lets
+            you model which tools each agent type can access, scoped to the delegating
+            user's permissions. An agent with access to the "send email" tool can only
+            send as the user who authorized it — and only to recipients that user has
+            permission to contact.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Tool-level permissions</h3>
+                <p>
+                    Define which tools each agent type can access using IPL. Restrict
+                    sensitive operations — delete, transfer, escalate — to specific
+                    agent configurations and user permission levels.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Parameter-level constraints</h3>
+                <p>
+                    Authorization goes beyond "can this agent call this tool." InferaDB
+                    can constrain the parameters a tool is called with — limiting
+                    which accounts, resources, or scopes the tool operates on.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Framework compatibility</h3>
+                <p>
+                    Works with LangChain, CrewAI, AutoGen, and any agent framework
+                    with middleware support. Wrap your tool executor with InferaDB
+                    middleware and every invocation is authorized automatically.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Resolution Traces</div>
+        <h2 data-reveal>Full audit trail for every agent action</h2>
+        <p data-reveal>
+            Every authorization decision InferaDB makes includes a complete resolution
+            trace — which relationships were traversed, which conditions were evaluated,
+            why the decision was allowed or denied. When an agent accesses sensitive data,
+            you can reconstruct the exact permission path that permitted it. When an
+            agent is denied, you can see precisely why.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Permission resolution traces</h3>
+                <p>
+                    Every check returns the full graph traversal — from user to
+                    delegation to tool to resource. Compliance teams can audit any
+                    agent action without reverse-engineering the permission model.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Deny explanations</h3>
+                <p>
+                    When an agent action is denied, the resolution trace shows exactly
+                    which permission was missing. Debug authorization issues in minutes,
+                    not hours of log spelunking.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Compliance-ready logging</h3>
+                <p>
+                    Every agent action — allowed or denied — is logged with full
+                    context: the invoking user, the agent identity, the tool called,
+                    the resources accessed, and the complete resolution path. Ready
+                    for SOC 2, HIPAA, and regulatory review.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Integration</div>
+        <h2 data-reveal>Three steps to authorized agents</h2>
+        <p data-reveal>
+            InferaDB integrates with your agent framework as middleware. You do not
+            need to rewrite your agent logic or change your tool implementations.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>1. Wrap your agent framework</h3>
+                <p>
+                    Add InferaDB middleware to your agent executor. Every tool call and
+                    retrieval request is intercepted and authorized before execution.
+                    Works with LangChain, CrewAI, AutoGen, and custom frameworks.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>2. Define tool permissions in IPL</h3>
+                <p>
+                    Use InferaDB's Permission Language to model your agent's tool
+                    permissions, delegation relationships, and resource access rules.
+                    Express complex authorization logic declaratively.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>3. Every action is authorized and logged</h3>
+                <p>
+                    Once integrated, every agent action is automatically checked against
+                    the delegating user's permissions and logged with full resolution
+                    context. No code changes to your tools or agent logic.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">&lt; 3&micro;s</span>
+                <span class="solution-stat-label">per authorization check</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">&lt; 0.1ms</span>
+                <span class="solution-stat-label">total overhead, 30 checks per turn</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Every</span>
+                <span class="solution-stat-label">agent action logged with full context</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Zero</span>
+                <span class="solution-stat-label">broad service-account permissions needed</span>
+            </div>
+        </div>
 
     </div>
 </section>
@@ -141,11 +291,12 @@ description: "Microsecond authorization for AI agent workflows. Per-user RAG sco
 <section class="solution-cta">
     <div class="container">
         <div class="solution-cta-inner" data-reveal>
-            <p class="solution-cta-eyebrow">Ready for AI-speed authorization?</p>
-            <h2>Give your agents permissions at machine speed.</h2>
+            <p class="solution-cta-eyebrow">AI agents are shipping today without proper authorization.</p>
+            <h2>Do not be the breach headline.</h2>
             <p>
-                Microsecond authorization for every tool call, every document
-                retrieval, every agent action — with full audit trails.
+                Delegation modeling, per-user RAG scoping, tool authorization, and
+                full resolution traces for every agent action — with no perceptible
+                latency overhead.
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>

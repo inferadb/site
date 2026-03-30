@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "The Infera Policy Language: Designing a Schema for Authorization — InferaDB"
-post_title: "The Infera Policy Language: Designing a Schema for Authorization"
+title: "The Infera Policy Language: One Schema for Every Authorization Model — InferaDB"
+post_title: "The Infera Policy Language: One Schema for Every Authorization Model"
 date: 2026-02-25
-category: practices
+category: engineering
 description: "IPL unifies ReBAC, RBAC, and ABAC in a single schema language with PEG grammar, static analysis, and parallel evaluation — no more choosing between authorization paradigms."
 authors:
   - Evan Sims

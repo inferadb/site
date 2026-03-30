@@ -2,7 +2,7 @@
 title: "Authorization for Platform Teams | InferaDB"
 layout: default
 body_class: page-solution
-description: "Centralized authorization for microservice architectures. Replace fragmented per-service permission systems with a single authorization database. Terraform provider, zero-downtime deploys, multi-region support."
+description: "Centralized authorization as a managed service for microservice architectures. Replace fragmented per-service permission systems with a single authorization API. Terraform provider, zero-downtime policy deploys, multi-region support."
 ---
 
 <section class="solution-hero">
@@ -13,8 +13,8 @@ description: "Centralized authorization for microservice architectures. Replace 
             In a microservice architecture, authorization fragments across services.
             Each team builds their own permission checks, their own role tables, their
             own audit logs. Policies drift. Gaps emerge. Nobody has a complete picture
-            of who can access what. InferaDB centralizes authorization as shared
-            infrastructure.
+            of who can access what. InferaDB provides centralized authorization as a
+            managed service your teams consume, not maintain.
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -32,7 +32,9 @@ description: "Centralized authorization for microservice architectures. Replace 
             Every service has its own authorization logic. The billing service checks
             roles in its database. The content service has its own ACL table. The
             admin dashboard hardcodes permission checks. When someone asks "what can
-            User X access across all services?" — nobody can answer.
+            User X access across all services?" — nobody can answer. And building a
+            centralized system in-house just creates another piece of infrastructure
+            for your team to operate.
         </p>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
@@ -62,12 +64,13 @@ description: "Centralized authorization for microservice architectures. Replace 
         </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.02</span> Centralized Policy Engine</div>
-        <h2 data-reveal>One authorization database for every service</h2>
+        <h2 data-reveal>One authorization service for your entire platform</h2>
         <p data-reveal>
             InferaDB serves as the single source of truth for authorization across
-            your entire platform. Every service queries the same engine, evaluates
-            the same policies, and produces audit entries in the same ledger. Define
-            policies once, enforce everywhere.
+            your entire platform. Your teams get an API they call — not infrastructure
+            they operate. Every service queries the same engine, evaluates the same
+            policies, and produces audit entries in the same ledger. Define policies
+            once, enforce everywhere.
         </p>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
@@ -83,6 +86,7 @@ description: "Centralized authorization for microservice architectures. Replace 
                 <p>
                     Every service integrates via the same API. AuthZEN-compliant
                     evaluation endpoints work with any language and framework.
+                    Three lines of middleware per service.
                 </p>
             </div>
             <div class="solution-feature">
@@ -98,7 +102,7 @@ description: "Centralized authorization for microservice architectures. Replace 
         <div class="solution-section-label" data-reveal><span>SEC.03</span> Infrastructure as Code</div>
         <h2 data-reveal>Terraform provider for authorization infrastructure</h2>
         <p data-reveal>
-            Manage organizations, vaults, clients, teams, and grants through
+            Manage vaults, policies, clients, teams, and grants through
             Terraform. Authorization configuration lives in your infrastructure
             repo, reviewed through pull requests, applied through CI/CD pipelines.
             No ClickOps. No drift.
@@ -108,7 +112,7 @@ description: "Centralized authorization for microservice architectures. Replace 
         <h2 data-reveal>Policy changes without service interruption</h2>
         <p data-reveal>
             Branch, test, and merge authorization policies like application code.
-            Policy updates are applied atomically via Raft consensus — every node
+            Policy updates are applied atomically across all regions — every endpoint
             transitions to the new policy simultaneously. No rolling restarts, no
             inconsistency windows, no downtime.
         </p>
@@ -131,8 +135,8 @@ description: "Centralized authorization for microservice architectures. Replace 
             <div class="solution-feature">
                 <h3>Atomic rollout</h3>
                 <p>
-                    Raft consensus ensures all nodes apply policy changes at the
-                    same revision. No split-brain, no stale policy evaluation.
+                    All regions apply policy changes at the same revision.
+                    No split-brain, no stale policy evaluation.
                 </p>
             </div>
         </div>
@@ -140,23 +144,74 @@ description: "Centralized authorization for microservice architectures. Replace 
         <div class="solution-section-label" data-reveal><span>SEC.05</span> Multi-Region</div>
         <h2 data-reveal>Global authorization for global teams</h2>
         <p data-reveal>
-            Deploy InferaDB nodes across regions for low-latency authorization
-            everywhere your services run. Raft consensus maintains strong consistency
-            across regions. 47ms cross-region replication (US East to EU West) means
-            policy changes propagate globally in under 50 milliseconds.
+            InferaDB runs in the regions where your services run. Authorization
+            decisions resolve locally — no cross-region round trips for reads.
+            Policy changes propagate globally in under 50 milliseconds. Your
+            services get consistent, low-latency authorization everywhere without
+            you managing a single node.
         </p>
+
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Observability</div>
+        <h2 data-reveal>Full visibility into every authorization decision</h2>
+        <p data-reveal>
+            Platform teams need to know what their services are doing. InferaDB
+            exposes a Prometheus metrics endpoint, OpenTelemetry trace spans for
+            every authorization check, and Grafana-compatible dashboards out of
+            the box. Monitor decision latency, error rates, and policy evaluation
+            patterns across your entire platform from your existing observability
+            stack.
+        </p>
+
         <div class="solution-stats" data-reveal>
             <div class="solution-stat">
-                <span class="solution-stat-value">2.8us</span>
-                <span class="solution-stat-label">p99 read latency</span>
+                <span class="solution-stat-value">1</span>
+                <span class="solution-stat-label">authorization service for all teams</span>
             </div>
             <div class="solution-stat">
-                <span class="solution-stat-value">47ms</span>
-                <span class="solution-stat-label">cross-region replication</span>
+                <span class="solution-stat-value">Zero</span>
+                <span class="solution-stat-label">infrastructure to operate</span>
             </div>
             <div class="solution-stat">
-                <span class="solution-stat-value">4.9B</span>
-                <span class="solution-stat-label">checks/sec per node</span>
+                <span class="solution-stat-value">&lt; 3us</span>
+                <span class="solution-stat-label">added to your service latency</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Any</span>
+                <span class="solution-stat-label">region, consistent reads</span>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.07</span> Adoption Path</div>
+        <h2 data-reveal>How platform teams adopt InferaDB</h2>
+        <p data-reveal>
+            No big-bang migration required. Teams adopt InferaDB incrementally
+            using a strangler fig pattern — start with one service, prove the
+            model, then roll out across the platform at your own pace.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Step 1: Start with one service</h3>
+                <p>
+                    Pick one service with clear authorization needs. Point its
+                    permission checks at InferaDB's API. Validate behavior
+                    against your existing system in parallel.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Step 2: Define shared authorization schema</h3>
+                <p>
+                    Model your platform's authorization in IPL. Define the
+                    resource types, relations, and policies that span services.
+                    Version it in your infrastructure repo alongside Terraform.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Step 3: Roll out incrementally</h3>
+                <p>
+                    Each additional service adds three lines of middleware to
+                    call the InferaDB API. Migrate at whatever pace your teams
+                    are comfortable with — no coordination required.
+                </p>
             </div>
         </div>
 
@@ -167,10 +222,10 @@ description: "Centralized authorization for microservice architectures. Replace 
     <div class="container">
         <div class="solution-cta-inner" data-reveal>
             <p class="solution-cta-eyebrow">Ready to centralize authorization?</p>
-            <h2>One database. Every service. Every decision.</h2>
+            <h2>One service. Every team. Every decision.</h2>
             <p>
-                Replace fragmented per-service permission systems with shared
-                authorization infrastructure that scales with your platform.
+                Replace fragmented per-service permission systems with a managed
+                authorization service that scales with your platform.
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>

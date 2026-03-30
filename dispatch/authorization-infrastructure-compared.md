@@ -12,7 +12,7 @@ authors:
 
 **Most authorization comparisons are thinly disguised sales pages.** They cherry-pick benchmarks, ignore trade-offs, and assume you've already decided to buy whatever they're selling.
 
-This isn't that. We built [OpenFGA](https://openfga.dev) at Auth0, shipped it through the Okta acquisition, and watched thousands of teams make this decision. We know what matters and what doesn't, and we know where every option — including ours — has real limitations.
+This isn't that. We helped build [OpenFGA](https://openfga.dev) at Okta, shipped Auth0's authorization platform, and watched thousands of teams make this decision. We know what matters and what doesn't, and we know where every option — including ours — has real limitations.
 
 Choosing authorization infrastructure is a high-stakes, high-lock-in decision. You're picking the system that sits in the critical path of every API call, every page load, every agent action. Get it wrong and you're either rebuilding in 18 months or living with compromises that compound into security incidents.
 

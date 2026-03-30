@@ -1,17 +1,204 @@
-- title: "Gartner Recognizes Authorization as a Standalone Product Category"
-  date: 2026-03-03
-  source: Gartner
-  url: "https://www.gartner.com/en/documents/authorization-management-platforms"
-  excerpt: "Gartner published its first-ever 'Innovation Insight: Authorization Management Platforms' report, formally recognizing authorization as a distinct market category."
+# External press, research, and authoritative content on authorization
+- title: "Rethinking Authorization for the Age of Agentic AI"
+  date: 2026-03-19
+  source: Cloud Security Alliance
+  url: "https://cloudsecurityalliance.org/blog/2026/03/19/rethinking-authorization-for-the-age-of-agentic-ai"
+  excerpt: "Examines how authorization frameworks must evolve for autonomous AI agents, covering dynamic policy enforcement, delegation chains, and the shift from static IAM to context-aware authorization."
 
-- title: "Fine-Grained Authorization Market Growing at 19.3% CAGR"
-  date: 2026-02-01
-  source: The Business Research Company
-  url: "https://www.thebusinessresearchcompany.com/report/fine-grained-authorization"
-  excerpt: "The fine-grained authorization market is valued at $3.32 billion in 2025 and projected to reach $7.90 billion by 2030."
+- title: "Securing AI Agents: The Defining Cybersecurity Challenge of 2026"
+  date: 2026-03-24
+  source: Bessemer Venture Partners
+  url: "https://www.bvp.com/atlas/securing-ai-agents-the-defining-cybersecurity-challenge-of-2026"
+  excerpt: "Venture capital perspective on why 48% of cybersecurity professionals identify agentic AI as the top attack vector, and how authorization and identity controls must adapt."
 
-- title: "InferaDB Announces Seed Funding Round"
-  date: 2026-01-20
-  source: InferaDB
-  url: "/dispatch/seed-funding-announcement"
-  excerpt: "InferaDB is raising a $5M seed round to bring purpose-built authorization infrastructure to market, founded by engineers behind OpenFGA."
+- title: "How Uber Reinvented Access Control for Microservices"
+  date: 2026-02-24
+  source: ByteByteGo
+  url: "https://blog.bytebytego.com/p/how-uber-reinvented-access-control"
+  excerpt: "Deep dive into Uber's attribute-based access control system Charter, which separates authorization logic from application code across thousands of microservices."
+
+- title: "Accelerating the Adoption of Software and AI Agent Identity and Authorization"
+  date: 2026-02-05
+  source: NIST NCCoE
+  url: "https://csrc.nist.gov/pubs/other/2026/02/05/accelerating-the-adoption-of-software-and-ai-agent/ipd"
+  excerpt: "NIST concept paper exploring how identity standards like OAuth 2.0 can be applied to AI agents, covering authorization delegation and audit logging for non-human entities."
+
+- title: "State of AI Agent Security 2026: When Adoption Outpaces Control"
+  date: 2026-02-04
+  source: Gravitee
+  url: "https://www.gravitee.io/blog/state-of-ai-agent-security-2026-report-when-adoption-outpaces-control"
+  excerpt: "Survey of 900+ practitioners finding that 88% of organizations reported AI agent security incidents, yet only 22% treat agents as independent identity-bearing entities."
+
+- title: "How Google Manages Trillions of Authorizations with Zanzibar"
+  date: 2026-01-27
+  source: ByteByteGo
+  url: "https://blog.bytebytego.com/p/how-google-manages-trillions-of-authorizations"
+  excerpt: "System design walkthrough of Google Zanzibar's architecture, explaining how it stores trillions of permission records and serves millions of requests per second."
+
+- title: "AI Agents Are Becoming Authorization Bypass Paths"
+  date: 2026-01-14
+  source: The Hacker News
+  url: "https://thehackernews.com/2026/01/ai-agents-are-becoming-privilege.html"
+  excerpt: "How AI agents operating with broad shared credentials create unintended privilege escalation paths, since authorization is evaluated against the agent's identity rather than the requesting user's."
+
+- title: "Authorization API 1.0 Final Specification Approved"
+  date: 2026-01-12
+  source: OpenID Foundation
+  url: "https://openid.net/authorization-api-1-0-final-specification-approved/"
+  excerpt: "The OpenID Foundation approved AuthZEN Authorization API 1.0 as a Final Specification, standardizing PEP-PDP communication the way OpenID Connect standardized authentication."
+
+- title: "Request for Information: Security Considerations for AI Agents"
+  date: 2026-01-08
+  source: Federal Register (NIST)
+  url: "https://www.federalregister.gov/documents/2026/01/08/2026-00206/request-for-information-regarding-security-considerations-for-artificial-intelligence-agents"
+  excerpt: "NIST formally seeks public input on securing AI agent systems, including authorization controls, identity management, and prompt injection defenses."
+
+- title: "The Looming Authorization Crisis: Why Traditional IAM Fails Agentic AI"
+  date: 2025-12-19
+  source: ISACA
+  url: "https://www.isaca.org/resources/news-and-trends/industry-news/2025/the-looming-authorization-crisis-why-traditional-iam-fails-agentic-ai"
+  excerpt: "Identifies seven limitations of legacy IAM frameworks for AI agents and proposes two new architectures for agent-native authorization."
+
+- title: "OWASP Top 10: Broken Access Control Still Tops App Security List"
+  date: 2025-11-11
+  source: The Register
+  url: "https://www.theregister.com/2025/11/11/new_owasp_top_ten_broken/"
+  excerpt: "Covers the OWASP Top 10 2025 release where broken access control maintains the number one position, with 100% of tested applications exhibiting some form of access control failure."
+
+- title: "OpenFGA Becomes a CNCF Incubating Project"
+  date: 2025-11-11
+  source: Cloud Native Computing Foundation
+  url: "https://www.cncf.io/blog/2025/11/11/openfga-becomes-a-cncf-incubating-project/"
+  excerpt: "The CNCF advances OpenFGA to Incubation status, recognizing the Zanzibar-inspired authorization engine now used by 37 companies in production."
+
+- title: "Top 10 Identity Security Insights from Forrester's 2025 Security Summit"
+  date: 2025-11-10
+  source: Software Strategies Blog
+  url: "https://softwarestrategiesblog.com/2025/11/10/top-10-identity-security-insights-from-forresters-2025-security-risk-summit/"
+  excerpt: "Forrester research shows IAM spending will nearly double to $27.5B by 2029, with dynamic authorization replacing static entitlements."
+
+- title: "A01:2025 Broken Access Control"
+  date: 2025-11-01
+  source: OWASP
+  url: "https://owasp.org/Top10/2025/A01_2025-Broken_Access_Control/"
+  excerpt: "The official OWASP Top 10 2025 entry documenting how broken access control affects 100% of tested applications, with 40 mapped CWEs."
+
+- title: "Security for AI Agents: Protecting Intelligent Systems"
+  date: 2025-10-23
+  source: Obsidian Security
+  url: "https://www.obsidiansecurity.com/blog/security-for-ai-agents"
+  excerpt: "Comprehensive guide to AI agent security threats including prompt injection and token compromise, advocating for dynamic authorization policies."
+
+- title: "97% of Organizations with AI Breaches Lacked Proper AI Access Controls"
+  date: 2025-07-30
+  source: IBM
+  url: "https://newsroom.ibm.com/2025-07-30-ibm-report-13-of-organizations-reported-breaches-of-ai-models-or-applications,-97-of-which-reported-lacking-proper-ai-access-controls"
+  excerpt: "IBM's 2025 Cost of a Data Breach Report reveals organizations with shadow AI face $670K in additional breach costs, and 97% of AI-related breaches lacked proper access controls."
+
+- title: "Open Policy Agent: Best Practices for a Secure Deployment"
+  date: 2025-03-18
+  source: Cloud Native Computing Foundation
+  url: "https://www.cncf.io/blog/2025/03/18/open-policy-agent-best-practices-for-a-secure-deployment/"
+  excerpt: "Seven best practices for securing OPA deployments, including separating policy from application code, using GitOps for policy storage, and CI/CD pipeline validation."
+
+- title: "How to Build Scalable Access Control for Your Web App"
+  date: 2025-02-04
+  source: freeCodeCamp
+  url: "https://www.freecodecamp.org/news/how-to-build-scalable-access-control-for-your-web-app/"
+  excerpt: "Developer handbook comparing RBAC, ABAC, and ReBAC access control models with practical implementation guidance."
+
+- title: "Implementing a Zero Trust Architecture (SP 1800-35)"
+  date: 2025-01-01
+  source: NIST
+  url: "https://csrc.nist.gov/news/2025/implementing-a-zero-trust-architecture-sp-1800-35"
+  excerpt: "NIST's practice guide demonstrating 19 zero trust implementations, emphasizing authentication and authorization as discrete functions before resource access."
+
+- title: "Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization"
+  date: 2024-10-01
+  source: Amazon Science (OOPSLA 2024)
+  url: "https://www.amazon.science/publications/cedar-a-new-language-for-expressive-fast-safe-and-analyzable-authorization"
+  excerpt: "Academic paper presenting Amazon's open-source authorization policy language with formal verification capabilities supporting RBAC, ABAC, and ReBAC models."
+
+- title: "How to Implement ReBAC with Amazon Verified Permissions and Neptune"
+  date: 2024-09-30
+  source: AWS Security Blog
+  url: "https://aws.amazon.com/blogs/security/how-to-implement-relationship-based-access-control-with-amazon-verified-permissions-and-amazon-neptune/"
+  excerpt: "Demonstrates implementing relationship-based access control using a graph database for relationship storage combined with Cedar policies for authorization decisions."
+
+- title: "Common Expressions for Portable Policy and Beyond"
+  date: 2024-06-18
+  source: Google Open Source Blog
+  url: "https://opensource.googleblog.com/2024/06/common-expressions-for-portable-policy.html"
+  excerpt: "Google introduces cel.dev, the official home for Common Expression Language, used in Kubernetes and Cloud IAM for fine-grained authorization with nanosecond evaluation."
+
+- title: "How to Implement Relationship Based Access Control (ReBAC)"
+  date: 2024-03-08
+  source: freeCodeCamp
+  url: "https://www.freecodecamp.org/news/implement-relationship-based-access-control/"
+  excerpt: "Developer tutorial explaining ReBAC fundamentals including graph-based permission models, ownership, and hierarchical relationships with practical examples."
+
+- title: "Attribute-Based Access Control at Uber"
+  date: 2023-07-13
+  source: Uber Engineering Blog
+  url: "https://www.uber.com/blog/attribute-based-access-control-at-uber/"
+  excerpt: "Uber's Charter authorization system uses Google CEL for policy conditions, now adopted by 70 services for fine-grained access control across APIs, databases, and infrastructure."
+
+- title: "NIST SP 800-207A: Zero Trust Access Control for Cloud-Native Applications"
+  date: 2023-09-01
+  source: NIST
+  url: "https://csrc.nist.gov/pubs/sp/800/207/a/final"
+  excerpt: "Guidance on zero trust access control for distributed microservices, shifting focus from network perimeters to identity-based authentication and authorization."
+
+- title: "How We Built Cedar with Automated Reasoning and Differential Testing"
+  date: 2023-05-10
+  source: Amazon Science
+  url: "https://www.amazon.science/blog/how-we-built-cedar-with-automated-reasoning-and-differential-testing"
+  excerpt: "Amazon's verification-guided development process for Cedar, using Dafny formal modeling and differential random testing to prove authorization policy correctness."
+
+- title: "Adventures in Authentication and Authorization"
+  date: 2023-01-24
+  source: USENIX Enigma 2023
+  url: "https://www.usenix.org/conference/enigma2023/presentation/haken"
+  excerpt: "Netflix staff security engineer presents lessons from implementing ubiquitous authentication and authorization in a microservice zero-trust ecosystem."
+
+- title: "Using ABAC to Solve Role Explosion"
+  date: 2022-03-30
+  source: Thoughtworks
+  url: "https://www.thoughtworks.com/en-us/insights/blog/microservices/using-abac-solve-role-explosion"
+  excerpt: "How ABAC eliminates role explosion in microservice architectures by dynamically evaluating user attributes against policies."
+
+- title: "Authorization at Netflix Scale"
+  date: 2022-07-08
+  source: InfoQ (QCon Plus 2021)
+  url: "https://www.infoq.com/presentations/authorization-scalability/"
+  excerpt: "Netflix senior engineer describes how Netflix handles 3 million authorization requests per second, evolving from distributed rules to a centralized Product Access Service."
+
+- title: "Himeji: A Scalable Centralized System for Authorization at Airbnb"
+  date: 2021-04-20
+  source: Airbnb Tech Blog
+  url: "https://medium.com/airbnb-engineering/himeji-a-scalable-centralized-system-for-authorization-at-airbnb-341664924574"
+  excerpt: "Airbnb's Zanzibar-inspired authorization system stores tens of billions of relations and serves nearly a million authorizations per second with 12ms p99 latency."
+
+- title: "Airbnb Builds Himeji: A Scalable Centralized Authorization System"
+  date: 2021-05-12
+  source: InfoQ
+  url: "https://www.infoq.com/news/2021/05/airbnb-himeji/"
+  excerpt: "Technical analysis of Airbnb's three-layer Himeji architecture for centralized authorization, covering orchestration, caching, and data layers."
+
+- title: "Edge Authentication and Token-Agnostic Identity Propagation"
+  date: 2021-02-13
+  source: Netflix Tech Blog
+  url: "https://netflixtechblog.com/edge-authentication-and-token-agnostic-identity-propagation-514e47e0b602"
+  excerpt: "Netflix's Access and Identity Management team describes moving authentication to the edge and creating cryptographically-verifiable identity propagation across microservices."
+
+- title: "User and Device Identity for Microservices at Netflix Scale"
+  date: 2019-12-16
+  source: InfoQ (QCon SF 2019)
+  url: "https://www.infoq.com/presentations/netflix-user-identity/"
+  excerpt: "How Netflix manages user and device identity for 158 million subscribers across 2 million requests per second using edge authentication."
+
+- title: "Zanzibar: Google's Consistent, Global Authorization System"
+  date: 2019-07-10
+  source: Google Research (USENIX ATC 2019)
+  url: "https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/"
+  excerpt: "The foundational paper describing Google's global authorization system handling trillions of access control lists across Calendar, Cloud, Drive, Maps, Photos, and YouTube."

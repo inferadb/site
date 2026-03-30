@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- A circle made of individual dots at slightly varying radii -->
+    <!-- Each dot is a discrete permission — together they form the whole -->
+
+    <!-- Outer ring: r ~70, varying ±4 -->
+    <circle cx="70" cy="0" r="2" fill="#dce1e8"/>
+    <circle cx="66" cy="22" r="1.5" fill="#dce1e8"/>
+    <circle cx="56" cy="42" r="2.5" fill="#dce1e8"/>
+    <circle cx="38" cy="58" r="1.5" fill="#dce1e8"/>
+    <circle cx="18" cy="68" r="2" fill="#dce1e8"/>
+    <circle cx="-4" cy="72" r="1.5" fill="#dce1e8"/>
+    <circle cx="-26" cy="65" r="2" fill="#dce1e8"/>
+    <circle cx="-44" cy="53" r="2.5" fill="#dce1e8"/>
+    <circle cx="-58" cy="37" r="1.5" fill="#dce1e8"/>
+    <circle cx="-67" cy="16" r="2" fill="#dce1e8"/>
+    <circle cx="-71" cy="-6" r="1.5" fill="#dce1e8"/>
+    <circle cx="-64" cy="-28" r="2" fill="#dce1e8"/>
+    <circle cx="-52" cy="-46" r="2.5" fill="#dce1e8"/>
+    <circle cx="-34" cy="-60" r="1.5" fill="#dce1e8"/>
+    <circle cx="-12" cy="-69" r="2" fill="#dce1e8"/>
+    <circle cx="10" cy="-71" r="1.5" fill="#dce1e8"/>
+    <circle cx="32" cy="-63" r="2" fill="#dce1e8"/>
+    <circle cx="49" cy="-49" r="2.5" fill="#dce1e8"/>
+    <circle cx="61" cy="-32" r="1.5" fill="#dce1e8"/>
+    <circle cx="68" cy="-14" r="2" fill="#dce1e8"/>
+
+    <!-- Inner cluster: a few dots closer to center, different sizes -->
+    <circle cx="8" cy="-12" r="3" fill="#dce1e8"/>
+    <circle cx="-14" cy="6" r="2" fill="#dce1e8"/>
+    <circle cx="5" cy="16" r="2.5" fill="#dce1e8"/>
+    <circle cx="-6" cy="-4" r="1.5" fill="#dce1e8"/>
+    <circle cx="18" cy="4" r="2" fill="#dce1e8"/>
+  </g>
+</svg>

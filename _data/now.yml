@@ -12,6 +12,7 @@
   date: 2026-03-27
   category: security
   slug: ciso-guide-fine-grained-authorization
+  teaser: /assets/images/dispatch/ciso-guide.svg
   excerpt: "Broken access control is the #1 API security risk — and most organizations still treat authorization as application logic, not infrastructure. A practical guide for security leaders evaluating fine-grained authorization."
   authors:
     - Jane Sims

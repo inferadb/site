@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
-  <rect width="960" height="400" fill="#0b0d11"/>
 
   <!-- InferaDB: hexagon with three connected nodes -->
   <g transform="translate(280, 200)">

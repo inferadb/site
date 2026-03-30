@@ -5,6 +5,7 @@ post_title: "The CISO's Guide to Fine-Grained Authorization"
 date: 2026-03-27
 category: security
 description: "Fine-grained authorization is a security and compliance imperative. A practical guide for CISOs evaluating authorization infrastructure — covering risk reduction, SOC 2, HIPAA, GDPR, NIS2 compliance, and the build-vs-buy decision."
+hero: /assets/images/dispatch/ciso-guide.svg
 authors:
   - Jane Sims
 ---

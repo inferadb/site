@@ -3287,10 +3287,11 @@ section {
 
 .dispatch-entry-teaser {
   width: 100%;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   margin-bottom: 0.75rem;
   object-fit: cover;
   max-height: 180px;
+  background: var(--border);
 }
 
 // ─── Dispatch load more ──────────────────────────────────────

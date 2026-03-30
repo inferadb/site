@@ -440,4 +440,109 @@ description: "InferaDB pricing — start free, scale from $29/month. Usage-based
             >.
         </p>
     </div>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What counts as a check?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Every time your app asks \"can user X do action Y on resource Z?\" that's one check. Batch requests count as one check per item. Complexity of the underlying policy doesn't affect the count."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What counts as a relationship?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A relationship describes a connection: \"alice is an editor of report-q4\". We count the total number stored, not writes. Delete a relationship and the count goes down."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is a vault?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Think of a vault like a database in a database server -- a self-contained unit with its own relationships, policies, and audit trail. On Scale plans, each vault is cryptographically isolated from every other."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does overage billing work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Each paid plan includes a base allocation of checks and relationships. Go over and you pay the per-unit rate for your plan, billed monthly. No surprises -- usage is visible in your dashboard in real time."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What will I actually pay?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most Launch teams pay $30-60/month. Most Scale teams pay $250-500/month. The platform fee is the floor, not the ceiling -- your total depends on check volume and stored relationships. Usage is metered in real time so there are no surprises at the end of the month."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What happens when I hit my free tier limits?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Your app keeps working. Free tier usage degrades gracefully with increased latency rather than hard-cutting requests. You'll receive email notifications as you approach your limits so you can upgrade before it affects your users."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I change plans at any time?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Upgrades take effect immediately. Downgrades take effect at the start of your next billing cycle. There are no long-term contracts on any self-serve plan."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the audit trail?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A tamper-evident log of every authorization decision. On Scale plans, each entry is anchored to a Merkle tree so you can prove the record hasn't been altered."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How is my data secured?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "All data is encrypted at rest (AES-256) and in transit (TLS 1.3). On Scale plans, each vault is cryptographically isolated with its own encryption keys. Audit trail entries are tamper-evident via Merkle proofs. InferaDB Cloud is SOC 2 Type II and GDPR compliant on every plan."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is the audit trail sufficient for compliance?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Every authorization decision is logged with full context: who, what, when, and the policy version that produced the decision. On Scale plans, Merkle proofs provide cryptographic evidence that records haven't been altered -- suitable for SOC 2, HIPAA, and financial compliance audits."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What if I need to migrate off InferaDB Cloud?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "InferaDB has an open source Community Edition (MIT + Apache 2.0) with the same core engine, policy language, and APIs. You can export your relationships and policies at any time and run them on your own infrastructure. No lock-in."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do you offer credits for startups?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Apply for up to $10K in credits through our Startup Program. We also offer free Scale-tier access for open source and education projects."
+                }
+            }
+        ]
+    }
+    </script>
 </section>

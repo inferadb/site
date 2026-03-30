@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "NIS2, DORA, and the EU AI Act: Why Authorization Is Now a Compliance Requirement — InferaDB"
+title: "NIS2, DORA, and the EU AI Act: Why Authorization Is Now a Compliance Requirement"
 post_title: "NIS2, DORA, and the EU AI Act: Why Authorization Is Now a Compliance Requirement"
 date: 2026-02-15
 category: security

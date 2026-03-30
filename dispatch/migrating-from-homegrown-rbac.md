@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Migrating from Home-Grown RBAC to InferaDB — InferaDB"
+title: "Migrating from Home-Grown RBAC to InferaDB"
 post_title: "Migrating from Home-Grown RBAC to InferaDB"
 date: 2026-03-25
 category: engineering

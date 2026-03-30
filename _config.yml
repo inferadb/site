@@ -13,13 +13,23 @@ plugins:
   - jekyll-seo-tag
 
 # SEO defaults
+author:
+  name: InferaDB
+  url: https://inferadb.com
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/og-logo.png
 twitter:
   card: summary_large_image
+  username: inferadb
 social:
   name: InferaDB
   links:
     - https://github.com/inferadb
     - https://discord.gg/inferadb
+    - https://linkedin.com/company/inferadb
 logo: /assets/images/og-logo.png
 
 sass:

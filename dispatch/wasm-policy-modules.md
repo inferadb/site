@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language — InferaDB"
+title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
 post_title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
 date: 2026-03-01
 category: engineering

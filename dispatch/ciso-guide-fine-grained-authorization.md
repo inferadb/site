@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The CISO's Guide to Fine-Grained Authorization — InferaDB"
+title: "The CISO's Guide to Fine-Grained Authorization"
 post_title: "The CISO's Guide to Fine-Grained Authorization"
 date: 2026-03-27
 category: security

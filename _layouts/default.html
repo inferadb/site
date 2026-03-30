@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}" />
     <link rel="alternate" type="application/atom+xml" title="InferaDB Dispatch" href="{{ '/dispatch/feed.xml' | relative_url }}" />
     <link rel="icon" type="image/svg+xml" href="{{ '/assets/images/favicon.svg' | relative_url }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/images/favicon-32x32.png' | relative_url }}" />
+    <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}" />
     <link rel="author" href="{{ '/humans.txt' | relative_url }}" />
     <link rel="help" href="{{ '/llms.txt' | relative_url }}" type="text/plain" />
     <script type="application/ld+json">
@@ -42,6 +44,31 @@
           "https://discord.gg/inferadb"
         ]
       }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "InferaDB",
+      "url": "https://inferadb.com",
+      "logo": "https://inferadb.com/assets/images/og-logo.png",
+      "description": "Managed authorization infrastructure for modern software.",
+      "foundingDate": "2025",
+      "founders": [
+        { "@type": "Person", "name": "Evan Sims", "jobTitle": "Co-Founder & CTO" },
+        { "@type": "Person", "name": "Jane Sims", "jobTitle": "Co-Founder & CEO" }
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@inferadb.com",
+        "contactType": "customer service"
+      },
+      "sameAs": [
+        "https://github.com/inferadb",
+        "https://linkedin.com/company/inferadb",
+        "https://discord.gg/inferadb"
+      ]
     }
     </script>
   </head>

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How InferaDB Achieves 1,000x Faster Permission Checks — InferaDB"
+title: "How InferaDB Achieves 1,000x Faster Permission Checks"
 post_title: "How InferaDB Achieves 1,000x Faster Permission Checks"
 date: 2026-03-12
 category: engineering

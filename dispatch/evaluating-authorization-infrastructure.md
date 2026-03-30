@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to Evaluate Authorization Infrastructure: A Buyer's Checklist — InferaDB"
+title: "How to Evaluate Authorization Infrastructure: A Buyer's Checklist"
 post_title: "How to Evaluate Authorization Infrastructure: A Buyer's Checklist"
 date: 2026-03-26
 category: security

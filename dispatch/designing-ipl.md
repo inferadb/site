@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The Infera Policy Language: One Schema for Every Authorization Model — InferaDB"
+title: "The Infera Policy Language: One Schema for Every Authorization Model"
 post_title: "The Infera Policy Language: One Schema for Every Authorization Model"
 date: 2026-02-25
 category: engineering

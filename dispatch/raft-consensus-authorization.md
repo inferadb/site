@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Why Eventual Consistency in Authorization Is a Security Vulnerability — InferaDB"
+title: "Why Eventual Consistency in Authorization Is a Security Vulnerability"
 post_title: "Why Eventual Consistency in Authorization Is a Security Vulnerability"
 date: 2026-03-10
 category: engineering

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Cryptographic Tenant Isolation: Why Application-Level Multi-Tenancy Isn't Enough — InferaDB"
+title: "Cryptographic Tenant Isolation: Why Application-Level Multi-Tenancy Isn't Enough"
 post_title: "Cryptographic Tenant Isolation: Why Application-Level Multi-Tenancy Isn't Enough"
 date: 2026-02-05
 category: security

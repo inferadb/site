@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Authorization Market: $3.32B and No Dominant Player — InferaDB"
+title: "Authorization Market: $3.32B and No Dominant Player"
 post_title: "Authorization Market: $3.32B and No Dominant Player"
 date: 2026-02-20
 category: company

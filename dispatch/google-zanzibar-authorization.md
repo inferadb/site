@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Google Zanzibar: The Authorization Model Behind Every Google Product — InferaDB"
+title: "Google Zanzibar: The Authorization Model Behind Every Google Product"
 post_title: "Google Zanzibar: The Authorization Model Behind Every Google Product"
 date: 2026-03-24
 category: engineering

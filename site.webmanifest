@@ -1,0 +1,21 @@
+{
+  "name": "InferaDB",
+  "short_name": "InferaDB",
+  "description": "Managed authorization infrastructure for modern software.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0b0d11",
+  "theme_color": "#0b0d11",
+  "icons": [
+    {
+      "src": "/assets/images/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    },
+    {
+      "src": "/assets/images/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    }
+  ]
+}

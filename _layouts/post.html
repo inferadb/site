@@ -31,7 +31,7 @@ body_class: page-post
       {% endif %}
     </header>
     {% if page.hero %}
-    <img class="post-hero" src="{{ page.hero }}" alt="" loading="eager" />
+    <img class="post-hero" src="{{ page.hero }}" alt="{{ page.hero_alt | default: page.post_title }}" loading="eager" />
     {% endif %}
     <div class="post-body">
       {{ content }}
@@ -49,3 +49,15 @@ body_class: page-post
     {% endif %}
   </div>
 </article>
+{% if page.category == "company" %}{% assign bc_cat_url = "/dispatch/news/" %}{% assign bc_cat_name = "Company" %}{% elsif page.category == "engineering" %}{% assign bc_cat_url = "/dispatch/engineering/" %}{% assign bc_cat_name = "Engineering" %}{% elsif page.category == "security" %}{% assign bc_cat_url = "/dispatch/security/" %}{% assign bc_cat_name = "Security" %}{% elsif page.category == "ai" %}{% assign bc_cat_url = "/dispatch/ai/" %}{% assign bc_cat_name = "AI" %}{% else %}{% assign bc_cat_url = "/dispatch/" %}{% assign bc_cat_name = page.category %}{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Dispatch", "item": "{{ site.url }}/dispatch/" },
+    { "@type": "ListItem", "position": 2, "name": "{{ bc_cat_name }}", "item": "{{ site.url }}{{ bc_cat_url }}" },
+    { "@type": "ListItem", "position": 3, "name": "{{ page.post_title }}" }
+  ]
+}
+</script>

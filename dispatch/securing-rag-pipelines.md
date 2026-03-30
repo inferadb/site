@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Securing RAG Pipelines: Per-User Document Authorization for AI — InferaDB"
+title: "Securing RAG Pipelines: Per-User Document Authorization for AI"
 post_title: "Securing RAG Pipelines: Per-User Document Authorization for AI"
 date: 2026-01-25
 category: ai

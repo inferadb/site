@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How AI Agents Are Breaking Traditional Authorization — InferaDB"
+title: "How AI Agents Are Breaking Traditional Authorization"
 post_title: "How AI Agents Are Breaking Traditional Authorization"
 date: 2026-03-14
 category: ai

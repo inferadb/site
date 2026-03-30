@@ -43,7 +43,7 @@
   date: 2026-03-20
   category: company
   slug: why-were-building-inferadb
-  excerpt: "Authorization is a hidden crisis in modern software. We helped build OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished we could have built — a true authorization database."
+  excerpt: "Authorization is a hidden crisis in modern software. We helped build OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished existed — purpose-built authorization infrastructure, delivered as a managed service."
   authors:
     - Evan Sims
 
@@ -75,7 +75,7 @@
   date: 2026-03-01
   category: engineering
   slug: wasm-policy-modules
-  excerpt: "For logic beyond declarative rules — IP ranges, subscription tiers, time windows — InferaDB supports WASM modules. Sandboxed, deterministic, fuel-limited, with no I/O access."
+  excerpt: "Not everything fits into declarative rules. IP geofencing, subscription tier checks, time-window restrictions — these need real code. InferaDB lets you write that logic in any language, compile to WebAssembly, and run it inside the authorization engine with full sandboxing."
   authors:
     - Evan Sims
 
@@ -91,7 +91,7 @@
   date: 2026-02-20
   category: company
   slug: authorization-market-analysis
-  excerpt: "The fine-grained authorization market is growing at 19.3% CAGR — nearly twice the broader IAM market. Total VC investment across all pure-play authorization companies is approximately $165M."
+  excerpt: "The fine-grained authorization market is $3.32B and growing at 19.3% CAGR — significantly outpacing the broader IAM market. Yet total VC investment is modest, there's no dominant player, and the category leader position is wide open."
   authors:
     - Jane Sims
 
@@ -123,6 +123,6 @@
   date: 2026-01-25
   category: ai
   slug: securing-rag-pipelines
-  excerpt: "When an LLM retrieves documents for a user, every document must be authorized. InferaDB enables pre-retrieval authorization so your agent never sees data the requesting user can't access."
+  excerpt: "Your RAG pipeline has a security hole. When an LLM retrieves documents to answer a question, it pulls everything the vector search returns — including documents the requesting user shouldn't see. InferaDB enforces per-user authorization before retrieval, not after."
   authors:
     - Evan Sims

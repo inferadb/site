@@ -1,12 +1,13 @@
-<div class="card-grid">
+<div class="dispatch-list" id="dispatch-list" data-per-page="10">
 {% for entry in include.entries %}
-<a href="/dispatch/{{ entry.slug }}" class="card">
-  <div class="card-meta">
-    <span class="card-label-accent">{{ entry.category }}</span>
+<a href="/dispatch/{{ entry.slug }}" class="dispatch-entry">
+  <div class="dispatch-entry-meta">
     <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+    <span class="dispatch-entry-cat">{{ entry.category }}</span>
   </div>
-  <h2 class="card-title">{{ entry.title }}</h2>
-  <p class="card-excerpt">{{ entry.excerpt }}</p>
+  <h2 class="dispatch-entry-title">{{ entry.title }}</h2>
+  <p class="dispatch-entry-excerpt">{{ entry.excerpt }}</p>
 </a>
 {% endfor %}
 </div>
+<button class="dispatch-load-more btn btn-ghost" id="dispatch-load-more">Load more</button>

@@ -1,0 +1,15 @@
+<div class="author-card" id="author-{{ include.member.slug }}">
+  <img class="author-card-photo" src="{{ include.member.photo }}" alt="{{ include.member.name }}" width="64" height="64" loading="lazy" />
+  <div class="author-card-body">
+    <div class="author-card-info">
+      <h3 class="author-card-name">{{ include.member.name }}</h3>
+      <span class="author-card-role">{{ include.member.role }}</span>
+    </div>
+    <p class="author-card-bio">{{ include.member.bio }}</p>
+    <div class="author-card-links">
+      {% for link in include.member.links %}
+      <a href="{{ link.url }}" aria-label="{{ link.label }}"{% if link.url contains "://" %} target="_blank" rel="noopener"{% endif %}>{% include icon-{{ link.icon }}.svg %}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -1614,4 +1614,35 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   });
 })();
 
+// Dispatch load more
+(function() {
+  var list = document.getElementById('dispatch-list');
+  var btn = document.getElementById('dispatch-load-more');
+  if (!list || !btn) return;
 
+  var entries = list.querySelectorAll('.dispatch-entry');
+  var perPage = parseInt(list.getAttribute('data-per-page') || '10', 10);
+  var visible = Math.min(perPage, entries.length);
+
+  // Hide entries beyond initial page
+  for (var i = 0; i < entries.length; i++) {
+    entries[i].style.display = i < visible ? '' : 'none';
+  }
+
+  // Hide button if all entries fit on first page
+  if (visible >= entries.length) {
+    btn.style.display = 'none';
+    return;
+  }
+
+  btn.addEventListener('click', function() {
+    var next = Math.min(visible + perPage, entries.length);
+    for (var i = visible; i < next; i++) {
+      entries[i].style.display = '';
+    }
+    visible = next;
+    if (visible >= entries.length) {
+      btn.style.display = 'none';
+    }
+  });
+})();

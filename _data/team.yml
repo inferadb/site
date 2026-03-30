@@ -1,0 +1,34 @@
+- name: Evan Sims
+  slug: evan-sims
+  role: "Co-Founder & CTO"
+  photo: /assets/images/evan-sims.jpeg
+  bio: "20+ years in identity, security, and infrastructure engineering. Founding engineer on Auth0's fine-grained authorization team at Okta, where he helped build OpenFGA — now a CNCF incubating project used in production by Grafana Labs, Docker, and Canonical. Led Auth0's open-source SDK ecosystem serving millions of developers and helped lead FedRAMP certification. Brings deep expertise in distributed systems, storage engines, and the Rust ecosystem to InferaDB's architecture."
+  links:
+    - label: Email
+      url: "mailto:evan@inferadb.com"
+      icon: mail
+    - label: LinkedIn
+      url: "https://linkedin.com/in/evansims"
+      icon: linkedin
+    - label: X
+      url: "https://x.com/evansims"
+      icon: x
+    - label: Bluesky
+      url: "https://bsky.app/profile/evansims.com"
+      icon: bluesky
+    - label: Threads
+      url: "https://www.threads.com/@evansims"
+      icon: threads
+
+- name: Jane Sims
+  slug: jane-sims
+  role: "Co-Founder & CEO"
+  photo: /assets/images/jane-sims.jpeg
+  bio: "Operator who builds revenue engines from zero. Scaled several businesses from startup to sustained profitability across multiple markets — leading sales, marketing, and operations across distributed teams. At InferaDB, she owns go-to-market strategy, enterprise partnerships, and the business development motion that turns developer adoption into enterprise contracts. Understands how security infrastructure is evaluated and purchased, and builds the relationships that get InferaDB into those conversations."
+  links:
+    - label: Email
+      url: "mailto:jane@inferadb.com"
+      icon: mail
+    - label: LinkedIn
+      url: "https://linkedin.com/in/jane-sims"
+      icon: linkedin

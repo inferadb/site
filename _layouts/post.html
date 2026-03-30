@@ -14,9 +14,18 @@ body_class: page-post
       </div>
       <h1>{{ page.post_title }}</h1>
       {% if page.authors %}
-      <div class="post-authors">
-        {% for author in page.authors %}
-        <span>{{ author }}</span>
+      <div class="post-byline">
+        {% for author_name in page.authors %}
+        {% assign member = nil %}
+        {% for m in site.data.team %}{% if m.name == author_name %}{% assign member = m %}{% endif %}{% endfor %}
+        {% if member %}
+        <a href="#author-{{ member.slug }}" class="post-byline-author">
+          <img class="post-byline-photo" src="{{ member.photo }}" alt="{{ member.name }}" width="28" height="28" loading="lazy" />
+          <span>{{ member.name }}</span>
+        </a>
+        {% else %}
+        <span class="post-byline-author">{{ author_name }}</span>
+        {% endif %}
         {% endfor %}
       </div>
       {% endif %}
@@ -24,5 +33,16 @@ body_class: page-post
     <div class="post-body">
       {{ content }}
     </div>
+    {% if page.authors %}
+    <footer class="post-footer">
+      {% for author_name in page.authors %}
+      {% assign member = nil %}
+      {% for m in site.data.team %}{% if m.name == author_name %}{% assign member = m %}{% endif %}{% endfor %}
+      {% if member %}
+      {% include author-card.html member=member %}
+      {% endif %}
+      {% endfor %}
+    </footer>
+    {% endif %}
   </div>
 </article>

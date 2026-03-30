@@ -90,53 +90,11 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     <div class="container">
         <div class="about-section-label"><span>SEC.03</span> Team</div>
         <div class="about-team-grid">
+            {% for member in site.data.team %}
             <div class="about-person">
-                <img class="about-person-photo" src="/assets/images/evan-sims.jpeg" alt="Evan Sims" width="80" height="80" loading="lazy" />
-                <div class="about-person-info">
-                    <h3>Evan Sims</h3>
-                    <span class="about-person-role">Co-Founder &amp; CTO</span>
-                </div>
-                <p>
-                    20+ years in identity, security, and infrastructure
-                    engineering. Founding engineer on Auth0's fine-grained
-                    authorization team at Okta, where he helped build
-                    OpenFGA — now a CNCF incubating project used in production
-                    by Grafana Labs, Docker, and Canonical. Led Auth0's
-                    open-source SDK ecosystem serving millions of developers
-                    and helped lead FedRAMP certification. Brings deep
-                    expertise in distributed systems, storage engines, and
-                    the Rust ecosystem to InferaDB's architecture.
-                </p>
-                <div class="about-person-links">
-                    <a href="mailto:evan@inferadb.com" aria-label="Email">{% include icon-mail.svg %}</a>
-                    <a href="https://linkedin.com/in/evansims" target="_blank" rel="noopener" aria-label="LinkedIn">{% include icon-linkedin.svg %}</a>
-                    <a href="https://x.com/evansims" target="_blank" rel="noopener" aria-label="X">{% include icon-x.svg %}</a>
-                    <a href="https://bsky.app/profile/evansims.com" target="_blank" rel="noopener" aria-label="Bluesky">{% include icon-bluesky.svg %}</a>
-                    <a href="https://www.threads.com/@evansims" target="_blank" rel="noopener" aria-label="Threads">{% include icon-threads.svg %}</a>
-                </div>
+                {% include author-card.html member=member %}
             </div>
-            <div class="about-person">
-                <img class="about-person-photo" src="/assets/images/jane-sims.jpeg" alt="Jane Sims" width="80" height="80" loading="lazy" />
-                <div class="about-person-info">
-                    <h3>Jane Sims</h3>
-                    <span class="about-person-role">Co-Founder &amp; CEO</span>
-                </div>
-                <p>
-                    Operator who builds revenue engines from zero. Scaled several businesses from startup to sustained
-                    profitability across multiple markets — leading sales, marketing, and
-                    operations across distributed teams. At InferaDB, she
-                    owns go-to-market strategy, enterprise partnerships, and
-                    the business development motion that turns developer
-                    adoption into enterprise contracts. Understands how
-                    security infrastructure is evaluated and purchased,
-                    and builds the relationships that get InferaDB into
-                    those conversations.
-                </p>
-                <div class="about-person-links">
-                    <a href="mailto:jane@inferadb.com" aria-label="Email">{% include icon-mail.svg %}</a>
-                    <a href="https://linkedin.com/in/jane-sims" target="_blank" rel="noopener" aria-label="LinkedIn">{% include icon-linkedin.svg %}</a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </section>

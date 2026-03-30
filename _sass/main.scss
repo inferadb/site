@@ -91,7 +91,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip; // clip instead of hidden — preserves sticky positioning
 
 
   &.nav-open {
@@ -3438,12 +3438,16 @@ section {
   display: grid;
   grid-template-columns: 7rem 24px 1fr;
   gap: 0 1.25rem;
-  padding: 2.5rem 0;
-
-  &:first-child { padding-top: 0; }
 }
 
 // ─── Date column ────────────────────────────────────────────
+
+.changelog-date-col {
+  // Align with the title text: match content padding + offset to title baseline
+  padding-top: calc(2.5rem + 0.75rem);
+
+  .changelog-entry:first-child & { padding-top: 0.75rem; }
+}
 
 .changelog-date {
   font-family: var(--font-mono);
@@ -3452,8 +3456,10 @@ section {
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
   text-align: right;
-  padding-top: 0.25rem;
   line-height: 1.4;
+  display: block;
+  position: sticky;
+  top: 5rem;
 }
 
 // ─── Rail column ────────────────────────────────────────────
@@ -3463,18 +3469,18 @@ section {
   display: flex;
   justify-content: center;
 
-  // Vertical line — continuous through padding between entries
+  // Vertical line — continuous, spans full entry height
   &::before {
     content: "";
     position: absolute;
-    top: -2.5rem;
+    top: 0;
     bottom: 0;
     width: 1px;
     background: var(--border);
   }
 
-  .changelog-entry:first-child &::before { top: 0; }
-  .changelog-entry:last-child &::before { bottom: 0; }
+  .changelog-entry:first-child &::before { top: 0.875rem; }
+  .changelog-entry:last-child &::before { bottom: auto; height: calc(2.5rem + 0.875rem + 4px); }
 }
 
 .changelog-node {
@@ -3483,10 +3489,13 @@ section {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  margin-top: 0.375rem;
+  // Align dot center with title text: content padding + offset
+  margin-top: calc(2.5rem + 0.875rem);
   background: var(--border);
   flex-shrink: 0;
   transition: background 0.2s;
+
+  .changelog-entry:first-child & { margin-top: 0.875rem; }
 
   .changelog-entry.is-expanded & {
     background: var(--accent);
@@ -3497,6 +3506,9 @@ section {
 
 .changelog-content {
   min-width: 0;
+  padding-top: 2.5rem;
+
+  .changelog-entry:first-child & { padding-top: 0; }
 }
 
 .changelog-summary {
@@ -3619,11 +3631,14 @@ section {
     grid-template-rows: auto auto;
   }
 
-  .changelog-date {
+  .changelog-date-col {
     grid-column: 2;
-    text-align: left;
-    padding-top: 0;
     margin-bottom: 0.25rem;
+  }
+
+  .changelog-date {
+    text-align: left;
+    position: static;
   }
 
   .changelog-rail {

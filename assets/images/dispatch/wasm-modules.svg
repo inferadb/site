@@ -1,11 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
 
   <g transform="translate(480, 200)">
-    <!-- Large circle: the core -->
-    <circle cx="-20" cy="0" r="40" stroke="#dce1e8" stroke-width="2.5" fill="none"/>
-    <!-- Smaller circle: the module, touching -->
-    <circle cx="45" cy="0" r="25" stroke="#dce1e8" stroke-width="2.5" fill="none"/>
-    <!-- Connection point where they meet -->
-    <circle cx="20" cy="0" r="2.5" fill="#dce1e8"/>
+    <!-- 3x3 grid: 8 hollow, 1 filled -->
+
+    <!-- Row 1 -->
+    <rect x="-52" y="-52" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+    <rect x="-11" y="-52" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+    <rect x="30" y="-52" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+
+    <!-- Row 2 -->
+    <rect x="-52" y="-11" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+    <rect x="-11" y="-11" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+    <rect x="30" y="-11" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="#dce1e8"/>
+
+    <!-- Row 3 -->
+    <rect x="-52" y="30" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+    <rect x="-11" y="30" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
+    <rect x="30" y="30" width="30" height="30" stroke="#dce1e8" stroke-width="2" fill="none"/>
   </g>
 </svg>

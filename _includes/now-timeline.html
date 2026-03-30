@@ -1,7 +1,7 @@
 <div class="changelog-timeline">
 {% for entry in include.entries %}
 <div class="changelog-entry{% if entry.expanded %} is-expanded{% endif %}">
-  <time class="changelog-date" datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+  <div class="changelog-date-col"><time class="changelog-date" datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time></div>
   <div class="changelog-rail"><span class="changelog-node"></span></div>
   <details class="changelog-content"{% if entry.expanded %} open{% endif %}>
     <summary class="changelog-summary">

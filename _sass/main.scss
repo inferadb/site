@@ -91,7 +91,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: clip; // clip instead of hidden — preserves sticky positioning
+  overflow-x: clip;
 
 
   &.nav-open {
@@ -3428,13 +3428,11 @@ section {
 
 
 // ─── Changelog timeline ─────────────────────────────────────
+// Single flat grid: date | rail | content. All cells are direct
+// children so the date-col stretches to the full row height,
+// giving the sticky date room to travel.
 
 .changelog-timeline {
-  display: flex;
-  flex-direction: column;
-}
-
-.changelog-entry {
   display: grid;
   grid-template-columns: 7rem 24px 1fr;
   gap: 0 1.25rem;
@@ -3443,10 +3441,9 @@ section {
 // ─── Date column ────────────────────────────────────────────
 
 .changelog-date-col {
-  // Align with the title text: match content padding + offset to title baseline
   padding-top: calc(2.5rem + 0.75rem);
 
-  .changelog-entry:first-child & { padding-top: 0.75rem; }
+  &.is-first { padding-top: 0.75rem; }
 }
 
 .changelog-date {
@@ -3469,7 +3466,6 @@ section {
   display: flex;
   justify-content: center;
 
-  // Vertical line — continuous, spans full entry height
   &::before {
     content: "";
     position: absolute;
@@ -3479,8 +3475,8 @@ section {
     background: var(--border);
   }
 
-  .changelog-entry:first-child &::before { top: 0.875rem; }
-  .changelog-entry:last-child &::before { bottom: auto; height: calc(2.5rem + 0.875rem + 4px); }
+  &.is-first::before { top: 0.875rem; }
+  &.is-last::before { bottom: auto; height: calc(2.5rem + 0.875rem + 4px); }
 }
 
 .changelog-node {
@@ -3489,17 +3485,13 @@ section {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  // Align dot center with title text: content padding + offset
   margin-top: calc(2.5rem + 0.875rem);
   background: var(--border);
   flex-shrink: 0;
   transition: background 0.2s;
 
-  .changelog-entry:first-child & { margin-top: 0.875rem; }
-
-  .changelog-entry.is-expanded & {
-    background: var(--accent);
-  }
+  .is-first & { margin-top: 0.875rem; }
+  .is-expanded & { background: var(--accent); }
 }
 
 // ─── Content column ─────────────────────────────────────────
@@ -3508,7 +3500,7 @@ section {
   min-width: 0;
   padding-top: 2.5rem;
 
-  .changelog-entry:first-child & { padding-top: 0; }
+  &.is-first { padding-top: 0; }
 }
 
 .changelog-summary {
@@ -3626,9 +3618,8 @@ section {
 // ─── Changelog mobile ───────────────────────────────────────
 
 @media (max-width: 768px) {
-  .changelog-entry {
+  .changelog-timeline {
     grid-template-columns: 24px 1fr;
-    grid-template-rows: auto auto;
   }
 
   .changelog-date-col {
@@ -3643,7 +3634,7 @@ section {
 
   .changelog-rail {
     grid-column: 1;
-    grid-row: 1 / -1;
+    grid-row: span 2;
   }
 
   .changelog-content {

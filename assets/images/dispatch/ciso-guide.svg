@@ -1,31 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
 
   <g transform="translate(480, 200)">
-    <!-- Outer ring: bold dots at varying radii, uneven sizes -->
-    <circle cx="74" cy="0" r="3.5" fill="#dce1e8"/>
-    <circle cx="66" cy="26" r="2" fill="#dce1e8"/>
-    <circle cx="54" cy="46" r="4" fill="#dce1e8"/>
-    <circle cx="34" cy="62" r="2.5" fill="#dce1e8"/>
-    <circle cx="10" cy="72" r="3" fill="#dce1e8"/>
-    <circle cx="-16" cy="69" r="2" fill="#dce1e8"/>
-    <circle cx="-38" cy="60" r="4" fill="#dce1e8"/>
-    <circle cx="-56" cy="44" r="2.5" fill="#dce1e8"/>
-    <circle cx="-68" cy="22" r="3.5" fill="#dce1e8"/>
-    <circle cx="-73" cy="-4" r="2" fill="#dce1e8"/>
-    <circle cx="-66" cy="-30" r="3" fill="#dce1e8"/>
-    <circle cx="-50" cy="-52" r="4" fill="#dce1e8"/>
-    <circle cx="-30" cy="-64" r="2.5" fill="#dce1e8"/>
-    <circle cx="-6" cy="-72" r="3.5" fill="#dce1e8"/>
-    <circle cx="20" cy="-68" r="2" fill="#dce1e8"/>
-    <circle cx="42" cy="-56" r="3" fill="#dce1e8"/>
-    <circle cx="58" cy="-40" r="4" fill="#dce1e8"/>
-    <circle cx="70" cy="-18" r="2.5" fill="#dce1e8"/>
-
-    <!-- Inner scatter: heavier, bolder, fewer -->
-    <circle cx="12" cy="-18" r="5" fill="#dce1e8"/>
-    <circle cx="-20" cy="8" r="3.5" fill="#dce1e8"/>
-    <circle cx="6" cy="22" r="4.5" fill="#dce1e8"/>
-    <circle cx="-8" cy="-4" r="2.5" fill="#dce1e8"/>
-    <circle cx="24" cy="6" r="3" fill="#dce1e8"/>
+    <!-- Single circle, dashed: one boundary, many segments -->
+    <circle cx="0" cy="0" r="55" stroke="#dce1e8" stroke-width="2.5" stroke-dasharray="6 5" fill="none"/>
   </g>
 </svg>

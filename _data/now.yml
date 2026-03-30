@@ -21,6 +21,7 @@
   date: 2026-03-26
   category: security
   slug: evaluating-authorization-infrastructure
+  teaser: /assets/images/dispatch/evaluating-authorization.svg
   excerpt: "Choosing authorization infrastructure locks you in for years. Here's a structured evaluation framework covering performance, security, compliance, pricing, and lock-in risk — the questions to ask and what good answers look like."
   authors:
     - Jane Sims
@@ -29,6 +30,7 @@
   date: 2026-03-25
   category: engineering
   slug: migrating-from-homegrown-rbac
+  teaser: /assets/images/dispatch/migrating-rbac.svg
   excerpt: "You started with a user_roles table. Now you have a maze of role matrices, permission overrides, and sharing logic nobody can reason about. Here's the concrete migration path from home-grown RBAC to InferaDB — step by step, with a rollback plan."
   authors:
     - Evan Sims
@@ -37,6 +39,7 @@
   date: 2026-03-24
   category: engineering
   slug: google-zanzibar-authorization
+  teaser: /assets/images/dispatch/zanzibar.svg
   excerpt: "Google's Zanzibar handles 10 million permission checks per second across every Google product. Every open-source implementation since has hit the same ceiling: general-purpose databases. Here's how Zanzibar works and why InferaDB removes that ceiling."
   authors:
     - Evan Sims
@@ -45,6 +48,7 @@
   date: 2026-03-20
   category: company
   slug: why-were-building-inferadb
+  teaser: /assets/images/dispatch/why-building.svg
   excerpt: "Authorization is a hidden crisis in modern software. We helped build OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished existed — purpose-built authorization infrastructure, delivered as a managed service."
   authors:
     - Evan Sims
@@ -54,6 +58,7 @@
   date: 2026-03-14
   category: ai
   slug: ai-agents-breaking-authorization
+  teaser: /assets/images/dispatch/ai-agents.svg
   excerpt: "Traditional authorization handles 1-2 checks per request. AI agent workflows need dozens — and at 5-50ms each, that's seconds of latency before any work happens. The agent era needs authorization infrastructure built for machine-speed decisions."
   authors:
     - Evan Sims
@@ -62,6 +67,7 @@
   date: 2026-03-12
   category: engineering
   slug: b-plus-tree-storage-engine
+  teaser: /assets/images/dispatch/b-plus-tree.svg
   excerpt: "Authorization checks through general-purpose databases take 5-50ms. InferaDB's purpose-built storage engine delivers 2.8 microsecond p99 reads. Here's the architecture that makes it possible."
   authors:
     - Evan Sims
@@ -70,6 +76,7 @@
   date: 2026-03-10
   category: engineering
   slug: raft-consensus-authorization
+  teaser: /assets/images/dispatch/raft-consensus.svg
   excerpt: "If Alice revokes Bob's access at 10:00:00 and Bob's request at 10:00:01 hits a stale replica, he retains access. This is the 'new enemy problem.' InferaDB uses Raft consensus with revision tokens to solve it."
   authors:
     - Evan Sims
@@ -78,6 +85,7 @@
   date: 2026-03-01
   category: engineering
   slug: wasm-policy-modules
+  teaser: /assets/images/dispatch/wasm-modules.svg
   excerpt: "Not everything fits into declarative rules. IP geofencing, subscription tier checks, time-window restrictions — these need real code. InferaDB lets you write that logic in any language, compile to WebAssembly, and run it inside the authorization engine with full sandboxing."
   authors:
     - Evan Sims
@@ -86,6 +94,7 @@
   date: 2026-02-25
   category: engineering
   slug: designing-ipl
+  teaser: /assets/images/dispatch/designing-ipl.svg
   excerpt: "Most teams stitch together RBAC, ReBAC, and ABAC with application code. IPL unifies all three in a single declarative language — statically analyzed at deploy time, evaluated in parallel at query time. One schema, one evaluation, one audit trail."
   authors:
     - Evan Sims
@@ -94,6 +103,7 @@
   date: 2026-02-20
   category: company
   slug: authorization-market-analysis
+  teaser: /assets/images/dispatch/market-analysis.svg
   excerpt: "The fine-grained authorization market is $3.32B and growing at 19.3% CAGR — significantly outpacing the broader IAM market. Yet total VC investment is modest, there's no dominant player, and the category leader position is wide open."
   authors:
     - Jane Sims
@@ -102,6 +112,7 @@
   date: 2026-02-15
   category: security
   slug: eu-regulation-authorization
+  teaser: /assets/images/dispatch/eu-regulation.svg
   excerpt: "NIS2, DORA, and the EU AI Act all mandate fine-grained, auditable access control — with enforcement deadlines already passing. Here's what each regulation requires and why most authorization systems can't deliver it."
   authors:
     - Jane Sims
@@ -110,6 +121,7 @@
   date: 2026-02-08
   category: engineering
   slug: why-rust-for-authorization
+  teaser: /assets/images/dispatch/why-rust.svg
   excerpt: "An authorization service has a brutal performance contract: sub-microsecond reads, zero latency spikes, memory safety without compromise. We evaluated Go, Java, and C# seriously. Here's why Rust was the only language that met all three requirements."
   authors:
     - Evan Sims
@@ -118,6 +130,7 @@
   date: 2026-02-05
   category: security
   slug: cryptographic-tenant-isolation
+  teaser: /assets/images/dispatch/tenant-isolation.svg
   excerpt: "Every multi-tenant authorization system promises tenant isolation. Most enforce it with WHERE clauses. One missing filter and data leaks across tenant boundaries. InferaDB enforces isolation with cryptography — cross-tenant access isn't prevented, it's architecturally impossible."
   authors:
     - Jane Sims
@@ -126,6 +139,7 @@
   date: 2026-01-25
   category: ai
   slug: securing-rag-pipelines
+  teaser: /assets/images/dispatch/securing-rag.svg
   excerpt: "Your RAG pipeline has a security hole. When an LLM retrieves documents to answer a question, it pulls everything the vector search returns — including documents the requesting user shouldn't see. InferaDB enforces per-user authorization before retrieval, not after."
   authors:
     - Evan Sims

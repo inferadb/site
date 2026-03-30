@@ -5,6 +5,7 @@ post_title: "Authorization Market: $3.32B and No Dominant Player"
 date: 2026-02-20
 category: company
 description: "The fine-grained authorization market is $3.32B at 19.3% CAGR with no category leader. Here's why this is the biggest open opportunity in infrastructure."
+hero: /assets/images/dispatch/market-analysis.svg
 authors:
   - Jane Sims
 ---

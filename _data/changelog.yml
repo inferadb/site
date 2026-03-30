@@ -1,5 +1,6 @@
 - date: 2026-03-18
   title: "Ledger: Per-Vault Blockchain with Merkle Proof Verification"
+  expanded: true
   body: |
     Every permission change is now committed to a per-vault blockchain with Merkle proof verification. Auditors can independently verify that no records have been altered — without trusting the server.
 

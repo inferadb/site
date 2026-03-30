@@ -3208,12 +3208,12 @@ section {
 .dispatch-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 1rem;
+  row-gap: 2.5rem;
 }
 
 .dispatch-entry {
   display: block;
-  padding: 2rem 2rem 2rem 0;
+  padding: 0 2rem 0 0;
   text-decoration: none;
   transition: opacity 0.15s;
 
@@ -3285,13 +3285,41 @@ section {
   line-height: 1.65;
 }
 
-.dispatch-entry-teaser {
-  width: 100%;
+.dispatch-entry-teaser-wrap {
+  position: relative;
   border-radius: var(--radius);
   margin-bottom: 0.75rem;
+  overflow: hidden;
+  background: var(--border);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 0;
+  }
+}
+
+.dispatch-entry:hover .dispatch-entry-teaser-wrap::before {
+  opacity: 1;
+}
+
+.dispatch-entry-teaser {
+  display: block;
+  width: 100%;
   object-fit: cover;
   max-height: 180px;
-  background: var(--border);
+  position: relative;
+  z-index: 1;
+  transition: filter 0.3s;
+}
+
+.dispatch-entry:hover .dispatch-entry-teaser {
+  filter: brightness(0);
+  mix-blend-mode: multiply;
 }
 
 // ─── Dispatch load more ──────────────────────────────────────
@@ -3399,32 +3427,128 @@ section {
 }
 
 
-// Changelog timeline
+// ─── Changelog timeline ─────────────────────────────────────
+
 .changelog-timeline {
   display: flex;
   flex-direction: column;
 }
 
 .changelog-entry {
+  display: grid;
+  grid-template-columns: 7rem 24px 1fr;
+  gap: 0 1.25rem;
   padding: 2.5rem 0;
-  border-bottom: 1px solid var(--border);
 
   &:first-child { padding-top: 0; }
-  &:last-child { border-bottom: none; }
 }
 
-.changelog-entry-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
+// ─── Date column ────────────────────────────────────────────
 
-  time {
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    font-variant-numeric: tabular-nums;
+.changelog-date {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  padding-top: 0.25rem;
+  line-height: 1.4;
+}
+
+// ─── Rail column ────────────────────────────────────────────
+
+.changelog-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  // Vertical line — continuous through padding between entries
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2.5rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
   }
+
+  .changelog-entry:first-child &::before { top: 0; }
+  .changelog-entry:last-child &::before { bottom: 0; }
+}
+
+.changelog-node {
+  position: relative;
+  z-index: 1;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 0.375rem;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background 0.2s;
+
+  .changelog-entry.is-expanded & {
+    background: var(--accent);
+  }
+}
+
+// ─── Content column ─────────────────────────────────────────
+
+.changelog-content {
+  min-width: 0;
+}
+
+.changelog-summary {
+  list-style: none;
+  cursor: pointer;
+
+  &::-webkit-details-marker { display: none; }
+
+  &:hover .changelog-entry-title {
+    color: var(--accent);
+  }
+}
+
+.changelog-summary-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Title row with inline chevron
+.changelog-summary-inner .changelog-entry-title {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-right: 1.5px solid var(--muted);
+    border-bottom: 1.5px solid var(--muted);
+    transform: rotate(-45deg);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+    position: relative;
+    top: -0.0625rem;
+  }
+
+  details[open] > summary &::after {
+    transform: rotate(45deg);
+  }
+}
+
+.changelog-entry-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+  margin: 0;
+  transition: color 0.15s;
 }
 
 .changelog-entry-tags {
@@ -3433,6 +3557,7 @@ section {
 }
 
 .changelog-tag {
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -3440,15 +3565,16 @@ section {
   color: var(--muted);
   padding: 0.125rem 0.5rem;
   background: rgba(255, 255, 255, 0.03);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
-.changelog-entry-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-white);
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+.changelog-entry-image {
+  display: block;
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin: 1.25rem 0;
 }
 
 .changelog-entry-body {
@@ -3456,6 +3582,7 @@ section {
   color: var(--text);
   line-height: 1.75;
   max-width: 640px;
+  margin-top: 1rem;
 
   p { margin-bottom: 0.875rem; }
 
@@ -3484,6 +3611,31 @@ section {
   }
 }
 
+// ─── Changelog mobile ───────────────────────────────────────
+
+@media (max-width: 768px) {
+  .changelog-entry {
+    grid-template-columns: 24px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .changelog-date {
+    grid-column: 2;
+    text-align: left;
+    padding-top: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  .changelog-rail {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+
+  .changelog-content {
+    grid-column: 2;
+  }
+}
+
 // Post page (individual full articles)
 .post {
   padding: 8rem 0 4rem;
@@ -3495,8 +3647,6 @@ section {
 
 .post-header {
   margin-bottom: 2.5rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid var(--border);
 }
 
 .post-meta {
@@ -3639,9 +3789,13 @@ section {
 }
 
 .post-hero {
-  width: 100%;
-  border-radius: var(--radius-sm);
+  width: 100vw;
+  max-width: var(--container);
+  max-height: 320px;
   margin: 2rem 0;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  border-radius: var(--radius-sm);
   object-fit: cover;
 }
 

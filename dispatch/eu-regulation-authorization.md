@@ -5,6 +5,7 @@ post_title: "NIS2, DORA, and the EU AI Act: Why Authorization Is Now a Complianc
 date: 2026-02-15
 category: security
 description: "Three EU regulations now mandate fine-grained auditable access control. Here's what NIS2, DORA, and the EU AI Act mean for your authorization stack."
+hero: /assets/images/dispatch/eu-regulation.svg
 authors:
   - Jane Sims
 ---

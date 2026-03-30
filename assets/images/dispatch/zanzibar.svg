@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- Center node -->
+    <circle cx="0" cy="0" r="5" fill="#dce1e8"/>
+
+    <!-- Inner ring: 6 nodes evenly spaced -->
+    <circle cx="0" cy="-45" r="3.5" fill="#dce1e8"/>
+    <circle cx="39" cy="-22" r="3.5" fill="#dce1e8"/>
+    <circle cx="39" cy="22" r="3.5" fill="#dce1e8"/>
+    <circle cx="0" cy="45" r="3.5" fill="#dce1e8"/>
+    <circle cx="-39" cy="22" r="3.5" fill="#dce1e8"/>
+    <circle cx="-39" cy="-22" r="3.5" fill="#dce1e8"/>
+
+    <!-- Inner connections: center to ring -->
+    <line x1="0" y1="0" x2="0" y2="-45" stroke="#dce1e8" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="39" y2="-22" stroke="#dce1e8" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="39" y2="22" stroke="#dce1e8" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="0" y2="45" stroke="#dce1e8" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="-39" y2="22" stroke="#dce1e8" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="-39" y2="-22" stroke="#dce1e8" stroke-width="0.5"/>
+
+    <!-- Outer ring: 12 nodes -->
+    <circle cx="0" cy="-95" r="2" fill="#dce1e8"/>
+    <circle cx="48" cy="-82" r="2" fill="#dce1e8"/>
+    <circle cx="82" cy="-48" r="2" fill="#dce1e8"/>
+    <circle cx="95" cy="0" r="2" fill="#dce1e8"/>
+    <circle cx="82" cy="48" r="2" fill="#dce1e8"/>
+    <circle cx="48" cy="82" r="2" fill="#dce1e8"/>
+    <circle cx="0" cy="95" r="2" fill="#dce1e8"/>
+    <circle cx="-48" cy="82" r="2" fill="#dce1e8"/>
+    <circle cx="-82" cy="48" r="2" fill="#dce1e8"/>
+    <circle cx="-95" cy="0" r="2" fill="#dce1e8"/>
+    <circle cx="-82" cy="-48" r="2" fill="#dce1e8"/>
+    <circle cx="-48" cy="-82" r="2" fill="#dce1e8"/>
+
+    <!-- Outer connections: inner ring to outer ring -->
+    <line x1="0" y1="-45" x2="0" y2="-95" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="0" y1="-45" x2="48" y2="-82" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="0" y1="-45" x2="-48" y2="-82" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="39" y1="-22" x2="82" y2="-48" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="39" y1="-22" x2="95" y2="0" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="39" y1="22" x2="95" y2="0" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="39" y1="22" x2="82" y2="48" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="0" y1="45" x2="48" y2="82" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="0" y1="45" x2="0" y2="95" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="0" y1="45" x2="-48" y2="82" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="-39" y1="22" x2="-82" y2="48" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="-39" y1="22" x2="-95" y2="0" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="-39" y1="-22" x2="-95" y2="0" stroke="#dce1e8" stroke-width="0.3"/>
+    <line x1="-39" y1="-22" x2="-82" y2="-48" stroke="#dce1e8" stroke-width="0.3"/>
+  </g>
+</svg>

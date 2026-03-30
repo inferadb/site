@@ -2,7 +2,9 @@
 {% for entry in include.entries %}
 <a href="/dispatch/{{ entry.slug }}" class="dispatch-entry{% if entry.teaser %} has-teaser{% endif %}">
   {% if entry.teaser %}
-  <img class="dispatch-entry-teaser" src="{{ entry.teaser }}" alt="" loading="lazy" />
+  <div class="dispatch-entry-teaser-wrap">
+    <img class="dispatch-entry-teaser" src="{{ entry.teaser }}" alt="" loading="lazy" />
+  </div>
   {% endif %}
   <div class="dispatch-entry-content">
     <div class="dispatch-entry-meta">

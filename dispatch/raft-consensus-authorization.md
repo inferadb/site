@@ -5,6 +5,7 @@ post_title: "Why Eventual Consistency in Authorization Is a Security Vulnerabili
 date: 2026-03-10
 category: engineering
 description: "Eventual consistency in authorization means stale grants — security violations you can't undo. InferaDB uses Raft consensus with revision tokens to guarantee linearizable writes."
+hero: /assets/images/dispatch/raft-consensus.svg
 authors:
   - Evan Sims
 ---

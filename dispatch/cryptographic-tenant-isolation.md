@@ -5,6 +5,7 @@ post_title: "Cryptographic Tenant Isolation: Why Application-Level Multi-Tenancy
 date: 2026-02-05
 category: security
 description: "InferaDB encrypts each tenant's data with independent AES-256-GCM keys. Cross-tenant access is architecturally impossible — not just prevented by application logic."
+hero: /assets/images/dispatch/tenant-isolation.svg
 authors:
   - Jane Sims
 ---

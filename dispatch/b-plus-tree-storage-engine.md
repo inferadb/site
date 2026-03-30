@@ -5,6 +5,7 @@ post_title: "How InferaDB Achieves 1,000x Faster Permission Checks"
 date: 2026-03-12
 category: engineering
 description: "InferaDB's custom Rust B+ tree delivers 2.8µs p99 reads and 952K ops/sec with per-page AES-256-GCM encryption — 1,000x faster than alternatives backed by general-purpose databases."
+hero: /assets/images/dispatch/b-plus-tree.svg
 authors:
   - Evan Sims
 ---

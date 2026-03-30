@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- Evaluation scorecard: 6 rows x 4 columns -->
+    <!-- Filled = passes, hollow = doesn't -->
+
+    <!-- Row 1 -->
+    <circle cx="-54" cy="-75" r="5" fill="#dce1e8"/>
+    <circle cx="-18" cy="-75" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="18" cy="-75" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="54" cy="-75" r="5" fill="#dce1e8"/>
+
+    <!-- Row 2 -->
+    <circle cx="-54" cy="-45" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="-18" cy="-45" r="5" fill="#dce1e8"/>
+    <circle cx="18" cy="-45" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="54" cy="-45" r="5" fill="#dce1e8"/>
+
+    <!-- Row 3 -->
+    <circle cx="-54" cy="-15" r="5" fill="#dce1e8"/>
+    <circle cx="-18" cy="-15" r="5" fill="#dce1e8"/>
+    <circle cx="18" cy="-15" r="5" fill="#dce1e8"/>
+    <circle cx="54" cy="-15" r="5" fill="#dce1e8"/>
+
+    <!-- Row 4 -->
+    <circle cx="-54" cy="15" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="-18" cy="15" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="18" cy="15" r="5" fill="#dce1e8"/>
+    <circle cx="54" cy="15" r="5" fill="#dce1e8"/>
+
+    <!-- Row 5 -->
+    <circle cx="-54" cy="45" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="-18" cy="45" r="5" fill="#dce1e8"/>
+    <circle cx="18" cy="45" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="54" cy="45" r="5" fill="#dce1e8"/>
+
+    <!-- Row 6 -->
+    <circle cx="-54" cy="75" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="-18" cy="75" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="18" cy="75" r="5" stroke="#dce1e8" stroke-width="1.5" fill="none"/>
+    <circle cx="54" cy="75" r="5" fill="#dce1e8"/>
+  </g>
+</svg>

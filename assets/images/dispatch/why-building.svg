@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- Origin point -->
+    <circle cx="-120" cy="0" r="5" fill="#dce1e8"/>
+
+    <!-- Ray extending from it — thickening as it grows -->
+    <line x1="-115" y1="0" x2="160" y2="0" stroke="#dce1e8" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+</svg>

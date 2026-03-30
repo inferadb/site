@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- Single bold hexagon: one schema, one language -->
+    <polygon points="0,-55 48,-27 48,27 0,55 -48,27 -48,-27" stroke="#dce1e8" stroke-width="2.5" fill="none"/>
+    <circle cx="0" cy="0" r="3" fill="#dce1e8"/>
+  </g>
+</svg>

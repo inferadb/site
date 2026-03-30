@@ -1,18 +1,26 @@
 <div class="changelog-timeline">
 {% for entry in include.entries %}
-<div class="changelog-entry">
-  <header class="changelog-entry-header">
-    <time datetime="{{ entry.date }}">{{ entry.date | date: "%B %d, %Y" }}</time>
-    {% if entry.tags %}
-    <div class="changelog-entry-tags">
-      {% for tag in entry.tags %}<span class="changelog-tag">{{ tag }}</span>{% endfor %}
-    </div>
+<div class="changelog-entry{% if entry.expanded %} is-expanded{% endif %}">
+  <time class="changelog-date" datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+  <div class="changelog-rail"><span class="changelog-node"></span></div>
+  <details class="changelog-content"{% if entry.expanded %} open{% endif %}>
+    <summary class="changelog-summary">
+      <div class="changelog-summary-inner">
+        <h2 class="changelog-entry-title">{{ entry.title }}</h2>
+        {% if entry.tags %}
+        <div class="changelog-entry-tags">
+          {% for tag in entry.tags %}<span class="changelog-tag">{{ tag }}</span>{% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </summary>
+    {% if entry.image %}
+    <img class="changelog-entry-image" src="{{ entry.image }}" alt="" loading="lazy" />
     {% endif %}
-  </header>
-  <h2 class="changelog-entry-title">{{ entry.title }}</h2>
-  <div class="changelog-entry-body">
-    {{ entry.body | markdownify }}
-  </div>
+    <div class="changelog-entry-body">
+      {{ entry.body | markdownify }}
+    </div>
+  </details>
 </div>
 {% endfor %}
 </div>

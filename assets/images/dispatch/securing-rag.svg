@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- Inner solid circle: what the user can access -->
+    <circle cx="0" cy="0" r="35" stroke="#dce1e8" stroke-width="2.5" fill="none"/>
+    <!-- Outer dashed circle: everything that exists -->
+    <circle cx="0" cy="0" r="70" stroke="#dce1e8" stroke-width="1" stroke-dasharray="4 6" fill="none"/>
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="3" fill="#dce1e8"/>
+  </g>
+</svg>

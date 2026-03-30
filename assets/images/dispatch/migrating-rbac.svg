@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <!-- Single continuous path: chaotic on the left, smooth and bold on the right -->
+  <path d="M180,208 L210,185 L240,220 L270,178 L300,212 L340,186 L380,208 L425,192 L475,204 L530,198 L600,200 L780,200" stroke="#dce1e8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+</svg>

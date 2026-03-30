@@ -1,12 +1,17 @@
 <div class="dispatch-list" id="dispatch-list" data-per-page="10">
 {% for entry in include.entries %}
-<a href="/dispatch/{{ entry.slug }}" class="dispatch-entry">
-  <div class="dispatch-entry-meta">
-    <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
-    <span class="dispatch-entry-cat">{{ entry.category }}</span>
+<a href="/dispatch/{{ entry.slug }}" class="dispatch-entry{% if entry.teaser %} has-teaser{% endif %}">
+  {% if entry.teaser %}
+  <img class="dispatch-entry-teaser" src="{{ entry.teaser }}" alt="" loading="lazy" />
+  {% endif %}
+  <div class="dispatch-entry-content">
+    <div class="dispatch-entry-meta">
+      <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+      <span class="dispatch-entry-cat">{{ entry.category }}</span>
+    </div>
+    <h2 class="dispatch-entry-title">{{ entry.title }}</h2>
+    <p class="dispatch-entry-excerpt">{{ entry.excerpt }}</p>
   </div>
-  <h2 class="dispatch-entry-title">{{ entry.title }}</h2>
-  <p class="dispatch-entry-excerpt">{{ entry.excerpt }}</p>
 </a>
 {% endfor %}
 </div>

@@ -46,6 +46,7 @@
   excerpt: "Authorization is a hidden crisis in modern software. We helped build OpenFGA and saw the architectural limits firsthand. InferaDB is what we wished existed — purpose-built authorization infrastructure, delivered as a managed service."
   authors:
     - Evan Sims
+    - Jane Sims
 
 - title: "How AI Agents Are Breaking Traditional Authorization"
   date: 2026-03-14
@@ -117,7 +118,7 @@
   slug: cryptographic-tenant-isolation
   excerpt: "Every multi-tenant authorization system promises tenant isolation. Most enforce it with WHERE clauses. One missing filter and data leaks across tenant boundaries. InferaDB enforces isolation with cryptography — cross-tenant access isn't prevented, it's architecturally impossible."
   authors:
-    - Evan Sims
+    - Jane Sims
 
 - title: "Securing RAG Pipelines: Per-User Document Authorization for AI"
   date: 2026-01-25

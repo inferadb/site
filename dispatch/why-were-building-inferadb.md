@@ -7,6 +7,7 @@ category: company
 description: "Broken access control is OWASP's #1 risk. InferaDB is purpose-built managed authorization infrastructure with sub-microsecond latency."
 authors:
   - Evan Sims
+  - Jane Sims
 ---
 
 **Broken access control has been the #1 risk on the OWASP Top 10 since the 2021 edition.** The average breach costs $4.88 million (IBM, 2024), and the root cause is almost always the same: a permission check that was missing, stale, or wrong.

@@ -30,6 +30,9 @@ body_class: page-post
       </div>
       {% endif %}
     </header>
+    {% if page.hero %}
+    <img class="post-hero" src="{{ page.hero }}" alt="" loading="eager" />
+    {% endif %}
     <div class="post-body">
       {{ content }}
     </div>

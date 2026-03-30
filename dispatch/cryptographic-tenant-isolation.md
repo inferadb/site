@@ -6,7 +6,7 @@ date: 2026-02-05
 category: security
 description: "InferaDB encrypts each tenant's data with independent AES-256-GCM keys. Cross-tenant access is architecturally impossible — not just prevented by application logic."
 authors:
-  - Evan Sims
+  - Jane Sims
 ---
 
 Every multi-tenant authorization system makes the same promise: **your data is isolated from other tenants.** The question is how that promise is enforced.

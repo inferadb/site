@@ -1622,27 +1622,37 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
 
   var entries = list.querySelectorAll('.dispatch-entry');
   var perPage = parseInt(list.getAttribute('data-per-page') || '10', 10);
-  var visible = Math.min(perPage, entries.length);
 
-  // Hide entries beyond initial page
-  for (var i = 0; i < entries.length; i++) {
-    entries[i].style.display = i < visible ? '' : 'none';
+  // Restore visible count from hash, or default to first page
+  function getStoredCount() {
+    var match = location.hash.match(/show=(\d+)/);
+    return match ? Math.min(parseInt(match[1], 10), entries.length) : perPage;
   }
 
-  // Hide button if all entries fit on first page
-  if (visible >= entries.length) {
-    btn.style.display = 'none';
-    return;
+  var visible = Math.max(perPage, getStoredCount());
+
+  function showEntries(count) {
+    visible = Math.min(count, entries.length);
+    for (var i = 0; i < entries.length; i++) {
+      entries[i].style.display = i < visible ? '' : 'none';
+    }
+    btn.style.display = visible >= entries.length ? 'none' : '';
   }
+
+  function updateHash() {
+    if (visible > perPage) {
+      history.replaceState(null, '', '#show=' + visible);
+    } else {
+      // Clean hash if back to default
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+
+  // Initial render — restore from hash
+  showEntries(visible);
 
   btn.addEventListener('click', function() {
-    var next = Math.min(visible + perPage, entries.length);
-    for (var i = visible; i < next; i++) {
-      entries[i].style.display = '';
-    }
-    visible = next;
-    if (visible >= entries.length) {
-      btn.style.display = 'none';
-    }
+    showEntries(visible + perPage);
+    updateHash();
   });
 })();

@@ -3285,6 +3285,22 @@ section {
   line-height: 1.65;
 }
 
+.dispatch-entry-teaser {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+  object-fit: cover;
+  max-height: 240px;
+}
+
+// Entries with teasers span full width for visual impact
+.dispatch-entry.has-teaser {
+  grid-column: 1 / -1;
+  padding-left: 0;
+  padding-right: 0;
+  border-left: none;
+}
+
 // ─── Dispatch load more ──────────────────────────────────────
 
 .dispatch-load-more {
@@ -3552,6 +3568,9 @@ section {
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 // ─── Author card component ───────────────────────────────────
@@ -3624,6 +3643,13 @@ section {
     float: right;
     margin: 0 0 0.75rem 1rem;
   }
+}
+
+.post-hero {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  margin: 2rem 0;
+  object-fit: cover;
 }
 
 .post-body {

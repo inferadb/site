@@ -218,6 +218,8 @@
   text-align: right;
   line-height: 1.4;
   display: block;
+  position: sticky;
+  top: calc(var(--nav-h) + 1rem);
 }
 
 // ─── Rail column ────────────────────────────────────────────
@@ -241,7 +243,8 @@
 }
 
 .changelog-node {
-  position: relative;
+  position: sticky;
+  top: calc(var(--nav-h) + 1rem + 0.125rem);
   z-index: 1;
   width: 8px;
   height: 8px;
@@ -399,6 +402,16 @@
   .changelog-date {
     text-align: left;
     position: static;
+  }
+
+  .changelog-node {
+    position: absolute;
+    top: calc(2rem + 0.25rem);
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0;
+
+    .is-first & { top: 0.25rem; }
   }
 
   .changelog-rail {

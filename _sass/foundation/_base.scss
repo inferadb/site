@@ -68,8 +68,9 @@ section {
 }
 
 // Defer rendering for below-fold sections. Excludes hero sections
-// (class names containing "hero") which are always above the fold.
-section:not([class*="hero"]) {
+// (class names containing "hero") which are always above the fold, and
+// dispatch section where containment breaks sticky timeline positioning.
+section:not([class*="hero"]):not(.dispatch-section) {
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }

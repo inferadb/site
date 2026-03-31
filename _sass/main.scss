@@ -1,11 +1,12 @@
-// ─── Fonts (self-hosted) ─────────────────────────────────────
+// ─── Fonts (self-hosted, subset to Latin + site glyphs) ─────
 
 @font-face {
   font-family: 'Figtree';
   src: url('/assets/fonts/figtree.woff2') format('woff2');
   font-weight: 400 800;
   font-style: normal;
-  font-display: swap;
+  font-display: optional; // headings only — no reflow, use if cached
+  unicode-range: U+0000-00FF, U+2013-2014, U+2018-201D, U+2026;
 }
 
 @font-face {
@@ -13,7 +14,8 @@
   src: url('/assets/fonts/inter.woff2') format('woff2');
   font-weight: 400 600;
   font-style: normal;
-  font-display: swap;
+  font-display: swap; // body text — swap acceptable
+  unicode-range: U+0000-00FF, U+00B5, U+00B7, U+2013-2014, U+2018-201D, U+2026, U+2190, U+2192, U+2194;
 }
 
 @font-face {
@@ -21,7 +23,8 @@
   src: url('/assets/fonts/jetbrains-mono.woff2') format('woff2');
   font-weight: 400 500;
   font-style: normal;
-  font-display: swap; // non-critical, OK to swap
+  font-display: swap; // technical labels — swap acceptable
+  unicode-range: U+0000-00FF, U+00A7, U+00B5, U+00B7, U+2013-2014, U+2190, U+2192, U+2460-2461, U+2500, U+2502, U+250C, U+2510, U+2514, U+2518, U+251C, U+252C, U+25BC, U+2713, U+2717;
 }
 
 // ─── Variables ───────────────────────────────────────────────
@@ -158,21 +161,36 @@
 // Based on Andy Bell's modern CSS reset + Josh Comeau's custom reset.
 // Goals: eliminate cross-browser variance, inherit fonts everywhere,
 // strip user-agent opinions on headings/lists/form elements.
+// ─── Reset (layered) — lowest cascade priority ─────────────
 @layer reset {
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; -moz-text-size-adjust: 100%; }
+  h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+  a { color: inherit; text-decoration: none; }
+  ul, ol { list-style: none; }
+  img, svg, video, canvas, picture { display: block; max-width: 100%; }
+  img, video { height: auto; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  fieldset { border: none; }
+  legend { padding: 0; }
+  table { border-collapse: collapse; border-spacing: 0; }
+  summary { cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary { list-style: none; }
+  pre, code, kbd, samp { font-family: var(--font-mono); font-size: inherit; }
+  hr { border: none; border-top: 1px solid var(--border); }
+  [hidden] { display: none !important; }
+  :where(dialog) { margin: auto; }
+}
 
-// 1. Box-sizing + zero margins/padding globally
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-// 2. Root & viewport
+// ─── Base — unlayered, foundational styles ──────────────────
 html {
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
   overscroll-behavior: none;
 }
 
-// 3. Body defaults
 body {
   font-family: var(--font-sans);
   background: var(--bg);
@@ -199,68 +217,15 @@ body {
   }
 }
 
-// 4. Headings — strip browser font-size/weight, set display font
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-size: inherit;
-  font-weight: inherit;
   line-height: 1.2;
   text-wrap: balance;
 }
 
-// 5. Typography
 p { text-wrap: pretty; }
 b, strong { font-weight: 600; }
-
-// 6. Links
-a {
-  color: inherit;
-  text-decoration: none;
-  &:not([class]) { text-decoration-skip-ink: auto; }
-}
-
-// 7. Lists
-ul, ol { list-style: none; }
-
-// 8. Media — block-level, responsive, no distortion
-img, svg, video, canvas, picture {
-  display: block;
-  max-width: 100%;
-}
-img, video { height: auto; }
-
-// 9. Form elements — inherit font, strip appearance
-button, input, select, textarea {
-  font: inherit;
-  color: inherit;
-}
-button { cursor: pointer; }
-fieldset { border: none; }
-legend { padding: 0; }
-
-// 10. Table
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-// 11. Details/summary
-summary { cursor: pointer; }
-details > summary::-webkit-details-marker { display: none; }
-details > summary { list-style: none; }
-
-// 12. Pre/code — mono stack, inherit size
-pre, code, kbd, samp {
-  font-family: var(--font-mono);
-  font-size: inherit;
-}
-
-// 13. Miscellaneous
-hr { border: none; border-top: 1px solid var(--border); }
-[hidden] { display: none !important; }
-:where(dialog) { margin: auto; }
-
-} // @layer reset
+a:not([class]) { text-decoration-skip-ink: auto; }
 
 // Skip navigation link — visible only on keyboard focus
 .skip-link {
@@ -357,20 +322,27 @@ hr { border: none; border-top: 1px solid var(--border); }
   max-width: var(--container);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+// Container query context — only on sections with responsive grids.
+// Not applied to hero sections where size containment breaks flex layout.
+section:not([class*="hero"]) > .container {
   container-type: inline-size;
 }
 
 section {
   padding: 7rem 0;
 
-  // Skip rendering for below-fold sections until near viewport.
-  // The hero overrides this to visible (always above fold).
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-
   @media (width <= 768px) {
     padding: 4.5rem 0;
   }
+}
+
+// Defer rendering for below-fold sections. Excludes hero sections
+// (class names containing "hero") which are always above the fold.
+section:not([class*="hero"]) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 }
 
 // ─── Typography ──────────────────────────────────────────────
@@ -871,7 +843,6 @@ section {
   text-align: center;
   overflow: hidden;
   display: flex;
-  content-visibility: visible; // always above fold — override section default
   flex-direction: column;
   justify-content: center;
 

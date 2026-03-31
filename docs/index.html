@@ -16,7 +16,7 @@ description: "InferaDB documentation — quickstart guides, API reference (REST,
 <div class="docs-hub">
   {% for group in site.data.docs_nav %}
   <div class="docs-hub-section" data-section="{{ group.filter }}">
-    <div class="docs-hub-label"><span>{{ group.code }}</span> {{ group.section }}</div>
+    <h2 class="docs-hub-label"><span>{{ group.code }}</span> {{ group.section }}</h2>
     <div class="card-grid">
       {% for item in group.items %}
       <a href="{{ item.url }}" class="card">

@@ -6,7 +6,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 ---
 
 <!-- Hero -->
-<section class="hero">
+<section class="hero" aria-label="Hero">
     <canvas class="hero-constellation" id="constellation" aria-hidden="true"></canvas>
     <div class="hero-glow"></div>
     <div class="container">
@@ -30,10 +30,10 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 
 {% include section-break.html id="01" label="THREAT ASSESSMENT" %}
 <!-- Problem -->
-<section class="problem">
+<section class="problem" aria-labelledby="problem-heading">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>Authorization is a hidden crisis</h2>
+            <h2 id="problem-heading">Authorization is a hidden crisis</h2>
             <p>
                 Broken access control is the #1 risk on the OWASP Top 10
                 and three of the top five positions on the OWASP API Security
@@ -63,10 +63,10 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 
 {% include section-break.html id="02" label="THE SOLUTION" %}
 <!-- Performance + How It Works (merged) -->
-<section class="performance" id="product">
+<section class="performance" id="product" aria-labelledby="performance-heading">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>Authorization that disappears from your stack</h2>
+            <h2 id="performance-heading">Authorization that disappears from your stack</h2>
             <p>
                 Other solutions bolt authorization onto general-purpose databases
                 or embed it in your application code. InferaDB is purpose-built
@@ -108,10 +108,10 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 </section>
 
 <!-- How it works -->
-<section class="how-it-works">
+<section class="how-it-works" aria-labelledby="hiw-heading">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>Model any permission system</h2>
+            <h2 id="hiw-heading">Model any permission system</h2>
             <p>
                 The Infera Policy Language unifies ReBAC, RBAC, and ABAC in a
                 single declarative syntax. Express hierarchies, conditions, and
@@ -120,12 +120,12 @@ description: "InferaDB — managed authorization infrastructure for modern softw
             </p>
         </div>
         <div class="hiw-tabs" role="tablist" aria-label="Perspective" data-reveal>
-            <button class="hiw-tab" role="tab" aria-selected="false" aria-controls="hiw-panel-dev" data-hiw-tab="dev" tabindex="-1">For Developers</button>
-            <button class="hiw-tab active" role="tab" aria-selected="true" aria-controls="hiw-panel-sec" data-hiw-tab="sec">For Security Teams</button>
+            <button class="hiw-tab" role="tab" aria-selected="false" aria-controls="hiw-panel-dev" data-hiw-tab="dev" tabindex="-1" id="hiw-tab-dev">For Developers</button>
+            <button class="hiw-tab active" role="tab" aria-selected="true" aria-controls="hiw-panel-sec" data-hiw-tab="sec" id="hiw-tab-sec">For Security Teams</button>
         </div>
 
         <!-- Developer perspective -->
-        <div class="hiw-grid hiw-panel" id="hiw-panel-dev" role="tabpanel" data-hiw-panel="dev">
+        <div class="hiw-grid hiw-panel" id="hiw-panel-dev" role="tabpanel" aria-labelledby="hiw-tab-dev" data-hiw-panel="dev">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -188,7 +188,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
         </div>
 
         <!-- Security & compliance perspective -->
-        <div class="hiw-grid hiw-panel active" id="hiw-panel-sec" role="tabpanel" data-hiw-panel="sec">
+        <div class="hiw-grid hiw-panel active" id="hiw-panel-sec" role="tabpanel" aria-labelledby="hiw-tab-sec" data-hiw-panel="sec">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -245,10 +245,10 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 
 {% include section-break.html id="03" label="USE CASES" %}
 <!-- Use Cases -->
-<section class="use-cases">
+<section class="use-cases" aria-labelledby="use-cases-heading">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>Built for the workloads that matter</h2>
+            <h2 id="use-cases-heading">Built for the workloads that matter</h2>
         </div>
         <div class="uc-grid">
             <div class="uc-card" data-reveal>
@@ -320,10 +320,10 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 
 {% include section-break.html id="03b" label="WHY INFERADB" %}
 <!-- Comparison Matrix -->
-<section class="compare" id="compare">
+<section class="compare" id="compare" aria-labelledby="compare-heading">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>How InferaDB stacks up</h2>
+            <h2 id="compare-heading">How InferaDB stacks up</h2>
             <p>
                 Every approach to authorization has trade-offs. Here's an honest
                 look at what you get with InferaDB versus the alternatives.
@@ -398,10 +398,10 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 
 {% include section-break.html id="04" label="DEVELOPER EXPERIENCE" %}
 <!-- Developer Experience -->
-<section class="devex" id="developers">
+<section class="devex" id="developers" aria-labelledby="devex-heading">
     <div class="container">
         <div class="section-header" data-reveal>
-            <h2>Integrate in minutes, not months</h2>
+            <h2 id="devex-heading">Integrate in minutes, not months</h2>
             <p>
                 REST and gRPC APIs. SDKs for every major language. Branch, test,
                 and merge policies like code. Infrastructure as code from day one.
@@ -501,12 +501,12 @@ description: "InferaDB — managed authorization infrastructure for modern softw
 </section>
 
 <!-- CTA -->
-<section class="cta">
+<section class="cta" aria-labelledby="cta-heading">
     <div class="container">
         <div class="cta-content" data-reveal>
             <div class="cta-glow"></div>
             <p class="cta-eyebrow">Ready to rethink authorization?</p>
-            <h2>
+            <h2 id="cta-heading">
                 Stop building permissions.<br/>Start shipping
                 <span class="gradient-text">features</span>.
             </h2>

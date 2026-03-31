@@ -113,9 +113,16 @@ if (toggle && links) {
       t.setAttribute('aria-selected', isActive ? 'true' : 'false');
       t.setAttribute('tabindex', isActive ? '0' : '-1');
     });
-    panels.forEach(function(p) { p.classList.toggle('active', p.getAttribute('data-hiw-panel') === target); });
+    panels.forEach(function(p) {
+      var isActive = p.getAttribute('data-hiw-panel') === target;
+      p.classList.toggle('active', isActive);
+      p.hidden = !isActive;
+    });
     tab.focus();
   }
+
+  // Set initial hidden state for inactive panels
+  panels.forEach(function(p) { if (!p.classList.contains('active')) p.hidden = true; });
 
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() { activate(tab); });
@@ -173,7 +180,7 @@ if (toggle && links) {
         trigger.setAttribute('aria-expanded', 'true');
         activeTrigger = trigger;
         // Focus first menu item
-        var firstItem = mega ? mega.querySelector('[role="menuitem"]') : null;
+        var firstItem = mega ? mega.querySelector('.nav-mega-hub, .nav-mega-item') : null;
         if (firstItem) firstItem.focus();
       }
     });
@@ -181,7 +188,7 @@ if (toggle && links) {
     // Arrow key navigation within mega menu
     if (mega) {
       mega.addEventListener('keydown', function(e) {
-        var items = Array.from(mega.querySelectorAll('[role="menuitem"]'));
+        var items = Array.from(mega.querySelectorAll('.nav-mega-hub, .nav-mega-item'));
         var idx = items.indexOf(document.activeElement);
         if (e.key === 'ArrowDown') {
           e.preventDefault();
@@ -1662,13 +1669,17 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
         t.setAttribute('aria-selected', 'false');
         t.setAttribute('tabindex', '-1');
       });
-      panels.forEach(function(p) { p.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); p.hidden = true; });
       tabs[idx].classList.add('active');
       tabs[idx].setAttribute('aria-selected', 'true');
       tabs[idx].setAttribute('tabindex', '0');
       panels[idx].classList.add('active');
+      panels[idx].hidden = false;
       localStorage.setItem('docs-tab:' + id, idx);
     }
+
+    // Set initial hidden state for inactive panels
+    panels.forEach(function(p) { if (!p.classList.contains('active')) p.hidden = true; });
 
     var saved = localStorage.getItem('docs-tab:' + id);
     if (saved !== null) {

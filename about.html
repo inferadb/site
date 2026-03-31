@@ -5,10 +5,10 @@ body_class: page-about
 description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We're building purpose-built authorization infrastructure for fine-grained access control at scale."
 ---
 
-<section class="about-hero">
+<section class="about-hero" aria-labelledby="about-hero-heading">
     <div class="container">
         <p class="about-eyebrow">SYS:ABOUT // InferaDB</p>
-        <h1>The authorization company</h1>
+        <h1 id="about-hero-heading">The authorization company</h1>
         <p class="lead">
             From the engineers behind OpenFGA at Auth0. Purpose-built
             authorization infrastructure for modern software.
@@ -16,10 +16,10 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     </div>
 </section>
 
-<section class="about-story">
+<section class="about-story" aria-labelledby="about-origin-heading">
     <div class="container about-narrow">
         <div class="about-section-label"><span>SEC.01</span> Origin</div>
-        <h2 class="sr-only">Origin</h2>
+        <h2 class="sr-only" id="about-origin-heading">Origin</h2>
         <p>
             We spent years building authorization at Auth0 and Okta — including
             OpenFGA, now a CNCF incubating project used in production by Grafana
@@ -43,12 +43,12 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     </div>
 </section>
 
-<section class="about-principles">
+<section class="about-principles" aria-labelledby="about-principles-heading">
     <div class="container">
         <div class="about-section-label">
             <span>SEC.02</span> Design Principles
         </div>
-        <h2 class="sr-only">Design Principles</h2>
+        <h2 class="sr-only" id="about-principles-heading">Design Principles</h2>
         <div class="about-principles-grid">
             <div class="about-principle">
                 <h3>Every decision is explainable</h3>
@@ -88,10 +88,10 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     </div>
 </section>
 
-<section class="about-team">
+<section class="about-team" aria-labelledby="about-team-heading">
     <div class="container">
         <div class="about-section-label"><span>SEC.03</span> Team</div>
-        <h2 class="sr-only">Team</h2>
+        <h2 class="sr-only" id="about-team-heading">Team</h2>
         <div class="about-team-grid">
             {% for member in site.data.team %}
             <div class="about-person">
@@ -102,12 +102,12 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     </div>
 </section>
 
-<section class="about-numbers">
+<section class="about-numbers" aria-labelledby="about-numbers-heading">
     <div class="container">
         <div class="about-section-label">
             <span>SEC.04</span> By the Numbers
         </div>
-        <h2 class="sr-only">By the Numbers</h2>
+        <h2 class="sr-only" id="about-numbers-heading">By the Numbers</h2>
         <div class="about-numbers-grid">
             <div class="about-stat">
                 <span class="about-stat-value">2.8µs</span>
@@ -137,12 +137,12 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     </div>
 </section>
 
-<section class="about-oss">
+<section class="about-oss" aria-labelledby="about-oss-heading">
     <div class="container about-narrow">
         <div class="about-section-label">
             <span>SEC.05</span> Open Source &amp; Standards
         </div>
-        <h2 class="sr-only">Open Source and Standards</h2>
+        <h2 class="sr-only" id="about-oss-heading">Open Source and Standards</h2>
         <p>
             InferaDB's core authorization engine is open source, dual-licensed
             under
@@ -170,10 +170,10 @@ description: "InferaDB was founded by engineers behind OpenFGA at Auth0/Okta. We
     </div>
 </section>
 
-<section class="about-cta">
+<section class="about-cta" aria-labelledby="about-cta-heading">
     <div class="container">
         <div class="about-cta-inner">
-            <h2>Stop building permissions. Start shipping features.</h2>
+            <h2 id="about-cta-heading">Stop building permissions. Start shipping features.</h2>
             <p>Lock in launch-day pricing and be first to deploy.</p>
             <div class="about-cta-actions">
                 <a href="/waitlist" class="btn btn-primary">Get Early Access</a>

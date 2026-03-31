@@ -16,7 +16,7 @@ body_class: page-docs
 </div>
 
 <div class="docs-layout">
-  <a href="#docs-article" class="skip-link">Skip to content</a>
+  <a href="#docs-article" class="skip-link">Skip to article</a>
   <aside class="docs-sidebar">
     <div class="docs-sidebar-inner">
       <button class="search-trigger" id="search-trigger" aria-label="Search documentation">
@@ -119,7 +119,7 @@ body_class: page-docs
       <div class="docs-footer-meta">
         <a href="{{ site.github_repo }}/edit/main/{{ page.path }}" class="docs-edit-link" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          Edit on GitHub
+          Edit on GitHub<span class="sr-only"> (opens in new tab)</span>
         </a>
         {% if page.last_updated %}
         <span class="docs-updated">Last updated {{ page.last_updated | date: "%B %d, %Y" }}</span>
@@ -158,8 +158,8 @@ body_class: page-docs
     <div class="docs-toc-actions">
       <button class="docs-toc-action" id="toc-copy-link">Copy link</button>
       <button class="docs-toc-action" id="toc-copy-md" data-src="{{ site.github_repo }}/raw/main/{{ page.path }}">Copy markdown</button>
-      <a class="docs-toc-action" href="https://chatgpt.com/?q=Help%20me%20understand%20this%20InferaDB%20documentation%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Open in ChatGPT</a>
-      <a class="docs-toc-action" href="https://claude.ai/new?q=Help%20me%20understand%20this%20InferaDB%20documentation%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Open in Claude</a>
+      <a class="docs-toc-action" href="https://chatgpt.com/?q=Help%20me%20understand%20this%20InferaDB%20documentation%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Open in ChatGPT<span class="sr-only"> (opens in new tab)</span></a>
+      <a class="docs-toc-action" href="https://claude.ai/new?q=Help%20me%20understand%20this%20InferaDB%20documentation%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener">Open in Claude<span class="sr-only"> (opens in new tab)</span></a>
     </div>
   </aside>
   {% endunless %}

@@ -5,11 +5,11 @@ body_class: page-contact
 description: "Get in touch with the InferaDB team — technical questions, enterprise inquiries, partnerships, or security disclosures. We respond within 24 hours."
 ---
 
-<section class="contact-hero">
+<section class="contact-hero" aria-labelledby="contact-hero-heading">
     <div class="contact-glow"></div>
     <div class="container">
         <p class="contact-eyebrow">SYS:CONTACT // Direct Line</p>
-        <h1>Every message reaches an engineer. Every reply within 24 hours.</h1>
+        <h1 id="contact-hero-heading">Every message reaches an engineer. Every reply within 24 hours.</h1>
         <p class="contact-lead">
             No ticket queues, no chatbots, no sales theater. Tell us what you're
             building and an engineer who worked on the system will respond.
@@ -17,7 +17,7 @@ description: "Get in touch with the InferaDB team — technical questions, enter
     </div>
 </section>
 
-<section class="contact-section">
+<section class="contact-section" aria-label="Contact form">
     <div class="container">
         <div class="contact-grid">
             <div class="contact-form-wrap">
@@ -398,6 +398,7 @@ description: "Get in touch with the InferaDB team — technical questions, enter
             var showFor = conditionalFields[i].getAttribute('data-show-for').split(' ');
             var visible = showFor.indexOf(type) !== -1;
             conditionalFields[i].style.display = visible ? '' : 'none';
+            conditionalFields[i].setAttribute('aria-hidden', visible ? 'false' : 'true');
 
             // Disable hidden inputs so they don't submit empty values
             var inputs = conditionalFields[i].querySelectorAll('input, select, textarea');

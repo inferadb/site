@@ -75,7 +75,9 @@
   </head>
   <body class="{{ page.body_class }}" data-layout="{{ page.layout }}">
     <a href="#main-content" class="skip-link">Skip to content</a>
-    {% include nav.html %}
+    <header>
+      {% include nav.html %}
+    </header>
     <main id="main-content">
       {{ content }}
     </main>

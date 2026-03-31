@@ -36,12 +36,19 @@ const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
 if (toggle && links) {
   var savedScroll = 0;
+  function getFocusable(container) {
+    return Array.from(container.querySelectorAll('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])'));
+  }
+
   function openNav() {
     savedScroll = window.scrollY;
     document.body.style.top = -savedScroll + 'px';
     toggle.setAttribute('aria-expanded', 'true');
     links.classList.add('open');
     document.body.classList.add('nav-open');
+    // Move focus to first link
+    var first = getFocusable(links)[0];
+    if (first) first.focus();
   }
   function closeNav() {
     toggle.setAttribute('aria-expanded', 'false');
@@ -49,6 +56,7 @@ if (toggle && links) {
     document.body.classList.remove('nav-open');
     document.body.style.top = '';
     window.scrollTo(0, savedScroll);
+    toggle.focus();
   }
 
   toggle.addEventListener('click', () => {
@@ -61,9 +69,25 @@ if (toggle && links) {
     link.addEventListener('click', closeNav);
   });
 
-  // Close on escape key
+  // Focus trap + Escape
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && links.classList.contains('open')) closeNav();
+    if (e.key === 'Escape' && links.classList.contains('open')) {
+      closeNav();
+      return;
+    }
+    if (e.key === 'Tab' && links.classList.contains('open')) {
+      var focusable = getFocusable(links);
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   // Close if viewport resizes beyond mobile breakpoint
@@ -72,25 +96,58 @@ if (toggle && links) {
   }, { passive: true });
 }
 
-// How-it-works perspective tabs
+// How-it-works perspective tabs (accessible)
 (function() {
+  var tablist = document.querySelector('.hiw-tabs');
   var tabs = document.querySelectorAll('.hiw-tab');
   var panels = document.querySelectorAll('.hiw-panel');
   if (!tabs.length) return;
 
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var target = tab.getAttribute('data-hiw-tab');
-      tabs.forEach(function(t) { t.classList.toggle('active', t.getAttribute('data-hiw-tab') === target); });
-      panels.forEach(function(p) { p.classList.toggle('active', p.getAttribute('data-hiw-panel') === target); });
+  function activate(tab) {
+    var target = tab.getAttribute('data-hiw-tab');
+    tabs.forEach(function(t) {
+      var isActive = t.getAttribute('data-hiw-tab') === target;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      t.setAttribute('tabindex', isActive ? '0' : '-1');
     });
+    panels.forEach(function(p) { p.classList.toggle('active', p.getAttribute('data-hiw-panel') === target); });
+    tab.focus();
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() { activate(tab); });
   });
+
+  // Arrow key navigation between tabs
+  if (tablist) {
+    tablist.addEventListener('keydown', function(e) {
+      var tabArr = Array.from(tabs);
+      var idx = tabArr.indexOf(document.activeElement);
+      if (idx < 0) return;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        activate(tabArr[(idx + 1) % tabArr.length]);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        activate(tabArr[(idx - 1 + tabArr.length) % tabArr.length]);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        activate(tabArr[0]);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        activate(tabArr[tabArr.length - 1]);
+      }
+    });
+  }
 })();
 
-// Mega-menu dropdowns
+// Mega-menu dropdowns (accessible)
 (function() {
   var dropdowns = document.querySelectorAll('.nav-dropdown');
   if (!dropdowns.length) return;
+
+  var activeTrigger = null;
 
   function closeAll() {
     dropdowns.forEach(function(d) {
@@ -102,6 +159,7 @@ if (toggle && links) {
 
   dropdowns.forEach(function(dropdown) {
     var trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    var mega = dropdown.querySelector('.nav-mega');
     if (!trigger) return;
 
     trigger.addEventListener('click', function(e) {
@@ -111,8 +169,33 @@ if (toggle && links) {
       if (!isOpen) {
         dropdown.classList.add('open');
         trigger.setAttribute('aria-expanded', 'true');
+        activeTrigger = trigger;
+        // Focus first menu item
+        var firstItem = mega ? mega.querySelector('[role="menuitem"]') : null;
+        if (firstItem) firstItem.focus();
       }
     });
+
+    // Arrow key navigation within mega menu
+    if (mega) {
+      mega.addEventListener('keydown', function(e) {
+        var items = Array.from(mega.querySelectorAll('[role="menuitem"]'));
+        var idx = items.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (idx < items.length - 1) items[idx + 1].focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (idx > 0) items[idx - 1].focus();
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          items[0].focus();
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          items[items.length - 1].focus();
+        }
+      });
+    }
 
     // Close on mouse leave (with delay for tolerance)
     var closeTimer;
@@ -130,9 +213,15 @@ if (toggle && links) {
   // Close on click outside
   document.addEventListener('click', function() { closeAll(); });
 
-  // Close on Escape
+  // Close on Escape — return focus to trigger
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeAll();
+    if (e.key === 'Escape') {
+      closeAll();
+      if (activeTrigger) {
+        activeTrigger.focus();
+        activeTrigger = null;
+      }
+    }
   });
 })();
 
@@ -171,6 +260,7 @@ document.querySelectorAll('pre').forEach(function(pre) {
 
   function close() {
     overlay.classList.remove('open');
+    if (trigger) trigger.focus();
   }
 
   function createResult(item, query) {
@@ -269,6 +359,20 @@ document.querySelectorAll('pre').forEach(function(pre) {
       if (overlay.classList.contains('open')) close(); else open();
     }
     if (e.key === 'Escape' && overlay.classList.contains('open')) close();
+    // Focus trap within search overlay
+    if (e.key === 'Tab' && overlay.classList.contains('open')) {
+      var focusable = Array.from(overlay.querySelectorAll('input, a[href], button:not([disabled])'));
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 
   overlay.addEventListener('click', function(e) {
@@ -1795,7 +1899,7 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     }
 
     var navBottom = nav ? nav.getBoundingClientRect().bottom : 60;
-    var pin = navBottom + 8;
+    var pin = navBottom + 20;
     var viewMid = window.innerHeight / 2;
 
     for (var i = 0; i < entries.length; i++) {
@@ -1821,8 +1925,9 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
         e.date.style.width = dateRect.width + 'px';
 
         if (e.node && nodeRect) {
+          var dotOffset = (dateHeight - nodeRect.height) / 2;
           e.node.style.position = 'fixed';
-          e.node.style.top = pin + 'px';
+          e.node.style.top = (pin + dotOffset) + 'px';
           e.node.style.left = (nodeRect.left + nodeRect.width / 2 - 4) + 'px';
           e.node.style.marginTop = '0';
         }

@@ -119,13 +119,13 @@ description: "InferaDB — managed authorization infrastructure for modern softw
                 further.
             </p>
         </div>
-        <div class="hiw-tabs" data-reveal>
-            <button class="hiw-tab" data-hiw-tab="dev">For Developers</button>
-            <button class="hiw-tab active" data-hiw-tab="sec">For Security Teams</button>
+        <div class="hiw-tabs" role="tablist" aria-label="Perspective" data-reveal>
+            <button class="hiw-tab" role="tab" aria-selected="false" aria-controls="hiw-panel-dev" data-hiw-tab="dev">For Developers</button>
+            <button class="hiw-tab active" role="tab" aria-selected="true" aria-controls="hiw-panel-sec" data-hiw-tab="sec">For Security Teams</button>
         </div>
 
         <!-- Developer perspective -->
-        <div class="hiw-grid hiw-panel" data-hiw-panel="dev">
+        <div class="hiw-grid hiw-panel" id="hiw-panel-dev" role="tabpanel" data-hiw-panel="dev">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -188,7 +188,7 @@ description: "InferaDB — managed authorization infrastructure for modern softw
         </div>
 
         <!-- Security & compliance perspective -->
-        <div class="hiw-grid hiw-panel active" data-hiw-panel="sec">
+        <div class="hiw-grid hiw-panel active" id="hiw-panel-sec" role="tabpanel" data-hiw-panel="sec">
             <div class="hiw-code" data-reveal>
                 <div class="code-window">
                     <div class="code-header">
@@ -333,58 +333,58 @@ description: "InferaDB — managed authorization infrastructure for modern softw
             <table class="compare-matrix">
                 <thead>
                     <tr>
-                        <th class="compare-dimension-head">Dimension</th>
-                        <th class="compare-col-inhouse">Built In-House</th>
-                        <th class="compare-col-policy">Policy Engines<span class="compare-col-sub">OPA / Cedar</span></th>
-                        <th class="compare-col-managed">Managed Services<span class="compare-col-sub">AuthZed / Oso</span></th>
-                        <th class="compare-col-infera">InferaDB</th>
+                        <th class="compare-dimension-head" scope="col">Dimension</th>
+                        <th class="compare-col-inhouse" scope="col">Built In-House</th>
+                        <th class="compare-col-policy" scope="col">Policy Engines<span class="compare-col-sub">OPA / Cedar</span></th>
+                        <th class="compare-col-managed" scope="col">Managed Services<span class="compare-col-sub">AuthZed / Oso</span></th>
+                        <th class="compare-col-infera" scope="col">InferaDB</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr data-reveal data-reveal-delay="0">
-                        <td class="compare-dimension">Setup time</td>
+                        <th class="compare-dimension" scope="row">Setup time</th>
                         <td class="compare-weak">Months</td>
                         <td class="compare-neutral">Weeks</td>
                         <td class="compare-neutral">Days</td>
                         <td class="compare-win">Minutes</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="40">
-                        <td class="compare-dimension">Latency</td>
+                        <th class="compare-dimension" scope="row">Latency</th>
                         <td class="compare-neutral">Varies</td>
                         <td class="compare-neutral">1-10 ms</td>
                         <td class="compare-neutral">5-10 ms</td>
                         <td class="compare-win">~3 &#181;s</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="80">
-                        <td class="compare-dimension">Audit trail</td>
+                        <th class="compare-dimension" scope="row">Audit trail</th>
                         <td class="compare-weak">Build it yourself</td>
                         <td class="compare-weak">Decision logs only</td>
                         <td class="compare-neutral">Audit logging</td>
                         <td class="compare-win">Full lineage</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="120">
-                        <td class="compare-dimension">Tenant isolation</td>
+                        <th class="compare-dimension" scope="row">Tenant isolation</th>
                         <td class="compare-weak">DIY per-tenant</td>
                         <td class="compare-weak">Not built-in</td>
                         <td class="compare-neutral">Namespace-level</td>
                         <td class="compare-win">Native multi-tenant</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="160">
-                        <td class="compare-dimension">Compliance readiness</td>
+                        <th class="compare-dimension" scope="row">Compliance readiness</th>
                         <td class="compare-weak">Manual effort</td>
                         <td class="compare-weak">Policy-only</td>
                         <td class="compare-neutral">Partial</td>
                         <td class="compare-win">SOC 2 / HIPAA ready</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="200">
-                        <td class="compare-dimension">Ongoing maintenance</td>
+                        <th class="compare-dimension" scope="row">Ongoing maintenance</th>
                         <td class="compare-weak">Dedicated team</td>
                         <td class="compare-neutral">Rego / Cedar upkeep</td>
                         <td class="compare-neutral">Vendor-managed</td>
                         <td class="compare-win">Zero ops</td>
                     </tr>
                     <tr data-reveal data-reveal-delay="240">
-                        <td class="compare-dimension">Cost at scale</td>
+                        <th class="compare-dimension" scope="row">Cost at scale</th>
                         <td class="compare-weak">$900K+ / year</td>
                         <td class="compare-neutral">Infra + team</td>
                         <td class="compare-neutral">Resource / MAU-based</td>

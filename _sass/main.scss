@@ -137,6 +137,19 @@ img, svg { display: block; max-width: 100%; }
   }
 }
 
+// Screen-reader-only utility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 // Focus-visible — keyboard focus indicator for all interactive elements
 :focus-visible {
   outline: 2px solid var(--accent);
@@ -294,7 +307,7 @@ section {
 .site-banner .site-banner-inner {
   width: 100%;
   gap: 1rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0 1.5rem;
 }
 
 .site-banner-text {
@@ -318,7 +331,9 @@ section {
   justify-content: center;
   background: none;
   border: none;
-  padding: 0.25rem;
+  padding: 0.625rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
   color: var(--bg);
   opacity: 0.5;
   cursor: pointer;
@@ -331,26 +346,26 @@ section {
 
 // When banner is visible, push nav down and remove its amber top-border
 .has-banner .site-nav {
-  top: 2.875rem; // banner height (~46px)
+  top: 2.75rem; // banner height (~46px)
   border-top: none;
 }
 
 .has-banner .docs-layout {
-  padding-top: calc(4.125rem + 2.875rem);
+  padding-top: calc(4.125rem + 2.75rem);
 }
 
 .has-banner .docs-sidebar {
-  top: calc(4.125rem + 2.875rem);
-  height: calc(100vh - 4.125rem - 2.875rem);
+  top: calc(4.125rem + 2.75rem);
+  height: calc(100vh - 4.125rem - 2.75rem);
 }
 
 .has-banner .docs-toc {
-  top: calc(4.125rem + 2.875rem);
-  height: calc(100vh - 4.125rem - 2.875rem);
+  top: calc(4.125rem + 2.75rem);
+  height: calc(100vh - 4.125rem - 2.75rem);
 }
 
 .has-banner .hero {
-  padding-top: calc(4.125rem + 2.875rem + 4rem);
+  padding-top: calc(4.125rem + 2.75rem + 4rem);
 }
 
 // ─── Navigation ──────────────────────────────────────────────
@@ -2410,7 +2425,7 @@ section {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--muted);
+  color: var(--text-secondary);
   margin-bottom: 0.25rem;
 }
 
@@ -2633,9 +2648,11 @@ section {
       top: 4.125rem; // below fixed nav
       padding-top: 0.75rem;
       border-bottom: 1px solid var(--border);
+      // Extend background upward to cover any subpixel gap with the nav
+      box-shadow: 0 -2px 0 0 var(--bg);
 
       .has-banner & {
-        top: calc(4.125rem + 2.875rem); // nav + banner
+        top: calc(4.125rem + 2.75rem); // nav + banner
       }
     }
   }
@@ -2681,7 +2698,7 @@ section {
 }
 
 .pricing-table-no {
-  color: var(--muted) !important;
+  color: var(--text-secondary) !important;
 }
 
 .pricing-table-yes {
@@ -2779,7 +2796,7 @@ section {
     margin-bottom: 0;
 
     .has-banner & {
-      top: calc(5.125rem + 2.875rem); // nav + banner
+      top: calc(5.125rem + 2.75rem); // nav + banner
     }
   }
 }
@@ -2915,7 +2932,7 @@ section {
 .compare-weak {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--text-secondary);
 }
 
 // ─── Solutions ────────────────────────────────────────────────
@@ -4479,7 +4496,7 @@ section {
   .has-banner & h2,
   .has-banner & h3,
   .has-banner & h4 {
-    scroll-margin-top: calc(5.125rem + 2.875rem);
+    scroll-margin-top: calc(5.125rem + 2.75rem);
   }
 
   h2 {

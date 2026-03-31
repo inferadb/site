@@ -336,21 +336,21 @@ section {
 }
 
 .has-banner .docs-layout {
-  padding-top: calc(3.5rem + 2.875rem);
+  padding-top: calc(4.125rem + 2.875rem);
 }
 
 .has-banner .docs-sidebar {
-  top: calc(3.5rem + 2.875rem);
-  height: calc(100vh - 3.5rem - 2.875rem);
+  top: calc(4.125rem + 2.875rem);
+  height: calc(100vh - 4.125rem - 2.875rem);
 }
 
 .has-banner .docs-toc {
-  top: calc(3.5rem + 2.875rem);
-  height: calc(100vh - 3.5rem - 2.875rem);
+  top: calc(4.125rem + 2.875rem);
+  height: calc(100vh - 4.125rem - 2.875rem);
 }
 
 .has-banner .hero {
-  padding-top: calc(3.5rem + 2.875rem + 4rem);
+  padding-top: calc(4.125rem + 2.875rem + 4rem);
 }
 
 // ─── Navigation ──────────────────────────────────────────────
@@ -683,7 +683,7 @@ section {
   min-height: 100vh;
   min-height: 100dvh;
   padding: 5rem 0 5rem;
-  padding-top: 3.5rem; // just enough to clear the fixed nav
+  padding-top: 4.125rem; // just enough to clear the fixed nav
   text-align: center;
   overflow: hidden;
   display: flex;
@@ -2630,12 +2630,12 @@ section {
 
     @media (min-width: 769px) {
       position: sticky;
-      top: 3.5rem; // below fixed nav
+      top: 4.125rem; // below fixed nav
       padding-top: 0.75rem;
       border-bottom: 1px solid var(--border);
 
       .has-banner & {
-        top: calc(3.5rem + 2.875rem); // nav + banner
+        top: calc(4.125rem + 2.875rem); // nav + banner
       }
     }
   }
@@ -2775,11 +2775,11 @@ section {
 
   @media (min-width: 769px) {
     position: sticky;
-    top: 4.5rem; // below fixed nav
+    top: 5.125rem; // below fixed nav
     margin-bottom: 0;
 
     .has-banner & {
-      top: calc(4.5rem + 2.875rem); // nav + banner
+      top: calc(5.125rem + 2.875rem); // nav + banner
     }
   }
 }
@@ -4176,13 +4176,13 @@ section {
   min-height: 100vh;
   max-width: 1400px;
   margin: 0 auto;
-  padding-top: 3.5rem;
+  padding-top: 4.125rem;
 }
 
 .docs-sidebar {
   position: sticky;
-  top: 3.5rem;
-  height: calc(100vh - 3.5rem);
+  top: 4.125rem;
+  height: calc(100vh - 4.125rem);
   overflow-y: auto;
   border-right: 1px solid var(--border);
   background: var(--bg);
@@ -4473,13 +4473,13 @@ section {
 .docs-content article {
   // Anchor scroll offset — clear the fixed nav (+ banner when present)
   h2, h3, h4 {
-    scroll-margin-top: 4.5rem;
+    scroll-margin-top: 5.125rem;
   }
 
   .has-banner & h2,
   .has-banner & h3,
   .has-banner & h4 {
-    scroll-margin-top: calc(4.5rem + 2.875rem);
+    scroll-margin-top: calc(5.125rem + 2.875rem);
   }
 
   h2 {
@@ -5872,12 +5872,12 @@ h3:hover .heading-anchor {
   .nav-links {
     display: none;
     position: fixed;
-    top: 3.5rem;
+    top: 4.125rem;
     left: 0;
     right: 0;
     bottom: 0;
-    height: calc(100vh - 3.5rem);
-    height: calc(100dvh - 3.5rem);
+    height: calc(100vh - 4.125rem);
+    height: calc(100dvh - 4.125rem);
     width: 100%;
     flex-direction: column;
     align-items: stretch;
@@ -5976,7 +5976,7 @@ h3:hover .heading-anchor {
   .docs-sidebar { display: none; }
   .docs-toc { display: none; }
   .docs-content { padding: 1.25rem 1.5rem 1.5rem; }
-  .hero { padding: 6rem 0 3rem; padding-top: calc(3.5rem + 4rem); }
+  .hero { padding: 6rem 0 3rem; padding-top: calc(4.125rem + 4rem); }
   .hero-actions { flex-direction: column; align-items: center; }
   .credibility-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-grid { grid-template-columns: 1fr; }
@@ -6408,8 +6408,8 @@ h3:hover .heading-anchor {
 
 .docs-toc {
   position: sticky;
-  top: 3.5rem;
-  height: calc(100vh - 3.5rem);
+  top: 4.125rem;
+  height: calc(100vh - 4.125rem);
   overflow-y: auto;
   padding: 2.5rem 1rem 2rem 0;
   display: flex;

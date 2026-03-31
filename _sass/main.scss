@@ -2618,10 +2618,19 @@ section {
     color: var(--text-white);
     font-size: 0.875rem;
     padding-bottom: 0.75rem;
-    position: sticky;
-    top: 0;
     background: var(--bg);
     z-index: 1;
+
+    @media (min-width: 769px) {
+      position: sticky;
+      top: 3.5rem; // below fixed nav
+      padding-top: 0.75rem;
+      border-bottom: 1px solid var(--border);
+
+      .has-banner & {
+        top: calc(3.5rem + 2.875rem); // nav + banner
+      }
+    }
   }
 
   // First column (feature name) is wider
@@ -2648,7 +2657,7 @@ section {
 
   thead th:nth-child(3) {
     color: var(--accent);
-    background: rgba(200, 164, 78, 0.06);
+    background: #0e100f; // opaque equivalent of rgba(200,164,78,0.06) on --bg
     box-shadow: inset 0 2px 0 var(--accent);
   }
 }
@@ -2674,6 +2683,11 @@ section {
 
 .pricing-table-addon {
   color: var(--accent) !important;
+  a {
+    color: inherit;
+    text-decoration: none;
+    &:hover { text-decoration: underline; text-underline-offset: 2px; }
+  }
 }
 
 .pricing-table-addon-note {
@@ -2736,6 +2750,13 @@ section {
 
 .pricing-faq {
   margin-bottom: 3rem;
+
+  @media (min-width: 769px) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
+  }
 }
 
 .pricing-faq-heading {
@@ -2744,6 +2765,16 @@ section {
   font-weight: 600;
   color: var(--text-white);
   margin-bottom: 1.5rem;
+
+  @media (min-width: 769px) {
+    position: sticky;
+    top: 4.5rem; // below fixed nav
+    margin-bottom: 0;
+
+    .has-banner & {
+      top: calc(4.5rem + 2.875rem); // nav + banner
+    }
+  }
 }
 
 .pricing-faq-item {

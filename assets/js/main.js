@@ -44,6 +44,7 @@ if (toggle && links) {
     savedScroll = window.scrollY;
     document.body.style.top = -savedScroll + 'px';
     toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
     links.classList.add('open');
     document.body.classList.add('nav-open');
     // Move focus to first link
@@ -52,6 +53,7 @@ if (toggle && links) {
   }
   function closeNav() {
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
     links.classList.remove('open');
     document.body.classList.remove('nav-open');
     document.body.style.top = '';
@@ -225,12 +227,21 @@ if (toggle && links) {
   });
 })();
 
-// Scrollable code blocks — make keyboard-accessible
+// Scrollable regions — make keyboard-accessible
 document.querySelectorAll('pre').forEach(function(pre) {
   if (pre.scrollWidth > pre.clientWidth) {
     pre.setAttribute('tabindex', '0');
     pre.setAttribute('role', 'region');
     pre.setAttribute('aria-label', 'Code example (scroll horizontally)');
+  }
+});
+
+// Scrollable table wrappers (e.g. comparison matrix on mobile)
+document.querySelectorAll('.compare-wrap').forEach(function(wrap) {
+  if (wrap.scrollWidth > wrap.clientWidth) {
+    wrap.setAttribute('tabindex', '0');
+    wrap.setAttribute('role', 'region');
+    wrap.setAttribute('aria-label', 'Comparison table (scroll horizontally)');
   }
 });
 

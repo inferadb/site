@@ -50,7 +50,7 @@
             </div>
           </div>
           {% else %}
-          <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}</a>
+          <a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}{% if item.external %}<span class="sr-only"> (opens in new tab)</span>{% endif %}</a>
           {% endif %}
         {% endfor %}
       </div>

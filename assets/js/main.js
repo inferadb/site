@@ -245,6 +245,13 @@ document.querySelectorAll('pre').forEach(function(pre) {
   var index = null;
   var activeIdx = -1;
 
+  // Live region for search result count
+  var searchStatus = document.createElement('div');
+  searchStatus.setAttribute('role', 'status');
+  searchStatus.setAttribute('aria-live', 'polite');
+  searchStatus.className = 'sr-only';
+  overlay.querySelector('.search-modal').appendChild(searchStatus);
+
   function open() {
     overlay.classList.add('open');
     input.value = '';
@@ -317,6 +324,7 @@ document.querySelectorAll('pre').forEach(function(pre) {
       empty.className = 'search-empty';
       empty.textContent = 'No results for \u201c' + query + '\u201d';
       resultsList.appendChild(empty);
+      searchStatus.textContent = 'No results found.';
       activeIdx = -1;
       return;
     }
@@ -324,6 +332,7 @@ document.querySelectorAll('pre').forEach(function(pre) {
     matches.forEach(function(item) {
       resultsList.appendChild(createResult(item, query));
     });
+    searchStatus.textContent = matches.length + ' result' + (matches.length === 1 ? '' : 's') + ' found.';
     activeIdx = -1;
   }
 

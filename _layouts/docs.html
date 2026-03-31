@@ -54,9 +54,10 @@ body_class: page-docs
     {% endfor %}
     {% if breadcrumb_section %}
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
-      <a href="/docs/">Docs</a>
-      <span class="docs-breadcrumb-sep">/</span>
-      <span>{{ breadcrumb_section }}</span>
+      <ol>
+        <li><a href="/docs/">Docs</a></li>
+        <li><span aria-hidden="true">/</span> {{ breadcrumb_section }}</li>
+      </ol>
     </nav>
     {% endif %}
     <article id="docs-article">

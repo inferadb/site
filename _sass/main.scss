@@ -81,10 +81,84 @@
   --banner-h: 2.75rem; // close button min-height
 }
 
+// ─── Mixins ─────────────────────────────────────────────────
+// Repeated patterns extracted for source consistency.
+// LibSass expands these at each call site — no CSS output reduction,
+// but single source of truth for the design system's recurring patterns.
+
+// Monospaced technical label: readouts, eyebrows, badges, section codes
+@mixin tech-label($color: var(--accent)) {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: $color;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+// Card surface: dark raised panel with border
+@mixin card-surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+// Tab button base: underline-style tab in a tablist
+@mixin tab-button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  min-height: 2.75rem;
+
+  &:hover { color: var(--text-white); }
+  &.active { color: var(--accent); border-bottom-color: var(--accent); }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
+
+// Prose link styling: underline with animated color
+@mixin prose-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(200, 164, 78, 0.3);
+  &:hover { text-decoration-color: var(--accent); }
+}
+
+// ─── @property — typed custom properties for animation ──────
+
+// Gradient angle — enables smooth gradient rotation transitions
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 135deg;
+  inherits: false;
+}
+
+// Gradient stops — enables smooth color transitions in gradients
+@property --gradient-from {
+  syntax: "<color>";
+  initial-value: oklch(0.73 0.12 80);
+  inherits: false;
+}
+
+@property --gradient-to {
+  syntax: "<color>";
+  initial-value: oklch(0.78 0.10 80);
+  inherits: false;
+}
+
+// ─── @layer ordering ────────────────────────────────────────
+// Establishes cascade priority: reset < base < components < utilities
+@layer reset, base, components, utilities;
+
 // ─── Modern Reset ────────────────────────────────────────────
 // Based on Andy Bell's modern CSS reset + Josh Comeau's custom reset.
 // Goals: eliminate cross-browser variance, inherit fonts everywhere,
 // strip user-agent opinions on headings/lists/form elements.
+@layer reset {
 
 // 1. Box-sizing + zero margins/padding globally
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -186,6 +260,8 @@ hr { border: none; border-top: 1px solid var(--border); }
 [hidden] { display: none !important; }
 :where(dialog) { margin: auto; }
 
+} // @layer reset
+
 // Skip navigation link — visible only on keyboard focus
 .skip-link {
   position: absolute;
@@ -281,10 +357,16 @@ hr { border: none; border-top: 1px solid var(--border); }
   max-width: var(--container);
   margin: 0 auto;
   padding: 0 1.5rem;
+  container-type: inline-size;
 }
 
 section {
   padding: 7rem 0;
+
+  // Skip rendering for below-fold sections until near viewport.
+  // The hero overrides this to visible (always above fold).
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
 
   @media (width <= 768px) {
     padding: 4.5rem 0;
@@ -294,10 +376,15 @@ section {
 // ─── Typography ──────────────────────────────────────────────
 
 .gradient-text {
-  background: var(--accent-gradient);
+  --gradient-from: oklch(0.73 0.12 80);
+  --gradient-to: oklch(0.78 0.10 80);
+  --gradient-angle: 135deg;
+  background: linear-gradient(var(--gradient-angle), var(--gradient-from), var(--gradient-to));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  // @property typed custom properties enable smooth gradient transitions
+  transition: --gradient-angle 0.6s, --gradient-from 0.4s, --gradient-to 0.4s;
 }
 
 .section-header {
@@ -396,11 +483,9 @@ section {
 
 .site-banner-text {
   flex: 1;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--bg);
+  @include tech-label(var(--bg));
   letter-spacing: 0.02em;
+  text-transform: none;
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
@@ -786,6 +871,7 @@ section {
   text-align: center;
   overflow: hidden;
   display: flex;
+  content-visibility: visible; // always above fold — override section default
   flex-direction: column;
   justify-content: center;
 
@@ -823,12 +909,8 @@ section {
 
 .hero-eyebrow {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
+  @include tech-label;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
 
@@ -884,17 +966,15 @@ section {
 }
 
 .credibility-value {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  text-transform: none;
   line-height: 1.4;
 }
 
 .credibility-sep {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
 }
 
 // ─── Problem / Stats ─────────────────────────────────────────
@@ -907,13 +987,13 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
 }
 
 .stat-card {
   padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -952,13 +1032,14 @@ section {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 2rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
+  @container (640px <= width < 900px) { grid-template-columns: repeat(2, 1fr); }
 }
 
 .perf-card {
   padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   display: flex;
   flex-direction: column;
   gap: 0.375rem;
@@ -1033,22 +1114,8 @@ section {
 
 .hiw-tab {
   padding: 0.625rem 1rem;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
-
-  &:hover { color: var(--text-white); }
-  &.active { color: var(--accent); border-bottom-color: var(--accent); }
-  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @include tab-button;
+  @include tech-label(var(--text-secondary));
 }
 
 .hiw-panel {
@@ -1105,9 +1172,7 @@ section {
 // ─── Code windows ────────────────────────────────────────────
 
 .code-window {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   overflow: hidden;
 }
 
@@ -1129,9 +1194,9 @@ section {
 
 .code-title {
   margin-left: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
 }
 
 .code-window pre {
@@ -1188,9 +1253,7 @@ section {
 
 .arch-service {
   padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   display: flex;
   flex-direction: column;
 
@@ -1269,13 +1332,13 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
 }
 
 .diff-card {
   padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   transition: border-color 0.15s;
 
   &:hover { border-color: var(--border-hover); }
@@ -1296,17 +1359,13 @@ section {
 
 .diff-highlight {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
+  @include tech-label;
+  letter-spacing: 0.04em;
   padding: 0.1875rem 0.5rem;
   background: rgba(200, 164, 78, 0.06);
   border: 1px solid rgba(200, 164, 78, 0.15);
   border-radius: var(--radius-sm);
   margin-bottom: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
 }
 
 // ─── Use Cases ───────────────────────────────────────────────
@@ -1319,13 +1378,13 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
 }
 
 .uc-card {
   padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
 
   h3 {
     font-family: var(--font-sans);
@@ -1421,9 +1480,7 @@ section {
 
 .compliance-badge-item {
   padding: 1.5rem 1rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   text-align: center;
 
   span {
@@ -1445,13 +1502,13 @@ section {
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
 }
 
 .devex-card {
   padding: 1.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
 
   .code-window { margin-bottom: 1.25rem; }
 
@@ -1474,9 +1531,7 @@ section {
 
 .devex-extra {
   padding: 1.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
 
   h4 {
     font-family: var(--font-sans);
@@ -1503,9 +1558,7 @@ section {
 
 .oss-card {
   padding: 2.5rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
 
   h3 {
     font-family: var(--font-sans);
@@ -1584,11 +1637,7 @@ section {
 }
 
 .cta-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
-  text-transform: uppercase;
+  @include tech-label;
   letter-spacing: 0.1em;
   margin-bottom: 0.75rem;
 }
@@ -1678,10 +1727,8 @@ section {
   margin-bottom: 1rem;
 
   span {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
+    @include tech-label(var(--text-secondary));
+    font-weight: normal;
     letter-spacing: 0.04em;
   }
 }
@@ -1927,9 +1974,9 @@ section {
 }
 
 .waitlist-stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
 }
 
 .waitlist-inline {
@@ -1971,12 +2018,8 @@ section {
 }
 
 .contact-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
+  @include tech-label;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
   margin-bottom: 1.25rem;
 }
 
@@ -2067,9 +2110,9 @@ section {
 }
 
 .contact-response-note {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
   text-align: center;
   margin-top: 0.75rem;
 }
@@ -2429,9 +2472,9 @@ section {
 }
 
 .pricing-typical {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
   margin-top: 0.375rem;
 }
 
@@ -2476,9 +2519,7 @@ section {
 
 .pricing-card {
   padding: 2rem;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  @include card-surface;
   display: grid;
   grid-row: span 4;
   grid-template-rows: subgrid;
@@ -2509,12 +2550,9 @@ section {
   top: -0.75rem;
   left: 50%;
   transform: translateX(-50%);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  @include tech-label(var(--bg));
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--bg);
   background: var(--accent);
   padding: 0.1875rem 0.75rem;
   border-radius: 2px;
@@ -2601,9 +2639,9 @@ section {
 
 .pricing-inherits {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
   margin-bottom: 0.625rem;
 }
 
@@ -2702,12 +2740,8 @@ section {
 }
 
 .pricing-program-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  @include tech-label;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent);
 }
 
 // ─── Pricing: Comparison Table ──────────────────────────────
@@ -2793,12 +2827,8 @@ section {
 }
 
 .pricing-table-section th {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  @include tech-label;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--accent);
   padding-top: 1.5rem;
   border-bottom: 1px solid rgba(200, 164, 78, 0.15);
 }
@@ -3002,10 +3032,9 @@ section {
 
 .compare-col-sub {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  @include tech-label(var(--text-secondary));
   font-weight: 400;
-  color: var(--text-secondary);
+  text-transform: none;
   margin-top: 0.125rem;
   letter-spacing: 0;
 }
@@ -3044,12 +3073,8 @@ section {
 // ─── Solutions ────────────────────────────────────────────────
 
 .solution-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
+  @include tech-label;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
 
@@ -3112,12 +3137,7 @@ section {
 }
 
 .solution-section-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
   margin-bottom: 1.5rem;
   margin-top: 4rem;
   padding-bottom: 0.625rem;
@@ -3200,12 +3220,8 @@ section {
 }
 
 .solution-cta-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
+  @include tech-label;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   margin-bottom: 1rem;
 }
 
@@ -3264,12 +3280,7 @@ section {
   background: var(--bg-card);
 
   .solution-example-label {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    @include tech-label;
     margin-bottom: 0.75rem;
   }
 
@@ -3421,21 +3432,16 @@ section {
   margin-bottom: 0.625rem;
 
   time {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    color: var(--text-secondary);
+    @include tech-label(var(--text-secondary));
+    font-weight: normal;
+    text-transform: none;
     letter-spacing: 0.02em;
     font-variant-numeric: tabular-nums;
   }
 }
 
 .dispatch-entry-cat {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label;
 }
 
 .dispatch-entry-title {
@@ -3526,11 +3532,7 @@ section {
 
 .card-label {
   display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
+  @include tech-label(var(--text-secondary));
   letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
 }
@@ -3552,11 +3554,7 @@ section {
   margin-bottom: 0.75rem;
 
   time {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-transform: uppercase;
+    @include tech-label(var(--text-secondary));
     letter-spacing: 0.08em;
     font-variant-numeric: tabular-nums;
   }
@@ -3618,9 +3616,9 @@ section {
 }
 
 .changelog-date {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
   letter-spacing: 0.02em;
   font-variant-numeric: tabular-nums;
   text-align: right;
@@ -3739,12 +3737,8 @@ section {
 }
 
 .changelog-tag {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  text-transform: uppercase;
+  @include tech-label(var(--text-secondary));
   letter-spacing: 0.04em;
-  color: var(--text-secondary);
   padding: 0.125rem 0.5rem;
   background: rgba(255, 255, 255, 0.03);
   border-radius: 2px;
@@ -3935,12 +3929,7 @@ section {
 }
 
 .author-card-role {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label;
 }
 
 .author-card-bio {
@@ -4092,12 +4081,8 @@ section {
 // ─── About ───────────────────────────────────────────────────
 
 .about-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
+  @include tech-label;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
 
@@ -4129,12 +4114,7 @@ section {
 }
 
 .about-section-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
   margin-bottom: 1.5rem;
   padding-bottom: 0.625rem;
   border-bottom: 1px solid var(--border);
@@ -4354,11 +4334,7 @@ section {
   margin-bottom: 1.25rem;
 
   h4 {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-transform: uppercase;
+    @include tech-label(var(--text-secondary));
     letter-spacing: 0.08em;
     margin-bottom: 0.375rem;
   }
@@ -4434,11 +4410,7 @@ section {
   background: none;
   border: none;
   cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
+  @include tech-label(var(--text-secondary));
   letter-spacing: 0.08em;
   transition: color 0.15s;
 
@@ -4513,11 +4485,8 @@ section {
 
 .docs-breadcrumb {
   margin-bottom: 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
 
   ol {
     display: flex;
@@ -4545,9 +4514,9 @@ section {
 }
 
 .docs-updated {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
 }
 
 // Docs hub — tabs and cards
@@ -4564,26 +4533,11 @@ section {
 
   button[role="tab"] {
     padding: 0.75rem 0.75rem;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
-    min-height: 2.75rem;
+    @include tab-button;
+    @include tech-label(var(--text-secondary));
     display: inline-flex;
     align-items: center;
 
-    &:hover { color: var(--text-white); }
-
-    &.active,
     &[aria-selected="true"] {
       color: var(--accent);
       border-bottom-color: var(--accent);
@@ -4896,11 +4850,8 @@ section {
   background: none;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  color: var(--text-secondary);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
   cursor: pointer;
   transition: color 0.15s;
 
@@ -5140,12 +5091,7 @@ h3:hover .heading-anchor {
 }
 
 .docs-related-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
   margin-bottom: 0.75rem;
 }
 
@@ -5230,9 +5176,9 @@ h3:hover .heading-anchor {
 }
 
 .docs-feedback-thanks {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--accent);
+  @include tech-label;
+  font-weight: normal;
+  text-transform: none;
 }
 
 // Footer meta (edit link, etc.) and page navigation
@@ -5288,9 +5234,9 @@ h3:hover .heading-anchor {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
   text-decoration: none;
 
   &:hover { color: var(--accent); }
@@ -5362,12 +5308,8 @@ h3:hover .heading-anchor {
 // ─── Careers ─────────────────────────────────────────────────
 
 .careers-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
+  @include tech-label;
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
 
@@ -5400,12 +5342,7 @@ h3:hover .heading-anchor {
 }
 
 .careers-section-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
   margin-bottom: 1.5rem;
   padding-bottom: 0.625rem;
   border-bottom: 1px solid var(--border);
@@ -5458,11 +5395,7 @@ h3:hover .heading-anchor {
 
 .careers-principle-num {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.06em;
+  @include tech-label;
   margin-bottom: 0.75rem;
 }
 
@@ -5475,11 +5408,7 @@ h3:hover .heading-anchor {
 }
 
 .careers-role-dept {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
+  @include tech-label(var(--text-secondary));
   letter-spacing: 0.08em;
   margin-bottom: 0.75rem;
 }
@@ -5511,10 +5440,8 @@ h3:hover .heading-anchor {
 }
 
 .careers-role-meta {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
   letter-spacing: 0.04em;
 }
 
@@ -5787,12 +5714,8 @@ h3:hover .heading-anchor {
 }
 
 .section-break-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  @include tech-label(var(--text-secondary));
   letter-spacing: 0.1em;
-  text-transform: uppercase;
   white-space: nowrap;
 }
 
@@ -6225,34 +6148,8 @@ html.js [data-reveal="left"] {
 
   button {
     padding: 0.5rem 0.875rem;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: color 0.15s, border-color 0.15s;
-    min-height: 2.75rem;
-
-    &:hover {
-      color: var(--text-white);
-    }
-
-    &.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-    }
+    @include tab-button;
+    @include tech-label(var(--text-secondary));
   }
 }
 
@@ -6357,11 +6254,8 @@ html.js [data-reveal="left"] {
 
 .auth-diagram-caption {
   text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
   margin-top: 0.75rem;
 }
 
@@ -6428,12 +6322,7 @@ html.js [data-reveal="left"] {
 }
 
 .docs-callout-label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  @include tech-label(var(--text-secondary));
   margin-bottom: 0.375rem;
 
   span { margin-right: 0.375rem; }
@@ -6519,24 +6408,8 @@ html.js [data-reveal="left"] {
 
 .docs-tab {
   padding: 0.5rem 0.875rem;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  white-space: nowrap;
-  min-height: 2.75rem;
-  transition: color 0.15s, border-color 0.15s;
-
-  &:hover { color: var(--text-white); }
-  &.active { color: var(--accent); border-bottom-color: var(--accent); }
-  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @include tab-button;
+  @include tech-label(var(--text-secondary));
 }
 
 .docs-content article .docs-tab-panel {

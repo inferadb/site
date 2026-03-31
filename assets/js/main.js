@@ -1,10 +1,115 @@
-// Announcement banner
+// ─── Shared utilities ────────────────────────────────────────
+
+/**
+ * Shared decrypt/scramble effect.
+ * Scrambles characters in `el` toward `target` string, calling `onDone` when resolved.
+ *
+ * Options:
+ *   chars       — character pool for scrambling
+ *   baseDelay   — base frames before first char resolves (default 8)
+ *   perChar     — additional frames per character index (default 2.5)
+ *   jitter      — random additional frames (default 8)
+ *   flickerRate — frames between random char swaps for unresolved chars (default 3)
+ *   nearThresh  — progress ratio after which char may flash correct (default 0.7)
+ *   nearChance  — probability of showing correct char once past nearThresh (default 0.3)
+ *   preserve    — string of chars to keep as-is (e.g. ' /' for spaces/slashes)
+ *   randChar    — optional function(original) returning a random replacement char
+ */
+function decryptEffect(el, target, options, onDone) {
+  const opts = options || {};
+  const chars = opts.chars || 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+  const baseDelay = opts.baseDelay != null ? opts.baseDelay : 8;
+  const perChar = opts.perChar != null ? opts.perChar : 2.5;
+  const jitter = opts.jitter != null ? opts.jitter : 8;
+  const flickerRate = opts.flickerRate != null ? opts.flickerRate : 3;
+  const nearThresh = opts.nearThresh != null ? opts.nearThresh : 0.7;
+  const nearChance = opts.nearChance != null ? opts.nearChance : 0.3;
+  const preserve = opts.preserve || '';
+  const randCharFn = opts.randChar || null;
+
+  const len = target.length;
+  const resolved = new Array(len).fill(false);
+  const current = new Array(len);
+  let frame = 0;
+
+  const resolveFrames = [];
+  for (let i = 0; i < len; i++) {
+    resolveFrames[i] = baseDelay + i * perChar + Math.floor(Math.random() * jitter);
+    if (preserve.indexOf(target[i]) >= 0) {
+      current[i] = target[i];
+      resolved[i] = true;
+    } else if (randCharFn) {
+      current[i] = randCharFn(target[i]);
+    } else {
+      current[i] = chars[Math.floor(Math.random() * chars.length)];
+    }
+  }
+  el.textContent = current.join('');
+
+  function tick() {
+    frame++;
+    let allDone = true;
+
+    for (let i = 0; i < len; i++) {
+      if (resolved[i]) continue;
+      if (frame >= resolveFrames[i]) {
+        resolved[i] = true;
+        current[i] = target[i];
+      } else {
+        const nearResolve = frame / resolveFrames[i];
+        if (nearResolve > nearThresh) {
+          if (randCharFn) {
+            current[i] = Math.random() < nearChance ? target[i] : randCharFn(target[i]);
+          } else {
+            current[i] = Math.random() < nearChance ? target[i] : chars[Math.floor(Math.random() * chars.length)];
+          }
+        } else if (frame % flickerRate === 0) {
+          current[i] = randCharFn ? randCharFn(target[i]) : chars[Math.floor(Math.random() * chars.length)];
+        }
+        allDone = false;
+      }
+    }
+
+    el.textContent = current.join('');
+
+    if (allDone) {
+      if (onDone) onDone();
+      return null;
+    }
+    return requestAnimationFrame(tick);
+  }
+
+  return requestAnimationFrame(tick);
+}
+
+/**
+ * Get heading text without anchor elements.
+ */
+function headingText(h) {
+  const clone = h.cloneNode(true);
+  clone.querySelectorAll('.heading-anchor').forEach(function(a) { a.remove(); });
+  return clone.textContent.trim();
+}
+
+/**
+ * Detect step number from heading text (e.g., "1. Title" or "Phase 3: Title").
+ */
+function parseStepNumber(text) {
+  let m = text.match(/^(\d+)[\.\:\)]\s/);
+  if (m) return m[1];
+  m = text.match(/^(?:Phase|Step)\s+(\d+)/i);
+  if (m) return m[1];
+  return null;
+}
+
+
+// ─── Banner ──────────────────────────────────────────────────
 (function() {
-  var banner = document.getElementById('site-banner');
+  const banner = document.getElementById('site-banner');
   if (!banner) return;
 
-  var id = banner.getAttribute('data-banner-id');
-  var key = 'banner-dismissed:' + id;
+  const id = banner.getAttribute('data-banner-id');
+  const key = 'banner-dismissed:' + id;
 
   if (localStorage.getItem(key)) {
     banner.remove();
@@ -13,20 +118,20 @@
 
   document.body.classList.add('has-banner');
 
-  var close = document.getElementById('site-banner-close');
+  const close = document.getElementById('site-banner-close');
   if (close) {
     close.addEventListener('click', function() {
       localStorage.setItem(key, '1');
       banner.remove();
       document.body.classList.remove('has-banner');
       // Recalculate nav bottom after banner removal
-      var nav = document.querySelector('.site-nav');
-      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+      const navEl = document.querySelector('.site-nav');
+      if (navEl) document.documentElement.style.setProperty('--nav-bottom', navEl.getBoundingClientRect().bottom + 'px');
     });
   }
 })();
 
-// Navigation scroll effect + mobile panel positioning
+// ─── Navigation ──────────────────────────────────────────────
 const nav = document.querySelector('.site-nav');
 if (nav) {
   function updateNavBottom() {
@@ -40,11 +145,11 @@ if (nav) {
   }, { passive: true });
 }
 
-// Mobile menu toggle
+// ─── Mobile menu ─────────────────────────────────────────────
 const toggle = document.querySelector('.nav-toggle');
 const links = document.querySelector('.nav-links');
 if (toggle && links) {
-  var savedScroll = 0;
+  let savedScroll = 0;
   function getFocusable(container) {
     return Array.from(container.querySelectorAll('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])'));
   }
@@ -57,7 +162,7 @@ if (toggle && links) {
     links.classList.add('open');
     document.body.classList.add('nav-open');
     // Move focus to first link
-    var first = getFocusable(links)[0];
+    const first = getFocusable(links)[0];
     if (first) first.focus();
   }
   function closeNav() {
@@ -87,10 +192,10 @@ if (toggle && links) {
       return;
     }
     if (e.key === 'Tab' && links.classList.contains('open')) {
-      var focusable = getFocusable(links);
+      const focusable = getFocusable(links);
       if (!focusable.length) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -107,23 +212,23 @@ if (toggle && links) {
   }, { passive: true });
 }
 
-// How-it-works perspective tabs (accessible)
+// ─── Tab widgets (HiW, docs hub, etc.) ───────────────────────
 (function() {
-  var tablist = document.querySelector('.hiw-tabs');
-  var tabs = document.querySelectorAll('.hiw-tab');
-  var panels = document.querySelectorAll('.hiw-panel');
+  const tablist = document.querySelector('.hiw-tabs');
+  const tabs = document.querySelectorAll('.hiw-tab');
+  const panels = document.querySelectorAll('.hiw-panel');
   if (!tabs.length) return;
 
   function activate(tab) {
-    var target = tab.getAttribute('data-hiw-tab');
+    const target = tab.getAttribute('data-hiw-tab');
     tabs.forEach(function(t) {
-      var isActive = t.getAttribute('data-hiw-tab') === target;
+      const isActive = t.getAttribute('data-hiw-tab') === target;
       t.classList.toggle('active', isActive);
       t.setAttribute('aria-selected', isActive ? 'true' : 'false');
       t.setAttribute('tabindex', isActive ? '0' : '-1');
     });
     panels.forEach(function(p) {
-      var isActive = p.getAttribute('data-hiw-panel') === target;
+      const isActive = p.getAttribute('data-hiw-panel') === target;
       p.classList.toggle('active', isActive);
       p.hidden = !isActive;
     });
@@ -140,8 +245,8 @@ if (toggle && links) {
   // Arrow key navigation between tabs
   if (tablist) {
     tablist.addEventListener('keydown', function(e) {
-      var tabArr = Array.from(tabs);
-      var idx = tabArr.indexOf(document.activeElement);
+      const tabArr = Array.from(tabs);
+      const idx = tabArr.indexOf(document.activeElement);
       if (idx < 0) return;
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault();
@@ -160,36 +265,36 @@ if (toggle && links) {
   }
 })();
 
-// Mega-menu dropdowns (accessible)
+// ─── Mega-menu dropdowns ─────────────────────────────────────
 (function() {
-  var dropdowns = document.querySelectorAll('.nav-dropdown');
+  const dropdowns = document.querySelectorAll('.nav-dropdown');
   if (!dropdowns.length) return;
 
-  var activeTrigger = null;
+  let activeTrigger = null;
 
   function closeAll() {
     dropdowns.forEach(function(d) {
       d.classList.remove('open');
-      var trigger = d.querySelector('.nav-dropdown-trigger');
+      const trigger = d.querySelector('.nav-dropdown-trigger');
       if (trigger) trigger.setAttribute('aria-expanded', 'false');
     });
   }
 
   dropdowns.forEach(function(dropdown) {
-    var trigger = dropdown.querySelector('.nav-dropdown-trigger');
-    var mega = dropdown.querySelector('.nav-mega');
+    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
+    const mega = dropdown.querySelector('.nav-mega');
     if (!trigger) return;
 
     trigger.addEventListener('click', function(e) {
       e.stopPropagation();
-      var isOpen = dropdown.classList.contains('open');
+      const isOpen = dropdown.classList.contains('open');
       closeAll();
       if (!isOpen) {
         dropdown.classList.add('open');
         trigger.setAttribute('aria-expanded', 'true');
         activeTrigger = trigger;
         // Focus first menu item
-        var firstItem = mega ? mega.querySelector('.nav-mega-hub, .nav-mega-item') : null;
+        const firstItem = mega ? mega.querySelector('.nav-mega-hub, .nav-mega-item') : null;
         if (firstItem) firstItem.focus();
       }
     });
@@ -197,8 +302,8 @@ if (toggle && links) {
     // Arrow key navigation within mega menu
     if (mega) {
       mega.addEventListener('keydown', function(e) {
-        var items = Array.from(mega.querySelectorAll('.nav-mega-hub, .nav-mega-item'));
-        var idx = items.indexOf(document.activeElement);
+        const items = Array.from(mega.querySelectorAll('.nav-mega-hub, .nav-mega-item'));
+        const idx = items.indexOf(document.activeElement);
         if (e.key === 'ArrowDown') {
           e.preventDefault();
           if (idx < items.length - 1) items[idx + 1].focus();
@@ -216,7 +321,7 @@ if (toggle && links) {
     }
 
     // Close on mouse leave (with delay for tolerance)
-    var closeTimer;
+    let closeTimer;
     dropdown.addEventListener('mouseenter', function() {
       clearTimeout(closeTimer);
     });
@@ -243,7 +348,7 @@ if (toggle && links) {
   });
 })();
 
-// Scrollable regions — make keyboard-accessible
+// ─── Scrollable regions + tab bar wheel ──────────────────────
 document.querySelectorAll('pre').forEach(function(pre) {
   if (pre.scrollWidth > pre.clientWidth) {
     pre.setAttribute('tabindex', '0');
@@ -252,7 +357,6 @@ document.querySelectorAll('pre').forEach(function(pre) {
   }
 });
 
-// Scrollable table wrappers (e.g. comparison matrix on mobile)
 document.querySelectorAll('.compare-wrap').forEach(function(wrap) {
   if (wrap.scrollWidth > wrap.clientWidth) {
     wrap.setAttribute('tabindex', '0');
@@ -261,28 +365,28 @@ document.querySelectorAll('.compare-wrap').forEach(function(wrap) {
   }
 });
 
-// Tab bars — intercept mouse wheel to scroll horizontally
 document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs-nav, .docs-tabs-bar').forEach(function(bar) {
   bar.addEventListener('wheel', function(e) {
-    if (bar.scrollWidth <= bar.clientWidth) return; // no overflow, ignore
+    if (bar.scrollWidth <= bar.clientWidth) return;
     e.preventDefault();
     bar.scrollLeft += e.deltaY || e.deltaX;
   }, { passive: false });
 });
 
-// ─── Docs search (Cmd+K) ─────────────────────────────────────
+// ─── Search (Cmd+K) ─────────────────────────────────────────
 (function() {
-  var overlay = document.getElementById('search-overlay');
-  var input = document.getElementById('search-input');
-  var resultsList = document.getElementById('search-results');
-  var trigger = document.getElementById('search-trigger');
+  const overlay = document.getElementById('search-overlay');
+  const input = document.getElementById('search-input');
+  const resultsList = document.getElementById('search-results');
+  const trigger = document.getElementById('search-trigger');
   if (!overlay || !input) return;
 
-  var index = null;
-  var activeIdx = -1;
+  let index = null;
+  let activeIdx = -1;
+  let searchController = null;
 
   // Live region for search result count
-  var searchStatus = document.createElement('div');
+  const searchStatus = document.createElement('div');
   searchStatus.setAttribute('role', 'status');
   searchStatus.setAttribute('aria-live', 'polite');
   searchStatus.className = 'sr-only';
@@ -295,9 +399,12 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     activeIdx = -1;
     input.focus();
     if (!index) {
-      fetch('/search.json').then(function(r) { return r.json(); }).then(function(data) {
-        index = data;
-      });
+      if (searchController) searchController.abort();
+      searchController = new AbortController();
+      fetch('/search.json', { signal: searchController.signal })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { index = data; })
+        .catch(function(e) { if (e.name !== 'AbortError') throw e; });
     }
   }
 
@@ -307,34 +414,34 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   }
 
   function createResult(item, query) {
-    var li = document.createElement('li');
-    var a = document.createElement('a');
+    const li = document.createElement('li');
+    const a = document.createElement('a');
     a.href = item.url;
 
-    var section = document.createElement('div');
+    const section = document.createElement('div');
     section.className = 'search-result-section';
     section.textContent = item.section;
 
-    var title = document.createElement('div');
+    const title = document.createElement('div');
     title.className = 'search-result-title';
     title.textContent = item.title;
 
     a.appendChild(section);
     a.appendChild(title);
 
-    var snippetText = item.excerpt || '';
-    var q = query.toLowerCase();
+    let snippetText = item.excerpt || '';
+    const q = query.toLowerCase();
     if (item.content && item.content.toLowerCase().indexOf(q) >= 0
         && item.title.toLowerCase().indexOf(q) < 0
         && (!item.excerpt || item.excerpt.toLowerCase().indexOf(q) < 0)) {
-      var idx = item.content.toLowerCase().indexOf(q);
-      var start = Math.max(0, idx - 40);
-      var end = Math.min(item.content.length, idx + query.length + 60);
+      const idx = item.content.toLowerCase().indexOf(q);
+      const start = Math.max(0, idx - 40);
+      const end = Math.min(item.content.length, idx + query.length + 60);
       snippetText = (start > 0 ? '\u2026' : '') + item.content.substring(start, end) + (end < item.content.length ? '\u2026' : '');
     }
 
     if (snippetText) {
-      var excerpt = document.createElement('div');
+      const excerpt = document.createElement('div');
       excerpt.className = 'search-result-excerpt';
       excerpt.textContent = snippetText;
       a.appendChild(excerpt);
@@ -347,8 +454,8 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   function search(query) {
     while (resultsList.firstChild) resultsList.removeChild(resultsList.firstChild);
     if (!index || !query) { activeIdx = -1; return; }
-    var q = query.toLowerCase();
-    var matches = index.filter(function(item) {
+    const q = query.toLowerCase();
+    const matches = index.filter(function(item) {
       return item.title.toLowerCase().indexOf(q) >= 0
         || item.excerpt.toLowerCase().indexOf(q) >= 0
         || item.section.toLowerCase().indexOf(q) >= 0
@@ -356,7 +463,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     }).slice(0, 10);
 
     if (!matches.length) {
-      var empty = document.createElement('li');
+      const empty = document.createElement('li');
       empty.className = 'search-empty';
       empty.textContent = 'No results for \u201c' + query + '\u201d';
       resultsList.appendChild(empty);
@@ -373,26 +480,31 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   }
 
   function setActive(idx) {
-    var links = resultsList.querySelectorAll('a');
-    if (!links.length) return;
-    activeIdx = Math.max(0, Math.min(idx, links.length - 1));
-    links.forEach(function(a, i) { a.classList.toggle('active', i === activeIdx); });
-    links[activeIdx].scrollIntoView({ block: 'nearest' });
+    const searchLinks = resultsList.querySelectorAll('a');
+    if (!searchLinks.length) return;
+    activeIdx = Math.max(0, Math.min(idx, searchLinks.length - 1));
+    searchLinks.forEach(function(a, i) { a.classList.toggle('active', i === activeIdx); });
+    searchLinks[activeIdx].scrollIntoView({ block: 'nearest' });
   }
 
-  input.addEventListener('input', function() { search(input.value); });
+  // Debounced search input
+  let searchTimer;
+  input.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(function() { search(input.value); }, 150);
+  });
 
   input.addEventListener('keydown', function(e) {
-    var links = resultsList.querySelectorAll('a');
+    const searchLinks = resultsList.querySelectorAll('a');
     if (e.key === 'ArrowDown') {
       e.preventDefault();
       setActive(activeIdx + 1);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       setActive(activeIdx - 1);
-    } else if (e.key === 'Enter' && activeIdx >= 0 && links[activeIdx]) {
+    } else if (e.key === 'Enter' && activeIdx >= 0 && searchLinks[activeIdx]) {
       e.preventDefault();
-      links[activeIdx].click();
+      searchLinks[activeIdx].click();
     }
   });
 
@@ -406,10 +518,10 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     if (e.key === 'Escape' && overlay.classList.contains('open')) close();
     // Focus trap within search overlay
     if (e.key === 'Tab' && overlay.classList.contains('open')) {
-      var focusable = Array.from(overlay.querySelectorAll('input, a[href], button:not([disabled])'));
+      const focusable = Array.from(overlay.querySelectorAll('input, a[href], button:not([disabled])'));
       if (!focusable.length) return;
-      var first = focusable[0];
-      var last = focusable[focusable.length - 1];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
       if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
         last.focus();
@@ -425,58 +537,41 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 })();
 
-// ─── Docs enhancements ───────────────────────────────────────
+// ─── Docs: TOC + stepped guides ──────────────────────────────
 
 // 1. Right-side TOC — populate from h2/h3 headings + scroll spy
 (function() {
-  var tocList = document.querySelector('.docs-toc-list');
-  var article = document.querySelector('.docs-content article');
+  const tocList = document.querySelector('.docs-toc-list');
+  const article = document.querySelector('.docs-content article');
   if (!tocList || !article) return;
 
-  var headings = article.querySelectorAll('h2, h3');
+  const headings = article.querySelectorAll('h2, h3');
   if (headings.length < 2) {
-    var toc = document.querySelector('.docs-toc');
+    const toc = document.querySelector('.docs-toc');
     if (toc) toc.style.display = 'none';
     return;
   }
 
-  // Get heading text without child elements (anchor links, etc.)
-  function headingText(h) {
-    var clone = h.cloneNode(true);
-    var anchors = clone.querySelectorAll('.heading-anchor');
-    anchors.forEach(function(a) { a.remove(); });
-    return clone.textContent.trim();
-  }
-
-  // Detect step number from heading text (e.g., "1. Title" or "Phase 3: Title")
-  function parseStepNumber(text) {
-    var m = text.match(/^(\d+)[\.\:\)]\s/);
-    if (m) return m[1];
-    m = text.match(/^(?:Phase|Step)\s+(\d+)/i);
-    if (m) return m[1];
-    return null;
-  }
-
   headings.forEach(function(h) {
-    var text = headingText(h);
+    const text = headingText(h);
     if (!h.id) {
       h.id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
-    var li = document.createElement('li');
+    const li = document.createElement('li');
     if (h.tagName === 'H3') li.className = 'toc-h3';
-    var a = document.createElement('a');
+    const a = document.createElement('a');
     a.href = '#' + h.id;
 
     // Step number in TOC
-    var stepNum = (h.tagName === 'H2') ? parseStepNumber(text) : null;
+    const stepNum = (h.tagName === 'H2') ? parseStepNumber(text) : null;
     if (stepNum) {
       li.className = 'toc-step';
-      var numSpan = document.createElement('span');
+      const numSpan = document.createElement('span');
       numSpan.className = 'toc-step-number';
       numSpan.textContent = stepNum;
       a.appendChild(numSpan);
       // Show title without the number prefix
-      var titleSpan = document.createElement('span');
+      const titleSpan = document.createElement('span');
       titleSpan.textContent = text.replace(/^(\d+[\.\:\)]\s*|(?:Phase|Step)\s+\d+[:\s]*)/i, '');
       a.appendChild(titleSpan);
     } else {
@@ -487,17 +582,17 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     tocList.appendChild(li);
   });
 
-  var tocLinks = tocList.querySelectorAll('a');
-  var observer = new IntersectionObserver(function(entries) {
+  const tocLinks = tocList.querySelectorAll('a');
+  const observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        var id = entry.target.id;
+        const id = entry.target.id;
         tocLinks.forEach(function(link) {
           link.classList.toggle('active', link.getAttribute('href') === '#' + id);
         });
-        var activeLink = tocList.querySelector('a.active');
+        const activeLink = tocList.querySelector('a.active');
         if (activeLink) {
-          var li = activeLink.parentElement;
+          const li = activeLink.parentElement;
           tocList.style.setProperty('--toc-indicator-y', li.offsetTop + 'px');
           tocList.style.setProperty('--toc-indicator-h', li.offsetHeight + 'px');
         }
@@ -510,28 +605,13 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
 // 1b. Stepped guide layout — wrap numbered h2 sections in timeline chrome
 (function() {
-  var article = document.querySelector('.docs-content article');
+  const article = document.querySelector('.docs-content article');
   if (!article) return;
 
-  function headingText(h) {
-    var clone = h.cloneNode(true);
-    var anchors = clone.querySelectorAll('.heading-anchor');
-    anchors.forEach(function(a) { a.remove(); });
-    return clone.textContent.trim();
-  }
-
-  function parseStepNumber(text) {
-    var m = text.match(/^(\d+)[\.\:\)]\s/);
-    if (m) return m[1];
-    m = text.match(/^(?:Phase|Step)\s+(\d+)/i);
-    if (m) return m[1];
-    return null;
-  }
-
-  var h2s = article.querySelectorAll('h2');
-  var stepHeadings = [];
+  const h2s = article.querySelectorAll('h2');
+  const stepHeadings = [];
   h2s.forEach(function(h) {
-    var num = parseStepNumber(headingText(h));
+    const num = parseStepNumber(headingText(h));
     if (num) stepHeadings.push({ el: h, num: num });
   });
 
@@ -539,19 +619,19 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
   // For each step heading, collect all sibling elements until the next h2
   stepHeadings.forEach(function(step) {
-    var h = step.el;
+    const h = step.el;
 
     // Create step wrapper
-    var wrapper = document.createElement('div');
+    const wrapper = document.createElement('div');
     wrapper.className = 'docs-step';
 
     // Create number circle
-    var circle = document.createElement('span');
+    const circle = document.createElement('span');
     circle.className = 'docs-step-number';
     circle.textContent = step.num;
 
     // Strip number prefix from heading text
-    var firstText = h.firstChild;
+    const firstText = h.firstChild;
     if (firstText && firstText.nodeType === 3) {
       firstText.textContent = firstText.textContent.replace(/^(\d+[\.\:\)]\s*|(?:Phase|Step)\s+\d+[:\s]*)/i, '');
     }
@@ -562,9 +642,9 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     wrapper.appendChild(h);
 
     // Move siblings into wrapper until next h2 or another docs-step
-    var next = wrapper.nextSibling;
+    let next = wrapper.nextSibling;
     while (next) {
-      var curr = next;
+      const curr = next;
       next = curr.nextSibling;
       if (curr.nodeType === 1 && (curr.tagName === 'H2' || curr.classList.contains('docs-step'))) break;
       wrapper.appendChild(curr);
@@ -572,23 +652,23 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 
   // Highlight active step circle on scroll
-  var steps = article.querySelectorAll('.docs-step');
-  var stepObserver = new IntersectionObserver(function(entries) {
+  const steps = article.querySelectorAll('.docs-step');
+  const stepObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       entry.target.classList.toggle('active', entry.isIntersecting);
     });
   }, { rootMargin: '-80px 0px -70% 0px', threshold: 0 });
 
   steps.forEach(function(s) {
-    var h = s.querySelector('h2');
+    const h = s.querySelector('h2');
     if (h) stepObserver.observe(h);
   });
 })();
 
-// TOC actions — copy link, copy markdown
+// ─── Docs: TOC actions (copy link/markdown) ──────────────────
 (function() {
   function flashCopied(btn) {
-    var orig = btn.textContent;
+    const orig = btn.textContent;
     btn.textContent = 'Copied';
     btn.classList.add('docs-toc-action-copied');
     setTimeout(function() {
@@ -597,7 +677,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     }, 1500);
   }
 
-  var copyLink = document.getElementById('toc-copy-link');
+  const copyLink = document.getElementById('toc-copy-link');
   if (copyLink) {
     copyLink.addEventListener('click', function() {
       navigator.clipboard.writeText(window.location.href).then(function() {
@@ -606,28 +686,32 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     });
   }
 
-  var copyMd = document.getElementById('toc-copy-md');
+  let mdController = null;
+  const copyMd = document.getElementById('toc-copy-md');
   if (copyMd) {
     copyMd.addEventListener('click', function() {
-      var src = copyMd.getAttribute('data-src');
+      const src = copyMd.getAttribute('data-src');
       if (!src) return;
       copyMd.textContent = 'Fetching...';
-      fetch(src)
+      if (mdController) mdController.abort();
+      mdController = new AbortController();
+      fetch(src, { signal: mdController.signal })
         .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
         .then(function(text) {
           return navigator.clipboard.writeText(text);
         })
         .then(function() { flashCopied(copyMd); })
-        .catch(function() {
+        .catch(function(e) {
+          if (e && e.name === 'AbortError') return;
           copyMd.textContent = 'Copy as Markdown';
         });
     });
   }
 })();
 
-// 2. Language labels on code blocks
+// ─── Docs: language labels + shell highlighting ──────────────
 (function() {
-  var langNames = {
+  const langNames = {
     'rust': 'Rust', 'go': 'Go', 'python': 'Python', 'java': 'Java',
     'typescript': 'TypeScript', 'javascript': 'JavaScript', 'ts': 'TypeScript',
     'js': 'JavaScript', 'csharp': 'C#', 'cs': 'C#', 'ruby': 'Ruby',
@@ -640,18 +724,18 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     'proto': 'Protobuf', 'wat': 'WAT', 'plaintext': '',
   };
   document.querySelectorAll('.highlighter-rouge').forEach(function(block) {
-    var classes = block.className.split(' ');
-    var lang = '';
+    const classes = block.className.split(' ');
+    let lang = '';
     classes.forEach(function(cls) {
-      var match = cls.match(/^language-(.+)$/);
+      const match = cls.match(/^language-(.+)$/);
       if (match) lang = match[1];
     });
-    var name = langNames[lang];
+    const name = langNames[lang];
     if (name) {
-      var label = document.createElement('span');
+      const label = document.createElement('span');
       label.className = 'code-lang';
       label.textContent = name;
-      var pre = block.querySelector('pre');
+      const pre = block.querySelector('pre');
       if (pre) {
         pre.style.position = 'relative';
         pre.appendChild(label);
@@ -660,41 +744,38 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 })();
 
-// 2b. Shell command name highlighting
-// Wraps the first word of each line in shell blocks with a span for styling.
+// Shell command name highlighting
 (function() {
   document.querySelectorAll('.language-bash .highlight code, .language-shell .highlight code, .language-sh .highlight code').forEach(function(code) {
-    var nodes = Array.prototype.slice.call(code.childNodes);
-    var atLineStart = true;
+    const nodes = Array.prototype.slice.call(code.childNodes);
+    let atLineStart = true;
 
     nodes.forEach(function(node) {
       if (node.nodeType !== 3) {
-        // If it's a comment span (.c), next text node starts a new line
         if (node.classList && node.classList.contains('c')) atLineStart = true;
         return;
       }
-      var text = node.textContent;
+      const text = node.textContent;
       if (!text) return;
 
-      // Split on newlines to find line starts
-      var lines = text.split('\n');
+      const lines = text.split('\n');
       if (lines.length <= 1 && !atLineStart) return;
 
-      var frag = document.createDocumentFragment();
+      const frag = document.createDocumentFragment();
       lines.forEach(function(line, i) {
         if (i > 0) frag.appendChild(document.createTextNode('\n'));
 
-        var isStart = (i > 0) || atLineStart;
-        var trimmed = line.replace(/^\s+/, '');
-        var leading = line.substring(0, line.length - trimmed.length);
+        const isStart = (i > 0) || atLineStart;
+        const trimmed = line.replace(/^\s+/, '');
+        const leading = line.substring(0, line.length - trimmed.length);
 
         if (isStart && trimmed.length > 0 && !trimmed.startsWith('#')) {
-          var firstSpace = trimmed.indexOf(' ');
-          var cmd = firstSpace >= 0 ? trimmed.substring(0, firstSpace) : trimmed;
-          var rest = firstSpace >= 0 ? trimmed.substring(firstSpace) : '';
+          const firstSpace = trimmed.indexOf(' ');
+          const cmd = firstSpace >= 0 ? trimmed.substring(0, firstSpace) : trimmed;
+          const rest = firstSpace >= 0 ? trimmed.substring(firstSpace) : '';
 
           if (leading) frag.appendChild(document.createTextNode(leading));
-          var span = document.createElement('span');
+          const span = document.createElement('span');
           span.className = 'sh-cmd';
           span.textContent = cmd;
           frag.appendChild(span);
@@ -704,23 +785,22 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
         }
       });
 
-      // Track whether next node starts a new line
       atLineStart = text.endsWith('\n');
       node.parentNode.replaceChild(frag, node);
     });
   });
 })();
 
-// 3. Copy-to-clipboard on code blocks
+// ─── Docs: copy-to-clipboard ─────────────────────────────────
 (function() {
   document.querySelectorAll('.docs-content pre, .post-body pre').forEach(function(pre) {
-    var btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.className = 'code-copy';
     btn.textContent = 'Copy';
     btn.setAttribute('aria-label', 'Copy code to clipboard');
     btn.addEventListener('click', function() {
-      var code = pre.querySelector('code');
-      var text = code ? code.textContent : pre.textContent;
+      const code = pre.querySelector('code');
+      const text = code ? code.textContent : pre.textContent;
       navigator.clipboard.writeText(text).then(function() {
         btn.textContent = 'Copied';
         btn.classList.add('copied');
@@ -735,10 +815,10 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 })();
 
-// Heading anchor links
+// ─── Docs: heading anchors ───────────────────────────────────
 (function() {
   function createLinkIcon() {
-    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('width', '16');
     svg.setAttribute('height', '16');
     svg.setAttribute('viewBox', '0 0 24 24');
@@ -748,9 +828,9 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     svg.setAttribute('stroke-linecap', 'round');
     svg.setAttribute('stroke-linejoin', 'round');
     svg.setAttribute('aria-hidden', 'true');
-    var p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     p1.setAttribute('d', 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71');
-    var p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     p2.setAttribute('d', 'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71');
     svg.appendChild(p1);
     svg.appendChild(p2);
@@ -762,7 +842,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     if (!h.id) {
       h.id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
-    var anchor = document.createElement('a');
+    const anchor = document.createElement('a');
     anchor.className = 'heading-anchor';
     anchor.href = '#' + h.id;
     anchor.setAttribute('aria-label', 'Copy link to ' + h.textContent.trim());
@@ -771,12 +851,12 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 })();
 
-// Docs sidebar scroll persistence
+// ─── Docs: sidebar (scroll + collapsible) ────────────────────
 (function() {
-  var sidebar = document.querySelector('.docs-sidebar');
+  const sidebar = document.querySelector('.docs-sidebar');
   if (!sidebar) return;
-  var key = 'docs-sidebar-scroll';
-  var saved = sessionStorage.getItem(key);
+  const key = 'docs-sidebar-scroll';
+  const saved = sessionStorage.getItem(key);
   if (saved) sidebar.scrollTop = parseInt(saved, 10);
   sidebar.addEventListener('scroll', function() {
     sessionStorage.setItem(key, sidebar.scrollTop);
@@ -785,12 +865,12 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
 // Collapsible sidebar sections (with sessionStorage persistence)
 (function() {
-  var groups = document.querySelectorAll('.docs-nav-group');
+  const groups = document.querySelectorAll('.docs-nav-group');
   if (!groups.length) return;
 
-  var storageKey = 'docs-sidebar-sections';
-  var saved = sessionStorage.getItem(storageKey);
-  var savedState = null;
+  const storageKey = 'docs-sidebar-sections';
+  const saved = sessionStorage.getItem(storageKey);
+  let savedState = null;
 
   if (saved) {
     try { savedState = JSON.parse(saved); } catch (e) { /* ignore */ }
@@ -815,7 +895,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 
   function persistState() {
-    var state = [];
+    const state = [];
     groups.forEach(function(group) {
       state.push(group.classList.contains('open'));
     });
@@ -823,13 +903,13 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   }
 
   groups.forEach(function(group) {
-    var btn = group.querySelector('.docs-nav-heading');
+    const btn = group.querySelector('.docs-nav-heading');
     if (!btn) return;
-    var isOpen = group.classList.contains('open');
+    const isOpen = group.classList.contains('open');
     btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 
     btn.addEventListener('click', function() {
-      var wasOpen = group.classList.contains('open');
+      const wasOpen = group.classList.contains('open');
       group.classList.toggle('open');
       btn.setAttribute('aria-expanded', wasOpen ? 'false' : 'true');
       persistState();
@@ -837,15 +917,15 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 })();
 
-// Docs feedback widget
+// ─── Docs: feedback widget ───────────────────────────────────
 (function() {
-  var container = document.getElementById('docs-feedback');
+  const container = document.getElementById('docs-feedback');
   if (!container) return;
 
-  var key = 'docs-feedback:' + window.location.pathname;
-  var saved = localStorage.getItem(key);
-  var thanks = container.querySelector('.docs-feedback-thanks');
-  var buttons = container.querySelectorAll('.docs-feedback-btn');
+  const key = 'docs-feedback:' + window.location.pathname;
+  const saved = localStorage.getItem(key);
+  const thanks = container.querySelector('.docs-feedback-thanks');
+  const buttons = container.querySelectorAll('.docs-feedback-btn');
 
   if (saved) {
     buttons.forEach(function(btn) {
@@ -857,7 +937,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
   buttons.forEach(function(btn) {
     btn.addEventListener('click', function() {
-      var value = btn.dataset.value;
+      const value = btn.dataset.value;
       localStorage.setItem(key, value);
       buttons.forEach(function(b) {
         b.classList.toggle('selected', b.dataset.value === value);
@@ -868,24 +948,138 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 })();
 
-// ─── Authorization Graph Visualization ───────────────────────
-// Simulates live ReBAC query resolution in the hero background.
+// ─── Docs: tabs + code tabs ──────────────────────────────────
+
+// Docs Tabs
 (function() {
-  var canvas = document.getElementById('constellation');
+  const tabGroups = document.querySelectorAll('.docs-tabs');
+  if (!tabGroups.length) return;
+
+  tabGroups.forEach(function(group) {
+    const tabs = group.querySelectorAll('.docs-tab');
+    const panels = group.querySelectorAll('.docs-tab-panel');
+    const id = group.dataset.tabsId;
+
+    function activateTab(idx) {
+      tabs.forEach(function(t) {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+      });
+      panels.forEach(function(p) { p.classList.remove('active'); p.hidden = true; });
+      tabs[idx].classList.add('active');
+      tabs[idx].setAttribute('aria-selected', 'true');
+      tabs[idx].setAttribute('tabindex', '0');
+      panels[idx].classList.add('active');
+      panels[idx].hidden = false;
+      localStorage.setItem('docs-tab:' + id, idx);
+    }
+
+    // Set initial hidden state for inactive panels
+    panels.forEach(function(p) { if (!p.classList.contains('active')) p.hidden = true; });
+
+    const savedTab = localStorage.getItem('docs-tab:' + id);
+    if (savedTab !== null) {
+      const idx = parseInt(savedTab, 10);
+      if (idx >= 0 && idx < tabs.length) activateTab(idx);
+    }
+
+    tabs.forEach(function(tab, i) {
+      tab.addEventListener('click', function() { activateTab(i); });
+    });
+
+    // Arrow key navigation for tablist
+    group.querySelector('.docs-tabs-bar').addEventListener('keydown', function(e) {
+      const current = Array.prototype.indexOf.call(tabs, document.activeElement);
+      if (current < 0) return;
+      let next = -1;
+      if (e.key === 'ArrowRight') next = (current + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = tabs.length - 1;
+      if (next >= 0) {
+        e.preventDefault();
+        activateTab(next);
+        tabs[next].focus();
+      }
+    });
+  });
+})();
+
+// Code Tabs
+(function() {
+  const STORAGE_KEY = 'inferadb-docs-lang';
+
+  function activateTab(group, lang) {
+    const buttons = group.querySelectorAll('.code-tabs-nav button');
+    const panels = group.querySelectorAll('.code-tabs-panel');
+    buttons.forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+    panels.forEach(function(panel) {
+      panel.classList.toggle('active', panel.getAttribute('data-lang') === lang);
+    });
+    // Update SDK link if present
+    const activeBtn = group.querySelector('.code-tabs-nav button.active');
+    const sdkLink = group.querySelector('.code-tabs-sdk-link');
+    if (activeBtn && sdkLink) {
+      const url = activeBtn.getAttribute('data-sdk-url');
+      const name = activeBtn.getAttribute('data-sdk-name');
+      if (url && name) {
+        const a = sdkLink.querySelector('a');
+        if (a) {
+          a.href = url;
+          a.textContent = name;
+        }
+      }
+    }
+  }
+
+  function syncAll(lang) {
+    document.querySelectorAll('.code-tabs').forEach(function(group) {
+      const hasLang = group.querySelector('[data-lang="' + lang + '"]');
+      if (hasLang) activateTab(group, lang);
+    });
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.code-tabs-nav button');
+    if (!btn) return;
+    const lang = btn.getAttribute('data-lang');
+    if (lang) syncAll(lang);
+  });
+
+  // On page load, restore preference or use first tab
+  let saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  document.querySelectorAll('.code-tabs').forEach(function(group) {
+    const first = group.querySelector('.code-tabs-nav button');
+    if (!first) return;
+    const lang = saved && group.querySelector('[data-lang="' + saved + '"]')
+      ? saved
+      : first.getAttribute('data-lang');
+    activateTab(group, lang);
+  });
+})();
+
+// ─── Constellation canvas ────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('constellation');
   if (!canvas) return;
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var ctx = canvas.getContext('2d');
-  var W, H, isMobile;
-  var nodes = [], edges = [], pulses = [];
-  var mouseX = -1000, mouseY = -1000;
-  var raf = null, running = false, time = 0;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ctx = canvas.getContext('2d');
+  let W, H, isMobile;
+  let nodes = [], edges = [], pulses = [];
+  let mouseX = -1000, mouseY = -1000;
+  let raf = null, running = false, time = 0;
 
-  var amber = [200, 164, 78];
-  var teal = [86, 182, 194];
-  var green = [106, 158, 74];
-  var red = [212, 88, 88];
+  const amber = [200, 164, 78];
+  const teal = [86, 182, 194];
+  const green = [106, 158, 74];
+  const red = [212, 88, 88];
 
-  var types = [
+  const types = [
     { c: amber, r: 2.5 }, { c: teal, r: 2 },
     { c: green, r: 1.8 }, { c: amber, r: 1.5 },
   ];
@@ -902,12 +1096,12 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
   function buildEdges() {
     edges = [];
-    for (var a = 0; a < nodes.length; a++) {
-      var c = 0;
-      for (var b = a + 1; b < nodes.length; b++) {
+    for (let a = 0; a < nodes.length; a++) {
+      let c = 0;
+      for (let b = a + 1; b < nodes.length; b++) {
         if (c >= 4) break;
-        var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
-        var maxDist = isMobile ? 120 : 200;
+        const dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
+        const maxDist = isMobile ? 120 : 200;
         if (Math.sqrt(dx * dx + dy * dy) < maxDist && Math.random() < 0.5) {
           edges.push([a, b]);
           c++;
@@ -916,14 +1110,24 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     }
   }
 
+  let adj = [];
+  function buildAdj() {
+    adj = [];
+    for (let i = 0; i < nodes.length; i++) adj[i] = [];
+    for (let e = 0; e < edges.length; e++) {
+      adj[edges[e][0]].push(edges[e][1]);
+      adj[edges[e][1]].push(edges[e][0]);
+    }
+  }
+
   function init() {
     resize();
     nodes = []; pulses = [];
-    var count = isMobile
+    const count = isMobile
       ? Math.max(12, Math.min(25, Math.floor(W * H / 15000)))
       : Math.max(30, Math.min(70, Math.floor(W * H / 6000)));
-    for (var i = 0; i < count; i++) {
-      var t = types[Math.floor(Math.random() * types.length)];
+    for (let i = 0; i < count; i++) {
+      const t = types[Math.floor(Math.random() * types.length)];
       nodes.push({
         x: Math.random() * W, y: Math.random() * H,
         c: t.c, r: t.r, glow: 0
@@ -933,62 +1137,45 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     buildAdj();
   }
 
-  // Build adjacency list for fast neighbor lookups
-  var adj = [];
-  function buildAdj() {
-    adj = [];
-    for (var i = 0; i < nodes.length; i++) adj[i] = [];
-    for (var e = 0; e < edges.length; e++) {
-      adj[edges[e][0]].push(edges[e][1]);
-      adj[edges[e][1]].push(edges[e][0]);
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
     }
   }
 
-  // Simulate a graph traversal query with branching exploration.
-  // Models how InferaDB resolves: check(user:X, permission, resource:Y)
-  // — walks the relationship graph, exploring union branches in parallel.
   function fireQuery() {
     if (!adj.length) return;
 
-    // Pick a starting node (the "subject" — e.g., user:alice)
-    var start = Math.floor(Math.random() * nodes.length);
+    const start = Math.floor(Math.random() * nodes.length);
     if (!adj[start] || !adj[start].length) return;
 
-    // BFS/DFS traversal with branching — collect all explored paths
-    var branches = [];
-    var visited = {};
-    visited[start] = 1;
-    var maxDepth = 3 + Math.floor(Math.random() * 4); // 3-6 hops deep
-
-    // Explore multiple branches from the start (like union evaluation)
-    var branchCount = Math.min(adj[start].length, 2 + Math.floor(Math.random() * 2));
-    var startNeighbors = adj[start].slice();
+    const branches = [];
+    const maxDepth = 3 + Math.floor(Math.random() * 4);
+    const branchCount = Math.min(adj[start].length, 2 + Math.floor(Math.random() * 2));
+    const startNeighbors = adj[start].slice();
     shuffle(startNeighbors);
 
-    for (var b = 0; b < branchCount; b++) {
+    for (let b = 0; b < branchCount; b++) {
       if (b >= startNeighbors.length) break;
-      var path = [start];
-      var cur = startNeighbors[b];
+      const path = [start];
+      let cur = startNeighbors[b];
       path.push(cur);
-      var localVisited = {};
+      const localVisited = {};
       localVisited[start] = 1;
       localVisited[cur] = 1;
 
-      // Walk this branch deeper
-      for (var d = 0; d < maxDepth - 1; d++) {
-        var neighbors = [];
-        for (var n = 0; n < adj[cur].length; n++) {
+      for (let d = 0; d < maxDepth - 1; d++) {
+        const neighbors = [];
+        for (let n = 0; n < adj[cur].length; n++) {
           if (!localVisited[adj[cur][n]]) neighbors.push(adj[cur][n]);
         }
         if (!neighbors.length) break;
-        // Occasionally branch again mid-path (tuple-to-userset traversal)
         if (neighbors.length > 1 && Math.random() < 0.3 && d < maxDepth - 2) {
           shuffle(neighbors);
-          // Fork: create a sub-branch from this point
-          var fork = path.slice();
+          const fork = path.slice();
           fork.push(neighbors[1]);
           branches.push({ path: fork, isFork: true });
-          // Continue main branch with first neighbor
           cur = neighbors[0];
         } else {
           cur = neighbors[Math.floor(Math.random() * neighbors.length)];
@@ -1002,18 +1189,13 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
     if (!branches.length) return;
 
-    // Determine result — one branch "succeeds" (allowed), others may not
-    var allowedBranch = Math.floor(Math.random() * branches.length);
-    var queryAllowed = Math.random() < 0.75;
+    const allowedBranch = Math.floor(Math.random() * branches.length);
+    const queryAllowed = Math.random() < 0.75;
 
-    // Stagger the branch pulses slightly for visual effect
-    for (var i = 0; i < branches.length; i++) {
+    for (let i = 0; i < branches.length; i++) {
       if (branches[i].path.length < 2) continue;
-      var isWinner = (i === allowedBranch) && queryAllowed;
-      var branchColor = isWinner ? green : (queryAllowed ? amber : red);
-      // Denied branches use amber (explored but not the granting path)
-      // The winning branch lights up green
-      // If query denied overall, last branch goes red
+      const isWinner = (i === allowedBranch) && queryAllowed;
+      let branchColor = isWinner ? green : (queryAllowed ? amber : red);
       if (!queryAllowed && i === branches.length - 1) branchColor = red;
 
       pulses.push({
@@ -1023,16 +1205,9 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
         c: branchColor,
         age: 0,
         ttl: 140,
-        delay: i * 12, // stagger start
+        delay: i * 12,
         isWinner: isWinner
       });
-    }
-  }
-
-  function shuffle(arr) {
-    for (var i = arr.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
     }
   }
 
@@ -1041,24 +1216,24 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
     // Static edges
     ctx.lineWidth = 0.5;
-    for (var e = 0; e < edges.length; e++) {
-      var a = nodes[edges[e][0]], b = nodes[edges[e][1]];
+    for (let e = 0; e < edges.length; e++) {
+      const a = nodes[edges[e][0]], b = nodes[edges[e][1]];
       ctx.strokeStyle = rgba(amber, 0.03);
       ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
     }
 
     // Query pulses
-    for (var p = 0; p < pulses.length; p++) {
-      var pl = pulses[p];
+    for (let p = 0; p < pulses.length; p++) {
+      const pl = pulses[p];
       if (pl.delay > 0) continue;
-      var seg = Math.floor(pl.t), frac = pl.t - seg;
-      var fade = pl.age > 0 ? Math.max(0, 1 - pl.age / pl.ttl) : 1;
-      var lineW = pl.isWinner ? 1.5 : 0.8;
+      const seg = Math.floor(pl.t), frac = pl.t - seg;
+      const fade = pl.age > 0 ? Math.max(0, 1 - pl.age / pl.ttl) : 1;
+      const lineW = pl.isWinner ? 1.5 : 0.8;
 
       // Lit edges
       ctx.lineWidth = lineW;
-      for (var s = 0; s < Math.min(seg + 1, pl.path.length - 1); s++) {
-        var ea = (s < seg ? 0.15 : frac * 0.15) * fade;
+      for (let s = 0; s < Math.min(seg + 1, pl.path.length - 1); s++) {
+        const ea = (s < seg ? 0.15 : frac * 0.15) * fade;
         ctx.strokeStyle = rgba(pl.c, ea);
         ctx.beginPath();
         ctx.moveTo(nodes[pl.path[s]].x, nodes[pl.path[s]].y);
@@ -1068,36 +1243,35 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
       // Moving dot
       if (seg < pl.path.length - 1) {
-        var f = nodes[pl.path[seg]], t = nodes[pl.path[seg+1]];
-        var px = f.x + (t.x - f.x) * frac, py = f.y + (t.y - f.y) * frac;
-        var dotR = pl.isWinner ? 2.5 : 1.8;
+        const f = nodes[pl.path[seg]], t = nodes[pl.path[seg+1]];
+        const px = f.x + (t.x - f.x) * frac, py = f.y + (t.y - f.y) * frac;
+        const dotR = pl.isWinner ? 2.5 : 1.8;
         ctx.fillStyle = rgba(pl.c, 0.5);
         ctx.beginPath(); ctx.arc(px, py, dotR, 0, 6.28); ctx.fill();
         ctx.fillStyle = rgba(pl.c, 0.06);
         ctx.beginPath(); ctx.arc(px, py, 8, 0, 6.28); ctx.fill();
 
-        // Light up nodes as the pulse passes through
         nodes[pl.path[seg]].glow = Math.max(nodes[pl.path[seg]].glow, 0.15);
         t.glow = Math.max(t.glow, frac * 0.25);
       }
 
       // Terminal flash
       if (pl.age > 0 && pl.age < 30) {
-        var tn = nodes[pl.path[pl.path.length - 1]];
-        var flashR = pl.isWinner ? 12 : 8;
-        var flashA = (1 - pl.age / 30) * (pl.isWinner ? 0.3 : 0.15);
+        const tn = nodes[pl.path[pl.path.length - 1]];
+        const flashR = pl.isWinner ? 12 : 8;
+        const flashA = (1 - pl.age / 30) * (pl.isWinner ? 0.3 : 0.15);
         ctx.fillStyle = rgba(pl.c, flashA);
         ctx.beginPath(); ctx.arc(tn.x, tn.y, flashR, 0, 6.28); ctx.fill();
       }
     }
 
     // Nodes
-    for (var k = 0; k < nodes.length; k++) {
-      var n = nodes[k];
-      var mdx = n.x - mouseX, mdy = n.y - mouseY;
-      var md = Math.sqrt(mdx * mdx + mdy * mdy);
-      var mg = md < 180 ? (1 - md / 180) * 0.15 : 0;
-      var na = Math.min(0.08 + n.glow + mg, 0.4);
+    for (let k = 0; k < nodes.length; k++) {
+      const n = nodes[k];
+      const mdx = n.x - mouseX, mdy = n.y - mouseY;
+      const md = Math.sqrt(mdx * mdx + mdy * mdy);
+      const mg = md < 180 ? (1 - md / 180) * 0.15 : 0;
+      const na = Math.min(0.08 + n.glow + mg, 0.4);
       ctx.fillStyle = rgba(n.c, na);
       ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 6.28); ctx.fill();
       if (n.glow > 0.08) {
@@ -1118,12 +1292,12 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
       if (time % 100 === 50) fireQuery();
     }
 
-    for (var i = 0; i < nodes.length; i++) {
+    for (let i = 0; i < nodes.length; i++) {
       nodes[i].glow *= 0.94;
     }
 
-    for (var p = pulses.length - 1; p >= 0; p--) {
-      var pl = pulses[p];
+    for (let p = pulses.length - 1; p >= 0; p--) {
+      const pl = pulses[p];
       if (pl.delay > 0) { pl.delay--; continue; }
       if (pl.t < pl.path.length - 1) {
         pl.t += pl.spd;
@@ -1136,18 +1310,24 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
   }
 
-  function loop() {
+  const FRAME_INTERVAL = 1000 / 60;
+  let lastFrame = 0;
+  function loop(timestamp) {
     if (!running) return;
+    if (timestamp - lastFrame < FRAME_INTERVAL) { raf = requestAnimationFrame(loop); return; }
+    lastFrame = timestamp;
     update();
     draw();
     raf = requestAnimationFrame(loop);
   }
 
-  function start() { if (!running) { running = true; loop(); } }
+  function start() { if (!running) { running = true; raf = requestAnimationFrame(loop); } }
   function stop() { running = false; if (raf) { cancelAnimationFrame(raf); raf = null; } }
 
+  let heroVisible = true;
+
   canvas.parentElement.addEventListener('mousemove', function(e) {
-    var r = canvas.getBoundingClientRect();
+    const r = canvas.getBoundingClientRect();
     mouseX = e.clientX - r.left; mouseY = e.clientY - r.top;
   }, { passive: true });
   canvas.parentElement.addEventListener('mouseleave', function() { mouseX = mouseY = -1000; });
@@ -1158,8 +1338,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   });
 
   // Pause when hero is scrolled out of view
-  var heroVisible = true;
-  var heroObserver = new IntersectionObserver(function(entries) {
+  const heroObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       heroVisible = entry.isIntersecting;
       if (heroVisible && !reducedMotion) start();
@@ -1170,7 +1349,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
   init();
   if (reducedMotion) {
-    for (var q = 0; q < 3; q++) fireQuery();
+    for (let q = 0; q < 3; q++) fireQuery();
     pulses.forEach(function(pl) { pl.t = pl.path.length - 1; pl.age = 10; });
     draw();
   } else {
@@ -1178,13 +1357,13 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   }
 })();
 
-// ─── Numeric decrypt effect ──────────────────────────────────
-// Elements with [data-decrypt-num] scramble through digits/symbols
-// before resolving. Resets on scroll out.
+// ─── Decrypt effects (numeric, text, hero) ───────────────────
+
+// Numeric decrypt effect — [data-decrypt-num]
 (function() {
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var digits = '0123456789';
-  var elements = document.querySelectorAll('[data-decrypt-num]');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const digits = '0123456789';
+  const elements = document.querySelectorAll('[data-decrypt-num]');
   if (!elements.length) return;
 
   if (reducedMotion) {
@@ -1192,93 +1371,52 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     return;
   }
 
-  var active = new Map();
+  const active = new Map();
+
+  // Characters that should stay fixed (non-digits)
+  function isDigit(ch) { return digits.indexOf(ch) >= 0; }
 
   function scramble(el) {
-    var target = el.getAttribute('data-decrypt-num');
-    var len = target.length;
-    var resolved = new Array(len).fill(false);
-    var current = new Array(len);
-    var frame = 0;
-
-    var resolveFrames = [];
-    for (var i = 0; i < len; i++) {
-      resolveFrames[i] = 15 + i * 5 + Math.floor(Math.random() * 20);
-      // Keep symbols/letters as-is from the start, only scramble digits
-      if ('0123456789'.indexOf(target[i]) >= 0) {
-        current[i] = digits[Math.floor(Math.random() * digits.length)];
-      } else {
-        current[i] = target[i];
-        resolved[i] = true;
-      }
-    }
-    el.textContent = current.join('');
-
-    function tick() {
-      frame++;
-      var allDone = true;
-
-      for (var i = 0; i < len; i++) {
-        if (resolved[i]) continue;
-        if (frame >= resolveFrames[i]) {
-          resolved[i] = true;
-          current[i] = target[i];
-        } else {
-          var nearResolve = frame / resolveFrames[i];
-          if (nearResolve > 0.6) {
-            current[i] = Math.random() < 0.25 ? target[i] : digits[Math.floor(Math.random() * digits.length)];
-          } else if (frame % 2 === 0) {
-            current[i] = digits[Math.floor(Math.random() * digits.length)];
-          }
-          allDone = false;
-        }
-      }
-
-      el.textContent = current.join('');
-
-      if (allDone) {
-        active.delete(el);
-      } else {
-        active.set(el, requestAnimationFrame(tick));
-      }
-    }
-
+    const target = el.getAttribute('data-decrypt-num');
+    // Cancel any existing animation
     if (active.has(el)) { cancelAnimationFrame(active.get(el)); }
-    active.set(el, requestAnimationFrame(tick));
+    const rafId = decryptEffect(el, target, {
+      chars: digits,
+      baseDelay: 15,
+      perChar: 5,
+      jitter: 20,
+      flickerRate: 2,
+      nearThresh: 0.6,
+      nearChance: 0.25,
+      preserve: target.split('').filter(function(ch) { return !isDigit(ch); }).join('')
+    }, function() { active.delete(el); });
+    active.set(el, rafId);
   }
 
-  function reset(el) {
-    if (active.has(el)) { cancelAnimationFrame(active.get(el)); active.delete(el); }
-    // Fill with scrambled text at correct length to preserve layout
-    var target = el.getAttribute('data-decrypt-num');
-    var out = '';
-    for (var i = 0; i < target.length; i++) {
-      if ('0123456789'.indexOf(target[i]) >= 0) {
+  function randomFill(target) {
+    let out = '';
+    for (let i = 0; i < target.length; i++) {
+      if (isDigit(target[i])) {
         out += digits[Math.floor(Math.random() * digits.length)];
       } else {
         out += target[i];
       }
     }
-    el.textContent = out;
+    return out;
   }
 
-  var timeouts = new Map();
-  var idleAnims = new Map();
+  function reset(el) {
+    if (active.has(el)) { cancelAnimationFrame(active.get(el)); active.delete(el); }
+    el.textContent = randomFill(el.getAttribute('data-decrypt-num'));
+  }
 
-  // Show cycling random digits until the real decrypt starts
+  const timeouts = new Map();
+  const idleAnims = new Map();
+
   function startIdle(el) {
-    var target = el.getAttribute('data-decrypt-num');
-    var len = target.length;
+    const target = el.getAttribute('data-decrypt-num');
     function tick() {
-      var out = '';
-      for (var i = 0; i < len; i++) {
-        if ('0123456789'.indexOf(target[i]) >= 0) {
-          out += digits[Math.floor(Math.random() * digits.length)];
-        } else {
-          out += target[i];
-        }
-      }
-      el.textContent = out;
+      el.textContent = randomFill(target);
       idleAnims.set(el, requestAnimationFrame(tick));
     }
     idleAnims.set(el, requestAnimationFrame(tick));
@@ -1291,14 +1429,12 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     }
   }
 
-  var observer = new IntersectionObserver(function(entries) {
+  const observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        var delay = parseInt(entry.target.getAttribute('data-decrypt-delay') || '0', 10);
-        // Start idle scrambling immediately
+        const delay = parseInt(entry.target.getAttribute('data-decrypt-delay') || '0', 10);
         startIdle(entry.target);
-        // After delay, stop idle and begin real decrypt
-        var tid = setTimeout(function() {
+        const tid = setTimeout(function() {
           stopIdle(entry.target);
           scramble(entry.target);
           timeouts.delete(entry.target);
@@ -1315,65 +1451,81 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     });
   }, { threshold: 0.5 });
 
-  // Scramble on init — real text is in DOM for crawlers, JS scrambles for visual effect
   elements.forEach(function(el) {
-    var target = el.getAttribute('data-decrypt-num');
-    var out = '';
-    for (var i = 0; i < target.length; i++) {
-      if ('0123456789'.indexOf(target[i]) >= 0) {
-        out += digits[Math.floor(Math.random() * digits.length)];
-      } else {
-        out += target[i];
-      }
-    }
-    el.textContent = out;
+    el.textContent = randomFill(el.getAttribute('data-decrypt-num'));
     observer.observe(el);
   });
 })();
 
-// ─── Viewport reveal animations ──────────────────────────────
-// Elements with [data-reveal] fade/slide in when they enter the viewport.
-// Respects prefers-reduced-motion.
+// Cipher decrypt effect — [data-decrypt]
 (function() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('[data-decrypt]').forEach(function(el) {
+      el.textContent = el.getAttribute('data-decrypt');
+    });
+    return;
+  }
 
-  var elements = document.querySelectorAll('[data-reveal]');
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+  const elements = document.querySelectorAll('[data-decrypt]');
   if (!elements.length) return;
 
-  var observer = new IntersectionObserver(function(entries) {
+  const active = new Map();
+
+  function scramble(el) {
+    const target = el.getAttribute('data-decrypt');
+    if (active.has(el)) { cancelAnimationFrame(active.get(el)); }
+    const rafId = decryptEffect(el, target, {
+      chars: chars,
+      preserve: ' /'
+    }, function() { active.delete(el); });
+    active.set(el, rafId);
+  }
+
+  function reset(el) {
+    if (active.has(el)) { cancelAnimationFrame(active.get(el)); active.delete(el); }
+    const target = el.getAttribute('data-decrypt');
+    let out = '';
+    for (let i = 0; i < target.length; i++) {
+      if (target[i] === ' ' || target[i] === '/') {
+        out += target[i];
+      } else {
+        out += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+    el.textContent = out;
+  }
+
+  const observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        // Apply delay if set
-        var delay = entry.target.getAttribute('data-reveal-delay');
-        if (delay) {
-          entry.target.style.transitionDelay = delay + 'ms';
-        }
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target); // only animate once
+        scramble(entry.target);
+      } else {
+        reset(entry.target);
       }
     });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -40px 0px'
-  });
+  }, { threshold: 0.5 });
 
-  elements.forEach(function(el) { observer.observe(el); });
+  elements.forEach(function(el) {
+    reset(el);
+    observer.observe(el);
+  });
 })();
 
-// ─── Hero title decrypt + phrase cycling ─────────────────────
+// Hero title decrypt + phrase cycling — [data-hero-decrypt]
 (function() {
-  var hero = document.querySelector('[data-hero-decrypt]');
+  const hero = document.querySelector('[data-hero-decrypt]');
   if (!hero) return;
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var statics = hero.querySelectorAll('[data-hero-static]');
-  var cycleEl = hero.querySelector('[data-hero-cycle]');
+  const statics = hero.querySelectorAll('[data-hero-static]');
+  const cycleEl = hero.querySelector('[data-hero-cycle]');
   if (!cycleEl) return;
 
-  var phrases = cycleEl.getAttribute('data-phrases').split(',');
-  var charsUpper = 'ABCDEFGHJKLNPRSTUX';  // avoid wide M/W/O
-  var charsLower = 'abcdefghjklmnprstux0123456789';
-  var currentPhrase = 0;
+  const phrases = cycleEl.getAttribute('data-phrases').split(',');
+  const charsUpper = 'ABCDEFGHJKLNPRSTUX';
+  const charsLower = 'abcdefghjklmnprstux0123456789';
+  let currentPhrase = 0;
 
   function randChar(original) {
     if (original === original.toUpperCase()) {
@@ -1381,66 +1533,35 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     }
     return charsLower[Math.floor(Math.random() * charsLower.length)];
   }
-  var cycleInterval = null;
-  var animFrame = null;
 
-  function decryptText(el, text, onDone) {
-    var len = text.length;
-    var resolved = new Array(len).fill(false);
-    var current = new Array(len);
-    var frame = 0;
+  let cycleInterval = null;
+  let animFrame = null;
 
-    // Each character gets a random number of "scramble cycles" before resolving
-    // Creates a wave that moves left-to-right but with organic variation
-    var resolveFrames = [];
-    for (var i = 0; i < len; i++) {
-      // Base delay increases per character, plus random jitter
-      resolveFrames[i] = 8 + i * 2.5 + Math.floor(Math.random() * 8);
-      current[i] = text[i] === ' ' ? ' ' : randChar(text[i]);
-    }
-    el.textContent = current.join('');
-
-    function tick() {
-      frame++;
-      var done = true;
-      for (var i = 0; i < len; i++) {
-        if (resolved[i]) continue;
-        if (text[i] === ' ') { resolved[i] = true; current[i] = ' '; continue; }
-        if (frame >= resolveFrames[i]) {
-          resolved[i] = true;
-          current[i] = text[i];
-        } else {
-          var nearResolve = frame / resolveFrames[i];
-          if (nearResolve > 0.7) {
-            current[i] = Math.random() < 0.3 ? text[i] : randChar(text[i]);
-          } else if (frame % 3 === 0) {
-            current[i] = randChar(text[i]);
-          }
-          done = false;
-        }
-      }
-      el.textContent = current.join('');
-      if (done) {
-        if (onDone) onDone();
-      } else {
-        animFrame = requestAnimationFrame(tick);
-      }
-    }
-    animFrame = requestAnimationFrame(tick);
+  function heroDecryptText(el, text, onDone) {
+    // Reuse the shared decryptEffect with hero-specific params
+    animFrame = decryptEffect(el, text, {
+      baseDelay: 8,
+      perChar: 2.5,
+      jitter: 8,
+      flickerRate: 3,
+      nearThresh: 0.7,
+      nearChance: 0.3,
+      preserve: ' ',
+      randChar: randChar
+    }, onDone);
   }
 
   function encryptThenDecrypt(el, newText, onDone) {
-    var oldText = el.textContent;
-    var frame = 0;
-    var encryptFrames = 20;
-    var current = oldText.split('');
+    const oldText = el.textContent;
+    let frame = 0;
+    const encryptFrames = 20;
+    const current = oldText.split('');
 
     function tick() {
       frame++;
       if (frame <= encryptFrames) {
-        // Gradually scramble — more characters corrupt each frame
-        var corruption = frame / encryptFrames;
-        for (var i = 0; i < current.length; i++) {
+        const corruption = frame / encryptFrames;
+        for (let i = 0; i < current.length; i++) {
           if (current[i] === ' ') continue;
           if (Math.random() < corruption * 0.5) {
             current[i] = randChar(current[i]);
@@ -1449,8 +1570,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
         el.textContent = current.join('');
         animFrame = requestAnimationFrame(tick);
       } else {
-        // Switch to decrypting new text
-        decryptText(el, newText, onDone);
+        heroDecryptText(el, newText, onDone);
       }
     }
     animFrame = requestAnimationFrame(tick);
@@ -1459,9 +1579,8 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   function startCycling() {
     cycleInterval = setInterval(function() {
       currentPhrase = (currentPhrase + 1) % phrases.length;
-      var newText = phrases[currentPhrase];
+      const newText = phrases[currentPhrase];
 
-      // Blur out, swap text, blur in — no scramble, no reflow
       cycleEl.style.transition = 'filter 0.4s ease-out, opacity 0.4s ease-out';
       cycleEl.style.filter = 'blur(6px)';
       cycleEl.style.opacity = '0.3';
@@ -1480,9 +1599,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   }
 
   if (reducedMotion) {
-    // Just show the text, cycle without animation
-    statics.forEach(function(el) { /* already has text */ });
-    var phraseIdx = 0;
+    let phraseIdx = 0;
     setInterval(function() {
       phraseIdx = (phraseIdx + 1) % phrases.length;
       cycleEl.textContent = phrases[phraseIdx];
@@ -1491,14 +1608,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   }
 
   // Keep the real text in the DOM for correct layout.
-  // On view, scramble it in-place then decrypt back — no layout shift.
-  var staticTexts = [];
-  statics.forEach(function(el) { staticTexts.push(el.textContent); });
-  var firstPhrase = cycleEl.textContent;
-
-  // Initial reveal uses CSS blur/clip — no text changes, no reflow.
-  // Only the cycling phrase uses text-swap decrypt after the first reveal.
-  var allParts = Array.prototype.slice.call(statics);
+  const allParts = Array.prototype.slice.call(statics);
   allParts.push(cycleEl);
 
   // Hide all parts with CSS
@@ -1508,10 +1618,10 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
     el.style.transition = 'none';
   });
 
-  var observer = new IntersectionObserver(function(entries) {
+  const observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        var delay = 0;
+        let delay = 0;
         allParts.forEach(function(el) {
           setTimeout(function() {
             el.style.transition = 'filter 0.8s ease-out, opacity 0.8s ease-out';
@@ -1520,7 +1630,6 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
           }, delay);
           delay += 250;
         });
-        // Start phrase cycling after all parts have revealed
         setTimeout(function() {
           startCycling();
         }, delay + 3000);
@@ -1531,134 +1640,39 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
 
   observer.observe(hero);
 
-  // Pause when tab hidden
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) stopCycling();
     else if (!cycleInterval) startCycling();
   });
 })();
 
-// ─── Cipher decrypt effect ───────────────────────────────────
-// Elements with [data-decrypt] scramble through random characters
-// before resolving to their real text. Resets when scrolled out of view.
+// ─── Viewport reveal animations ──────────────────────────────
 (function() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Just show the text immediately
-    document.querySelectorAll('[data-decrypt]').forEach(function(el) {
-      el.textContent = el.getAttribute('data-decrypt');
-    });
-    return;
-  }
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
-  var elements = document.querySelectorAll('[data-decrypt]');
+  const elements = document.querySelectorAll('[data-reveal]');
   if (!elements.length) return;
 
-  var active = new Map();
-
-  function scramble(el) {
-    var target = el.getAttribute('data-decrypt');
-    var len = target.length;
-    var resolved = new Array(len).fill(false);
-    var current = new Array(len);
-    var frame = 0;
-
-    var resolveFrames = [];
-    for (var i = 0; i < len; i++) {
-      resolveFrames[i] = 8 + i * 2.5 + Math.floor(Math.random() * 8);
-      current[i] = target[i] === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)];
-    }
-    el.textContent = current.join('');
-
-    function tick() {
-      frame++;
-      var allDone = true;
-
-      for (var i = 0; i < len; i++) {
-        if (resolved[i]) continue;
-        if (target[i] === ' ' || target[i] === '/') {
-          resolved[i] = true;
-          current[i] = target[i];
-          continue;
-        }
-
-        if (frame >= resolveFrames[i]) {
-          resolved[i] = true;
-          current[i] = target[i];
-        } else {
-          var nearResolve = frame / resolveFrames[i];
-          if (nearResolve > 0.7) {
-            current[i] = Math.random() < 0.3 ? target[i] : chars[Math.floor(Math.random() * chars.length)];
-          } else if (frame % 3 === 0) {
-            current[i] = chars[Math.floor(Math.random() * chars.length)];
-          }
-          allDone = false;
-        }
-      }
-
-      el.textContent = current.join('');
-
-      if (allDone) {
-        active.delete(el);
-      } else {
-        active.set(el, requestAnimationFrame(tick));
-      }
-    }
-
-    // Cancel any existing animation on this element
-    if (active.has(el)) {
-      cancelAnimationFrame(active.get(el));
-    }
-    active.set(el, requestAnimationFrame(tick));
-  }
-
-  function reset(el) {
-    if (active.has(el)) {
-      cancelAnimationFrame(active.get(el));
-      active.delete(el);
-    }
-    // Fill with scrambled text at correct length to preserve layout
-    var target = el.getAttribute('data-decrypt');
-    var out = '';
-    for (var i = 0; i < target.length; i++) {
-      if (target[i] === ' ' || target[i] === '/') {
-        out += target[i];
-      } else {
-        out += chars[Math.floor(Math.random() * chars.length)];
-      }
-    }
-    el.textContent = out;
-  }
-
-  var observer = new IntersectionObserver(function(entries) {
+  const observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        scramble(entry.target);
-      } else {
-        reset(entry.target);
+        const delay = entry.target.getAttribute('data-reveal-delay');
+        if (delay) {
+          entry.target.style.transitionDelay = delay + 'ms';
+        }
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.5
+    threshold: 0.15,
+    rootMargin: '0px 0px -40px 0px'
   });
 
-  // Scramble on init — real text is in DOM for crawlers, JS scrambles for visual effect
-  elements.forEach(function(el) {
-    var target = el.getAttribute('data-decrypt');
-    var out = '';
-    for (var i = 0; i < target.length; i++) {
-      if (target[i] === ' ' || target[i] === '/') {
-        out += target[i];
-      } else {
-        out += chars[Math.floor(Math.random() * chars.length)];
-      }
-    }
-    el.textContent = out;
-    observer.observe(el);
-  });
+  elements.forEach(function(el) { observer.observe(el); });
 })();
 
-// Smooth scroll for anchor links
+// ─── Smooth scroll anchors ───────────────────────────────────
 document.querySelectorAll('a[href^="/#"]').forEach(link => {
   link.addEventListener('click', (e) => {
     const id = link.getAttribute('href').replace('/', '');
@@ -1671,139 +1685,27 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   });
 });
 
-// ─── Docs Tabs ──────────────────────────────────────────────
-(function() {
-  var tabGroups = document.querySelectorAll('.docs-tabs');
-  if (!tabGroups.length) return;
-
-  tabGroups.forEach(function(group) {
-    var tabs = group.querySelectorAll('.docs-tab');
-    var panels = group.querySelectorAll('.docs-tab-panel');
-    var id = group.dataset.tabsId;
-
-    function activateTab(idx) {
-      tabs.forEach(function(t) {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-        t.setAttribute('tabindex', '-1');
-      });
-      panels.forEach(function(p) { p.classList.remove('active'); p.hidden = true; });
-      tabs[idx].classList.add('active');
-      tabs[idx].setAttribute('aria-selected', 'true');
-      tabs[idx].setAttribute('tabindex', '0');
-      panels[idx].classList.add('active');
-      panels[idx].hidden = false;
-      localStorage.setItem('docs-tab:' + id, idx);
-    }
-
-    // Set initial hidden state for inactive panels
-    panels.forEach(function(p) { if (!p.classList.contains('active')) p.hidden = true; });
-
-    var saved = localStorage.getItem('docs-tab:' + id);
-    if (saved !== null) {
-      var idx = parseInt(saved, 10);
-      if (idx >= 0 && idx < tabs.length) activateTab(idx);
-    }
-
-    tabs.forEach(function(tab, i) {
-      tab.addEventListener('click', function() { activateTab(i); });
-    });
-
-    // Arrow key navigation for tablist
-    group.querySelector('.docs-tabs-bar').addEventListener('keydown', function(e) {
-      var current = Array.prototype.indexOf.call(tabs, document.activeElement);
-      if (current < 0) return;
-      var next = -1;
-      if (e.key === 'ArrowRight') next = (current + 1) % tabs.length;
-      else if (e.key === 'ArrowLeft') next = (current - 1 + tabs.length) % tabs.length;
-      else if (e.key === 'Home') next = 0;
-      else if (e.key === 'End') next = tabs.length - 1;
-      if (next >= 0) {
-        e.preventDefault();
-        activateTab(next);
-        tabs[next].focus();
-      }
-    });
-  });
-})();
-
-// ─── Code Tabs ───────────────────────────────────────────────
-(function () {
-  var STORAGE_KEY = 'inferadb-docs-lang';
-
-  function activateTab(group, lang) {
-    var buttons = group.querySelectorAll('.code-tabs-nav button');
-    var panels = group.querySelectorAll('.code-tabs-panel');
-    buttons.forEach(function (btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-    });
-    panels.forEach(function (panel) {
-      panel.classList.toggle('active', panel.getAttribute('data-lang') === lang);
-    });
-    // Update SDK link if present
-    var activeBtn = group.querySelector('.code-tabs-nav button.active');
-    var sdkLink = group.querySelector('.code-tabs-sdk-link');
-    if (activeBtn && sdkLink) {
-      var url = activeBtn.getAttribute('data-sdk-url');
-      var name = activeBtn.getAttribute('data-sdk-name');
-      if (url && name) {
-        var a = sdkLink.querySelector('a');
-        if (a) {
-          a.href = url;
-          a.textContent = name;
-        }
-      }
-    }
-  }
-
-  function syncAll(lang) {
-    document.querySelectorAll('.code-tabs').forEach(function (group) {
-      var hasLang = group.querySelector('[data-lang="' + lang + '"]');
-      if (hasLang) activateTab(group, lang);
-    });
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
-  }
-
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.code-tabs-nav button');
-    if (!btn) return;
-    var lang = btn.getAttribute('data-lang');
-    if (lang) syncAll(lang);
-  });
-
-  // On page load, restore preference or use first tab
-  var saved = null;
-  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
-  document.querySelectorAll('.code-tabs').forEach(function (group) {
-    var first = group.querySelector('.code-tabs-nav button');
-    if (!first) return;
-    var lang = saved && group.querySelector('[data-lang="' + saved + '"]')
-      ? saved
-      : first.getAttribute('data-lang');
-    activateTab(group, lang);
-  });
-})();
+// ─── Dispatch: load more + SVG teasers ───────────────────────
 
 // Dispatch load more
 (function() {
-  var list = document.getElementById('dispatch-list');
-  var btn = document.getElementById('dispatch-load-more');
+  const list = document.getElementById('dispatch-list');
+  const btn = document.getElementById('dispatch-load-more');
   if (!list || !btn) return;
 
-  var entries = list.querySelectorAll('.dispatch-entry');
-  var perPage = parseInt(list.getAttribute('data-per-page') || '10', 10);
+  const entries = list.querySelectorAll('.dispatch-entry');
+  const perPage = parseInt(list.getAttribute('data-per-page') || '10', 10);
 
-  // Restore visible count from hash, or default to first page
   function getStoredCount() {
-    var match = location.hash.match(/show=(\d+)/);
+    const match = location.hash.match(/show=(\d+)/);
     return match ? Math.min(parseInt(match[1], 10), entries.length) : perPage;
   }
 
-  var visible = Math.max(perPage, getStoredCount());
+  let visible = Math.max(perPage, getStoredCount());
 
   function showEntries(count) {
     visible = Math.min(count, entries.length);
-    for (var i = 0; i < entries.length; i++) {
+    for (let i = 0; i < entries.length; i++) {
       entries[i].style.display = i < visible ? '' : 'none';
     }
     btn.style.display = visible >= entries.length ? 'none' : '';
@@ -1813,26 +1715,24 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     if (visible > perPage) {
       history.replaceState(null, '', '#show=' + visible);
     } else {
-      // Clean hash if back to default
       history.replaceState(null, '', location.pathname + location.search);
     }
   }
 
-  // Initial render — restore from hash
   showEntries(visible);
 
   // Live region for announcing loaded entries
-  var liveRegion = document.createElement('div');
+  const liveRegion = document.createElement('div');
   liveRegion.setAttribute('aria-live', 'polite');
   liveRegion.setAttribute('role', 'status');
   liveRegion.className = 'sr-only';
   list.parentNode.insertBefore(liveRegion, list.nextSibling);
 
   btn.addEventListener('click', function() {
-    var prev = visible;
+    const prev = visible;
     showEntries(visible + perPage);
     updateHash();
-    var loaded = visible - prev;
+    const loaded = visible - prev;
     if (loaded > 0) {
       liveRegion.textContent = 'Loaded ' + loaded + ' more entries. Showing ' + visible + ' of ' + entries.length + '.';
     }
@@ -1843,30 +1743,30 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
 (function() {
   function getLength(el) {
     try { if (el.getTotalLength) return el.getTotalLength(); } catch(e) {}
-    var tag = el.tagName.toLowerCase();
+    const tag = el.tagName.toLowerCase();
     if (tag === 'line') {
-      var dx = (parseFloat(el.getAttribute('x2')) || 0) - (parseFloat(el.getAttribute('x1')) || 0);
-      var dy = (parseFloat(el.getAttribute('y2')) || 0) - (parseFloat(el.getAttribute('y1')) || 0);
+      const dx = (parseFloat(el.getAttribute('x2')) || 0) - (parseFloat(el.getAttribute('x1')) || 0);
+      const dy = (parseFloat(el.getAttribute('y2')) || 0) - (parseFloat(el.getAttribute('y1')) || 0);
       return Math.sqrt(dx * dx + dy * dy);
     }
     if (tag === 'circle') return 2 * Math.PI * (parseFloat(el.getAttribute('r')) || 0);
     if (tag === 'rect') {
-      var w = parseFloat(el.getAttribute('width')) || 0;
-      var h = parseFloat(el.getAttribute('height')) || 0;
+      const w = parseFloat(el.getAttribute('width')) || 0;
+      const h = parseFloat(el.getAttribute('height')) || 0;
       return 2 * (w + h);
     }
     return 300;
   }
 
   function setupDraw(svg) {
-    var items = [];
-    var all = svg.querySelectorAll('line, circle, rect, polygon, polyline, path');
-    for (var i = 0; i < all.length; i++) {
-      var el = all[i];
-      var stroke = el.getAttribute('stroke');
-      var fill = el.getAttribute('fill');
+    const items = [];
+    const all = svg.querySelectorAll('line, circle, rect, polygon, polyline, path');
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      const stroke = el.getAttribute('stroke');
+      const fill = el.getAttribute('fill');
       if (stroke && stroke !== 'none') {
-        var len = getLength(el);
+        const len = getLength(el);
         el.style.strokeDasharray = len;
         el.style.strokeDashoffset = len;
         items.push({ el: el, len: len, type: 'stroke' });
@@ -1881,15 +1781,15 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
 
   function play(items, dur) {
     dur = dur || 800;
-    var sd = dur * 0.75;
-    var fd = dur * 0.5;
-    for (var i = 0; i < items.length; i++) {
+    const sd = dur * 0.75;
+    const fd = dur * 0.5;
+    for (let i = 0; i < items.length; i++) {
       items[i].el.style.transition = 'none';
       if (items[i].type === 'stroke') items[i].el.style.strokeDashoffset = items[i].len;
       else items[i].el.style.opacity = '0';
     }
     if (items.length) items[0].el.getBoundingClientRect();
-    for (var j = 0; j < items.length; j++) {
+    for (let j = 0; j < items.length; j++) {
       if (items[j].type === 'stroke') {
         items[j].el.style.transition = 'stroke-dashoffset ' + sd + 'ms cubic-bezier(0.4,0,0.2,1)';
         items[j].el.style.strokeDashoffset = '0';
@@ -1901,33 +1801,32 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   }
 
   function injectSvg(img, cb) {
-    var src = img.getAttribute('src');
+    const src = img.getAttribute('src');
     if (!src || src.indexOf('.svg') === -1) return;
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', src, true);
-    xhr.onload = function() {
-      if (xhr.status !== 200) return;
-      var doc = new DOMParser().parseFromString(xhr.responseText, 'image/svg+xml');
-      var svg = doc.querySelector('svg');
-      if (!svg) return;
-      var cls = img.className;
-      svg.setAttribute('class', cls);
-      svg.removeAttribute('width');
-      svg.removeAttribute('height');
-      img.parentNode.replaceChild(svg, img);
-      cb(svg);
-    };
-    xhr.send();
+    fetch(src)
+      .then(function(r) { return r.ok ? r.text() : Promise.reject(); })
+      .then(function(text) {
+        const doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+        const svg = doc.querySelector('svg');
+        if (!svg) return;
+        const cls = img.className;
+        svg.setAttribute('class', cls);
+        svg.removeAttribute('width');
+        svg.removeAttribute('height');
+        img.parentNode.replaceChild(svg, img);
+        cb(svg);
+      })
+      .catch(function() { /* SVG injection failed, keep original img */ });
   }
 
   // Dispatch teasers
-  var teasers = document.querySelectorAll('.dispatch-entry-teaser');
+  const teasers = document.querySelectorAll('.dispatch-entry-teaser');
   teasers.forEach(function(img) {
     if (img.tagName !== 'IMG') return;
     injectSvg(img, function(svg) {
-      var items = setupDraw(svg);
-      var entry = svg.closest('.dispatch-entry');
-      var ob = new IntersectionObserver(function(entries) {
+      const items = setupDraw(svg);
+      const entry = svg.closest('.dispatch-entry');
+      const ob = new IntersectionObserver(function(entries) {
         if (entries[0].isIntersecting) { play(items, 800); ob.disconnect(); }
       }, { threshold: 0.3 });
       ob.observe(svg);
@@ -1936,89 +1835,35 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   });
 
   // Post hero
-  var hero = document.querySelector('img.post-hero');
-  if (hero) {
-    injectSvg(hero, function(svg) {
-      var items = setupDraw(svg);
+  const heroImg = document.querySelector('img.post-hero');
+  if (heroImg) {
+    injectSvg(heroImg, function(svg) {
+      const items = setupDraw(svg);
       play(items, 1000);
     });
   }
 })();
 
-// Changelog sticky dates + dots
+// ─── Changelog: sticky dates + deep-link ─────────────────────
 (function() {
-  var MOBILE = 768;
-  var cols = document.querySelectorAll('.changelog-date-col');
+  const MOBILE = 768;
+  const cols = document.querySelectorAll('.changelog-date-col');
   if (!cols.length) return;
 
-  var nav = document.querySelector('.site-nav');
-  var entries = [];
+  const navEl = document.querySelector('.site-nav');
+  const entries = [];
 
-  for (var i = 0; i < cols.length; i++) {
-    var col = cols[i];
-    var date = col.querySelector('.changelog-date');
+  for (let i = 0; i < cols.length; i++) {
+    const col = cols[i];
+    const date = col.querySelector('.changelog-date');
     if (!date) continue;
-    var rail = col.nextElementSibling;
-    var node = rail ? rail.querySelector('.changelog-node') : null;
-    var content = rail ? rail.nextElementSibling : null;
+    const rail = col.nextElementSibling;
+    const node = rail ? rail.querySelector('.changelog-node') : null;
+    const content = rail ? rail.nextElementSibling : null;
     entries.push({ col: col, date: date, rail: rail, node: node, content: content, stuck: false, active: false });
   }
 
-  var ticking = false;
-  function update() {
-    // Skip on mobile — date is inline above content, no sticky needed
-    if (window.innerWidth <= MOBILE) {
-      for (var k = 0; k < entries.length; k++) {
-        unstick(entries[k]);
-        setActive(entries[k], false);
-      }
-      ticking = false;
-      return;
-    }
-
-    var navBottom = nav ? nav.getBoundingClientRect().bottom : 60;
-    var pin = navBottom + 20;
-    var viewMid = window.innerHeight / 2;
-
-    for (var i = 0; i < entries.length; i++) {
-      var e = entries[i];
-
-      // Temporarily unstick to measure natural positions
-      if (e.stuck) {
-        unstick(e);
-      }
-
-      var dateRect = e.date.getBoundingClientRect();
-      var nodeRect = e.node ? e.node.getBoundingClientRect() : null;
-      var contentRect = e.content ? e.content.getBoundingClientRect() : dateRect;
-      var dateHeight = dateRect.height;
-
-      // Stick: natural position above pin AND content still visible below
-      var shouldStick = dateRect.top < pin && contentRect.bottom > pin + dateHeight + 16;
-
-      if (shouldStick) {
-        e.date.style.position = 'fixed';
-        e.date.style.top = pin + 'px';
-        e.date.style.left = dateRect.left + 'px';
-        e.date.style.width = dateRect.width + 'px';
-
-        if (e.node && nodeRect) {
-          var dotOffset = (dateHeight - nodeRect.height) / 2;
-          e.node.style.position = 'fixed';
-          e.node.style.top = (pin + dotOffset) + 'px';
-          e.node.style.left = (nodeRect.left + nodeRect.width / 2 - 4) + 'px';
-          e.node.style.marginTop = '0';
-        }
-
-        e.stuck = true;
-      }
-
-      // Active: content is currently in the viewport center region
-      var isActive = contentRect.top < viewMid && contentRect.bottom > pin;
-      setActive(e, isActive);
-    }
-    ticking = false;
-  }
+  let ticking = false;
 
   function unstick(e) {
     e.date.style.position = '';
@@ -2043,6 +1888,57 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
     }
   }
 
+  function update() {
+    if (window.innerWidth <= MOBILE) {
+      for (let k = 0; k < entries.length; k++) {
+        unstick(entries[k]);
+        setActive(entries[k], false);
+      }
+      ticking = false;
+      return;
+    }
+
+    const navBottom = navEl ? navEl.getBoundingClientRect().bottom : 60;
+    const pin = navBottom + 20;
+    const viewMid = window.innerHeight / 2;
+
+    for (let i = 0; i < entries.length; i++) {
+      const e = entries[i];
+
+      if (e.stuck) {
+        unstick(e);
+      }
+
+      const dateRect = e.date.getBoundingClientRect();
+      const nodeRect = e.node ? e.node.getBoundingClientRect() : null;
+      const contentRect = e.content ? e.content.getBoundingClientRect() : dateRect;
+      const dateHeight = dateRect.height;
+
+      const shouldStick = dateRect.top < pin && contentRect.bottom > pin + dateHeight + 16;
+
+      if (shouldStick) {
+        e.date.style.position = 'fixed';
+        e.date.style.top = pin + 'px';
+        e.date.style.left = dateRect.left + 'px';
+        e.date.style.width = dateRect.width + 'px';
+
+        if (e.node && nodeRect) {
+          const dotOffset = (dateHeight - nodeRect.height) / 2;
+          e.node.style.position = 'fixed';
+          e.node.style.top = (pin + dotOffset) + 'px';
+          e.node.style.left = (nodeRect.left + nodeRect.width / 2 - 4) + 'px';
+          e.node.style.marginTop = '0';
+        }
+
+        e.stuck = true;
+      }
+
+      const isActive = contentRect.top < viewMid && contentRect.bottom > pin;
+      setActive(e, isActive);
+    }
+    ticking = false;
+  }
+
   function onScroll() {
     if (!ticking) {
       ticking = true;
@@ -2058,12 +1954,11 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
 // Changelog deep-link: open + scroll to entry on hash
 (function() {
   function openFromHash() {
-    var hash = location.hash.replace('#', '');
+    const hash = location.hash.replace('#', '');
     if (!hash) return;
-    var target = document.getElementById(hash);
+    const target = document.getElementById(hash);
     if (!target || target.tagName !== 'DETAILS') return;
     target.open = true;
-    // Scroll after layout reflow
     requestAnimationFrame(function() {
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });

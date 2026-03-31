@@ -1,17 +1,17 @@
 {% assign tab_id = include.id | default: "tabs" %}
 <div class="docs-tabs" data-tabs-id="{{ tab_id }}">
   <div class="docs-tabs-bar" role="tablist">
-    {% if include.tab1_name %}<button class="docs-tab active" role="tab" aria-selected="true" data-tab="0">{{ include.tab1_name }}</button>{% endif %}
-    {% if include.tab2_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="1">{{ include.tab2_name }}</button>{% endif %}
-    {% if include.tab3_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="2">{{ include.tab3_name }}</button>{% endif %}
-    {% if include.tab4_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="3">{{ include.tab4_name }}</button>{% endif %}
-    {% if include.tab5_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="4">{{ include.tab5_name }}</button>{% endif %}
+    {% if include.tab1_name %}<button class="docs-tab active" role="tab" aria-selected="true" data-tab="0" id="{{ tab_id }}-tab-0" aria-controls="{{ tab_id }}-panel-0">{{ include.tab1_name }}</button>{% endif %}
+    {% if include.tab2_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="1" id="{{ tab_id }}-tab-1" aria-controls="{{ tab_id }}-panel-1" tabindex="-1">{{ include.tab2_name }}</button>{% endif %}
+    {% if include.tab3_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="2" id="{{ tab_id }}-tab-2" aria-controls="{{ tab_id }}-panel-2" tabindex="-1">{{ include.tab3_name }}</button>{% endif %}
+    {% if include.tab4_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="3" id="{{ tab_id }}-tab-3" aria-controls="{{ tab_id }}-panel-3" tabindex="-1">{{ include.tab4_name }}</button>{% endif %}
+    {% if include.tab5_name %}<button class="docs-tab" role="tab" aria-selected="false" data-tab="4" id="{{ tab_id }}-tab-4" aria-controls="{{ tab_id }}-panel-4" tabindex="-1">{{ include.tab5_name }}</button>{% endif %}
   </div>
   <div class="docs-tabs-panels">
-    {% if include.tab1_code %}<div class="docs-tab-panel active" role="tabpanel" data-tab="0"><div class="language-{{ include.tab1_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab1_code | xml_escape }}</code></pre></div></div></div>{% endif %}
-    {% if include.tab2_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="1"><div class="language-{{ include.tab2_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab2_code | xml_escape }}</code></pre></div></div></div>{% endif %}
-    {% if include.tab3_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="2"><div class="language-{{ include.tab3_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab3_code | xml_escape }}</code></pre></div></div></div>{% endif %}
-    {% if include.tab4_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="3"><div class="language-{{ include.tab4_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab4_code | xml_escape }}</code></pre></div></div></div>{% endif %}
-    {% if include.tab5_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="4"><div class="language-{{ include.tab5_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab5_code | xml_escape }}</code></pre></div></div></div>{% endif %}
+    {% if include.tab1_code %}<div class="docs-tab-panel active" role="tabpanel" data-tab="0" id="{{ tab_id }}-panel-0" aria-labelledby="{{ tab_id }}-tab-0"><div class="language-{{ include.tab1_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab1_code | xml_escape }}</code></pre></div></div></div>{% endif %}
+    {% if include.tab2_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="1" id="{{ tab_id }}-panel-1" aria-labelledby="{{ tab_id }}-tab-1"><div class="language-{{ include.tab2_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab2_code | xml_escape }}</code></pre></div></div></div>{% endif %}
+    {% if include.tab3_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="2" id="{{ tab_id }}-panel-2" aria-labelledby="{{ tab_id }}-tab-2"><div class="language-{{ include.tab3_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab3_code | xml_escape }}</code></pre></div></div></div>{% endif %}
+    {% if include.tab4_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="3" id="{{ tab_id }}-panel-3" aria-labelledby="{{ tab_id }}-tab-3"><div class="language-{{ include.tab4_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab4_code | xml_escape }}</code></pre></div></div></div>{% endif %}
+    {% if include.tab5_code %}<div class="docs-tab-panel" role="tabpanel" data-tab="4" id="{{ tab_id }}-panel-4" aria-labelledby="{{ tab_id }}-tab-4"><div class="language-{{ include.tab5_lang }} highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{{ include.tab5_code | xml_escape }}</code></pre></div></div></div>{% endif %}
   </div>
 </div>

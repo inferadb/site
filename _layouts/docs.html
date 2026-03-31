@@ -16,6 +16,7 @@ body_class: page-docs
 </div>
 
 <div class="docs-layout">
+  <a href="#docs-article" class="skip-link">Skip to content</a>
   <aside class="docs-sidebar">
     <div class="docs-sidebar-inner">
       <button class="search-trigger" id="search-trigger" aria-label="Search documentation">
@@ -58,7 +59,7 @@ body_class: page-docs
       <span>{{ breadcrumb_section }}</span>
     </nav>
     {% endif %}
-    <article>
+    <article id="docs-article">
       {% if page.doc_title %}
       <header class="docs-header">
         <h1>{{ page.doc_title }}</h1>

@@ -1,7 +1,7 @@
 ---
-layout: now
+layout: dispatch
 title: Company — InferaDB
-now_category: company
+dispatch_category: company
 ---
-{% assign filtered = site.data.now | where: "category", "company" %}
-{% include now-cards.html entries=filtered %}
+{% assign filtered = site.data.dispatch | where: "category", "company" %}
+{% include dispatch-cards.html entries=filtered %}

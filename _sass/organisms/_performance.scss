@@ -1,0 +1,93 @@
+// ─── Performance ─────────────────────────────────────────────
+
+.performance {
+  padding: 7rem 0 4rem;
+}
+
+.perf-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
+  @container (640px <= width < 900px) { grid-template-columns: repeat(2, 1fr); }
+}
+
+.perf-card {
+  @include card-base(2rem, 0.375rem);
+}
+
+.perf-hero {
+  background: var(--accent-gradient-subtle);
+  border-color: var(--accent-overlay-strong);
+
+  .perf-number { color: var(--accent); }
+}
+
+.perf-number {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.perf-unit {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.perf-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-bright);
+}
+
+.perf-context {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.perf-note, .post-body .perf-note {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--text-secondary);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.perf-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  svg { width: 18px; height: 18px; }
+}
+
+// Perf-hero card — subtle ambient pulse on the border
+.perf-hero {
+  animation: ambient-pulse 4s ease-in-out infinite;
+}
+
+@keyframes ambient-pulse {
+  0%, 100% { border-color: oklch(0.73 0.12 80 / 0.15); }
+  50% { border-color: oklch(0.73 0.12 80 / 0.3); }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 1024px) {
+  .perf-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (width <= 768px) {
+  .perf-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,73 @@
+// ─── Use Cases ───────────────────────────────────────────────
+
+.use-cases {
+  padding: 6rem 0;
+}
+
+.uc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
+}
+
+.uc-card {
+  padding: 2rem;
+  @include card-surface;
+
+  h3 {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.625rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  ul {
+    li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: 0.8125rem;
+      color: var(--text);
+      line-height: 1.5;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.55em;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--purple);
+      }
+
+      & + li { margin-top: 0.3125rem; }
+    }
+  }
+}
+
+.uc-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--accent-overlay-light);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 1024px) {
+  .uc-grid { grid-template-columns: 1fr; }
+}

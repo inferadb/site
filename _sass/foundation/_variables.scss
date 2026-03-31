@@ -1,0 +1,102 @@
+// ─── Fonts (self-hosted, subset to Latin + site glyphs) ─────
+
+@font-face {
+  font-family: 'Figtree';
+  src: url('/assets/fonts/figtree.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: optional; // headings only — no reflow, use if cached
+  unicode-range: U+0000-00FF, U+2013-2014, U+2018-201D, U+2026;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/inter.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap; // body text — swap acceptable
+  unicode-range: U+0000-00FF, U+00B5, U+00B7, U+2013-2014, U+2018-201D, U+2026, U+2190, U+2192, U+2194;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/assets/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap; // technical labels — swap acceptable
+  unicode-range: U+0000-00FF, U+00A7, U+00B5, U+00B7, U+2013-2014, U+2190, U+2192, U+2460-2461, U+2500, U+2502, U+250C, U+2510, U+2514, U+2518, U+251C, U+252C, U+25BC, U+2713, U+2717;
+}
+
+// ─── Variables ───────────────────────────────────────────────
+
+:root {
+  color-scheme: dark;
+
+  // Mil-spec industrial palette — dark slate, not pure black
+  --bg: #0b0d11;
+  --bg-raised: #10131a;
+  --bg-card: #10131a;
+  --bg-card-hover: #151921;
+  --border: #1c2028;
+  --border-hover: #272d38;
+  --border-interactive: #3a4250; // 3:1 contrast vs --bg, for interactive element boundaries
+
+  // Text: cool slate hierarchy, never pure white
+  // All text colors meet WCAG 2.1 AA contrast (4.5:1) against --bg (#0b0d11)
+  --text: #7d8590;          // 5.21:1 — body text
+  --text-secondary: #778189; // 4.80:1 — secondary text on both bg and card
+  --text-bright: #c0c8d2;   // 11.5:1 — bright text
+  --text-white: #dce1e8;    // 14.8:1 — headings
+  --muted: #555d68;          // 3.10:1 — decorative only, never for essential text
+
+  // Accent: hazard amber (primary), desaturated teal (secondary)
+  // Defined in oklch for perceptually uniform palette derivation
+  --accent: oklch(0.73 0.12 80);           // hazard amber
+  --accent-hover: oklch(0.78 0.12 80);     // lighter amber for hover
+  --accent-dim: oklch(0.73 0.12 80 / 0.15);
+  --accent-teal: oklch(0.72 0.1 200);      // desaturated teal
+  --accent-red: oklch(0.62 0.18 25);       // signal red
+  --accent-green: oklch(0.62 0.14 140);    // muted green
+
+  // Derived states via color-mix — hover/active shades from one source
+  --border-accent: color-mix(in oklch, var(--accent) 20%, transparent);
+  --bg-accent-subtle: color-mix(in oklch, var(--accent) 6%, var(--bg));
+
+  // Accent overlays — derived transparencies for backgrounds and borders
+  --accent-overlay-subtle: rgba(200, 164, 78, 0.03);
+  --accent-overlay-light: rgba(200, 164, 78, 0.06);
+  --accent-overlay-medium: rgba(200, 164, 78, 0.15);
+  --accent-overlay-strong: rgba(200, 164, 78, 0.2);
+  --accent-overlay-bg: rgba(200, 164, 78, 0.04);
+
+  // Legacy aliases
+  --purple: var(--accent);
+  --pink: var(--accent);
+  --accent-gradient: linear-gradient(135deg, oklch(0.73 0.12 80) 0%, oklch(0.78 0.10 80) 100%);
+  --accent-gradient-subtle: linear-gradient(135deg, oklch(0.73 0.12 80 / 0.08) 0%, oklch(0.73 0.12 80 / 0.03) 100%);
+
+  // Typography: Inter for body, Figtree for display, JetBrains Mono for technical
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Figtree", "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Consolas", monospace;
+
+  --container: 1060px;
+  --container-narrow: 760px;
+  --radius: 3px;    // Angular, not rounded — industrial
+  --radius-sm: 2px;
+
+  // Layout: fixed nav + optional announcement banner
+  // Nav = 2px border-top + 0.875rem pad + 2.75rem btn-sm + 0.875rem pad + 1px border-bottom
+  --nav-h: calc(2px + 0.875rem + 2.75rem + 0.875rem + 1px);
+  --banner-h: 2.75rem; // close button min-height
+}
+
+// Mechanical easing — hydraulic/damped spring for industrial feel
+// Simulates a mechanical actuator rather than a rubber band
+:root {
+  --ease-mechanical: linear(
+    0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%,
+    0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%,
+    1.006 50.1%, 1.015 55%, 1.017 63.9%, 1.001 85%, 1
+  );
+}

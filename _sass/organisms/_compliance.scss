@@ -1,0 +1,64 @@
+// ─── Compliance ──────────────────────────────────────────────
+
+.compliance {
+  padding: 6rem 0;
+}
+
+.compliance-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.compliance-text {
+  h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-white);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.25rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .compliance-detail {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+}
+
+.compliance-badges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.compliance-badge-item {
+  padding: 1.5rem 1rem;
+  @include card-surface;
+  text-align: center;
+
+  span {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-white);
+  }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 1024px) {
+  .compliance-inner { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+@media (width <= 768px) {
+  .compliance-badges { grid-template-columns: repeat(2, 1fr); }
+}

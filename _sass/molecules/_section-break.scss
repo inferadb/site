@@ -1,0 +1,21 @@
+// Section break annotations
+.section-break {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section-break-line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-break-label {
+  @include tech-label(var(--text-secondary));
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}

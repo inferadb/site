@@ -1,0 +1,75 @@
+// ─── How it works ────────────────────────────────────────────
+
+.how-it-works {
+  padding: 4rem 0 7rem;
+}
+
+.hiw-tabs {
+  @include tab-bar;
+  gap: 0.25rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.hiw-tab {
+  padding: 0.625rem 1rem;
+  @include tab-button;
+  @include tech-label(var(--text-secondary));
+}
+
+.hiw-panel {
+  display: none;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: start;
+  &.active { display: grid; }
+}
+
+.hiw-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  padding-top: 0.5rem;
+}
+
+.hiw-step {
+  position: relative;
+  padding-left: 3rem;
+}
+
+.hiw-step-num {
+  position: absolute;
+  left: 0;
+  top: 0.125rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.hiw-step h3 {
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 0.375rem;
+}
+
+.hiw-step p {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    padding: 0.125rem 0.375rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    color: var(--text-bright);
+  }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 768px) {
+  .hiw-panel { grid-template-columns: 1fr; }
+}

@@ -19,13 +19,22 @@
       localStorage.setItem(key, '1');
       banner.remove();
       document.body.classList.remove('has-banner');
+      // Recalculate nav bottom after banner removal
+      var nav = document.querySelector('.site-nav');
+      if (nav) document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
     });
   }
 })();
 
-// Navigation scroll effect
+// Navigation scroll effect + mobile panel positioning
 const nav = document.querySelector('.site-nav');
 if (nav) {
+  function updateNavBottom() {
+    document.documentElement.style.setProperty('--nav-bottom', nav.getBoundingClientRect().bottom + 'px');
+  }
+  updateNavBottom();
+  window.addEventListener('resize', updateNavBottom, { passive: true });
+
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 20);
   }, { passive: true });
@@ -250,6 +259,15 @@ document.querySelectorAll('.compare-wrap').forEach(function(wrap) {
     wrap.setAttribute('role', 'region');
     wrap.setAttribute('aria-label', 'Comparison table (scroll horizontally)');
   }
+});
+
+// Tab bars — intercept mouse wheel to scroll horizontally
+document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs-nav, .docs-tabs-bar').forEach(function(bar) {
+  bar.addEventListener('wheel', function(e) {
+    if (bar.scrollWidth <= bar.clientWidth) return; // no overflow, ignore
+    e.preventDefault();
+    bar.scrollLeft += e.deltaY || e.deltaX;
+  }, { passive: false });
 });
 
 // ─── Docs search (Cmd+K) ─────────────────────────────────────

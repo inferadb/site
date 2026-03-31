@@ -1,0 +1,60 @@
+// ─── Rouge syntax highlighting ───────────────────────────────
+// Mil-spec code palette — each token type is visually distinct.
+// Amber = keywords, Teal = types, Green = strings, Warm gray = functions, Copper = numbers.
+
+.highlight {
+  // Keywords — amber (the strongest signal in authorization code)
+  :is(.k, .kd, .kn, .kp, .kr, .kc, .kt, .kv, .ow) { color: var(--accent); }
+
+  // Builtins — slightly muted amber
+  .nb  { color: oklch(0.70 0.10 80); }
+  .bp  { color: var(--text-secondary); }  // self, cls
+
+  // Types, classes, namespaces, keyword types — teal
+  :is(.nc, .nn, .no, .nd, .ni, .kt) { color: var(--accent-teal); }
+
+  // Functions — bright with slight warmth
+  .nf, .fm { color: oklch(0.82 0.06 70); }
+
+  // Attributes, properties — dimmer teal
+  .na  { color: oklch(0.65 0.08 200); }
+  .nt  { color: var(--accent-teal); }     // name.tag — flags in shell, tags in HTML/XML
+  .py  { color: var(--text-bright); }     // property names (TOML keys)
+
+  // Strings — green
+  :is(.s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sr, .ss) { color: var(--accent-green); }
+  .sa  { color: var(--accent); }          // string affix (f, b, r)
+  .dl  { color: var(--accent-green); }    // string delimiters
+
+  // Numbers — distinct copper/orange (not green)
+  :is(.m, .mi, .mf, .mh, .mo, .mb, .mx, .il) { color: oklch(0.72 0.12 55); }
+
+  // Comments — muted, italic
+  :is(.c, .c1, .cm, .cs, .ch) { color: var(--muted); font-style: italic; }
+
+  // Preprocessor — brighter than comments
+  .cp  { color: var(--text-secondary); font-style: normal; }
+
+  // Operators — subtle but not invisible
+  .o   { color: oklch(0.65 0.04 240); }
+  .p   { color: var(--text-secondary); }  // punctuation
+
+  // Variables, identifiers — default text
+  .n, .nv, .vi, .vg, .vc,
+  .nx  { color: var(--text); }
+  .nl  { color: var(--text-bright); }     // label names
+
+  // Output, errors
+  .go  { color: var(--text-secondary); }
+  .ge  { font-style: italic; }
+  .gs  { font-weight: bold; }
+  .gr, .gt { color: var(--accent-red); }
+  .gd  { color: var(--accent-red); background: oklch(0.25 0.08 25 / 0.15); }
+  .gi  { color: var(--accent-green); background: oklch(0.25 0.08 140 / 0.15); }
+  .gh  { color: var(--text-bright); font-weight: 600; }
+  .gu  { color: var(--accent-teal); }
+
+  // Special
+  .w   { color: var(--text); }
+  .err { color: var(--accent-red); text-decoration: underline; text-decoration-color: oklch(0.62 0.18 25 / 0.4); }
+}

@@ -1,7 +1,7 @@
 ---
-layout: now
+layout: dispatch
 title: Engineering — InferaDB
-now_category: engineering
+dispatch_category: engineering
 ---
-{% assign filtered = site.data.now | where: "category", "engineering" %}
-{% include now-cards.html entries=filtered %}
+{% assign filtered = site.data.dispatch | where: "category", "engineering" %}
+{% include dispatch-cards.html entries=filtered %}

@@ -1,0 +1,78 @@
+// ─── Pricing: FAQ ────────────────────────────────────────────
+
+.pricing-faq {
+  margin-bottom: 3rem;
+
+  @media (width >= 769px) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
+  }
+}
+
+.pricing-faq-heading {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 1.5rem;
+
+  @media (width >= 769px) {
+    position: sticky;
+    top: calc(var(--nav-h) + 1rem); // below fixed nav + breathing room
+    margin-bottom: 0;
+
+    .has-banner & {
+      top: calc(var(--nav-h) + var(--banner-h) + 1rem); // nav + banner + breathing room
+    }
+  }
+}
+
+.pricing-faq-item {
+  border-bottom: 1px solid var(--border);
+
+  &:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-white);
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+
+    &::after {
+      content: "+";
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      margin-left: 1rem;
+      transition: transform 0.15s var(--ease-mechanical);
+    }
+
+    &:hover { color: var(--accent); }
+  }
+
+  &[open] summary::after {
+    content: "\2212"; // minus sign
+    color: var(--accent);
+  }
+
+  p {
+    font-size: 0.8125rem;
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0 0 1rem;
+    margin: 0;
+  }
+}

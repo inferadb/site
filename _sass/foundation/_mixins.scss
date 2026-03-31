@@ -1,0 +1,98 @@
+// ─── Mixins ─────────────────────────────────────────────────
+// Repeated patterns extracted for source consistency.
+// LibSass expands these at each call site — no CSS output reduction,
+// but single source of truth for the design system's recurring patterns.
+
+// Monospaced technical label: readouts, eyebrows, badges, section codes
+@mixin tech-label($color: var(--accent)) {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: $color;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+// Card surface: dark raised panel with border
+@mixin card-surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+// Tab bar container: horizontal scroll without visible scrollbars.
+// Mouse wheel events are intercepted by JS to scroll horizontally.
+@mixin tab-bar {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;              // Firefox
+  -ms-overflow-style: none;           // IE/Edge legacy
+  &::-webkit-scrollbar { display: none; } // Chrome/Safari
+}
+
+// Tab button base: underline-style tab in a tablist
+@mixin tab-button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  min-height: 2.75rem;
+
+  &:hover { color: var(--text-white); }
+  &.active { color: var(--accent); border-bottom-color: var(--accent); }
+  &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+}
+
+// Prose link styling: underline with animated color
+@mixin prose-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--accent-overlay-medium);
+  &:hover { text-decoration-color: var(--accent); }
+}
+
+// Card base: surface + flex column layout (extends card-surface)
+@mixin card-base($padding: 2rem, $gap: 0.5rem) {
+  padding: $padding;
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+// Page hero section: shared across about, solutions, contact, careers
+@mixin page-hero($padding: 10rem 0 4rem) {
+  padding: $padding;
+  text-align: center;
+
+  h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+}
+
+// Eyebrow: monospaced section label above a heading
+@mixin eyebrow {
+  display: inline-block;
+  @include tech-label;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+// Focus ring: consistent keyboard focus indicator
+@mixin focus-ring($offset: 2px) {
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: $offset;
+    border-radius: 2px;
+  }
+}

@@ -1,0 +1,62 @@
+// ─── Developer Experience ────────────────────────────────────
+
+.devex {
+  padding: 6rem 0 5rem;
+}
+
+.devex-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
+}
+
+.devex-card {
+  padding: 1.5rem;
+  @include card-surface;
+
+  .code-window { margin-bottom: 1.25rem; }
+
+  h3 {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.375rem;
+  }
+
+  p { font-size: 0.875rem; line-height: 1.6; }
+}
+
+.devex-extras {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.devex-extra {
+  padding: 1.5rem;
+  @include card-surface;
+
+  h4 {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.375rem;
+  }
+
+  p { font-size: 0.8125rem; line-height: 1.6; }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 1024px) {
+  .devex-extras { grid-template-columns: 1fr; }
+}
+
+@media (width <= 768px) {
+  .devex-grid { grid-template-columns: 1fr; }
+}

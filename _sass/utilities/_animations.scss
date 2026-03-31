@@ -1,0 +1,212 @@
+// ─── Shared Animation Infrastructure ─────────────────────────
+
+// :has() — sibling dimming on card grids
+// When any card is hovered, dim the others. Spotlight effect.
+// The 200ms transition-delay on the *recovery* prevents flicker when crossing gaps.
+
+.diff-grid .diff-card,
+.uc-card,
+.arch-service,
+.card-grid .card,
+.pricing-card {
+  transition: opacity 0.2s var(--ease-mechanical), border-color 0.15s;
+}
+
+.diff-grid:has(.diff-card:hover) .diff-card,
+.uc-grid:has(.uc-card:hover) .uc-card,
+.arch-cards:has(.arch-service:hover) .arch-service,
+.card-grid:has(.card:hover) .card,
+.pricing-grid:has(.pricing-card:hover) .pricing-card {
+  opacity: 0.55;
+  transition: opacity 0.2s var(--ease-mechanical);
+}
+
+.diff-grid:has(.diff-card:hover) .diff-card:hover,
+.uc-grid:has(.uc-card:hover) .uc-card:hover,
+.arch-cards:has(.arch-service:hover) .arch-service:hover,
+.card-grid:has(.card:hover) .card:hover,
+.pricing-grid:has(.pricing-card:hover) .pricing-card:hover {
+  opacity: 1;
+  transition: opacity 0s; // snap in instantly, fade out handled by the rule above
+}
+
+// @starting-style — entry animations for elements appearing in DOM
+// Sections and cards fade in when they enter the viewport via scroll
+.diff-card,
+.uc-card,
+.arch-service,
+.stat-card,
+.perf-card,
+.standard-card,
+.compliance-badge-item,
+.about-principle,
+.about-person,
+.about-stat,
+.careers-principle,
+.careers-role {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  transition: opacity 0.5s var(--ease-mechanical),
+              transform 0.5s var(--ease-mechanical),
+              border-color 0.15s;
+}
+
+// Scroll-driven animations — progressive enhancement
+// Only apply when supported (Chrome/Edge). Safari/Firefox get static content.
+@supports (animation-timeline: view()) {
+  .section-header {
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  .arch-schematic-container {
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 25%;
+  }
+
+  .hero-code,
+  .hiw-code,
+  .hiw-steps {
+    animation: fade-slide-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+
+  // Stats count up feel — stagger the cards
+  .stat-card:nth-child(1) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 0% entry 25%; }
+  .stat-card:nth-child(2) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 5% entry 30%; }
+  .stat-card:nth-child(3) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 10% entry 35%; }
+
+  .perf-card:nth-child(1) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 0% entry 25%; }
+  .perf-card:nth-child(2) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 3% entry 28%; }
+  .perf-card:nth-child(3) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 6% entry 31%; }
+  .perf-card:nth-child(4) { animation: fade-slide-up linear both; animation-timeline: view(); animation-range: entry 9% entry 34%; }
+
+  @keyframes fade-slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// Card border glow — accent light traces the top edge on hover
+.card::after,
+.diff-card::after,
+.uc-card::after,
+.arch-service::after,
+.perf-card::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    oklch(0.73 0.12 80 / 0.5),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-mechanical);
+}
+
+.card,
+.diff-card,
+.uc-card,
+.arch-service,
+.perf-card {
+  position: relative;
+}
+
+.card:hover::after,
+.diff-card:hover::after,
+.uc-card:hover::after,
+.arch-service:hover::after,
+.perf-card:hover::after {
+  opacity: 1;
+}
+
+// Stat numbers — flicker-in effect on first appearance
+@keyframes data-flicker {
+  0% { opacity: 0; }
+  10% { opacity: 0.8; }
+  15% { opacity: 0.3; }
+  20% { opacity: 0.9; }
+  25% { opacity: 0.5; }
+  30% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@supports (animation-timeline: view()) {
+  .stat-number,
+  .perf-number {
+    animation: data-flicker 0.8s linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 40%;
+  }
+}
+
+// Section label reveal — line expands from center
+.docs-hub-label,
+.about-section-label,
+.solution-section-label,
+.careers-section-label {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background: var(--border);
+    transition: width 0.6s var(--ease-mechanical), left 0.3s var(--ease-mechanical);
+  }
+}
+
+// ─── Viewport Reveal Animations ──────────────────────────────
+// Elements with [data-reveal] start hidden and transition in when visible.
+// Scoped behind html.js so content is visible without JavaScript (progressive enhancement).
+// Reduced motion users see content immediately — no animation, no waiting for JS.
+
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s var(--ease-mechanical),
+              transform 0.6s var(--ease-mechanical);
+
+  &.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Variant: fade only (no slide) — for horizontal elements like the credibility bar
+html.js [data-reveal="fade"] {
+  transform: none;
+
+  &.in-view {
+    transform: none;
+  }
+}
+
+// Variant: slide from left — for section break lines
+html.js [data-reveal="left"] {
+  opacity: 0;
+  transform: translateX(-12px);
+
+  &.in-view {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

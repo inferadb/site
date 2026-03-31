@@ -1,0 +1,44 @@
+// ─── Differentiators ─────────────────────────────────────────
+
+.differentiators {
+  padding: 6rem 0;
+}
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @container (width < 640px) { grid-template-columns: 1fr; }
+}
+
+.diff-card {
+  padding: 2rem;
+  @include card-surface;
+  transition: border-color 0.15s;
+
+  &:hover { border-color: var(--border-hover); }
+
+  h3 {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 1024px) {
+  .diff-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (width <= 768px) {
+  .diff-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,23 @@
+// ─── Typography Labels ──────────────────────────────────────
+
+.gradient-text {
+  --gradient-from: oklch(0.73 0.12 80);
+  --gradient-to: oklch(0.78 0.10 80);
+  --gradient-angle: 135deg;
+  background: linear-gradient(var(--gradient-angle), var(--gradient-from), var(--gradient-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  // @property typed custom properties enable smooth gradient transitions
+  transition: --gradient-angle 0.6s, --gradient-from 0.4s, --gradient-to 0.4s;
+}
+
+// Technical label style — monospaced, uppercase, amber
+.tech-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

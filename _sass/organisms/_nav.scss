@@ -1,0 +1,589 @@
+// ─── Announcement Banner ─────────────────────────────────────
+
+.site-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101; // above nav
+  background: var(--accent);
+}
+
+// Reuses .nav-inner for max-width and horizontal padding; overrides layout
+.site-banner .site-banner-inner {
+  width: 100%;
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+
+.site-banner-text {
+  flex: 1;
+  @include tech-label(var(--bg));
+  letter-spacing: 0.02em;
+  text-transform: none;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover { text-decoration: underline; text-underline-offset: 2px; }
+}
+
+.site-banner-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0.625rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  color: var(--bg);
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+
+  &:hover { opacity: 0.8; }
+  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; border-radius: 2px; }
+}
+
+// When banner is visible, push nav down and remove its amber top-border
+.has-banner .site-nav {
+  top: var(--banner-h);
+  border-top: none;
+}
+
+.has-banner .docs-layout {
+  padding-top: calc(var(--nav-h) + var(--banner-h));
+}
+
+.has-banner .docs-sidebar {
+  top: calc(var(--nav-h) + var(--banner-h));
+  height: calc(100vh - var(--nav-h) - var(--banner-h));
+}
+
+.has-banner .docs-toc {
+  top: calc(var(--nav-h) + var(--banner-h));
+  height: calc(100vh - var(--nav-h) - var(--banner-h));
+}
+
+.has-banner .hero {
+  padding-top: calc(var(--nav-h) + var(--banner-h) + 4rem);
+}
+
+// ─── Navigation ──────────────────────────────────────────────
+
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0.875rem 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid transparent;
+  border-top: 2px solid var(--accent);
+  transition: none;
+
+  &.scrolled {
+    background: rgba(11, 13, 17, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom-color: var(--border);
+    transition: background 0.3s, border-bottom-color 0.3s;
+  }
+
+  [data-layout="docs"] & { border-bottom-color: var(--border); }
+}
+
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--text-white);
+  svg { width: 26px; height: 26px; }
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  a:not(.btn) {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.15s;
+    &:hover { color: var(--text-white); }
+  }
+
+  .nav-ctas {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-left: 0.75rem;
+  }
+}
+
+// ─── Mega-menu dropdowns ─────────────────────────────────────
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.15s;
+
+  &:hover { color: var(--text-white); }
+  @include focus-ring;
+}
+
+.nav-dropdown-chevron {
+  transition: transform 0.2s;
+  opacity: 0.5;
+}
+
+.nav-dropdown.open .nav-dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-mega {
+  position: absolute;
+  top: calc(100% + 0.875rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 480px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  z-index: 200;
+
+  // Arrow nub
+  &::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+}
+
+.nav-dropdown.open .nav-mega {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-mega-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.nav-mega-hub {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.625rem 0.75rem;
+  margin-bottom: -0.25rem;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+
+  .nav-mega-title {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  .nav-mega-desc {
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+  }
+
+  &:hover .nav-mega-title {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}
+
+.nav-mega-label {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 0.625rem 0.5rem;
+}
+
+.nav-mega-item {
+  display: block;
+  padding: 0.5rem 0.625rem;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  @include focus-ring;
+}
+
+.nav-mega-title {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-bright);
+  margin-bottom: 0.125rem;
+}
+
+.nav-mega-desc {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+// Mobile mega-menus — inline expandable sections
+@media (width <= 768px) {
+  .nav-dropdown {
+    width: 100%;
+  }
+
+  .nav-dropdown-trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.875rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-bright);
+    min-height: 48px;
+  }
+
+  .nav-dropdown-chevron {
+    opacity: 0.4;
+    transition: transform 0.2s;
+  }
+
+  .nav-dropdown.open .nav-dropdown-chevron {
+    transform: rotate(180deg);
+  }
+
+  .nav-mega {
+    position: static;
+    transform: none;
+    min-width: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    padding: 0 0 0.5rem 0.75rem;
+    display: none;
+    grid-template-columns: 1fr;
+    gap: 0;
+    opacity: 1;
+    pointer-events: auto;
+
+    &::before { display: none; }
+  }
+
+  .nav-dropdown.open .nav-mega {
+    display: grid;
+  }
+
+  .nav-mega-hub {
+    padding: 0.5rem 0;
+    margin-bottom: 0.25rem;
+    border-bottom: none;
+
+    .nav-mega-title { font-size: 0.8125rem; }
+    .nav-mega-desc { display: none; }
+  }
+
+  .nav-mega-label {
+    padding: 0.75rem 0 0.25rem;
+    font-size: 0.5625rem;
+  }
+
+  .nav-mega-item {
+    padding: 0.5rem 0;
+    min-height: auto;
+
+    .nav-mega-desc { display: none; }
+  }
+
+  .nav-mega-title {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem;
+  min-width: 44px;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: -0.5rem;
+  position: relative;
+  z-index: 2; // above the fullscreen overlay (within .site-nav context)
+
+  span {
+    display: block;
+    width: 20px;
+    height: 1.5px;
+    background: var(--text-bright);
+    border-radius: 1px;
+    transition: all 0.3s var(--ease-mechanical);
+    transform-origin: center;
+  }
+
+  // Hamburger → X transition when menu is open
+  &[aria-expanded="true"] {
+    span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  }
+}
+
+// Global nav links wrapper
+.nav-global {
+  display: contents; // on desktop, children flow into parent flex
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// Mobile docs nav (inside hamburger menu on docs pages)
+.nav-mobile-docs {
+  display: none; // hidden on desktop
+}
+
+.nav-mobile-docs-title {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-mobile-docs-group {
+  margin-bottom: 1.25rem;
+
+  h4 {
+    @include tech-label(var(--text-secondary));
+    letter-spacing: 0.08em;
+    margin-bottom: 0.375rem;
+  }
+
+  ul li a {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    min-height: 44px;
+
+    &:hover { color: var(--text-white); }
+    &.active { color: var(--accent); }
+  }
+}
+
+.nav-mobile-docs-back {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+
+  a {
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-height: 44px;
+    &:hover { color: var(--text-white); }
+  }
+}
+
+// Nav border transition — mechanical
+.site-nav {
+  transition: border-bottom-color 0.3s var(--ease-mechanical);
+}
+
+// Nav amber top bar — subtle shimmer (only when scrolled to avoid glow on transparent bg)
+.site-nav.scrolled {
+  background-image: linear-gradient(90deg,
+    transparent 0%,
+    oklch(0.73 0.12 80 / 0.03) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  background-position: -100% 0;
+  animation: nav-shimmer 12s ease-in-out infinite;
+}
+
+@keyframes nav-shimmer {
+  0% { background-position: -100% 0; }
+  30%, 70% { background-position: 200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 768px) {
+  .nav-toggle { display: flex; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    // Anchor to the nav's actual bottom edge via JS --nav-bottom custom prop,
+    // with var(--nav-h) as fallback for initial render
+    top: var(--nav-bottom, var(--nav-h));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem 2rem 2rem;
+    background: var(--bg);
+    gap: 0;
+    overflow-y: auto;
+
+
+    // Shared mobile link style — full-width, touch-friendly
+    a:not(.btn) {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 0.875rem 0;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-bright);
+      min-height: 48px;
+    }
+
+    .nav-global {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 0.5rem;
+
+      a {
+        // Inherits shared mobile link style above
+      }
+    }
+
+    // Mobile docs nav — same link treatment
+    .nav-mobile-docs {
+      a:not(.nav-mobile-docs-title) {
+        // Inherits shared mobile link style above
+        font-weight: 400;
+        color: var(--text-secondary);
+
+        &.active { color: var(--accent); }
+      }
+    }
+
+    .nav-mobile-docs-title {
+      font-size: 1rem;
+      padding: 0.875rem 0;
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+
+    .nav-mobile-docs-group {
+      h4 {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--text-bright);
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+        padding-bottom: 0.5rem;
+        border-top: 1px solid var(--border);
+      }
+
+      &:first-child h4 {
+        margin-top: 0.5rem;
+        border-top: none;
+      }
+    }
+
+    .nav-mobile-docs-back {
+      display: none;
+    }
+
+    .nav-ctas {
+      margin-left: 0;
+      margin-top: auto;
+      padding-top: 1.5rem;
+      flex-direction: column;
+      width: 100%;
+      .btn {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+        font-size: 0.9375rem;
+      }
+    }
+
+    &.open { display: flex; }
+  }
+
+  // On mobile docs pages: hide global links, show docs nav
+  [data-layout="docs"] .nav-links .nav-global { display: none; }
+  .nav-mobile-docs { display: block; }
+}

@@ -1,0 +1,60 @@
+// ─── Code windows ────────────────────────────────────────────
+
+.code-window {
+  @include card-surface;
+  overflow: hidden;
+}
+
+.code-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background: rgba(255,255,255,0.015);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border-hover);
+}
+
+.code-title {
+  margin-left: 0.5rem;
+  @include tech-label(var(--text-secondary));
+  font-weight: normal;
+  text-transform: none;
+}
+
+.code-window pre {
+  padding: 1.25rem;
+  overflow-x: auto;
+}
+
+.code-window code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--text);
+  .kw { color: var(--accent); }
+  .type { color: var(--accent-teal); }
+  .fn { color: var(--text-bright); }
+  .op { color: #7d8590; }
+  .lit { color: var(--accent-green); }
+  .str { color: var(--accent-green); }
+  .cm { color: var(--text-bright); }
+  .muted { color: var(--muted); }
+}
+
+// Code window hover — subtle lift
+.code-window {
+  transition: border-color 0.25s var(--ease-mechanical),
+              box-shadow 0.25s var(--ease-mechanical);
+
+  &:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 2px 20px oklch(0.73 0.12 80 / 0.04);
+  }
+}

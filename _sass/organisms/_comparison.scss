@@ -1,0 +1,96 @@
+// ─── Comparison Matrix ───────────────────────────────────────
+
+.compare {
+  padding: 6rem 0;
+}
+
+.compare-wrap {
+  overflow-x: auto;
+
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.compare-matrix {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+
+  th, td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  thead th {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: var(--text-white);
+    padding-bottom: 0.875rem;
+    vertical-align: bottom;
+    line-height: 1.3;
+  }
+}
+
+.compare-dimension-head {
+  width: 18%;
+  font-family: var(--font-mono) !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text) !important;
+}
+
+.compare-col-sub {
+  display: block;
+  @include tech-label(var(--text-secondary));
+  font-weight: 400;
+  text-transform: none;
+  margin-top: 0.125rem;
+  letter-spacing: 0;
+}
+
+.compare-col-infera {
+  background: var(--accent-overlay-bg);
+  color: var(--accent) !important;
+  box-shadow: inset 0 2px 0 var(--accent);
+}
+
+.compare-dimension {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  color: var(--text-white);
+}
+
+.compare-win {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--accent-overlay-bg);
+}
+
+.compare-neutral {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.compare-weak {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 1024px) {
+  .compare-matrix { font-size: 0.75rem;
+    th, td { padding: 0.5rem 0.625rem; }
+  }
+}
+
+@media (width <= 768px) {
+  .compare-matrix { min-width: 600px; }
+}

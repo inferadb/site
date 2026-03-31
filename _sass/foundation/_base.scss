@@ -1,0 +1,71 @@
+// ─── Base — unlayered, foundational styles ──────────────────
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100svh;
+
+  &.nav-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overscroll-behavior: none;
+
+    .site-nav {
+      background: var(--bg);
+      background-image: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
+b, strong { font-weight: 600; }
+a:not([class]) { text-decoration-skip-ink: auto; }
+
+// ─── Layout ──────────────────────────────────────────────────
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+// Container query context — only on sections with responsive grids.
+// Not applied to hero sections where size containment breaks flex layout.
+section:not([class*="hero"]) > .container {
+  container-type: inline-size;
+}
+
+section {
+  padding: 7rem 0;
+
+  @media (width <= 768px) {
+    padding: 4.5rem 0;
+  }
+}
+
+// Defer rendering for below-fold sections. Excludes hero sections
+// (class names containing "hero") which are always above the fold.
+section:not([class*="hero"]) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

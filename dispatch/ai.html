@@ -1,7 +1,7 @@
 ---
-layout: now
+layout: dispatch
 title: AI — InferaDB
-now_category: ai
+dispatch_category: ai
 ---
-{% assign filtered = site.data.now | where: "category", "ai" %}
-{% include now-cards.html entries=filtered %}
+{% assign filtered = site.data.dispatch | where: "category", "ai" %}
+{% include dispatch-cards.html entries=filtered %}

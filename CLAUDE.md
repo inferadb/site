@@ -139,8 +139,8 @@ Red and green accents are confusable with amber for deuteranopes (~6% of males).
 | `default.html` | Base HTML (head, nav, footer, scripts)               | All other layouts                   |
 | `page.html`    | Centered article with header                         | `contact.html`                      |
 | `docs.html`    | Sidebar + content with nav from `_data/docs_nav.yml` | All `/docs/` pages                  |
-| `now.html`     | Header + category tabs + content area                | All `/now/` and `/changelog/` pages |
-| `post.html`    | Full article with breadcrumb (Now / category / date) | Individual Now posts                |
+| `dispatch.html` | Header + category tabs + content area               | All `/dispatch/` and `/changelog/` pages |
+| `post.html`     | Full article with breadcrumb (Dispatch / category / date) | Individual Dispatch posts           |
 
 ### Content Sections
 
@@ -148,11 +148,11 @@ Red and green accents are confusable with amber for deuteranopes (~6% of males).
 
 **Documentation** (`docs/`): 34 pages including SDK docs for 10 languages. Index page (`docs/index.html`) is a card-based hub, not prose. Individual pages are markdown with `layout: docs` front matter. Sidebar navigation driven by `_data/docs_nav.yml`.
 
-**Now section** (`now/`): Three rendering patterns:
+**Dispatch section** (`dispatch/`): Three rendering patterns:
 
-- **Cards → full pages**: `now/index.html`, `now/news.html`, `now/ai.html`, `now/practices.html` — use `_includes/now-cards.html`, entries from `_data/now.yml`, link to individual `.md` posts in `now/`
-- **Inline timeline**: `changelog.html` — uses `_includes/now-timeline.html`, entries from `_data/changelog.yml` with full markdown body rendered inline
-- **External links**: `now/press.html` — uses `_includes/now-press.html`, entries from `_data/press.yml` with external URLs
+- **Cards → full pages**: `dispatch/index.html`, `dispatch/news.html`, `dispatch/ai.html`, `dispatch/engineering.html` — use `_includes/dispatch-cards.html`, entries from `_data/dispatch.yml`, link to individual `.md` posts in `dispatch/`
+- **Inline timeline**: `changelog.html` — uses `_includes/dispatch-timeline.html`, entries from `_data/changelog.yml` with full markdown body rendered inline
+- **External links**: `dispatch/press.html` — uses `_includes/dispatch-press.html`, entries from `_data/press.yml` with external URLs
 
 ### Data Files (`_data/`)
 
@@ -161,7 +161,7 @@ Red and green accents are confusable with amber for deuteranopes (~6% of males).
 | `nav.yml`       | Top navigation links                                         |
 | `docs_nav.yml`  | Documentation sidebar sections and links                     |
 | `features.yml`  | Homepage differentiator cards                                |
-| `now.yml`       | Now posts (news, ai, practices) — linked to individual pages |
+| `dispatch.yml`  | Dispatch posts (news, ai, engineering, security) — linked to individual pages |
 | `changelog.yml` | Changelog entries with inline `body` markdown                |
 | `press.yml`     | Press entries with external `url` fields                     |
 | `socials.yml`   | Social links in footer                                       |

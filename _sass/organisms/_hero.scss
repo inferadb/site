@@ -1,0 +1,122 @@
+// ─── Hero ────────────────────────────────────────────────────
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 5rem 0 5rem;
+  padding-top: var(--nav-h); // just enough to clear the fixed nav
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  // Dot grid background — renders behind everything
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, #272d38 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.5) 0%, transparent 60%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.5) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.hero-glow {
+  position: absolute;
+  top: -400px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 800px;
+  background: radial-gradient(ellipse at center, var(--accent-overlay-subtle) 0%, rgba(86, 182, 194, 0.015) 35%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+// Hero content sits above all background layers
+.hero > .container {
+  position: relative;
+  z-index: 3;
+}
+
+.hero-eyebrow {
+  @include eyebrow;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 3.75rem);
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.hero-subtitle {
+  max-width: 520px;
+  margin: 0 auto 2.5rem;
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+// Constellation canvas — authorization graph visualization
+.hero-constellation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+// Hero accent glow — animated with @property
+.hero-title .gradient-text {
+  --glow-opacity: 0;
+  transition: --glow-opacity 0.6s var(--ease-mechanical);
+  text-shadow: 0 0 40px oklch(0.73 0.12 80 / var(--glow-opacity));
+}
+
+.hero:hover .hero-title .gradient-text {
+  --glow-opacity: 0.3;
+}
+
+// Hero eyebrow — terminal cursor blink
+.hero-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 0.85em;
+  margin-left: 0.3em;
+  background: var(--accent);
+  vertical-align: middle;
+  position: relative;
+  top: -0.08em;
+  animation: cursor-blink 1.2s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 768px) {
+  .hero { padding: 6rem 0 3rem; padding-top: calc(var(--nav-h) + 4rem); }
+  .hero-actions { flex-direction: column; align-items: center; }
+}

@@ -1,0 +1,39 @@
+// ─── @property — typed custom properties for animation ──────
+
+// Gradient angle — enables smooth gradient rotation transitions
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 135deg;
+  inherits: false;
+}
+
+// Gradient stops — enables smooth color transitions in gradients
+@property --gradient-from {
+  syntax: "<color>";
+  initial-value: oklch(0.73 0.12 80);
+  inherits: false;
+}
+
+@property --gradient-to {
+  syntax: "<color>";
+  initial-value: oklch(0.78 0.10 80);
+  inherits: false;
+}
+
+// ─── @layer ordering ────────────────────────────────────────
+// Establishes cascade priority: reset < base < components < utilities
+@layer reset, base, components, utilities;
+
+// @property — typed custom properties for animatable values
+// These enable CSS-only gradient animations and glow effects.
+@property --glow-opacity {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --glow-spread {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}

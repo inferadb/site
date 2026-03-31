@@ -1,0 +1,19 @@
+// ─── HUD Elements ────────────────────────────────────────────
+
+// Status indicator dots — blinking green
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  animation: status-blink 3s ease-in-out infinite;
+  box-shadow: 0 0 6px oklch(0.62 0.14 140 / 0.4);
+}
+
+@keyframes status-blink {
+  0%, 40%, 100% { opacity: 1; }
+  45%, 55% { opacity: 0.3; }
+}

@@ -1,0 +1,64 @@
+// ─── OSS + Cloud ─────────────────────────────────────────────
+
+.oss-cloud {
+  padding: 6rem 0;
+}
+
+.oss-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.oss-card {
+  padding: 2.5rem;
+  @include card-surface;
+
+  h3 {
+    font-family: var(--font-sans);
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--text-white);
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  ul {
+    margin-bottom: 2rem;
+    li {
+      position: relative;
+      padding-left: 1.25rem;
+      font-size: 0.875rem;
+      color: var(--text);
+      line-height: 1.5;
+
+      &::before {
+        content: "\2713";
+        position: absolute;
+        left: 0;
+        color: var(--text-secondary);
+        font-size: 0.75rem;
+      }
+
+      & + li { margin-top: 0.5rem; }
+    }
+  }
+}
+
+.oss-card-cloud {
+  background: var(--accent-gradient-subtle);
+  border-color: var(--accent-overlay-strong);
+
+  ul li::before { color: var(--accent); }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 768px) {
+  .oss-grid { grid-template-columns: 1fr; }
+}

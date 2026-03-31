@@ -31,6 +31,9 @@
 
 :root {
   color-scheme: dark;
+  // Allow CSS transitions on keyword sizes (e.g., height: 0 → auto).
+  // Enables smooth <details> open/close without JavaScript height calculation.
+  interpolate-size: allow-keywords;
 
   // Mil-spec industrial palette — dark slate, not pure black
   --bg: #0b0d11;

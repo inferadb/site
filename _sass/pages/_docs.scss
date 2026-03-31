@@ -282,11 +282,7 @@
 
   // Prose links only — not hub cards or other block-level links
   :is(p, li, td, blockquote, h2, h3) a {
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    text-decoration-color: rgba(200, 164, 78, 0.3);
-    &:hover { text-decoration-color: var(--accent); }
+    @include prose-link;
   }
 
   strong { color: var(--text-bright); font-weight: 600; }
@@ -328,7 +324,6 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     overflow-x: auto;
-
     max-width: 100%;
 
     code {
@@ -350,7 +345,6 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       overflow-x: auto;
-
     }
 
     pre {
@@ -369,7 +363,6 @@
     font-size: 0.8125rem;
     display: block;
     overflow-x: auto;
-
 
     th {
       text-align: left;
@@ -1158,6 +1151,20 @@ h3:hover .heading-anchor {
   border: 1px solid var(--border);
   border-radius: 3px;
   background: var(--bg-card);
+
+  // Smooth open/close via interpolate-size: allow-keywords
+  > :not(summary) {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height 0.25s var(--ease-mechanical),
+                opacity 0.2s ease;
+  }
+
+  &[open] > :not(summary) {
+    height: auto;
+    opacity: 1;
+  }
 
   &[open] summary {
     border-bottom: 1px solid var(--border);

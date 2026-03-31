@@ -35,6 +35,10 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   line-height: 1.2;
   text-wrap: balance;
+  // Remove intrinsic font whitespace above cap-height and below baseline.
+  // Headings align precisely to their margin/padding — no optical drift.
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
 }
 
 p { text-wrap: pretty; }

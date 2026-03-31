@@ -63,6 +63,21 @@
     &:hover { color: var(--accent); }
   }
 
+  // Smooth open/close — interpolate-size: allow-keywords on :root
+  // enables transitioning height from 0 to auto
+  > :not(summary) {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height 0.25s var(--ease-mechanical),
+                opacity 0.2s ease;
+  }
+
+  &[open] > :not(summary) {
+    height: auto;
+    opacity: 1;
+  }
+
   &[open] summary::after {
     content: "\2212"; // minus sign
     color: var(--accent);

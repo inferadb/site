@@ -28,12 +28,17 @@
 
 .hero-glow {
   position: absolute;
-  top: -400px;
+  top: -300px;
   left: 50%;
   transform: translateX(-50%);
-  width: 1000px;
-  height: 800px;
-  background: radial-gradient(ellipse at center, var(--accent-overlay-subtle) 0%, rgba(86, 182, 194, 0.015) 35%, transparent 60%);
+  width: 1200px;
+  height: 900px;
+  background: radial-gradient(ellipse at center,
+    rgba(200, 164, 78, 0.06) 0%,
+    rgba(200, 164, 78, 0.03) 25%,
+    rgba(86, 182, 194, 0.015) 45%,
+    transparent 65%
+  );
   pointer-events: none;
   z-index: 1;
 }

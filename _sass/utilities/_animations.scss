@@ -125,6 +125,15 @@
 .arch-service,
 .perf-card {
   position: relative;
+  transition: box-shadow 0.3s var(--ease-mechanical);
+}
+
+.card:hover,
+.diff-card:hover,
+.uc-card:hover,
+.arch-service:hover,
+.perf-card:hover {
+  box-shadow: 0 4px 24px rgba(200, 164, 78, 0.06), 0 0 0 1px rgba(200, 164, 78, 0.04);
 }
 
 .card:hover::after,

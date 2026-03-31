@@ -92,8 +92,8 @@
     justify-content: center;
     min-width: 2.75rem;
     min-height: 2.75rem;
-    transition: color 0.15s;
-    &:hover { color: var(--text-white); }
+    transition: color 0.15s, transform 0.15s var(--ease-mechanical);
+    &:hover { color: var(--text-white); transform: translateY(-2px); }
   }
 }
 

@@ -1,7 +1,7 @@
 <div class="changelog-timeline">
 {% for entry in include.entries %}
   <div class="changelog-date-col{% if forloop.first %} is-first{% endif %}">
-    <time class="changelog-date" datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
+    <time class="changelog-date" datetime="{{ entry.date }}"><span>{{ entry.date | date: "%b %d, %Y" }}</span></time>
   </div>
   <div class="changelog-rail{% if forloop.first %} is-first{% endif %}{% if forloop.last %} is-last{% endif %}">
     <span class="changelog-node"></span>

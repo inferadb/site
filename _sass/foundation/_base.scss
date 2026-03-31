@@ -5,6 +5,12 @@ html {
   overscroll-behavior: none;
 }
 
+// scroll-state() container queries — enables CSS-only scroll detection
+// for nav background, sticky highlights, etc. Chrome 133+ / Edge 133+.
+@supports (container-type: scroll-state) {
+  html { container-type: scroll-state; }
+}
+
 body {
   font-family: var(--font-sans);
   background: var(--bg);

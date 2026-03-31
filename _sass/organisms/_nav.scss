@@ -481,6 +481,30 @@
   100% { background-position: 200% 0; }
 }
 
+// ─── Progressive enhancement: scroll-state nav detection ────
+// Replaces the JS scroll listener in Chrome 133+ / Edge 133+.
+// The JS fallback is gated behind !CSS.supports() for other browsers.
+@supports (container-type: scroll-state) {
+  @container scroll-state(scrollable: top) {
+    .site-nav {
+      background: rgba(11, 13, 17, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom-color: var(--border);
+      transition: background 0.3s, border-bottom-color 0.3s;
+      background-image: linear-gradient(90deg,
+        transparent 0%,
+        oklch(0.73 0.12 80 / 0.03) 50%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      background-position: -100% 0;
+      animation: nav-shimmer 12s ease-in-out infinite;
+    }
+  }
+}
+
 // ─── Responsive ──────────────────────────────────────────────
 
 @media (width <= 768px) {

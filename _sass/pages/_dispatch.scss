@@ -220,6 +220,17 @@
   display: block;
   position: sticky;
   top: calc(var(--nav-h) + 1rem);
+
+  > span { transition: color 0.2s; }
+}
+
+// Progressive enhancement: highlight date text when stuck (Chrome 133+)
+@supports (container-type: scroll-state) {
+  .changelog-date { container-type: scroll-state; }
+
+  @container scroll-state(stuck: top) {
+    span { color: var(--text-white); }
+  }
 }
 
 // ─── Rail column ────────────────────────────────────────────

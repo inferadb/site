@@ -140,9 +140,13 @@ if (nav) {
   updateNavBottom();
   window.addEventListener('resize', updateNavBottom, { passive: true });
 
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-  }, { passive: true });
+  // scroll-state() container queries handle this in CSS for Chrome 133+.
+  // JS scroll listener is the fallback for other browsers.
+  if (!CSS.supports('container-type', 'scroll-state')) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  }
 }
 
 // ─── Mobile menu ─────────────────────────────────────────────
@@ -1910,97 +1914,53 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   }
 })();
 
-// ─── Changelog: sticky dates + deep-link ─────────────────────
+// ─── Changelog: node highlighting + deep-link ────────────────
+// CSS position: sticky handles date/node sticking. This JS only
+// manages the .is-active class on timeline dots based on scroll.
 (function() {
-  const MOBILE = 768;
-  const cols = document.querySelectorAll('.changelog-date-col');
+  var MOBILE = 768;
+  var cols = document.querySelectorAll('.changelog-date-col');
   if (!cols.length) return;
 
-  const navEl = document.querySelector('.site-nav');
-  const entries = [];
+  var navEl = document.querySelector('.site-nav');
+  var entries = [];
 
-  for (let i = 0; i < cols.length; i++) {
-    const col = cols[i];
-    const date = col.querySelector('.changelog-date');
-    if (!date) continue;
-    const rail = col.nextElementSibling;
-    const node = rail ? rail.querySelector('.changelog-node') : null;
-    const content = rail ? rail.nextElementSibling : null;
-    entries.push({ col: col, date: date, rail: rail, node: node, content: content, stuck: false, active: false });
+  for (var i = 0; i < cols.length; i++) {
+    var col = cols[i];
+    var rail = col.nextElementSibling;
+    var node = rail ? rail.querySelector('.changelog-node') : null;
+    var content = rail ? rail.nextElementSibling : null;
+    entries.push({ col: col, node: node, content: content, active: false });
   }
 
-  let ticking = false;
-
-  function unstick(e) {
-    e.date.style.position = '';
-    e.date.style.top = '';
-    e.date.style.left = '';
-    e.date.style.width = '';
-    if (e.node) {
-      e.node.style.position = '';
-      e.node.style.top = '';
-      e.node.style.left = '';
-      e.node.style.marginTop = '';
-    }
-    e.stuck = false;
-  }
-
-  function setActive(e, active) {
-    if (e.active === active) return;
-    e.active = active;
-    if (e.node) {
-      if (active) e.node.classList.add('is-active');
-      else e.node.classList.remove('is-active');
-    }
-  }
+  var ticking = false;
 
   function update() {
     if (window.innerWidth <= MOBILE) {
-      for (let k = 0; k < entries.length; k++) {
-        unstick(entries[k]);
-        setActive(entries[k], false);
+      for (var k = 0; k < entries.length; k++) {
+        if (entries[k].active) {
+          entries[k].active = false;
+          if (entries[k].node) entries[k].node.classList.remove('is-active');
+        }
       }
       ticking = false;
       return;
     }
 
-    const navBottom = navEl ? navEl.getBoundingClientRect().bottom : 60;
-    const pin = navBottom + 20;
-    const viewMid = window.innerHeight / 2;
+    var navBottom = navEl ? navEl.getBoundingClientRect().bottom : 60;
+    var pin = navBottom + 20;
+    var viewMid = window.innerHeight / 2;
 
-    for (let i = 0; i < entries.length; i++) {
-      const e = entries[i];
+    for (var j = 0; j < entries.length; j++) {
+      var e = entries[j];
+      var colRect = e.col.getBoundingClientRect();
+      var contentRect = e.content ? e.content.getBoundingClientRect() : colRect;
+      var isActive = contentRect.top < viewMid && contentRect.bottom > pin;
 
-      if (e.stuck) {
-        unstick(e);
+      if (e.active !== isActive) {
+        e.active = isActive;
+        if (e.node) e.node.classList.toggle('is-active', isActive);
       }
-
-      const dateRect = e.date.getBoundingClientRect();
-      const nodeRect = e.node ? e.node.getBoundingClientRect() : null;
-      const contentRect = e.content ? e.content.getBoundingClientRect() : dateRect;
-      const dateHeight = dateRect.height;
-
-      const shouldStick = dateRect.top < pin && contentRect.bottom > pin + dateHeight + 16;
-
-      if (shouldStick) {
-        e.date.style.position = 'fixed';
-        e.date.style.top = pin + 'px';
-        e.date.style.left = dateRect.left + 'px';
-        e.date.style.width = dateRect.width + 'px';
-
-        if (e.node && nodeRect) {
-          const dotOffset = (dateHeight - nodeRect.height) / 2;
-          e.node.style.position = 'fixed';
-          e.node.style.top = (pin + dotOffset) + 'px';
-          e.node.style.left = (nodeRect.left + nodeRect.width / 2 - 4) + 'px';
-          e.node.style.marginTop = '0';
-        }
-
-        e.stuck = true;
-      }
-
-      const isActive = contentRect.top < viewMid && contentRect.bottom > pin;
-      setActive(e, isActive);
     }
     ticking = false;
   }

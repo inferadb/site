@@ -3385,6 +3385,7 @@ section {
   margin-bottom: 0.75rem;
   overflow: hidden;
   background: var(--border);
+  pointer-events: none; // Let clicks pass through to the card link overlay
 
   &::before {
     content: "";

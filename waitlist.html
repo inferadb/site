@@ -51,7 +51,7 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                             <span class="form-error" id="waitlist-email-error" role="alert" hidden></span>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="waitlist-website">Company Website <span class="form-optional">(optional)</span></label>
+                            <label class="form-label" for="waitlist-website">Company Website <span id="wl-cw-opt" class="form-optional">(optional)</span></label>
                             <input
                                 class="form-input"
                                 type="url"
@@ -59,6 +59,7 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                                 name="company-website"
                                 placeholder="acme.com"
                                 autocomplete="url"
+                                aria-describedby="wl-cw-opt"
                             />
                         </div>
                         <fieldset class="form-group contact-checkboxes">

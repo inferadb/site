@@ -42,6 +42,7 @@ The site uses a distinctive industrial aesthetic inspired by NASA/aerospace docu
 | `--accent-red`   | `#d45858` | Errors, denied states                       |
 | `--accent-green` | `#6a9e4a` | Success, allowed states                     |
 | `--border`       | `#1c2028` | Panel edges (subtle, not prominent)         |
+| `--border-interactive` | `#3a4250` | Interactive element borders (3:1 vs bg) |
 
 ### Typography
 

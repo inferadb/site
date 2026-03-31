@@ -19,7 +19,7 @@
       </div>
     </summary>
     {% if entry.image %}
-    <img class="changelog-entry-image" src="{{ entry.image }}" alt="{{ entry.image_alt | default: '' }}" loading="lazy" />
+    <img class="changelog-entry-image" src="{{ entry.image }}" alt="{{ entry.image_alt | default: entry.title }}" loading="lazy" />
     {% endif %}
     <div class="changelog-entry-body">
       {{ entry.body | markdownify }}

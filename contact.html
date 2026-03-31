@@ -98,7 +98,7 @@ description: "Get in touch with the InferaDB team — technical questions, enter
 
                     <!-- Company website: enterprise, partnership -->
                     <div class="form-group contact-field" data-show-for="enterprise partnership">
-                        <label class="form-label" for="company-website">Company Website <span class="form-optional">(optional)</span></label>
+                        <label class="form-label" for="company-website">Company Website <span id="cw-opt" class="form-optional">(optional)</span></label>
                         <input
                             class="form-input"
                             type="url"
@@ -106,14 +106,15 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                             name="company-website"
                             placeholder="acme.com"
                             autocomplete="url"
+                            aria-describedby="cw-opt"
                         />
                     </div>
 
                     <!-- Region + company size: enterprise only -->
                     <div class="form-row contact-field" data-show-for="enterprise">
                         <div class="form-group">
-                            <label class="form-label" for="region">Region <span class="form-optional">(optional)</span></label>
-                            <select class="form-input form-select" id="region" name="region">
+                            <label class="form-label" for="region">Region <span id="region-opt" class="form-optional">(optional)</span></label>
+                            <select class="form-input form-select" id="region" name="region" aria-describedby="region-opt">
                                 <option value="">Select region</option>
                                 <option value="north-america">North America</option>
                                 <option value="europe">Europe</option>
@@ -123,8 +124,8 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="company-size">Company Size <span class="form-optional">(optional)</span></label>
-                            <select class="form-input form-select" id="company-size" name="company-size">
+                            <label class="form-label" for="company-size">Company Size <span id="cs-opt" class="form-optional">(optional)</span></label>
+                            <select class="form-input form-select" id="company-size" name="company-size" aria-describedby="cs-opt">
                                 <option value="">Select size</option>
                                 <option value="1-10">1 &ndash; 10</option>
                                 <option value="11-50">11 &ndash; 50</option>

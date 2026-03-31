@@ -3,7 +3,7 @@
 <a href="/dispatch/{{ entry.slug }}" class="dispatch-entry{% if entry.teaser %} has-teaser{% endif %}">
   {% if entry.teaser %}
   <div class="dispatch-entry-teaser-wrap">
-    <img class="dispatch-entry-teaser" src="{{ entry.teaser }}" alt="{{ entry.teaser_alt | default: '' }}" loading="lazy" />
+    <img class="dispatch-entry-teaser" src="{{ entry.teaser }}" alt="{{ entry.teaser_alt | default: entry.title }}" loading="lazy" />
   </div>
   {% endif %}
   <div class="dispatch-entry-content">

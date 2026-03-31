@@ -6,12 +6,12 @@ hide_toc: true
 description: "InferaDB documentation — quickstart guides, API reference (REST, gRPC, AuthZEN), SDKs for 10 languages, architecture deep-dives, deployment, and security."
 ---
 
-<nav class="docs-hub-tabs" aria-label="Documentation categories">
-  <a href="#" class="active" data-filter="all">All</a>
+<div class="docs-hub-tabs" role="tablist" aria-label="Documentation categories">
+  <button role="tab" aria-selected="true" tabindex="0" class="active" data-filter="all">All</button>
   {% for group in site.data.docs_nav %}
-  <a href="#" data-filter="{{ group.filter }}">{{ group.tab | default: group.section }}</a>
+  <button role="tab" aria-selected="false" tabindex="-1" data-filter="{{ group.filter }}">{{ group.tab | default: group.section }}</button>
   {% endfor %}
-</nav>
+</div>
 
 <div class="docs-hub">
   {% for group in site.data.docs_nav %}
@@ -33,22 +33,48 @@ description: "InferaDB documentation — quickstart guides, API reference (REST,
 
 <script>
 (function() {
-  var tabs = document.querySelectorAll('.docs-hub-tabs a');
+  var tabs = document.querySelectorAll('.docs-hub-tabs [role="tab"]');
   var sections = document.querySelectorAll('.docs-hub-section');
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function(e) {
-      e.preventDefault();
-      var filter = this.getAttribute('data-filter');
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      this.classList.add('active');
-      sections.forEach(function(s) {
-        if (filter === 'all' || s.getAttribute('data-section') === filter) {
-          s.style.display = '';
-        } else {
-          s.style.display = 'none';
-        }
-      });
+
+  function activateTab(tab) {
+    tabs.forEach(function(t) {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+      t.setAttribute('tabindex', '-1');
     });
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    tab.setAttribute('tabindex', '0');
+    tab.focus();
+
+    var filter = tab.getAttribute('data-filter');
+    sections.forEach(function(s) {
+      s.style.display = (filter === 'all' || s.getAttribute('data-section') === filter) ? '' : 'none';
+    });
+  }
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() { activateTab(this); });
+  });
+
+  // Arrow key navigation (roving tabindex)
+  document.querySelector('.docs-hub-tabs').addEventListener('keydown', function(e) {
+    var tabArr = Array.prototype.slice.call(tabs);
+    var idx = tabArr.indexOf(document.activeElement);
+    if (idx < 0) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      activateTab(tabArr[(idx + 1) % tabArr.length]);
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      activateTab(tabArr[(idx - 1 + tabArr.length) % tabArr.length]);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      activateTab(tabArr[0]);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      activateTab(tabArr[tabArr.length - 1]);
+    }
   });
 })();
 </script>

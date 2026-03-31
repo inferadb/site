@@ -157,11 +157,9 @@
 // Establishes cascade priority: reset < base < components < utilities
 @layer reset, base, components, utilities;
 
-// ─── Modern Reset ────────────────────────────────────────────
-// Based on Andy Bell's modern CSS reset + Josh Comeau's custom reset.
-// Goals: eliminate cross-browser variance, inherit fonts everywhere,
-// strip user-agent opinions on headings/lists/form elements.
 // ─── Reset (layered) — lowest cascade priority ─────────────
+// Pure normalization: zeros margins, strips appearance, inherits fonts.
+// Foundational styles (body bg/color, heading family) are unlayered below.
 @layer reset {
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; -moz-text-size-adjust: 100%; }

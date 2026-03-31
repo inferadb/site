@@ -132,6 +132,7 @@
     color: var(--text-secondary);
     transition: color 0.15s;
     &:hover { color: var(--text-white); }
+    @include focus-ring;
   }
 
   .nav-ctas {

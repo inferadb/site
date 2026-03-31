@@ -24,27 +24,31 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                         method="POST"
                     >
                         <input type="hidden" name="_next" value="https://inferadb.com/waitlist/thanks" />
+                        <div id="waitlist-form-status" role="alert" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+                        <p class="form-required-note"><abbr title="Required" class="form-required-star">*</abbr> indicates a required field</p>
                         <div class="form-group">
-                            <label class="form-label" for="waitlist-name">Name</label>
+                            <label class="form-label" for="waitlist-name">Name <abbr title="Required" class="form-required-star">*</abbr></label>
                             <input
                                 class="form-input"
                                 type="text"
                                 id="waitlist-name"
                                 name="name"
                                 required
+                                aria-required="true"
                                 autocomplete="name"
                                 aria-describedby="waitlist-name-error"
                             />
                             <span class="form-error" id="waitlist-name-error" role="alert" hidden></span>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="waitlist-email">Work email</label>
+                            <label class="form-label" for="waitlist-email">Work email <abbr title="Required" class="form-required-star">*</abbr></label>
                             <input
                                 class="form-input"
                                 type="email"
                                 id="waitlist-email"
                                 name="email"
                                 required
+                                aria-required="true"
                                 autocomplete="email"
                                 aria-describedby="waitlist-email-error"
                             />
@@ -148,6 +152,8 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
         input.addEventListener('input', function() { clearError(input); });
     });
 
+    var formStatus = document.getElementById('waitlist-form-status');
+
     form.addEventListener('submit', function(e) {
         var firstInvalid = null;
         form.querySelectorAll('.form-input[required]').forEach(function(input) {
@@ -161,6 +167,9 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
         if (firstInvalid) {
             e.preventDefault();
             firstInvalid.focus();
+            formStatus.textContent = 'Form has errors. Please correct the highlighted fields.';
+        } else {
+            formStatus.textContent = '';
         }
     });
 })();

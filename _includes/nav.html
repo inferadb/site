@@ -14,12 +14,12 @@
       {% include logo.svg %}
       <span>InferaDB</span>
     </a>
-    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
       <span></span>
       <span></span>
       <span></span>
     </button>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <!-- Global nav — always visible on desktop, hidden on mobile docs pages -->
       <ul class="nav-global">
         {% for item in site.data.nav %}

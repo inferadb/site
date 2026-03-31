@@ -40,4 +40,11 @@
 
   &-sm { padding: 0.5rem 0.875rem; min-height: 2.75rem; font-size: 0.8125rem; }
   &-lg { padding: 0.875rem 1.75rem; min-height: 3rem; font-size: 0.9375rem; }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 }

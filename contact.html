@@ -28,6 +28,8 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                     id="contact-form"
                 >
                     <input type="hidden" name="_next" value="https://inferadb.com/contact/thanks" />
+                    <div id="contact-form-status" role="alert" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
+                    <p class="form-required-note"><abbr title="Required" class="form-required-star">*</abbr> indicates a required field</p>
 
                     <div class="form-group">
                         <label class="form-label" for="inquiry-type">What can we help with?</label>
@@ -55,26 +57,28 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                     <!-- Always visible: name + email -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label" for="first-name">First Name</label>
+                            <label class="form-label" for="first-name">First Name <abbr title="Required" class="form-required-star">*</abbr></label>
                             <input
                                 class="form-input"
                                 type="text"
                                 id="first-name"
                                 name="first-name"
                                 required
+                                aria-required="true"
                                 autocomplete="given-name"
                                 aria-describedby="first-name-error"
                             />
                             <span class="form-error" id="first-name-error" role="alert" hidden></span>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="last-name">Last Name</label>
+                            <label class="form-label" for="last-name">Last Name <abbr title="Required" class="form-required-star">*</abbr></label>
                             <input
                                 class="form-input"
                                 type="text"
                                 id="last-name"
                                 name="last-name"
                                 required
+                                aria-required="true"
                                 autocomplete="family-name"
                                 aria-describedby="last-name-error"
                             />
@@ -83,13 +87,14 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="email">Work Email</label>
+                        <label class="form-label" for="email">Work Email <abbr title="Required" class="form-required-star">*</abbr></label>
                         <input
                             class="form-input"
                             type="email"
                             id="email"
                             name="email"
                             required
+                            aria-required="true"
                             autocomplete="email"
                             aria-describedby="email-error"
                         />
@@ -151,12 +156,13 @@ description: "Get in touch with the InferaDB team — technical questions, enter
 
                     <!-- Always visible: message + submit -->
                     <div class="form-group">
-                        <label class="form-label" for="message">Message</label>
+                        <label class="form-label" for="message">Message <abbr title="Required" class="form-required-star">*</abbr></label>
                         <textarea
                             class="form-textarea"
                             id="message"
                             name="message"
                             required
+                            aria-required="true"
                             rows="5"
                             placeholder="Tell us about your stack and what you're evaluating..."
                             aria-describedby="message-error"
@@ -362,6 +368,8 @@ description: "Get in touch with the InferaDB team — technical questions, enter
         input.addEventListener('input', function() { clearError(input); });
     });
 
+    var formStatus = document.getElementById('contact-form-status');
+
     form.addEventListener('submit', function(e) {
         var firstInvalid = null;
         form.querySelectorAll('.form-input[required], .form-textarea[required]').forEach(function(input) {
@@ -376,6 +384,9 @@ description: "Get in touch with the InferaDB team — technical questions, enter
         if (firstInvalid) {
             e.preventDefault();
             firstInvalid.focus();
+            formStatus.textContent = 'Form has errors. Please correct the highlighted fields.';
+        } else {
+            formStatus.textContent = '';
         }
     });
 
@@ -459,6 +470,10 @@ description: "Get in touch with the InferaDB team — technical questions, enter
             e.preventDefault();
             selectType(buttons[next]);
             buttons[next].focus();
+        }
+        if (e.key === ' ' || e.key === 'Enter') {
+            e.preventDefault();
+            selectType(btn);
         }
     });
 

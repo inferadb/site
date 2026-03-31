@@ -54,6 +54,21 @@
   .hero-eyebrow::after { animation: none !important; }
   .perf-hero { animation: none !important; }
   .site-nav { animation: none !important; }
+
+  // Scroll-driven animations — animation-duration: 0.01ms alone does not
+  // disable scroll-driven timelines; explicitly remove them.
+  .section-header,
+  .arch-schematic-container,
+  .hero-code,
+  .hiw-code,
+  .hiw-steps,
+  .stat-card,
+  .perf-card,
+  .stat-number,
+  .perf-number {
+    animation: none !important;
+    animation-timeline: none !important;
+  }
 }
 
 // Windows High Contrast Mode / forced-colors

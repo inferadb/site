@@ -53,6 +53,8 @@
       color: var(--accent);
       border-bottom-color: var(--accent);
     }
+
+    @include focus-ring;
   }
 }
 

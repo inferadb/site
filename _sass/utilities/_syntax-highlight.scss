@@ -29,8 +29,8 @@
   // Numbers — distinct copper/orange (not green)
   :is(.m, .mi, .mf, .mh, .mo, .mb, .mx, .il) { color: oklch(0.72 0.12 55); }
 
-  // Comments — muted, italic
-  :is(.c, .c1, .cm, .cs, .ch) { color: var(--muted); font-style: italic; }
+  // Comments — secondary text (--muted fails 4.5:1 AA contrast)
+  :is(.c, .c1, .cm, .cs, .ch) { color: var(--text-secondary); font-style: italic; }
 
   // Preprocessor — brighter than comments
   .cp  { color: var(--text-secondary); font-style: normal; }

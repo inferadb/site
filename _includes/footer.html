@@ -45,7 +45,7 @@
       <p>&copy; {{ 'now' | date: '%Y' }} InferaDB, Inc.</p>
       <div class="footer-socials">
         {% for social in site.data.socials %}
-        <a href="{{ social.url }}"{% if social.url contains "://" %} target="_blank" rel="noopener"{% endif %} aria-label="{{ social.site }}">
+        <a href="{{ social.url }}"{% if social.url contains "://" %} target="_blank" rel="noopener"{% endif %} aria-label="{{ social.site }}{% if social.url contains '://' %} (opens in new tab){% endif %}">
           {% include icon-{{ social.icon }}.svg %}
         </a>
         {% endfor %}

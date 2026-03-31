@@ -1,14 +1,14 @@
 <div class="dispatch-list">
 {% for entry in include.entries %}
-<a href="{{ entry.url }}" class="dispatch-entry"{% if entry.url contains "://" %} target="_blank" rel="noopener"{% endif %}>
+<div class="dispatch-entry">
   <div class="dispatch-entry-content">
     <div class="dispatch-entry-meta">
       <time datetime="{{ entry.date }}">{{ entry.date | date: "%b %d, %Y" }}</time>
       <span class="dispatch-entry-cat">{{ entry.source }}</span>
     </div>
-    <h2 class="dispatch-entry-title">{{ entry.title }}</h2>
+    <h2 class="dispatch-entry-title"><a href="{{ entry.url }}"{% if entry.url contains "://" %} target="_blank" rel="noopener"{% endif %}>{{ entry.title }}{% if entry.url contains "://" %}<span class="sr-only"> (opens in new tab)</span>{% endif %}</a></h2>
     <p class="dispatch-entry-excerpt">{{ entry.excerpt }}</p>
   </div>
-</a>
+</div>
 {% endfor %}
 </div>

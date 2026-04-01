@@ -20,42 +20,47 @@
       <span></span>
     </button>
     <div class="nav-links" id="nav-links">
-      <!-- Global nav — always visible on desktop, hidden on mobile docs pages -->
       <ul class="nav-global">
         {% for item in site.data.nav %}
           {% if item.groups %}
-          <li class="nav-dropdown">
-            <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+          <li class="nav-has-mega">
+            <button class="nav-mega-trigger" data-mega="{{ item.title | slugify }}" aria-expanded="false" aria-haspopup="true">
               {{ item.title }}
-              <svg class="nav-dropdown-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+              <svg class="nav-mega-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
             </button>
-            <div class="nav-mega" aria-label="{{ item.title }}">
-              {% if item.hub %}
-              <a href="{{ item.hub.url }}" class="nav-mega-hub">
-                <span class="nav-mega-title">{{ item.hub.title }}</span>
-                <span class="nav-mega-desc">{{ item.hub.desc }}</span>
-              </a>
-              {% endif %}
-              {% for group in item.groups %}
-              <div class="nav-mega-group">
-                <div class="nav-mega-label">{{ group.label }}</div>
-                {% for link in group.items %}
-                <a href="{{ link.url }}" class="nav-mega-item">
-                  <span class="nav-mega-title">{{ link.title }}</span>
-                  <span class="nav-mega-desc">{{ link.desc }}</span>
-                </a>
-                {% endfor %}
-              </div>
-              {% endfor %}
-            </div>
           </li>
           {% else %}
           <li><a href="{{ item.url }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}{% if item.external %}<span class="sr-only"> (opens in new tab)</span>{% endif %}</a></li>
           {% endif %}
         {% endfor %}
       </ul>
+
+      <!-- Mobile: inline expandable dropdowns (hidden on desktop) -->
+      <div class="nav-mobile-megas">
+        {% for item in site.data.nav %}{% if item.groups %}
+        <div class="nav-mobile-dropdown">
+          <button class="nav-mobile-dropdown-trigger" aria-expanded="false">
+            {{ item.title }}
+            <svg class="nav-mega-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
+          </button>
+          <div class="nav-mobile-dropdown-body">
+            {% if item.hub %}
+            <a href="{{ item.hub.url }}" class="nav-mobile-hub">{{ item.hub.title }} &rarr;</a>
+            {% endif %}
+            {% for group in item.groups %}
+            <div class="nav-mobile-group">
+              <div class="nav-mobile-group-label">{{ group.label }}</div>
+              {% for link in group.items %}
+              <a href="{{ link.url }}" class="nav-mobile-group-item">{{ link.title }}</a>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}{% endfor %}
+      </div>
+
       {% if page.layout == 'docs' %}
-      <!-- Docs nav — only visible inside mobile hamburger on docs pages -->
       <nav class="nav-mobile-docs" aria-label="Mobile documentation navigation">
         <a href="/docs/" class="nav-mobile-docs-title">Documentation</a>
         {% for group in site.data.docs_nav %}
@@ -79,6 +84,36 @@
       <div class="nav-ctas">
         <a href="/waitlist" class="btn btn-primary btn-sm">Get Early Access</a>
       </div>
+    </div>
+  </div>
+
+  <!-- Shared mega dropdown — glassmorphic panel, slides between Product/Docs -->
+  <div class="nav-mega" id="nav-mega" aria-hidden="true">
+    <div class="nav-mega-inner">
+      {% for item in site.data.nav %}{% if item.groups %}
+      <div class="nav-mega-panel" id="mega-{{ item.title | slugify }}" role="region" aria-label="{{ item.title }} navigation">
+        {% if item.hub %}
+        <a href="{{ item.hub.url }}" class="nav-mega-hub">
+          <span class="nav-mega-hub-title">{{ item.hub.title }}</span>
+          <span class="nav-mega-hub-desc">{{ item.hub.desc }}</span>
+          <span class="nav-mega-hub-arrow">&rarr;</span>
+        </a>
+        {% endif %}
+        <div class="nav-mega-grid">
+          {% for group in item.groups %}
+          <div class="nav-mega-col">
+            <div class="nav-mega-label">{{ group.label }}</div>
+            {% for link in group.items %}
+            <a href="{{ link.url }}" class="nav-mega-card">
+              <span class="nav-mega-card-title">{{ link.title }}</span>
+              <span class="nav-mega-card-desc">{{ link.desc }}</span>
+            </a>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}{% endfor %}
     </div>
   </div>
 </nav>

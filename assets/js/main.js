@@ -269,86 +269,225 @@ if (toggle && links) {
   }
 })();
 
-// ─── Mega-menu dropdowns ─────────────────────────────────────
+// ─── Mega-menu — shared panel with hover activation ─────────
 (function() {
-  const dropdowns = document.querySelectorAll('.nav-dropdown');
-  if (!dropdowns.length) return;
+  var mega = document.getElementById('nav-mega');
+  var triggers = document.querySelectorAll('.nav-mega-trigger');
+  var panels = mega ? mega.querySelectorAll('.nav-mega-panel') : [];
+  var inner = mega ? mega.querySelector('.nav-mega-inner') : null;
+  if (!mega || !triggers.length || !panels.length) return;
 
-  let activeTrigger = null;
+  var activePanel = null;
+  var activeTrigger = null;
+  var closeTimer = null;
+  var isDesktop = function() { return window.innerWidth > 768; };
 
-  function closeAll() {
-    dropdowns.forEach(function(d) {
-      d.classList.remove('open');
-      const trigger = d.querySelector('.nav-dropdown-trigger');
-      if (trigger) trigger.setAttribute('aria-expanded', 'false');
-    });
+  function measureHeight(panel) {
+    // Temporarily make panel visible to measure
+    panel.style.position = 'relative';
+    panel.style.opacity = '0';
+    panel.style.pointerEvents = 'none';
+    var h = panel.offsetHeight;
+    panel.style.position = '';
+    panel.style.opacity = '';
+    panel.style.pointerEvents = '';
+    return h;
   }
 
-  dropdowns.forEach(function(dropdown) {
-    const trigger = dropdown.querySelector('.nav-dropdown-trigger');
-    const mega = dropdown.querySelector('.nav-mega');
-    if (!trigger) return;
+  function showPanel(panelId, direction) {
+    var panel = mega.querySelector('#mega-' + panelId);
+    if (!panel || panel === activePanel) return;
 
-    trigger.addEventListener('click', function(e) {
-      e.stopPropagation();
-      const isOpen = dropdown.classList.contains('open');
-      closeAll();
-      if (!isOpen) {
-        dropdown.classList.add('open');
-        trigger.setAttribute('aria-expanded', 'true');
-        activeTrigger = trigger;
-        // Focus first menu item
-        const firstItem = mega ? mega.querySelector('.nav-mega-hub, .nav-mega-item') : null;
-        if (firstItem) firstItem.focus();
-      }
-    });
+    var prevPanel = activePanel;
+    var exitClass = direction === 'right' ? 'is-exit-left' : 'is-exit-right';
+    var enterOffset = direction === 'right' ? 'translateX(30px)' : 'translateX(-30px)';
 
-    // Arrow key navigation within mega menu
-    if (mega) {
-      mega.addEventListener('keydown', function(e) {
-        const items = Array.from(mega.querySelectorAll('.nav-mega-hub, .nav-mega-item'));
-        const idx = items.indexOf(document.activeElement);
-        if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          if (idx < items.length - 1) items[idx + 1].focus();
-        } else if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          if (idx > 0) items[idx - 1].focus();
-        } else if (e.key === 'Home') {
-          e.preventDefault();
-          items[0].focus();
-        } else if (e.key === 'End') {
-          e.preventDefault();
-          items[items.length - 1].focus();
-        }
-      });
+    // Slide out previous panel
+    if (prevPanel) {
+      prevPanel.classList.remove('is-active');
+      prevPanel.classList.add(exitClass);
+      setTimeout(function() {
+        prevPanel.classList.remove('is-exit-left', 'is-exit-right');
+      }, 300);
     }
 
-    // Close on mouse leave (with delay for tolerance)
-    let closeTimer;
-    dropdown.addEventListener('mouseenter', function() {
-      clearTimeout(closeTimer);
+    // Slide in new panel — set starting position, reflow, then animate to center
+    panel.classList.remove('is-exit-left', 'is-exit-right');
+    panel.style.transform = enterOffset;
+    panel.style.opacity = '0';
+    panel.offsetHeight; // force reflow to commit starting position
+    panel.style.transform = '';
+    panel.style.opacity = '';
+    panel.classList.add('is-active');
+
+    // Animate container height
+    if (inner) {
+      inner.style.height = panel.scrollHeight + 'px';
+    }
+
+    activePanel = panel;
+  }
+
+  function open(panelId, trigger) {
+    clearTimeout(closeTimer);
+
+    // Determine slide direction from trigger order
+    var direction = 'right';
+    if (activeTrigger) {
+      var trigArr = Array.from(triggers);
+      var oldIdx = trigArr.indexOf(activeTrigger);
+      var newIdx = trigArr.indexOf(trigger);
+      direction = newIdx > oldIdx ? 'right' : 'left';
+    }
+
+    // Update triggers
+    triggers.forEach(function(t) { t.setAttribute('aria-expanded', 'false'); });
+    trigger.setAttribute('aria-expanded', 'true');
+    activeTrigger = trigger;
+
+    // Open container if not already open
+    if (!mega.classList.contains('is-open')) {
+      // Set initial panel without transition
+      var panel = mega.querySelector('#mega-' + panelId);
+      if (panel) {
+        panels.forEach(function(p) { p.classList.remove('is-active', 'is-exit-left'); });
+        panel.classList.add('is-active');
+        activePanel = panel;
+        if (inner) inner.style.height = panel.scrollHeight + 'px';
+      }
+      mega.classList.add('is-open');
+      mega.setAttribute('aria-hidden', 'false');
+    } else {
+      showPanel(panelId, direction);
+    }
+  }
+
+  function close() {
+    mega.classList.remove('is-open');
+    mega.setAttribute('aria-hidden', 'true');
+    triggers.forEach(function(t) { t.setAttribute('aria-expanded', 'false'); });
+    activeTrigger = null;
+    // Don't clear activePanel — keeps position for re-open
+  }
+
+  function scheduleClose() {
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(close, 250);
+  }
+
+  function cancelClose() {
+    clearTimeout(closeTimer);
+  }
+
+  // ─── Hover activation (desktop only) ────────────────────────
+
+  triggers.forEach(function(trigger) {
+    var panelId = trigger.getAttribute('data-mega');
+
+    trigger.addEventListener('mouseenter', function() {
+      if (!isDesktop()) return;
+      cancelClose();
+      open(panelId, trigger);
     });
-    dropdown.addEventListener('mouseleave', function() {
-      closeTimer = setTimeout(function() {
-        dropdown.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
-      }, 200);
+
+    trigger.addEventListener('mouseleave', function() {
+      if (!isDesktop()) return;
+      scheduleClose();
+    });
+
+    // Click toggle (keyboard and touch)
+    trigger.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (mega.classList.contains('is-open') && trigger === activeTrigger) {
+        close();
+      } else {
+        open(panelId, trigger);
+        // Focus first item on keyboard activation
+        var panel = mega.querySelector('#mega-' + panelId);
+        if (panel) {
+          var first = panel.querySelector('.nav-mega-hub, .nav-mega-card');
+          if (first) first.focus();
+        }
+      }
     });
   });
 
-  // Close on click outside
-  document.addEventListener('click', function() { closeAll(); });
+  // Keep mega open when hovering over it
+  mega.addEventListener('mouseenter', cancelClose);
+  mega.addEventListener('mouseleave', function() {
+    if (isDesktop()) scheduleClose();
+  });
 
-  // Close on Escape — return focus to trigger
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-      closeAll();
-      if (activeTrigger) {
-        activeTrigger.focus();
-        activeTrigger = null;
+  // Close on click outside
+  document.addEventListener('click', function(e) {
+    if (!mega.contains(e.target) && !e.target.closest('.nav-has-mega')) {
+      close();
+    }
+  });
+
+  // ─── Keyboard navigation ────────────────────────────────────
+
+  mega.addEventListener('keydown', function(e) {
+    if (!activePanel) return;
+    var items = Array.from(activePanel.querySelectorAll('.nav-mega-hub, .nav-mega-card'));
+    var idx = items.indexOf(document.activeElement);
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (idx < items.length - 1) items[idx + 1].focus();
+      else items[0].focus();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (idx > 0) items[idx - 1].focus();
+      else items[items.length - 1].focus();
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      items[0].focus();
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      items[items.length - 1].focus();
+    } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      // Switch between panels with left/right arrows
+      var trigArr = Array.from(triggers);
+      var curIdx = activeTrigger ? trigArr.indexOf(activeTrigger) : 0;
+      var nextIdx = e.key === 'ArrowRight'
+        ? (curIdx + 1) % trigArr.length
+        : (curIdx - 1 + trigArr.length) % trigArr.length;
+      var nextTrigger = trigArr[nextIdx];
+      var nextPanelId = nextTrigger.getAttribute('data-mega');
+      open(nextPanelId, nextTrigger);
+      var panel = mega.querySelector('#mega-' + nextPanelId);
+      if (panel) {
+        var first = panel.querySelector('.nav-mega-hub, .nav-mega-card');
+        if (first) first.focus();
       }
     }
+  });
+
+  // Escape — close and return focus
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && mega.classList.contains('is-open')) {
+      close();
+      if (activeTrigger) activeTrigger.focus();
+    }
+  });
+
+  // ─── Mobile inline dropdowns ────────────────────────────────
+
+  document.querySelectorAll('.nav-mobile-dropdown-trigger').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var dropdown = btn.closest('.nav-mobile-dropdown');
+      var wasOpen = dropdown.classList.contains('open');
+      // Close all mobile dropdowns
+      document.querySelectorAll('.nav-mobile-dropdown').forEach(function(d) {
+        d.classList.remove('open');
+        d.querySelector('.nav-mobile-dropdown-trigger').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        dropdown.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
   });
 })();
 

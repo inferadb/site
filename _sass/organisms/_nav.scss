@@ -124,13 +124,17 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 
   a:not(.btn) {
     font-size: 0.8125rem;
     font-weight: 500;
     color: var(--text-secondary);
     transition: color 0.15s;
+    padding: 0.5rem 0.75rem;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
     &:hover { color: var(--text-white); }
     @include focus-ring;
   }
@@ -143,19 +147,21 @@
   }
 }
 
-// ─── Mega-menu dropdowns ─────────────────────────────────────
+// ─── Mega-menu — shared glassmorphic panel ──────────────────
+// Single container below nav, panels slide between Product/Docs.
 
-.nav-dropdown {
-  position: relative;
+.nav-has-mega {
+  position: static; // panels are positioned relative to .site-nav
 }
 
-.nav-dropdown-trigger {
+.nav-mega-trigger {
   display: flex;
   align-items: center;
   gap: 0.25rem;
   background: none;
   border: none;
-  padding: 0;
+  padding: 0.5rem 0.75rem;
+  min-height: 2.75rem;
   font-family: inherit;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -163,199 +169,252 @@
   cursor: pointer;
   transition: color 0.15s;
 
-  &:hover { color: var(--text-white); }
+  &:hover,
+  &[aria-expanded="true"] { color: var(--text-white); }
   @include focus-ring;
 }
 
-.nav-dropdown-chevron {
-  transition: transform 0.2s;
+.nav-mega-chevron {
+  transition: transform 0.25s var(--ease-mechanical);
   opacity: 0.5;
+
+  [aria-expanded="true"] > & { transform: rotate(180deg); }
 }
 
-.nav-dropdown.open .nav-dropdown-chevron {
-  transform: rotate(180deg);
-}
+// ─── Shared mega container ──────────────────────────────────
 
 .nav-mega {
   position: absolute;
-  top: calc(100% + 0.875rem);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
-  min-width: 480px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 1.25rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.15s;
+  width: calc(100% - 3rem);
+  max-width: 680px;
   z-index: 200;
 
-  // Arrow nub
-  &::before {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-    width: 8px;
-    height: 8px;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border);
-    border-left: 1px solid var(--border);
+  // Glassmorphism — opaque enough to read without blur, blur is enhancement
+  background: rgba(16, 19, 26, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 210, 230, 0.08);
+  border-radius: var(--radius-sm);
+
+  // Open/close
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(6px);
+  transition: opacity 0.2s var(--ease-mechanical),
+              transform 0.2s var(--ease-mechanical);
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
   }
 }
 
-.nav-dropdown.open .nav-mega {
-  opacity: 1;
-  pointer-events: auto;
+.nav-mega-inner {
+  position: relative;
+  overflow: hidden;
+  // Height transitions via JS for smooth panel switching
+  transition: height 0.3s var(--ease-mechanical);
 }
 
-.nav-mega-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
+// ─── Panels ─────────────────────────────────────────────────
+
+.nav-mega-panel {
+  padding: 1.25rem;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transform: translateX(30px);
+  transition: opacity 0.25s var(--ease-mechanical),
+              transform 0.25s var(--ease-mechanical);
+  pointer-events: none;
+
+  // Active panel
+  &.is-active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    pointer-events: auto;
+  }
+
+  // Panel sliding out left/right
+  &.is-exit-left  { transform: translateX(-30px); }
+  &.is-exit-right { transform: translateX(30px); }
 }
+
+// ─── Hub link (Docs panel) ──────────────────────────────────
 
 .nav-mega-hub {
-  grid-column: 1 / -1;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0 0.625rem 0.75rem;
-  margin-bottom: -0.25rem;
-  border-bottom: 1px solid var(--border);
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   text-decoration: none;
-
-  .nav-mega-title {
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.75rem;
-  }
-
-  .nav-mega-desc {
-    font-size: 0.6875rem;
-    color: var(--text-secondary);
-  }
-
-  &:hover .nav-mega-title {
-    text-decoration: underline;
-    text-underline-offset: 2px;
-  }
-}
-
-.nav-mega-label {
-  font-family: var(--font-mono);
-  font-size: 0.5625rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0 0.625rem 0.5rem;
-}
-
-.nav-mega-item {
-  display: block;
-  padding: 0.5rem 0.625rem;
-  border-radius: 2px;
-  text-decoration: none;
-  transition: background 0.15s;
+  transition: border-color 0.15s, background 0.15s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--border-hover);
+    background: rgba(255, 255, 255, 0.03);
   }
 
   @include focus-ring;
 }
 
-.nav-mega-title {
+.nav-mega-hub-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.nav-mega-hub-desc {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.nav-mega-hub-arrow {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: transform 0.15s;
+
+  .nav-mega-hub:hover & { transform: translateX(3px); }
+}
+
+// ─── Bento grid ─────────────────────────────────────────────
+
+.nav-mega-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.nav-mega-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-mega-label {
+  @include tech-label(var(--text-secondary));
+  letter-spacing: 0.08em;
+  padding: 0 0.5rem 0.5rem;
+}
+
+.nav-mega-card {
+  display: block;
+  padding: 0.625rem 0.5rem;
+  border-radius: 2px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(200, 210, 230, 0.06);
+  }
+
+  @include focus-ring;
+}
+
+.nav-mega-card-title {
   display: block;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-bright);
   margin-bottom: 0.125rem;
+  transition: color 0.15s;
+
+  .nav-mega-card:hover & { color: var(--text-white); }
 }
 
-.nav-mega-desc {
+.nav-mega-card-desc {
   display: block;
   font-size: 0.6875rem;
   color: var(--text-secondary);
   line-height: 1.4;
 }
 
-// Mobile mega-menus — inline expandable sections
+// ─── Desktop: hide mobile megas ─────────────────────────────
+
+.nav-mobile-megas { display: none; }
+
+// ─── Mobile: hide shared mega, show inline dropdowns ────────
+
 @media (width <= 768px) {
-  .nav-dropdown {
-    width: 100%;
+  .nav-mega { display: none !important; }
+  .nav-has-mega { display: none; }
+
+  .nav-mobile-megas {
+    display: block;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
-  .nav-dropdown-trigger {
-    width: 100%;
+  .nav-mobile-dropdown-trigger {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
     padding: 0.875rem 0;
+    font-family: inherit;
     font-size: 1rem;
     font-weight: 500;
     color: var(--text-bright);
-    min-height: 48px;
+    cursor: pointer;
+    min-height: 44px;
   }
 
-  .nav-dropdown-chevron {
-    opacity: 0.4;
-    transition: transform 0.2s;
+  .nav-mobile-dropdown-body {
+    display: none;
+    padding: 0 0 0.75rem 0.75rem;
   }
 
-  .nav-dropdown.open .nav-dropdown-chevron {
+  .nav-mobile-dropdown.open .nav-mobile-dropdown-body {
+    display: block;
+  }
+
+  .nav-mobile-dropdown.open .nav-mega-chevron {
     transform: rotate(180deg);
   }
 
-  .nav-mega {
-    position: static;
-    transform: none;
-    min-width: 0;
-    background: none;
-    border: none;
-    border-radius: 0;
-    padding: 0 0 0.5rem 0.75rem;
-    display: none;
-    grid-template-columns: 1fr;
-    gap: 0;
-    opacity: 1;
-    pointer-events: auto;
-
-    &::before { display: none; }
-  }
-
-  .nav-dropdown.open .nav-mega {
-    display: grid;
-  }
-
-  .nav-mega-hub {
+  .nav-mobile-hub {
+    display: block;
     padding: 0.5rem 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
     margin-bottom: 0.25rem;
-    border-bottom: none;
-
-    .nav-mega-title { font-size: 0.8125rem; }
-    .nav-mega-desc { display: none; }
   }
 
-  .nav-mega-label {
+  .nav-mobile-group-label {
+    @include tech-label(var(--text-secondary));
+    letter-spacing: 0.08em;
     padding: 0.75rem 0 0.25rem;
-    font-size: 0.5625rem;
   }
 
-  .nav-mega-item {
+  .nav-mobile-group-item {
+    display: block;
     padding: 0.5rem 0;
-    min-height: auto;
-
-    .nav-mega-desc { display: none; }
-  }
-
-  .nav-mega-title {
     font-size: 0.875rem;
     color: var(--text-secondary);
+    text-decoration: none;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+
+    &:hover { color: var(--text-white); }
   }
 }
 

@@ -46,18 +46,6 @@
   font-weight: 400;
 }
 
-.form-required-star {
-  color: var(--accent-red);
-  text-decoration: none;
-  font-style: normal;
-}
-
-.form-required-note {
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.75rem;
-}
-
 // Select elements
 .form-select {
   appearance: none;
@@ -68,18 +56,6 @@
   cursor: pointer;
 
   option { background: var(--bg-card); color: var(--text-white); }
-}
-
-.form-required-star {
-  color: var(--accent-red);
-  text-decoration: none;
-  font-style: normal;
-}
-
-.form-required-note {
-  font-size: 0.875rem;
-  color: var(--text);
-  margin-bottom: 1.5rem;
 }
 
 @media (width <= 768px) {

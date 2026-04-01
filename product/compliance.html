@@ -1,0 +1,315 @@
+---
+title: "Compliance & Audit — SOC 2, HIPAA, GDPR Proof"
+layout: default
+body_class: page-solution
+description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cryptographic proof of every access decision — hash-chained, Merkle-verified, independently auditable. Maps to seven compliance frameworks out of the box."
+---
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:PRODUCT // Compliance &amp; Audit</p>
+        <h1>Pass audits without engineering sprints</h1>
+        <p class="lead">
+            Audit season shouldn't require weeks of log pulling, report writing,
+            and questionnaire archaeology. InferaDB produces cryptographic proof
+            of every access decision — hash-chained, Merkle-verified, and
+            independently auditable. Compliance becomes a property of your
+            architecture, not a quarterly fire drill.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
+        <h2 data-reveal>Audit season shouldn't require engineering sprints</h2>
+        <p data-reveal>
+            Every audit cycle follows the same pattern: compliance teams file tickets,
+            engineers drop feature work to pull logs, someone writes a script to
+            correlate access events across three systems, and leadership hopes the
+            auditor doesn't ask a question nobody prepared for. This is expensive,
+            fragile, and entirely avoidable.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Mutable logs are not evidence</h3>
+                <p>
+                    Authorization logs in traditional systems live in mutable databases.
+                    Anyone with admin access can alter or delete entries. When an auditor
+                    asks for proof, you're offering a promise — and hoping they accept it.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Manual correlation doesn't scale</h3>
+                <p>
+                    "Prove User X couldn't access Resource Y on March 14th" requires
+                    joining logs across identity providers, application databases, and
+                    authorization systems. The answer takes days, not seconds.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Compliance is a reporting layer, not architecture</h3>
+                <p>
+                    Most systems treat compliance as something bolted on after the fact —
+                    dashboards over data that was never designed to be auditable. When
+                    regulators ask hard questions, the answers require investigation,
+                    not retrieval.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> Cryptographic Proof</div>
+        <h2 data-reveal>Replace promises with verifiable evidence</h2>
+        <p data-reveal>
+            Every authorization decision InferaDB makes produces a hash-chained,
+            append-only audit entry. Each entry is signed with Ed25519 and includes
+            a Merkle proof that auditors can verify independently using open-source
+            tooling. This is not logging. This is cryptographic proof of every
+            access decision your system has ever made.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Hash-chained, append-only entries</h3>
+                <p>
+                    Every audit record links cryptographically to its predecessor.
+                    Altering any entry invalidates every subsequent hash. Tampering
+                    doesn't just get detected — it's structurally impossible to hide.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Ed25519 signatures with Merkle proofs</h3>
+                <p>
+                    Each entry is individually signed and includes a proof of inclusion
+                    in the global audit tree. Auditors verify the chain with open-source
+                    tooling — no proprietary software, no vendor dependency.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Tamper detection is immediate</h3>
+                <p>
+                    If a single entry is altered, inserted, or deleted, the chain breaks.
+                    Your team detects it. Your auditor detects it. There is no window
+                    where tampering goes unnoticed.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-callout" data-reveal>
+            <h3>Zero trust required to verify</h3>
+            <p>
+                Auditors don't need to trust InferaDB, your infrastructure, or your
+                team. They verify the cryptographic proof chain independently. The
+                evidence speaks for itself.
+            </p>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> What Gets Recorded</div>
+        <h2 data-reveal>Full decision context, not just allow/deny</h2>
+        <p data-reveal>
+            A log line that says "access denied" tells an auditor nothing useful.
+            InferaDB captures the complete decision context: who requested access,
+            to what, under which policy, and exactly how the authorization engine
+            arrived at its conclusion.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Complete decision records</h3>
+                <p>
+                    Every audit entry captures: subject, relation, resource, result
+                    (ALLOW/DENY), the explanation path, active policy version, revision
+                    token, timestamp, and cryptographic signature.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Expansion traces</h3>
+                <p>
+                    Every decision includes the full relationship traversal that produced
+                    it. When an auditor asks why a user had access, you show the exact
+                    graph path — not a best guess from application logs.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Policy version pinning</h3>
+                <p>
+                    Know exactly which authorization rules were active for any decision
+                    at any point in time. Policy changes are versioned. Auditors can
+                    verify that a decision was correct under the policy that was live
+                    when it was made.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-example" data-reveal>
+            <span class="solution-example-label">Example</span>
+            <p>
+                An auditor asks: "Could engineer alice access patient records in
+                the billing namespace on March 14th?" InferaDB returns the exact
+                decision record — DENY, with the full relationship traversal
+                showing no path from alice to billing:patient_records, under
+                policy version 47, signed and Merkle-verified. Answer delivered
+                in seconds, not days.
+            </p>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Framework Coverage</div>
+        <h2 data-reveal>One audit trail, seven frameworks</h2>
+        <p data-reveal>
+            Compliance frameworks differ in language but converge on the same
+            underlying requirements: prove who accessed what, prove the logs
+            are intact, prove access can be revoked. InferaDB's audit system
+            satisfies these requirements once — the same cryptographic evidence
+            maps to SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, and the EU AI Act
+            simultaneously. No per-framework engineering.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Automatic control mapping</h3>
+                <p>
+                    Every audit entry carries the primitives that frameworks ask for:
+                    subject identity, resource, action, decision, policy version,
+                    timestamp, and cryptographic proof. Whether your auditor needs
+                    CC6.1 evidence or &sect;164.312(b) records, the same entry serves
+                    both — no separate export pipelines per framework.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Continuous evidence, not quarterly snapshots</h3>
+                <p>
+                    Frameworks like SOC 2 and NIS2 require continuous monitoring, not
+                    point-in-time reports. Because every decision is recorded as it
+                    happens, evidence generation is always current. Auditors query a
+                    live trail, not a stale export assembled under deadline pressure.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Framework-specific exports</h3>
+                <p>
+                    Export audit evidence in the format each framework expects.
+                    Stream to your SIEM for SOC 2 monitoring. Generate access
+                    logs scoped to ePHI for HIPAA. Produce Article 30 processing
+                    records for GDPR. The underlying data is the same — the
+                    presentation adapts to the audience.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Data Residency &amp; Erasure</div>
+        <h2 data-reveal>Data stays where regulators require it — and disappears when they demand it</h2>
+        <p data-reveal>
+            Data residency and erasure are architectural properties, not policy
+            configurations that someone might misconfigure. EU authorization data
+            stays in the EU. US data stays in the US. Cross-border transfers are
+            eliminated by infrastructure, not managed by hope.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Region-pinned storage</h3>
+                <p>
+                    Pin authorization data to specific geographic regions. Your DPO
+                    gets a clean answer when regulators ask where personal data flows:
+                    it doesn't cross borders, architecturally.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Cryptographic shredding</h3>
+                <p>
+                    When a data subject exercises their right to erasure under GDPR
+                    Article 17, InferaDB destroys the encryption keys for their
+                    authorization data. The data becomes cryptographically irrecoverable.
+                    Your DPA response is "data destroyed", not "we believe we found
+                    all copies."
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>No cross-border transfers</h3>
+                <p>
+                    Authorization decisions that involve EU subjects are processed
+                    and stored in EU regions. This is not a configuration option
+                    that can drift — it's an architectural constraint that cannot
+                    be violated.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Every</span>
+                <span class="solution-stat-label">decision logged with full context</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Immutable</span>
+                <span class="solution-stat-label">hash-chained audit entries</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">7</span>
+                <span class="solution-stat-label">compliance frameworks mapped</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Zero</span>
+                <span class="solution-stat-label">trust required to verify</span>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Common Patterns</div>
+        <h2 data-reveal>How teams use audit capabilities</h2>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Audit preparation</h3>
+                <p>
+                    Export decision records filtered by date range, subject, or resource.
+                    Auditors verify the cryptographic chain independently. Preparation
+                    drops from weeks to minutes.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Incident response</h3>
+                <p>
+                    When a security event occurs, trace exactly who had access to what,
+                    when, and why. Expansion traces show the full relationship path —
+                    no manual log correlation.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Continuous compliance</h3>
+                <p>
+                    Stream audit events to your SIEM (Splunk, Datadog, Elastic).
+                    Cryptographic proofs travel with the data, so verification works
+                    wherever the logs land.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.07</span> Related Reading</div>
+        <ul class="solution-related" data-reveal>
+            <li><a href="/dispatch/eu-regulation-authorization">NIS2, DORA, and the EU AI Act</a></li>
+            <li><a href="/dispatch/ciso-guide-fine-grained-authorization">The CISO's Guide to Fine-Grained Authorization</a></li>
+            <li><a href="/solutions/regulated-industries">Authorization for Regulated Industries</a></li>
+            <li><a href="/dispatch/cryptographic-tenant-isolation">Cryptographic Tenant Isolation</a></li>
+        </ul>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Ready for audit-proof authorization?</p>
+            <h2>Replace promises with cryptographic proof.</h2>
+            <p>
+                Stop spending engineering cycles preparing for audits. Give auditors
+                verifiable evidence of every access decision — across SOC 2, HIPAA,
+                GDPR, PCI DSS, NIS2, DORA, and the EU AI Act. Compliance as
+                architecture, not afterthought.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
+            </div>
+        </div>
+    </div>
+</section>

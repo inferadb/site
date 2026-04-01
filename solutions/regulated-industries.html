@@ -17,7 +17,7 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/docs/compliance" class="btn btn-ghost">Compliance Docs</a>
+            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
         </div>
     </div>
 </section>
@@ -61,37 +61,43 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.02</span> Merkle Proof Audit Trails</div>
-        <h2 data-reveal>Every access decision is independently verifiable — no trust in InferaDB required</h2>
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> Auditor-Ready Evidence</div>
+        <h2 data-reveal>Give auditors verifiable evidence, not spreadsheets</h2>
         <p data-reveal>
-            Every permission decision is recorded in a hash-chained, append-only ledger.
-            Each entry includes a Merkle proof that your auditors can verify independently
-            using open-source tooling. If a single entry is altered or deleted, the chain
-            breaks and the tampering is immediately detectable — by you, not just by us.
+            Traditional audit prep means engineers pulling logs, compliance teams
+            formatting spreadsheets, and everyone hoping the auditor doesn't ask
+            a question nobody anticipated. InferaDB changes that interaction
+            entirely. Auditors get cryptographically verifiable evidence they can
+            check independently — your team's role shifts from "evidence producer"
+            to "evidence presenter."
         </p>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
-                <h3>Hash-chained entries</h3>
+                <h3>Seconds to answer, not days</h3>
                 <p>
-                    Every audit record links cryptographically to its predecessor.
-                    Altering any entry invalidates every subsequent hash — giving
-                    your compliance team a continuous, verifiable chain of evidence.
+                    "Could User X access Resource Y on March 14th?" With traditional
+                    systems, that question triggers a cross-team investigation. With
+                    InferaDB, you query the audit trail and return a signed decision
+                    record — complete with the policy version that was active and the
+                    exact authorization path evaluated.
                 </p>
             </div>
             <div class="solution-feature">
-                <h3>Independent verification</h3>
+                <h3>Auditors verify without your help</h3>
                 <p>
-                    Auditors verify proof chains with open-source tooling. No
-                    proprietary software, no vendor dependency for compliance
-                    evidence. You never have to take our word for it.
+                    Hand your auditor the proof chain and the open-source verification
+                    tool. They confirm evidence integrity themselves — no vendor calls,
+                    no trust assumptions, no back-and-forth. The audit relationship
+                    shifts from "trust us" to "check it yourself."
                 </p>
             </div>
             <div class="solution-feature">
-                <h3>SIEM export</h3>
+                <h3>Continuous readiness, not audit sprints</h3>
                 <p>
-                    Stream audit events to Splunk, Datadog, or your existing
-                    compliance toolchain. Cryptographic proofs travel with the
-                    data, so verification works wherever the logs land.
+                    Evidence is generated as decisions happen, not assembled before
+                    an audit window. Your compliance team can pull current evidence
+                    any day of the year. When audit season arrives, you export —
+                    you don't scramble.
                 </p>
             </div>
         </div>
@@ -251,6 +257,8 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
 
         <div class="solution-section-label" data-reveal><span>SEC.07</span> Related Reading</div>
         <ul class="solution-related" data-reveal>
+            <li><a href="/product/compliance">Compliance &amp; Audit</a></li>
+            <li><a href="/product/authorization">Authorization Platform</a></li>
             <li><a href="/dispatch/eu-regulation-authorization">NIS2, DORA, and the EU AI Act</a></li>
             <li><a href="/dispatch/ciso-guide-fine-grained-authorization">The CISO's Guide to Fine-Grained Authorization</a></li>
         </ul>
@@ -270,7 +278,7 @@ description: "Cryptographic audit trails, Merkle proof verification, and data re
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
-                <a href="/docs/compliance" class="btn btn-ghost btn-lg">Compliance Docs</a>
+                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
             </div>
         </div>
     </div>

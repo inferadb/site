@@ -17,7 +17,7 @@ And yet the infrastructure behind those checks has barely changed in decades.
 
 ## We Built the Last Generation. We Know Where It Breaks.
 
-Our team built [OpenFGA](https://openfga.dev) at Auth0, then continued the work through the Okta acquisition. We shipped a Zanzibar-inspired relationship-based access control system that thousands of developers adopted.
+Our team built OpenFGA at Auth0, then continued the work through the Okta acquisition. We shipped a Zanzibar-inspired relationship-based access control system that thousands of developers adopted.
 
 We saw what worked. More importantly, **we saw what didn't.**
 

@@ -91,6 +91,24 @@
   }
 }
 
+.compare-cta {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.compare-cta-link {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+
+  &:hover { text-decoration: underline; }
+}
+
 @media (width <= 768px) {
   .compare-matrix { min-width: 600px; }
+  .compare-cta { flex-direction: column; gap: 0.75rem; text-align: center; }
 }

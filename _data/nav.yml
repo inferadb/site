@@ -1,34 +1,31 @@
 - title: Product
-  bento: true
-  items:
-    - title: Authorization Engine
-      desc: The authorization layer your stack has been missing. Sub-3µs checks, cryptographic audit, infinite scale.
-      url: "/docs/architecture-engine"
-      area: engine
-    - title: Multi-Tenant SaaS
-      desc: Per-tenant permissions without role explosion
-      url: "/solutions/multi-tenant-saas"
-      area: saas
-    - title: Regulated Industries
-      desc: Prove every access decision to auditors
-      url: "/solutions/regulated-industries"
-      area: regulated
-    - title: AI Agents
-      desc: Authorize every agent action in microseconds
-      url: "/solutions/ai-agents"
-      area: agents
-    - title: Platform Engineering
-      desc: One authorization layer for all your services
-      url: "/solutions/platform-engineering"
-      area: platform
-    - title: Policy Language
-      desc: "Model any permission system — RBAC, ABAC, ReBAC"
-      url: "/docs/ipl"
-      area: ipl
-    - title: Audit & Compliance
-      desc: "SOC 2, HIPAA, GDPR — proof of every decision"
-      url: "/docs/compliance"
-      area: audit
+  groups:
+    - label: Capabilities
+      items:
+        - title: Authorization Platform
+          desc: "Managed authorization infrastructure you integrate, not build"
+          url: "/product/authorization"
+          featured: true
+        - title: Permissions Modeling
+          desc: "Define your entire permission system in one schema"
+          url: "/product/permissions"
+        - title: Compliance & Audit
+          desc: "Pass SOC 2, HIPAA, and GDPR audits by default"
+          url: "/product/compliance"
+    - label: Solutions
+      items:
+        - title: Multi-Tenant SaaS
+          desc: Per-tenant permissions without role explosion
+          url: "/solutions/multi-tenant-saas"
+        - title: Regulated Industries
+          desc: Authorization that satisfies regulators by design
+          url: "/solutions/regulated-industries"
+        - title: AI Agents
+          desc: Secure authorization for autonomous AI workflows
+          url: "/solutions/ai-agents"
+        - title: Platform Engineering
+          desc: One authorization layer for all your services
+          url: "/solutions/platform-engineering"
 
 - title: Resources
   bento: true

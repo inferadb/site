@@ -1,0 +1,364 @@
+---
+title: "Permissions Modeling — Define RBAC, ABAC, ReBAC in One Schema"
+layout: default
+body_class: page-solution
+description: "Model permissions as relationships, not role tables. Define your entire access control system in a single declarative schema — RBAC, ABAC, and ReBAC unified. Readable, testable, version-controlled. Inspired by Google Zanzibar."
+---
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:PRODUCT // Permissions Modeling</p>
+        <h1>Stop maintaining role tables. Start modeling relationships.</h1>
+        <p class="lead">
+            IPL is a declarative language for defining authorization as relationships
+            between users, resources, and organizations. Instead of sprawling role
+            matrices and hardcoded if-statements, you write a schema that describes
+            how your system actually works — and InferaDB derives every permission
+            decision from it. Readable by engineers, auditable by compliance,
+            version-controlled like the rest of your code.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
+        <h2 data-reveal>Role tables do not scale. You already know this.</h2>
+        <p data-reveal>
+            RBAC starts clean: admin, editor, viewer. Three roles, a simple lookup
+            table, and you ship. Then the product grows. Teams need scoped access.
+            Permissions need to inherit across organizational hierarchies. One
+            customer needs deny-override rules for compliance. Another needs
+            conditional access based on resource attributes.
+        </p>
+        <p data-reveal>
+            So you add team-specific roles. Then role hierarchies. Then exception
+            tables. Then a "super admin" role that bypasses everything because nobody
+            can reason about the matrix anymore. Every permission change becomes a
+            code change, a migration, a deploy, and a hope that you did not break
+            something for a different customer.
+        </p>
+        <div class="solution-callout" data-reveal>
+            <h3>The role explosion problem is not a skill issue</h3>
+            <p>
+                Organizations with mature RBAC systems routinely maintain hundreds or
+                thousands of roles. Not because the engineers were careless, but because
+                RBAC forces you to enumerate every combination of user, resource, and
+                access level as a discrete role. The complexity is inherent to the model.
+                You cannot engineer your way out of a paradigm problem.
+            </p>
+        </div>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Combinatorial role growth</h3>
+                <p>
+                    Each new resource type or access level multiplies the number of
+                    roles. Ten resource types with four access levels is forty roles
+                    before you add team scoping or tenant isolation.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>No inheritance model</h3>
+                <p>
+                    RBAC has no built-in concept of permission inheritance. Org admins
+                    should be able to manage team resources — but in a role table, you
+                    have to wire that up manually for every resource type.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Impossible to audit</h3>
+                <p>
+                    "Who can access this document?" In an RBAC system with role
+                    hierarchies and exception tables, answering this question requires
+                    traversing multiple tables, joining on conditions, and hoping
+                    the logic matches what the code actually enforces.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> A Different Approach</div>
+        <h2 data-reveal>Model relationships, not roles</h2>
+        <p data-reveal>
+            Instead of asking "what role does this user have?", ask "what is this
+            user's relationship to this resource?" A user is a member of a team.
+            That team owns a project. That project contains a document. The user
+            can view the document — not because someone assigned them a
+            "project-document-viewer" role, but because their relationship to the
+            organization implies it.
+        </p>
+        <p data-reveal>
+            Relationships compose naturally. Org membership implies team access.
+            Team ownership implies project access. Project membership implies
+            document access. You define these rules once, and InferaDB derives
+            every permission from the graph of actual relationships in your system.
+            This is the paradigm behind Google Zanzibar — the system that handles
+            authorization for Google Drive, YouTube, and Cloud IAM — made
+            accessible through a readable, declarative language.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Permissions follow structure</h3>
+                <p>
+                    Your authorization model mirrors your product's actual hierarchy.
+                    When you add a new team to an org, its members automatically get
+                    the right access to the right resources. No role assignments needed.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>One model, every question answered</h3>
+                <p>
+                    "Can this user edit this document?" "Who can access this project?"
+                    "Why was this request denied?" All answered by traversing the same
+                    graph. No scattered role tables, no duplicated logic.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Changes without code changes</h3>
+                <p>
+                    Adding a new access level or resource type means updating your
+                    schema — not writing migrations, updating middleware, or deploying
+                    new application code. The schema is the authorization logic.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> What IPL Looks Like</div>
+        <h2 data-reveal>Nine lines. An entire permission model.</h2>
+        <p data-reveal>
+            IPL reads like a specification, not code. You define types, their
+            relationships, and how permissions derive from those relationships.
+            Here is a complete model for a SaaS product with organizations, teams,
+            and documents:
+        </p>
+        <div class="solution-code" data-reveal>
+            <pre><code>type organization {
+    relation admin
+    relation member
+}
+
+type team {
+    relation parent: organization
+    relation member
+    relation admin = admin from parent
+}
+
+type document {
+    relation parent: team
+    relation viewer
+    relation editor
+    relation owner
+    relation can_view = viewer | editor | owner | viewer from parent
+    relation can_edit = editor | owner
+    relation can_admin = owner | admin from parent
+}</code></pre>
+        </div>
+        <p data-reveal>
+            That is the entire permission model. Organization admins can administer
+            any document in any team under their org. Team viewers can view all
+            documents in their team. Document editors can edit their specific
+            document. Inheritance, composition, and access levels — all declarative,
+            all testable, all versioned in source control alongside the code it
+            protects.
+        </p>
+        <div class="solution-example" data-reveal>
+            <p class="solution-example-label">What this replaces</p>
+            <p>
+                In a traditional system, this model would require: an organizations
+                table, a roles table, an organization_roles join table, a team_members
+                table, a document_permissions table, application-level inheritance
+                logic, and middleware to stitch it all together. With IPL, the schema
+                is the logic. There is nothing else to maintain.
+            </p>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Key Capabilities</div>
+        <h2 data-reveal>Expressive enough for real authorization problems</h2>
+        <p data-reveal>
+            Authorization in production is not just "can user X do action Y." It
+            involves inheritance hierarchies, conditional access, explicit denials,
+            and custom business logic. IPL handles all of these with a small set
+            of composable primitives.
+        </p>
+        <div class="solution-features solution-features--wide" data-reveal>
+            <div class="solution-feature">
+                <h3>Union, intersection, exclusion</h3>
+                <p>
+                    Compose permissions like building blocks. Union grants access if
+                    any relationship matches. Intersection requires multiple
+                    relationships. Exclusion removes access for specific conditions.
+                    Three operators that cover the full space of permission logic.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Tuple-to-userset inheritance</h3>
+                <p>
+                    Permissions flow through relationships automatically. An org admin
+                    inherits admin access to every team and document underneath — not
+                    through role duplication, but through graph traversal. Define the
+                    rule once, and it applies everywhere the relationship exists.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Forbid rules</h3>
+                <p>
+                    Explicit deny that overrides all permits. When compliance requires
+                    that a suspended user cannot access anything regardless of their
+                    relationships, a forbid rule makes that guarantee structural.
+                    No workaround, no exception, no "unless."
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>WASM conditions</h3>
+                <p>
+                    When declarative rules are not enough, attach custom logic written
+                    in any language that compiles to WebAssembly. Time-based access,
+                    attribute checks, geo-restrictions — sandboxed, deterministic, and
+                    evaluated at the same speed as native rules.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Three-pass validation</h3>
+                <p>
+                    Before a schema goes live, IPL validates it in three passes: type
+                    checking catches structural errors, conflict detection flags rules
+                    that contradict each other, and coverage analysis identifies
+                    unreachable permissions. Bugs caught before deploy, not in production.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Wildcards</h3>
+                <p>
+                    Public resources should not require individual relationship tuples
+                    for every user. IPL supports wildcard subjects for public or
+                    organization-wide access — without sacrificing the precision of
+                    the relationship model for everything else.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Workflow</div>
+        <h2 data-reveal>Schemas ship like code, because they are code</h2>
+        <p data-reveal>
+            IPL schemas are plain text files that live in your repository. They go
+            through code review, CI validation, and controlled rollout — the same
+            workflow you already use for application code. No admin consoles, no
+            manual configuration, no drift between environments.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Version-controlled schemas</h3>
+                <p>
+                    Push schema changes via CLI or Terraform. Every change is a commit
+                    with a diff, a reviewer, and a merge decision. Roll back a
+                    permission model the same way you roll back a feature.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Decision simulator</h3>
+                <p>
+                    Test your permission model before deploying it. The decision
+                    simulator evaluates checks against your schema with sample data,
+                    so you can verify that the new model does what you intend before
+                    it touches production.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Zero-downtime migrations</h3>
+                <p>
+                    Schema updates apply without interrupting authorization checks.
+                    InferaDB validates the new schema, prepares the transition, and
+                    switches atomically. No maintenance windows, no permission gaps.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Expansion traces</h3>
+                <p>
+                    Every authorization decision includes a trace showing exactly which
+                    relationships were traversed to reach the result. When a check
+                    returns "allowed," you can see the full path. When it returns
+                    "denied," you can see exactly where the path ended.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Common Patterns</div>
+        <h2 data-reveal>How teams model authorization with IPL</h2>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>SaaS with customer-managed roles</h3>
+                <p>
+                    Tenants define their own roles and permissions using relationships,
+                    sandboxed to their org. No code changes needed — new roles are just
+                    new relationship tuples.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Document collaboration</h3>
+                <p>
+                    Model Google Docs-style sharing — viewers, editors, owners, link
+                    access, inherited permissions from parent folders. All expressed
+                    in a single schema.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Microservice authorization</h3>
+                <p>
+                    Define a shared schema across services. Each service checks
+                    permissions against the same graph, eliminating policy drift
+                    and duplicated logic.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">1</span>
+                <span class="solution-stat-label">schema file replaces scattered role tables</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">3-pass</span>
+                <span class="solution-stat-label">validation before any schema goes live</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Zero</span>
+                <span class="solution-stat-label">downtime during schema migrations</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Every</span>
+                <span class="solution-stat-label">decision traceable to its relationship path</span>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.07</span> Related Reading</div>
+        <ul class="solution-related" data-reveal>
+            <li><a href="/docs/ipl">IPL Language Reference</a></li>
+            <li><a href="/docs/quickstart">Getting Started with InferaDB</a></li>
+            <li><a href="/solutions/multi-tenant-saas">Multi-Tenant SaaS Authorization</a></li>
+            <li><a href="/solutions/platform-engineering">Platform Engineering</a></li>
+        </ul>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Stop building permission systems. Start shipping features.</p>
+            <h2>Your authorization model should be smaller than your README.</h2>
+            <p>
+                A declarative schema that replaces role tables, inheritance logic,
+                and permission middleware — validated before deploy, traceable in
+                production, and version-controlled like everything else.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
+            </div>
+        </div>
+    </div>
+</section>

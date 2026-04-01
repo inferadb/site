@@ -99,9 +99,9 @@ This is not a theoretical advantage. It is the difference between authorization 
 
 Zanzibar's publication sparked a generation of open-source implementations:
 
-- **[SpiceDB](https://github.com/authzed/spicedb)** (AuthZed) — the most faithful open-source Zanzibar implementation
-- **[OpenFGA](https://openfga.dev)** (originally Auth0/Okta) — Zanzibar-inspired with a flexible modeling language
-- **[Ory Keto](https://github.com/ory/keto)** — early Zanzibar-inspired effort in the Ory ecosystem
+- **SpiceDB** (AuthZed) — the most faithful open-source Zanzibar implementation
+- **OpenFGA** (originally Auth0/Okta) — Zanzibar-inspired with a flexible modeling language
+- **Ory Keto** — early Zanzibar-inspired effort in the Ory ecosystem
 
 These projects proved that Zanzibar's model works outside Google. Thousands of companies adopted them. They are legitimate, useful tools.
 
@@ -127,7 +127,7 @@ These are not problems that can be optimized away. They are consequences of buil
 
 ## InferaDB: Zanzibar Without the Ceiling
 
-We helped build [OpenFGA](https://openfga.dev). We saw the database ceiling from the inside. InferaDB is what we would have built if we'd had the freedom to design the entire stack — storage engine, consensus protocol, tenant isolation, and query evaluation — for the authorization workload from first principles.
+We helped build OpenFGA. We saw the database ceiling from the inside. InferaDB is what we would have built if we'd had the freedom to design the entire stack — storage engine, consensus protocol, tenant isolation, and query evaluation — for the authorization workload from first principles.
 
 ### Purpose-Built Storage
 

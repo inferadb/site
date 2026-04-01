@@ -1,0 +1,425 @@
+---
+title: "Managed Authorization Platform — Fine-Grained Access Control"
+layout: default
+body_class: page-solution
+description: "Managed authorization infrastructure with sub-3µs permission checks, Raft consensus, and cryptographic audit trails. Fine-grained access control for enterprise software — RBAC, ABAC, ReBAC in one system. Alternative to OPA, Cedar, and home-grown solutions."
+---
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:PRODUCT // Authorization Platform</p>
+        <h1>Fine-grained authorization, managed for you</h1>
+        <p class="lead">
+            Every application needs authorization. Most teams build it from
+            scratch — role tables, custom middleware, hand-rolled audit logs.
+            InferaDB is managed authorization infrastructure: a purpose-built
+            system with sub-3µs permission checks, cryptographic audit trails,
+            and native multi-tenancy. Define your permission model, call the
+            API, and stop maintaining authorization code.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
+        <h2 data-reveal>Every team reinvents authorization. Most get it wrong.</h2>
+        <p data-reveal>
+            Authorization looks simple until it is not. You start with a roles table,
+            add a few joins, and ship. Then comes multi-tenancy, hierarchical permissions,
+            role explosion, and the first production incident where a customer sees
+            another customer's data. Now you are maintaining a bespoke authorization
+            system that nobody wants to touch and everyone is afraid to change.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Wrong tool for the job</h3>
+                <p>
+                    General-purpose databases handle authorization queries, but they were
+                    not optimized for them. Recursive graph traversal in Postgres means
+                    multi-millisecond latencies, query plan instability, and index bloat
+                    that grows with your permission model's complexity.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Policy without storage</h3>
+                <p>
+                    Policy engines like OPA and Cedar evaluate rules — but they do not
+                    store the relationships those rules operate on. You still need a data
+                    layer, a sync pipeline, cache invalidation, and consistency guarantees.
+                    The policy engine solves 30% of the problem.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Home-grown systems break at scale</h3>
+                <p>
+                    In-house authorization works until your first role explosion, your
+                    first cross-tenant data leak, or your first audit where you cannot
+                    explain why a user had access. Every team re-solves the same hard
+                    problems: caching, consistency, tenant isolation, audit logging.
+                </p>
+            </div>
+        </div>
+        <div class="solution-callout" data-reveal>
+            <h3>The real cost is not engineering time</h3>
+            <p>
+                It is the deals you cannot close because your authorization system
+                does not support the permission models enterprise buyers require. It
+                is the compliance certifications you cannot pass because you lack
+                audit trails. It is the multi-tenant architecture you cannot ship
+                because your permission layer was not designed for tenant isolation.
+            </p>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> The Engine</div>
+        <h2 data-reveal>Purpose-built for authorization. Nothing else.</h2>
+        <p data-reveal>
+            InferaDB is not a policy engine bolted onto Postgres. It is a complete
+            authorization system with its own storage engine, consensus protocol,
+            and query language — designed from the ground up for one job: evaluating
+            permissions against a relationship graph at speeds that disappear from
+            your latency budget.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Written in Rust</h3>
+                <p>
+                    No garbage collection pauses. No runtime overhead. The engine is
+                    compiled to native code with predictable, low-variance latency
+                    under load. Memory safety without a managed runtime.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Custom B+ tree storage</h3>
+                <p>
+                    InferaDB does not sit on top of RocksDB or SQLite. Its storage
+                    engine uses a purpose-built B+ tree optimized for relationship graph
+                    traversal — not generic key-value operations. Index reads complete
+                    in 0.3ms.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Raft consensus</h3>
+                <p>
+                    Linearizable writes across replicas. When a relationship changes,
+                    every subsequent read reflects that change. No eventual consistency
+                    windows where a revoked permission still grants access.
+                </p>
+            </div>
+        </div>
+        <div class="solution-example" data-reveal>
+            <p class="solution-example-label">How a permission check works</p>
+            <p>
+                Your application calls Check with a subject, relation, and object.
+                The engine evaluates your IPL policy against its relationship graph,
+                traverses the relevant paths, and returns ALLOW or DENY with a
+                revision token — a consistency marker you can use to guarantee
+                subsequent reads see at least the same state. The entire operation
+                completes in microseconds, not milliseconds.
+            </p>
+        </div>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>IPL policy evaluation</h3>
+                <p>
+                    InferaDB Permission Language defines your authorization model
+                    declaratively. The engine compiles IPL into an optimized evaluation
+                    plan and executes it against the relationship graph — no
+                    interpretation overhead at check time.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Six core services</h3>
+                <p>
+                    Check, BatchCheck, Expansion, Resources, Subjects, and Watch.
+                    Each is a focused API that does one thing well. No monolithic
+                    query language to learn — just the operations authorization
+                    systems actually need.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Revision tokens</h3>
+                <p>
+                    Every write returns a revision token. Pass it to subsequent reads
+                    to guarantee consistency — no stale permission checks, no
+                    time-of-check-to-time-of-use race conditions. Consistency without
+                    coordination overhead.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Performance</div>
+        <h2 data-reveal>Authorization that disappears from your latency budget</h2>
+        <p data-reveal>
+            Permission checks are on the critical path of every API request. If your
+            authorization layer adds measurable latency, your users feel it. InferaDB
+            is engineered so authorization is never the bottleneck — even at millions
+            of checks per second, even with complex relationship graphs, even under
+            sustained load.
+        </p>
+        <div class="solution-stats" data-reveal>
+            <div class="solution-stat">
+                <span class="solution-stat-value">2.8&micro;s</span>
+                <span class="solution-stat-label">p99 read latency</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">4.9B</span>
+                <span class="solution-stat-label">checks per second</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">0.3ms</span>
+                <span class="solution-stat-label">B+ tree index reads</span>
+            </div>
+            <div class="solution-stat">
+                <span class="solution-stat-value">Zero</span>
+                <span class="solution-stat-label">performance cliffs at scale</span>
+            </div>
+        </div>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Two-layer LRU cache</h3>
+                <p>
+                    Hot permission checks are served from an in-process cache with
+                    automatic invalidation on writes. No external cache to manage,
+                    no TTL tuning, no stale data. The cache is consistency-aware —
+                    it invalidates on relationship changes, not on timers.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>No capacity planning</h3>
+                <p>
+                    Performance scales linearly with your workload. Add replicas for
+                    read throughput, add nodes for storage capacity. No re-sharding,
+                    no rebalancing, no downtime. Your authorization layer grows with
+                    your application.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Predictable under load</h3>
+                <p>
+                    Rust's lack of garbage collection means no GC pauses, no tail
+                    latency spikes, no p99 surprises during traffic bursts. The
+                    latency you measure in staging is the latency you get in production.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Key Capabilities</div>
+        <h2 data-reveal>The APIs your authorization system actually needs</h2>
+        <p data-reveal>
+            Six focused services, three interface options, and SDKs for ten languages.
+            InferaDB gives you the building blocks to implement any authorization
+            pattern — from simple role checks to complex hierarchical permissions
+            with delegation and tenant isolation.
+        </p>
+        <div class="solution-features solution-features--wide" data-reveal>
+            <div class="solution-feature">
+                <h3>Check</h3>
+                <p>
+                    Single permission check with revision token. Does subject S have
+                    relation R on object O? Returns ALLOW or DENY with the revision
+                    state, so you can guarantee consistency across subsequent calls.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>BatchCheck</h3>
+                <p>
+                    Evaluate multiple permission checks in a single round-trip. Critical
+                    for AI agent workflows that need 20+ checks per turn, or UI rendering
+                    that needs to determine visibility for dozens of elements at once.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Expansion traces</h3>
+                <p>
+                    See exactly why a permission was allowed or denied. The engine returns
+                    the full graph traversal path — which relationships were followed,
+                    which conditions were evaluated. Debug authorization issues in minutes,
+                    not hours.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Watch API</h3>
+                <p>
+                    Stream real-time relationship changes. Use it for cache invalidation
+                    in downstream systems, audit log ingestion, or triggering workflows
+                    when permissions change. Server-sent events, no polling.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Resources and Subjects</h3>
+                <p>
+                    List all resources a subject can access, or all subjects that can
+                    access a resource. Powers UI patterns like "show me everything I
+                    have access to" and admin views like "who can see this document."
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Three interfaces, ten SDKs</h3>
+                <p>
+                    REST, gRPC, and OpenID AuthZEN. First-class SDKs for Go, Python,
+                    TypeScript, Java, Ruby, PHP, C#, Rust, Elixir, and Swift. Use
+                    whichever fits your stack — the behavior is identical across all three.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Architecture</div>
+        <h2 data-reveal>How it works under the hood</h2>
+        <p data-reveal>
+            InferaDB is three components: the Engine that evaluates permissions, the
+            Ledger that provides an immutable audit trail, and the Dashboard that
+            gives your team visibility into your authorization system. The Engine is
+            the core — everything else builds on its primitives.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Relationship graph, not rule engine</h3>
+                <p>
+                    Authorization decisions are resolved by traversing a relationship graph,
+                    not by evaluating a rule chain. This means permission checks are O(depth)
+                    in the graph, not O(rules) in your policy. As your policy grows in
+                    complexity, check latency stays constant.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Linearizable writes via Raft</h3>
+                <p>
+                    Every relationship write is replicated through Raft consensus before
+                    acknowledgment. When a write succeeds, every subsequent read — on any
+                    replica — reflects that change. No eventual consistency surprises.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Per-vault encryption</h3>
+                <p>
+                    Each tenant's data is encrypted at rest with AES-256-GCM using
+                    per-vault keys. Tenant isolation is enforced at the storage layer,
+                    not just the application layer. A compromised node cannot leak
+                    cross-tenant relationship data.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> How InferaDB Compares</div>
+        <h2 data-reveal>An honest look at the alternatives</h2>
+        <p data-reveal>
+            Engineers evaluating authorization infrastructure typically consider
+            three approaches. Here's how they compare.
+        </p>
+        <div class="solution-features solution-features--wide" data-reveal>
+            <div class="solution-feature">
+                <h3>Built in-house</h3>
+                <p>
+                    Role tables in Postgres, custom middleware, hand-rolled checks.
+                    This works early on — it is fast to build and you control everything.
+                    But it breaks down at scale: role explosion, cross-tenant data leaks,
+                    and compliance audits that demand audit trails you never built.
+                    Every team that goes this route eventually spends more time
+                    maintaining authorization than building product.
+                </p>
+                <p>
+                    InferaDB replaces the bespoke system with purpose-built infrastructure
+                    — so your team stops re-solving graph traversal, cache invalidation,
+                    and tenant isolation from scratch.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Policy engines (OPA, Cedar)</h3>
+                <p>
+                    OPA and Cedar are good at what they do: evaluating policy rules
+                    against input data. But they are policy engines, not authorization
+                    systems. They do not store relationships, they do not provide
+                    consistency guarantees, and they do not include a data layer. You
+                    still need to build the sync pipeline, manage the relationship
+                    store, and handle cache invalidation yourself.
+                </p>
+                <p>
+                    InferaDB combines policy evaluation and relationship storage in a
+                    single system. IPL defines your model, the engine stores your
+                    relationships, and Raft consensus guarantees every read reflects
+                    every write.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Managed authorization (SpiceDB, Oso, Warrant)</h3>
+                <p>
+                    These platforms share InferaDB's relationship-based approach, and
+                    they have advanced the category significantly. They are solid choices
+                    for teams that need managed authorization today. Where they differ is
+                    in the infrastructure layer: most rely on general-purpose databases
+                    under the hood.
+                </p>
+                <p>
+                    InferaDB is built on a custom B+ tree storage engine, achieves
+                    sub-3&micro;s permission checks without external caching layers,
+                    provides cryptographic audit trails via the Ledger, and enforces
+                    per-vault encryption for tenant isolation at the storage level —
+                    not just the application level.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.07</span> Common Patterns</div>
+        <h2 data-reveal>How teams use the authorization engine</h2>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Middleware integration</h3>
+                <p>
+                    Add a check call to your API gateway or request handler. The engine
+                    returns a decision before the request reaches your application code.
+                    SDKs for 10 languages make this a few lines of code.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Permission-aware queries</h3>
+                <p>
+                    Use the Resources API to list what a user can access, powering
+                    filtered views, search results, and admin dashboards without
+                    post-filtering or N+1 queries.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Real-time sync</h3>
+                <p>
+                    Stream relationship changes via the Watch API to keep downstream
+                    caches, search indexes, and UI state consistent with the
+                    authorization graph.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.08</span> Related Reading</div>
+        <ul class="solution-related" data-reveal>
+            <li><a href="/docs/architecture-engine">Engine Architecture Documentation</a></li>
+            <li><a href="/docs/ipl">InferaDB Permission Language Reference</a></li>
+            <li><a href="/docs/quickstart">Quickstart Guide</a></li>
+            <li><a href="/solutions/multi-tenant-saas">Multi-Tenant SaaS Authorization</a></li>
+            <li><a href="/solutions/ai-agents">AI Agent Authorization</a></li>
+        </ul>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Your authorization layer is the ceiling on every deal you close.</p>
+            <h2>Remove the ceiling.</h2>
+            <p>
+                Purpose-built storage. Sub-3µs permission checks. Raft consensus.
+                Full audit trails. Ten SDKs. One system that replaces the authorization
+                infrastructure your team keeps rebuilding.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
+            </div>
+        </div>
+    </div>
+</section>

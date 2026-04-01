@@ -754,24 +754,6 @@
   transition: border-bottom-color 0.3s var(--ease-mechanical);
 }
 
-// Nav amber top bar — subtle shimmer (only when scrolled to avoid glow on transparent bg)
-.site-nav.scrolled {
-  background-image: linear-gradient(90deg,
-    transparent 0%,
-    oklch(0.73 0.12 80 / 0.03) 50%,
-    transparent 100%
-  );
-  background-size: 200% 100%;
-  background-repeat: no-repeat;
-  background-position: -100% 0;
-  animation: nav-shimmer 12s ease-in-out infinite;
-}
-
-@keyframes nav-shimmer {
-  0% { background-position: -100% 0; }
-  30%, 70% { background-position: 200% 0; }
-  100% { background-position: 200% 0; }
-}
 
 // ─── Progressive enhancement: scroll-state nav detection ────
 // Replaces the JS scroll listener in Chrome 133+ / Edge 133+.
@@ -787,15 +769,6 @@
 
       // Mega panel top border hidden when nav has visible bottom border
       + .nav-mega { border-top-color: transparent; }
-      background-image: linear-gradient(90deg,
-        transparent 0%,
-        oklch(0.73 0.12 80 / 0.03) 50%,
-        transparent 100%
-      );
-      background-size: 200% 100%;
-      background-repeat: no-repeat;
-      background-position: -100% 0;
-      animation: nav-shimmer 12s ease-in-out infinite;
     }
   }
 }

@@ -55,35 +55,19 @@ description: "Get in touch with the InferaDB team — technical questions, enter
                     </div>
 
                     <!-- Always visible: name + email -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label" for="first-name">First Name <abbr title="Required" class="form-required-star">*</abbr></label>
-                            <input
-                                class="form-input"
-                                type="text"
-                                id="first-name"
-                                name="first-name"
-                                required
-                                aria-required="true"
-                                autocomplete="given-name"
-                                aria-describedby="first-name-error"
-                            />
-                            <span class="form-error" id="first-name-error" role="alert" hidden></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="last-name">Last Name <abbr title="Required" class="form-required-star">*</abbr></label>
-                            <input
-                                class="form-input"
-                                type="text"
-                                id="last-name"
-                                name="last-name"
-                                required
-                                aria-required="true"
-                                autocomplete="family-name"
-                                aria-describedby="last-name-error"
-                            />
-                            <span class="form-error" id="last-name-error" role="alert" hidden></span>
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label" for="name">Name <abbr title="Required" class="form-required-star">*</abbr></label>
+                        <input
+                            class="form-input"
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            aria-required="true"
+                            autocomplete="name"
+                            aria-describedby="name-error"
+                        />
+                        <span class="form-error" id="name-error" role="alert" hidden></span>
                     </div>
 
                     <div class="form-group">
@@ -341,8 +325,7 @@ description: "Get in touch with the InferaDB team — technical questions, enter
 (function() {
     var form = document.getElementById('contact-form');
     var errorMessages = {
-        'first-name': 'First name is required.',
-        'last-name': 'Last name is required.',
+        'name': 'Name is required.',
         'email': 'Please enter a valid email address.',
         'message': 'Message is required.'
     };

@@ -155,6 +155,7 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
     var formStatus = document.getElementById('waitlist-form-status');
 
     form.addEventListener('submit', function(e) {
+        e.preventDefault();
         var firstInvalid = null;
         form.querySelectorAll('.form-input[required]').forEach(function(input) {
             if (!input.value.trim() || (input.type === 'email' && !input.validity.valid)) {
@@ -165,12 +166,33 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
             }
         });
         if (firstInvalid) {
-            e.preventDefault();
             firstInvalid.focus();
             formStatus.textContent = 'Form has errors. Please correct the highlighted fields.';
-        } else {
-            formStatus.textContent = '';
+            return;
         }
+
+        var submitBtn = form.querySelector('.waitlist-submit');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        formStatus.textContent = '';
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        }).then(function(response) {
+            if (response.ok) {
+                window.location.href = '/waitlist/thanks';
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Join the Waitlist';
+                formStatus.textContent = 'Something went wrong. Please try again.';
+            }
+        }).catch(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Join the Waitlist';
+            formStatus.textContent = 'Network error. Please check your connection and try again.';
+        });
     });
 })();
 </script>

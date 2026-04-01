@@ -354,6 +354,7 @@ description: "Get in touch with the InferaDB team — technical questions, enter
     var formStatus = document.getElementById('contact-form-status');
 
     form.addEventListener('submit', function(e) {
+        e.preventDefault();
         var firstInvalid = null;
         form.querySelectorAll('.form-input[required], .form-textarea[required]').forEach(function(input) {
             if (input.disabled) return;
@@ -365,12 +366,33 @@ description: "Get in touch with the InferaDB team — technical questions, enter
             }
         });
         if (firstInvalid) {
-            e.preventDefault();
             firstInvalid.focus();
             formStatus.textContent = 'Form has errors. Please correct the highlighted fields.';
-        } else {
-            formStatus.textContent = '';
+            return;
         }
+
+        var submitBtn = form.querySelector('.contact-submit');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        formStatus.textContent = '';
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        }).then(function(response) {
+            if (response.ok) {
+                window.location.href = '/contact/thanks';
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+                formStatus.textContent = 'Something went wrong. Please try again.';
+            }
+        }).catch(function() {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
+            formStatus.textContent = 'Network error. Please check your connection and try again.';
+        });
     });
 
     var messagePlaceholders = {

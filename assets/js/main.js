@@ -2116,3 +2116,138 @@ document.querySelectorAll('a[href^="/#"]').forEach(link => {
   openFromHash();
   window.addEventListener('hashchange', openFromHash);
 })();
+
+// ─── Google Analytics custom events ─────────────────────────────
+(function() {
+  function ga() { return typeof gtag === 'function'; }
+
+  // Identify CTA location from DOM context
+  function ctaLocation(el) {
+    var section = el.closest('.cta');
+    if (section) return 'cta_section';
+    if (el.closest('.hero')) return 'hero';
+    if (el.closest('.site-footer')) return 'footer';
+    if (el.closest('.site-nav, .nav-mobile-cta')) return 'nav';
+    if (el.closest('.pricing-card')) return 'pricing_card';
+    return 'page';
+  }
+
+  // --- CTA button clicks ---
+  document.addEventListener('click', function(e) {
+    if (!ga()) return;
+    var link = e.target.closest('a.btn, a.nav-cta-link');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    var text = (link.textContent || '').trim();
+    gtag('event', 'cta_click', {
+      link_text: text,
+      link_url: href,
+      cta_location: ctaLocation(link)
+    });
+  });
+
+  // --- Waitlist form submission ---
+  var waitlistForm = document.querySelector('.waitlist-form');
+  if (waitlistForm) {
+    waitlistForm.addEventListener('submit', function() {
+      if (!ga()) return;
+      var useCases = [];
+      waitlistForm.querySelectorAll('input[name="use-case"]:checked').forEach(function(cb) {
+        useCases.push(cb.value);
+      });
+      gtag('event', 'generate_lead', {
+        form_name: 'waitlist',
+        use_cases: useCases.join(', ') || '(none)'
+      });
+    });
+  }
+
+  // --- Contact form submission ---
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function() {
+      if (!ga()) return;
+      var inquiryType = (contactForm.querySelector('#inquiry-type') || {}).value || '';
+      var useCases = [];
+      contactForm.querySelectorAll('input[name="use-case"]:checked').forEach(function(cb) {
+        useCases.push(cb.value);
+      });
+      gtag('event', 'generate_lead', {
+        form_name: 'contact',
+        inquiry_type: inquiryType,
+        use_cases: useCases.join(', ') || '(none)'
+      });
+    });
+  }
+
+  // --- Doc search usage ---
+  var searchInput = document.getElementById('search-input');
+  if (searchInput) {
+    var searchTimeout;
+    searchInput.addEventListener('input', function() {
+      if (!ga()) return;
+      clearTimeout(searchTimeout);
+      var q = searchInput.value.trim();
+      if (q.length < 2) return;
+      searchTimeout = setTimeout(function() {
+        gtag('event', 'search', { search_term: q });
+      }, 1000);
+    });
+  }
+
+  // --- Pricing tab / plan engagement ---
+  document.querySelectorAll('.pricing-toggle, [data-pricing-tab]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      if (!ga()) return;
+      gtag('event', 'view_item', {
+        item_name: (el.textContent || '').trim(),
+        item_category: 'pricing_plan'
+      });
+    });
+  });
+
+  // --- Docs sidebar navigation ---
+  document.querySelectorAll('.docs-sidebar a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      if (!ga()) return;
+      gtag('event', 'select_content', {
+        content_type: 'docs_nav',
+        item_id: link.getAttribute('href') || ''
+      });
+    });
+  });
+
+  // --- Dispatch category tab clicks ---
+  document.querySelectorAll('.dispatch-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      if (!ga()) return;
+      gtag('event', 'select_content', {
+        content_type: 'dispatch_category',
+        item_id: (tab.textContent || '').trim()
+      });
+    });
+  });
+
+  // --- How It Works tab engagement ---
+  document.querySelectorAll('.hiw-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      if (!ga()) return;
+      gtag('event', 'select_content', {
+        content_type: 'how_it_works_tab',
+        item_id: tab.getAttribute('data-hiw-tab') || (tab.textContent || '').trim()
+      });
+    });
+  });
+
+  // --- Copy-to-clipboard events (code blocks, sharing) ---
+  document.addEventListener('click', function(e) {
+    if (!ga()) return;
+    var btn = e.target.closest('[data-copy], .copy-link, .copy-md');
+    if (!btn) return;
+    gtag('event', 'share', {
+      method: btn.classList.contains('copy-md') ? 'copy_markdown' : 'copy_link',
+      content_type: 'page',
+      item_id: location.pathname
+    });
+  });
+})();

@@ -35,58 +35,50 @@
         {% endfor %}
       </ul>
 
-      <!-- Mobile: inline expandable dropdowns (hidden on desktop) -->
-      <div class="nav-mobile-megas">
-        {% for item in site.data.nav %}{% if item.groups or item.bento %}
-        <div class="nav-mobile-dropdown">
-          <button class="nav-mobile-dropdown-trigger" aria-expanded="false">
-            {{ item.title }}
-            <svg class="nav-mega-chevron" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5"/></svg>
-          </button>
-          <div class="nav-mobile-dropdown-body">
-            {% if item.hub %}
-            <a href="{{ item.hub.url }}" class="nav-mobile-hub">{{ item.hub.title }} &rarr;</a>
-            {% endif %}
-            {% if item.bento %}
-            {% for link in item.items %}
-            <a href="{{ link.url }}" class="nav-mobile-group-item">{{ link.title }}</a>
-            {% endfor %}
-            {% else %}
-            {% for group in item.groups %}
-            <div class="nav-mobile-group">
-              <div class="nav-mobile-group-label">{{ group.label }}</div>
-              {% for link in group.items %}
-              <a href="{{ link.url }}" class="nav-mobile-group-item">{{ link.title }}</a>
-              {% endfor %}
-            </div>
-            {% endfor %}
-            {% endif %}
-          </div>
-        </div>
-        {% endif %}{% endfor %}
-      </div>
-
       {% if page.layout == 'docs' %}
-      <nav class="nav-mobile-docs" aria-label="Mobile documentation navigation">
-        <a href="/docs/" class="nav-mobile-docs-title">Documentation</a>
+      <!-- Docs mobile nav — replaces global nav on /docs pages -->
+      <div class="nav-mobile-body" aria-label="Documentation navigation">
         {% for group in site.data.docs_nav %}
-        <div class="nav-mobile-docs-group">
-          <h4>{{ group.section }}</h4>
-          <ul>
-            {% for item in group.items %}
-            <li>
-              {% assign item_url_slash = item.url | append: '/' %}
-              <a href="{{ item.url }}"{% if page.url == item.url or page.url == item_url_slash %} class="active"{% endif %}>{{ item.title }}</a>
-            </li>
-            {% endfor %}
-          </ul>
+        <div class="nav-mobile-section">
+          <div class="nav-mobile-label">{{ group.section }}</div>
+          {% for item in group.items %}
+          {% assign item_url_slash = item.url | append: '/' %}
+          <a href="{{ item.url }}" class="nav-mobile-link{% if page.url == item.url or page.url == item_url_slash %} active{% endif %}">{{ item.title }}</a>
+          {% endfor %}
         </div>
         {% endfor %}
-        <div class="nav-mobile-docs-back">
-          <a href="/">← Back to site</a>
+      </div>
+      {% else %}
+      <!-- Global mobile nav -->
+      <div class="nav-mobile-body">
+        {% for item in site.data.nav %}
+        <div class="nav-mobile-section">
+          {% if item.bento or item.groups %}
+          <div class="nav-mobile-label">{{ item.title }}</div>
+          {% if item.bento %}
+          {% for link in item.items %}{% assign link_slash = link.url | append: '/' %}
+          <a href="{{ link.url }}" class="nav-mobile-link{% if page.url == link.url or page.url == link_slash %} active{% endif %}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}{% if link.external %}<span class="sr-only"> (opens in new tab)</span>{% endif %}</a>
+          {% endfor %}
+          {% if item.hub %}{% assign hub_slash = item.hub.url | append: '/' %}
+          <a href="{{ item.hub.url }}" class="nav-mobile-link{% if page.url == item.hub.url or page.url == hub_slash %} active{% endif %}">{{ item.hub.title }}</a>
+          {% endif %}
+          {% else %}
+          {% for group in item.groups %}
+          {% for link in group.items %}{% assign link_slash = link.url | append: '/' %}
+          <a href="{{ link.url }}" class="nav-mobile-link{% if page.url == link.url or page.url == link_slash %} active{% endif %}">{{ link.title }}</a>
+          {% endfor %}
+          {% endfor %}
+          {% endif %}
+          {% else %}{% assign item_slash = item.url | append: '/' %}
+          <a href="{{ item.url }}" class="nav-mobile-link nav-mobile-link-solo{% if page.url == item.url or page.url == item_slash %} active{% endif %}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.title }}{% if item.external %}<span class="sr-only"> (opens in new tab)</span>{% endif %}</a>
+          {% endif %}
         </div>
-      </nav>
+        {% endfor %}
+      </div>
       {% endif %}
+      <div class="nav-mobile-cta">
+        <a href="/waitlist" class="nav-cta-link">Get Early Access</a>
+      </div>
       <div class="nav-ctas">
         <a href="/waitlist" class="nav-cta-link">Get Early Access</a>
       </div>
@@ -110,7 +102,7 @@
       <a href="{{ item.hub.url }}" class="nav-mega-card nav-mega-hub-card" style="grid-area: {{ item.hub.area }}">
         <span class="nav-mega-card-title">{{ item.hub.title }}</span>
         <span class="nav-mega-card-desc">{{ item.hub.desc }}</span>
-        <span class="nav-mega-hub-arrow">&rarr;</span>
+        <span class="nav-mega-hub-arrow" aria-hidden="true">&rarr;</span>
       </a>
       {% endif %}
     </div>
@@ -120,7 +112,7 @@
       <a href="{{ item.hub.url }}" class="nav-mega-hub">
         <span class="nav-mega-hub-title">{{ item.hub.title }}</span>
         <span class="nav-mega-hub-desc">{{ item.hub.desc }}</span>
-        <span class="nav-mega-hub-arrow">&rarr;</span>
+        <span class="nav-mega-hub-arrow" aria-hidden="true">&rarr;</span>
       </a>
       {% endif %}
       <div class="nav-mega-grid">

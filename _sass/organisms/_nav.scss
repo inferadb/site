@@ -585,80 +585,105 @@
   .nav-mega-card:hover & { opacity: 0.8; }
 }
 
-// ─── Desktop: hide mobile megas ─────────────────────────────
+// ─── Desktop: hide mobile nav body ──────────────────────────
 
-.nav-mobile-megas { display: none; }
+.nav-mobile-body { display: none; }
+.nav-mobile-cta { display: none; }
 
-// ─── Mobile: hide shared mega, show inline dropdowns ────────
+// ─── Mobile: flat inline nav with backdrop blur ─────────────
 
 @media (width <= 768px) {
   .nav-mega { display: none !important; }
   .nav-has-mega { display: none; }
 
-  .nav-mobile-megas {
+  .nav-mobile-body {
     display: block;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 5rem; // space for sticky CTA
   }
-
-  .nav-mobile-dropdown-trigger {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background: none;
-    border: none;
-    padding: 0.875rem 0;
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-bright);
-    cursor: pointer;
-    min-height: 44px;
-  }
-
-  .nav-mobile-dropdown-body {
-    display: none;
-    padding: 0 0 0.75rem 0.75rem;
-  }
-
-  .nav-mobile-dropdown.open .nav-mobile-dropdown-body {
+  .nav-mobile-cta {
     display: block;
-  }
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 2rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    z-index: 100;
+    background: linear-gradient(to top, rgba(11, 13, 17, 0.95) 60%, transparent);
 
-  .nav-mobile-dropdown.open .nav-mega-chevron {
-    transform: rotate(180deg);
-  }
+    .nav-cta-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 48px;
+      padding: 0.75rem 1.25rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
 
-  .nav-mobile-hub {
-    display: block;
-    padding: 0.5rem 0;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-    margin-bottom: 0.25rem;
+      &:hover { background: var(--accent-hover); }
+    }
   }
+}
 
-  .nav-mobile-group-label {
-    @include tech-label(var(--text-secondary));
-    letter-spacing: 0.08em;
-    padding: 0.75rem 0 0.25rem;
+// ─── Mobile nav components (flat inline, Linear-style) ──────
+
+.nav-mobile-section {
+  margin-bottom: 0;
+
+  // Space between consecutive sections regardless of type
+  & + & { margin-top: 1.25rem; }
+
+  ul { list-style: none; margin: 0; padding: 0; }
+}
+
+.nav-mobile-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 1rem 2rem 0.25rem;
+  margin: 0 -2rem;
+  width: calc(100% + 4rem);
+
+  .nav-mobile-section:first-child & {
+    padding-top: 0;
   }
+}
 
-  .nav-mobile-group-item {
-    display: block;
-    padding: 0.5rem 0;
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
+// Override the .nav-links a rule that sets text-secondary on all links.
+// !important needed because the parent selector has higher specificity.
+.nav-mobile-link {
+  display: flex !important;
+  align-items: center;
+  padding: 0.375rem 2rem !important;
+  margin: 0 -2rem;
+  width: calc(100% + 4rem);
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  color: var(--text-white) !important;
+  text-decoration: none;
+  min-height: 44px !important;
+  transition: color 0.15s;
 
-    &:hover { color: var(--text-white); }
-  }
+  &:hover { color: var(--accent) !important; }
+  &.active { color: var(--accent) !important; font-weight: 700 !important; }
+  @include focus-ring;
+}
+
+// Solo links (Pricing, Dispatch) — no extra margin, section + section handles spacing
+.nav-mobile-link-solo {
+}
+
+// Docs subsite mobile nav — same visual treatment as global nav
+[data-layout="docs"] .nav-mobile-link {
+  &.active { color: var(--accent) !important; }
 }
 
 .nav-toggle {
@@ -701,62 +726,6 @@
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-// Mobile docs nav (inside hamburger menu on docs pages)
-.nav-mobile-docs {
-  display: none; // hidden on desktop
-}
-
-.nav-mobile-docs-title {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-white);
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.nav-mobile-docs-group {
-  margin-bottom: 1.25rem;
-
-  h4 {
-    @include tech-label(var(--text-secondary));
-    letter-spacing: 0.08em;
-    margin-bottom: 0.375rem;
-  }
-
-  ul li a {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0;
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-    min-height: 44px;
-
-    &:hover { color: var(--text-white); }
-    &.active { color: var(--accent); }
-  }
-}
-
-.nav-mobile-docs-back {
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--border);
-
-  a {
-    display: flex;
-    align-items: center;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    min-height: 44px;
-    &:hover { color: var(--text-white); }
-  }
 }
 
 // Nav border transition — mechanical
@@ -817,103 +786,31 @@
   .nav-links {
     display: none;
     position: fixed;
-    // Anchor to the nav's actual bottom edge via JS --nav-bottom custom prop,
-    // with var(--nav-h) as fallback for initial render
     top: var(--nav-bottom, var(--nav-h));
     left: 0;
     right: 0;
-    bottom: 0;
-    width: 100%;
+    height: calc(100dvh - var(--nav-bottom, var(--nav-h)));
+    z-index: 99;
     flex-direction: column;
     align-items: stretch;
     padding: 1.5rem 2rem 2rem;
-    background: var(--bg);
     gap: 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
 
+    // Backdrop blur — content shows through
+    background: rgba(11, 13, 17, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
-    // Shared mobile link style — full-width, touch-friendly
-    a:not(.btn) {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      padding: 0.875rem 0;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-bright);
-      min-height: 48px;
-    }
-
-    .nav-global {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-bottom: 0.5rem;
-
-      a {
-        // Inherits shared mobile link style above
-      }
-    }
-
-    // Mobile docs nav — same link treatment
-    .nav-mobile-docs {
-      a:not(.nav-mobile-docs-title) {
-        // Inherits shared mobile link style above
-        font-weight: 400;
-        color: var(--text-secondary);
-
-        &.active { color: var(--accent); }
-      }
-    }
-
-    .nav-mobile-docs-title {
-      font-size: 1rem;
-      padding: 0.875rem 0;
-      border-bottom: none;
-      margin-bottom: 0;
-    }
-
-    .nav-mobile-docs-group {
-      h4 {
-        font-family: var(--font-display);
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.02em;
-        color: var(--text-bright);
-        margin-top: 1.5rem;
-        padding-top: 1rem;
-        padding-bottom: 0.5rem;
-        border-top: 1px solid var(--border);
-      }
-
-      &:first-child h4 {
-        margin-top: 0.5rem;
-        border-top: none;
-      }
-    }
-
-    .nav-mobile-docs-back {
-      display: none;
-    }
-
-    .nav-ctas {
-      margin-left: 0;
-      margin-top: auto;
-      padding-top: 1.5rem;
-      flex-direction: column;
-      width: 100%;
-      .btn {
-        width: 100%;
-        justify-content: center;
-        min-height: 48px;
-        font-size: 0.9375rem;
-      }
-    }
+    // Hide desktop nav items
+    .nav-global { display: none; }
+    .nav-ctas { display: none; }
 
     &.open { display: flex; }
   }
 
-  // On mobile docs pages: hide global links, show docs nav
+  // On mobile docs pages: hide desktop nav items
   [data-layout="docs"] .nav-links .nav-global { display: none; }
-  .nav-mobile-docs { display: block; }
 }

@@ -159,14 +159,12 @@ if (toggle && links) {
   }
 
   function openNav() {
-    savedScroll = window.scrollY;
-    document.body.style.top = -savedScroll + 'px';
     toggle.setAttribute('aria-expanded', 'true');
     toggle.setAttribute('aria-label', 'Close menu');
     links.classList.add('open');
     document.body.classList.add('nav-open');
-    // Move focus to first link
-    const first = getFocusable(links)[0];
+    document.documentElement.classList.add('nav-open');
+    var first = getFocusable(links)[0];
     if (first) first.focus();
   }
   function closeNav() {
@@ -174,8 +172,7 @@ if (toggle && links) {
     toggle.setAttribute('aria-label', 'Open menu');
     links.classList.remove('open');
     document.body.classList.remove('nav-open');
-    document.body.style.top = '';
-    window.scrollTo(0, savedScroll);
+    document.documentElement.classList.remove('nav-open');
     toggle.focus();
   }
 
@@ -472,23 +469,7 @@ if (toggle && links) {
     }
   });
 
-  // ─── Mobile inline dropdowns ────────────────────────────────
-
-  document.querySelectorAll('.nav-mobile-dropdown-trigger').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var dropdown = btn.closest('.nav-mobile-dropdown');
-      var wasOpen = dropdown.classList.contains('open');
-      // Close all mobile dropdowns
-      document.querySelectorAll('.nav-mobile-dropdown').forEach(function(d) {
-        d.classList.remove('open');
-        d.querySelector('.nav-mobile-dropdown-trigger').setAttribute('aria-expanded', 'false');
-      });
-      if (!wasOpen) {
-        dropdown.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
+  // Mobile nav is now flat inline (no dropdowns to toggle).
 })();
 
 // ─── Scrollable regions + tab bar wheel ──────────────────────

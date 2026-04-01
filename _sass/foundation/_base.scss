@@ -3,6 +3,8 @@ html {
   scroll-behavior: smooth;
   scrollbar-gutter: stable;
   overscroll-behavior: none;
+
+  &.nav-open { overflow: hidden; }
 }
 
 // scroll-state() container queries — enables CSS-only scroll detection
@@ -36,22 +38,21 @@ body {
 
   &.nav-open {
     overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
     overscroll-behavior: none;
+    touch-action: none;
 
     .site-nav {
       background: var(--bg);
       background-image: none;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
+      border-bottom-color: var(--border);
     }
   }
 }
 
 ::selection {
-  background: oklch(0.73 0.12 80 / 0.3);
+  background: oklch(0.73 0.12 80 / 0.5);
   color: var(--text-white);
 }
 

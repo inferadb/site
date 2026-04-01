@@ -691,7 +691,7 @@ document.querySelectorAll('.dispatch-tabs, .hiw-tabs, .docs-hub-tabs, .code-tabs
   const article = document.querySelector('.docs-content article');
   if (!tocList || !article) return;
 
-  const headings = article.querySelectorAll('h2, h3');
+  const headings = article.querySelectorAll('h2:not(.docs-related-label), h3');
   if (headings.length < 2) {
     const toc = document.querySelector('.docs-toc');
     if (toc) toc.style.display = 'none';

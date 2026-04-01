@@ -1382,7 +1382,7 @@ h3:hover .heading-anchor {
 @media (width >= 1400px) {
   .docs-layout { grid-template-columns: 280px 1fr 220px; }
   .docs-content { max-width: 1000px; padding: 2rem 4rem 4rem; }
-  .docs-toc { display: block; }
+  .docs-toc { display: flex; }
 }
 
 @media (width <= 1024px) {

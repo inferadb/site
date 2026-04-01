@@ -125,8 +125,3 @@ inferadb dev logs engine | grep -i "error\|timeout\|unavailable"
 | `inferadb whoami` | Current auth context (org, vault) |
 | `inferadb stats` | Vault statistics (tuple count, schema version) |
 
-## What's Next?
-
-- [Core Concepts](/docs/concepts) — Review entities, tuples, and revision tokens
-- [CLI Reference](/docs/cli) — All diagnostic commands in detail
-- [Observability](/docs/observability) — Set up Prometheus metrics and tracing for production debugging

@@ -336,9 +336,3 @@ IO.inspect(allowed) # true
   </div>
 </div>
 
-## What's Next?
-
-- [Core Concepts](/docs/concepts) — Understand entities, relations, tuples, and revision tokens
-- [Modeling Guide](/docs/modeling) — Design a complete authorization schema for a real application
-- [IPL Overview](/docs/ipl) — Learn the full policy language syntax
-- [SDK Documentation](/docs/) — Full SDK docs for all 10 supported languages

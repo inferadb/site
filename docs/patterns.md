@@ -175,8 +175,3 @@ relation can_view = viewer & module("a") & module("b") & module("c")
 
 Consolidate into a single WASM module. Each invocation has ~1-2ms sandbox startup overhead.
 
-## What's Next?
-
-- [Modeling Guide](/docs/modeling) — Build a complete schema step by step
-- [Schema Reference](/docs/ipl-reference) — Full syntax and evaluation semantics
-- [WASM Modules](/docs/wasm) — Write custom authorization logic

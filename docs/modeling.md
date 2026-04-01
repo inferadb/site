@@ -287,10 +287,3 @@ relation can_view_sensitive = viewer & has_clearance & module("check_ip")
 inferadb relationships add "user:*" viewer document:public-faq
 ```
 
-## What's Next?
-
-- [Schema Reference](/docs/ipl-reference) — Full syntax, AST, evaluation semantics
-- [Schema Patterns](/docs/patterns) — Reusable authorization patterns and anti-patterns
-- [WASM Modules](/docs/wasm) — Write custom authorization logic
-- [REST API](/docs/api-rest) — Integrate checks into your application
-- [Troubleshooting](/docs/troubleshooting) — Debug unexpected ALLOW or DENY results

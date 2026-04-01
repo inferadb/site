@@ -1,70 +1,79 @@
 - title: Product
-  groups:
-    - label: Solutions
-      items:
-        - title: Multi-Tenant SaaS
-          desc: Per-tenant permissions that scale without role explosion
-          url: "/solutions/multi-tenant-saas"
-        - title: Regulated Industries
-          desc: Cryptographic audit trails for compliance frameworks
-          url: "/solutions/regulated-industries"
-        - title: AI Agents
-          desc: Secure agent actions without slowing them down
-          url: "/solutions/ai-agents"
-        - title: Platform Engineering
-          desc: One authorization service for every team
-          url: "/solutions/platform-engineering"
-    - label: Platform
-      items:
-        - title: Authorization Engine
-          desc: Permission checks that never bottleneck your app
-          url: "/docs/architecture-engine"
-        - title: Policy Language (IPL)
-          desc: Express any permission model in one language
-          url: "/docs/ipl"
-        - title: Audit & Compliance
-          desc: Cryptographic audit trails for SOC 2, HIPAA, GDPR
-          url: "/docs/compliance"
+  bento: true
+  items:
+    - title: Authorization Engine
+      desc: The authorization layer your stack has been missing. Sub-3µs checks, cryptographic audit, infinite scale.
+      url: "/docs/architecture-engine"
+      area: engine
+    - title: Multi-Tenant SaaS
+      desc: Per-tenant permissions without role explosion
+      url: "/solutions/multi-tenant-saas"
+      area: saas
+    - title: Regulated Industries
+      desc: Prove every access decision to auditors
+      url: "/solutions/regulated-industries"
+      area: regulated
+    - title: AI Agents
+      desc: Authorize every agent action in microseconds
+      url: "/solutions/ai-agents"
+      area: agents
+    - title: Platform Engineering
+      desc: One authorization layer for all your services
+      url: "/solutions/platform-engineering"
+      area: platform
+    - title: Policy Language
+      desc: "Model any permission system — RBAC, ABAC, ReBAC"
+      url: "/docs/ipl"
+      area: ipl
+    - title: Audit & Compliance
+      desc: "SOC 2, HIPAA, GDPR — proof of every decision"
+      url: "/docs/compliance"
+      area: audit
 
-- title: Docs
+- title: Resources
+  bento: true
+  items:
+    - title: Quick Start
+      desc: Zero to your first permission check in 5 minutes
+      url: "/docs/quickstart"
+      area: hero
+    - title: SDKs
+      desc: "TypeScript, Python, Go, Java, Rust — 10 languages"
+      url: "/docs/#sdks"
+      area: sdks
+    - title: Security Model
+      desc: Zero-trust architecture with cryptographic proof
+      url: "/docs/security"
+      area: security
+    - title: API Reference
+      desc: REST, gRPC, and AuthZEN endpoints
+      url: "/docs/api-rest"
+      area: api
+    - title: Core Concepts
+      desc: How authorization modeling works
+      url: "/docs/concepts"
+      area: concepts
+    - title: Modeling Guide
+      desc: Design a schema step by step
+      url: "/docs/modeling"
+      area: modeling
+    - title: Terraform
+      desc: Authorization as code
+      url: "/docs/terraform"
+      area: terraform
+    - title: Compliance
+      desc: Audit-ready from day one
+      url: "/docs/compliance"
+      area: compliance
+    - title: Architecture
+      desc: How InferaDB works under the hood
+      url: "/docs/architecture"
+      area: arch
   hub:
-    title: Documentation Hub
-    desc: Guides, references, and SDK docs
+    title: All Documentation
+    desc: Guides, API references, and SDK docs
     url: "/docs/"
-  groups:
-    - label: Learn
-      items:
-        - title: Quick Start
-          desc: From zero to permission checks in 5 minutes
-          url: "/docs/quickstart"
-        - title: Core Concepts
-          desc: Entities, relations, permissions, and tuples
-          url: "/docs/concepts"
-        - title: Modeling Guide
-          desc: Design an authorization schema step by step
-          url: "/docs/modeling"
-    - label: Integrate
-      items:
-        - title: SDKs
-          desc: Python, TypeScript, Go, Rust, Java, and more
-          url: "/docs/#sdks"
-        - title: REST & gRPC APIs
-          desc: AuthZEN-compliant evaluation endpoints
-          url: "/docs/api-rest"
-        - title: Terraform Provider
-          desc: Infrastructure-as-code for authorization
-          url: "/docs/terraform"
-    - label: Architecture & Security
-      items:
-        - title: Architecture
-          desc: Engine, Control, and Ledger components
-          url: "/docs/architecture"
-        - title: Security
-          desc: Encryption, isolation, and threat model
-          url: "/docs/security"
-        - title: Compliance
-          desc: SOC 2, HIPAA, GDPR, and audit readiness
-          url: "/docs/compliance"
+    area: hub
 
 - title: Pricing
   url: "/pricing"
@@ -72,5 +81,28 @@
 - title: Dispatch
   url: "/dispatch/"
 
-- title: About
-  url: "/about"
+- title: Company
+  bento: true
+  items:
+    - title: About InferaDB
+      desc: Why we're building the authorization layer for modern software
+      url: "/about"
+      area: about
+    - title: Careers
+      desc: Build the future of authorization
+      url: "/careers"
+      area: careers
+    - title: Contact
+      desc: Talk to an engineer, not a chatbot
+      url: "/contact"
+      area: contact
+    - title: Discord
+      desc: Join the community
+      url: "https://discord.gg/inferadb"
+      area: discord
+      external: true
+    - title: GitHub
+      desc: Open source and public roadmap
+      url: "https://github.com/inferadb"
+      area: github
+      external: true

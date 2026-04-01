@@ -22,7 +22,7 @@
     <div class="nav-links" id="nav-links">
       <ul class="nav-global">
         {% for item in site.data.nav %}
-          {% if item.groups %}
+          {% if item.groups or item.bento %}
           <li class="nav-has-mega">
             <button class="nav-mega-trigger" data-mega="{{ item.title | slugify }}" aria-expanded="false" aria-haspopup="true">
               {{ item.title }}
@@ -37,7 +37,7 @@
 
       <!-- Mobile: inline expandable dropdowns (hidden on desktop) -->
       <div class="nav-mobile-megas">
-        {% for item in site.data.nav %}{% if item.groups %}
+        {% for item in site.data.nav %}{% if item.groups or item.bento %}
         <div class="nav-mobile-dropdown">
           <button class="nav-mobile-dropdown-trigger" aria-expanded="false">
             {{ item.title }}
@@ -47,6 +47,11 @@
             {% if item.hub %}
             <a href="{{ item.hub.url }}" class="nav-mobile-hub">{{ item.hub.title }} &rarr;</a>
             {% endif %}
+            {% if item.bento %}
+            {% for link in item.items %}
+            <a href="{{ link.url }}" class="nav-mobile-group-item">{{ link.title }}</a>
+            {% endfor %}
+            {% else %}
             {% for group in item.groups %}
             <div class="nav-mobile-group">
               <div class="nav-mobile-group-label">{{ group.label }}</div>
@@ -55,6 +60,7 @@
               {% endfor %}
             </div>
             {% endfor %}
+            {% endif %}
           </div>
         </div>
         {% endif %}{% endfor %}
@@ -82,38 +88,56 @@
       </nav>
       {% endif %}
       <div class="nav-ctas">
-        <a href="/waitlist" class="btn btn-primary btn-sm">Get Early Access</a>
+        <a href="/waitlist" class="nav-cta-link">Get Early Access</a>
       </div>
     </div>
   </div>
 
-  <!-- Shared mega dropdown — glassmorphic panel, slides between Product/Docs -->
-  <div class="nav-mega" id="nav-mega" aria-hidden="true">
-    <div class="nav-mega-inner">
-      {% for item in site.data.nav %}{% if item.groups %}
-      <div class="nav-mega-panel" id="mega-{{ item.title | slugify }}" role="region" aria-label="{{ item.title }} navigation">
-        {% if item.hub %}
-        <a href="{{ item.hub.url }}" class="nav-mega-hub">
-          <span class="nav-mega-hub-title">{{ item.hub.title }}</span>
-          <span class="nav-mega-hub-desc">{{ item.hub.desc }}</span>
-          <span class="nav-mega-hub-arrow">&rarr;</span>
-        </a>
-        {% endif %}
-        <div class="nav-mega-grid">
-          {% for group in item.groups %}
-          <div class="nav-mega-col">
-            <div class="nav-mega-label">{{ group.label }}</div>
-            {% for link in group.items %}
-            <a href="{{ link.url }}" class="nav-mega-card">
-              <span class="nav-mega-card-title">{{ link.title }}</span>
-              <span class="nav-mega-card-desc">{{ link.desc }}</span>
-            </a>
-            {% endfor %}
-          </div>
+</nav>
+<!-- Mega dropdown — OUTSIDE nav to avoid nested backdrop-filter compositing -->
+<div class="nav-mega" id="nav-mega" aria-hidden="true">
+  <div class="nav-mega-inner">
+    {% for item in site.data.nav %}
+    {% if item.bento %}
+    <div class="nav-mega-panel nav-mega-bento" id="mega-{{ item.title | slugify }}" role="region" aria-label="{{ item.title }} navigation">
+      {% for link in item.items %}
+      <a href="{{ link.url }}" class="nav-mega-card" style="grid-area: {{ link.area }}"{% if link.external %} target="_blank" rel="noopener"{% endif %}>
+        <span class="nav-mega-card-title">{{ link.title }}{% if link.external %} <span class="nav-mega-external" aria-hidden="true">&nearr;</span>{% endif %}</span>
+        <span class="nav-mega-card-desc">{{ link.desc }}{% if link.external %}<span class="sr-only"> (opens in new tab)</span>{% endif %}</span>
+      </a>
+      {% endfor %}
+      {% if item.hub %}
+      <a href="{{ item.hub.url }}" class="nav-mega-card nav-mega-hub-card" style="grid-area: {{ item.hub.area }}">
+        <span class="nav-mega-card-title">{{ item.hub.title }}</span>
+        <span class="nav-mega-card-desc">{{ item.hub.desc }}</span>
+        <span class="nav-mega-hub-arrow">&rarr;</span>
+      </a>
+      {% endif %}
+    </div>
+    {% elsif item.groups %}
+    <div class="nav-mega-panel" id="mega-{{ item.title | slugify }}" role="region" aria-label="{{ item.title }} navigation">
+      {% if item.hub %}
+      <a href="{{ item.hub.url }}" class="nav-mega-hub">
+        <span class="nav-mega-hub-title">{{ item.hub.title }}</span>
+        <span class="nav-mega-hub-desc">{{ item.hub.desc }}</span>
+        <span class="nav-mega-hub-arrow">&rarr;</span>
+      </a>
+      {% endif %}
+      <div class="nav-mega-grid">
+        {% for group in item.groups %}
+        <div class="nav-mega-col">
+          <div class="nav-mega-label">{{ group.label }}</div>
+          {% for link in group.items %}
+          <a href="{{ link.url }}" class="nav-mega-card{% if link.featured %} is-featured{% endif %}">
+            <span class="nav-mega-card-title">{{ link.title }}</span>
+            <span class="nav-mega-card-desc">{{ link.desc }}</span>
+          </a>
           {% endfor %}
         </div>
+        {% endfor %}
       </div>
-      {% endif %}{% endfor %}
     </div>
+    {% endif %}
+    {% endfor %}
   </div>
-</nav>
+</div>

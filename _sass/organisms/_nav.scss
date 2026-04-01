@@ -739,6 +739,16 @@
   padding: 0;
 }
 
+// Tablet: right-align nav links, hide CTA
+@media (max-width: 1024px) and (min-width: 769px) {
+  .nav-global {
+    position: static;
+    transform: none;
+    margin-left: auto;
+  }
+  .nav-ctas { display: none; }
+}
+
 // Nav border transition — mechanical
 .site-nav {
   transition: border-bottom-color 0.3s var(--ease-mechanical);

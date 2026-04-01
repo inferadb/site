@@ -37,7 +37,7 @@
 
       {% if page.layout == 'docs' %}
       <!-- Docs mobile nav — replaces global nav on /docs pages -->
-      <div class="nav-mobile-body" aria-label="Documentation navigation">
+      <nav class="nav-mobile-body" aria-label="Documentation navigation">
         {% for group in site.data.docs_nav %}
         <div class="nav-mobile-section">
           <div class="nav-mobile-label">{{ group.section }}</div>
@@ -47,7 +47,7 @@
           {% endfor %}
         </div>
         {% endfor %}
-      </div>
+      </nav>
       {% else %}
       <!-- Global mobile nav -->
       <div class="nav-mobile-body">

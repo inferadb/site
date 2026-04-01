@@ -138,12 +138,11 @@
     &:hover { color: var(--text-white); }
     @include focus-ring;
   }
+}
 
-  .nav-ctas {
-    display: flex;
-    align-items: center;
-    margin-left: 0.75rem;
-  }
+.nav-ctas {
+  display: flex;
+  align-items: center;
 }
 
 .nav-cta-link {
@@ -595,6 +594,7 @@
 @media (width <= 768px) {
   .nav-mega { display: none !important; }
   .nav-has-mega { display: none; }
+  .nav-ctas { display: none; }
 
   .nav-mobile-body,
   .nav-mobile-docs {
@@ -725,9 +725,14 @@
   }
 }
 
-// Global nav links wrapper
+// Global nav links wrapper — centered via absolute positioning
 .nav-global {
-  display: contents; // on desktop, children flow into parent flex
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -807,7 +812,6 @@
 
     // Hide desktop nav items
     .nav-global { display: none; }
-    .nav-ctas { display: none; }
 
     &.open { display: flex; }
   }

@@ -706,6 +706,7 @@
   margin: -0.5rem;
   position: relative;
   z-index: 2; // above the fullscreen overlay (within .site-nav context)
+  @include focus-ring;
 
   span {
     display: block;

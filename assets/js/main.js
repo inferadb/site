@@ -155,7 +155,9 @@ const links = document.querySelector('.nav-links');
 if (toggle && links) {
   let savedScroll = 0;
   function getFocusable(container) {
-    return Array.from(container.querySelectorAll('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])'));
+    return Array.from(container.querySelectorAll('a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])')).filter(function(el) {
+      return el.offsetParent !== null || el.offsetWidth > 0 || el.offsetHeight > 0;
+    });
   }
 
   function openNav() {

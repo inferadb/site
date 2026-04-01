@@ -96,8 +96,17 @@
     border-color: ButtonText;
     &.active { border-color: Highlight; }
   }
-  .nav-dropdown-trigger, .nav-toggle {
+  .nav-mega-trigger, .nav-toggle {
     border: 1px solid ButtonText;
+  }
+  .nav-mega {
+    border-color: ButtonText;
+  }
+  .nav-mega-card, .nav-mega-hub {
+    border: 1px solid ButtonText;
+  }
+  .nav-mobile-link {
+    border-bottom: 1px solid ButtonText;
   }
   .search-trigger, .docs-toc-action {
     border: 1px solid ButtonText;

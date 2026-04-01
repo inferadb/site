@@ -87,7 +87,7 @@
 
 </nav>
 <!-- Mega dropdown — OUTSIDE nav to avoid nested backdrop-filter compositing -->
-<div class="nav-mega" id="nav-mega" aria-hidden="true">
+<div class="nav-mega" id="nav-mega" role="navigation" aria-label="Mega menu" aria-hidden="true">
   <div class="nav-mega-inner">
     {% for item in site.data.nav %}
     {% if item.bento %}

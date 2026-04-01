@@ -39,7 +39,6 @@ body {
   &.nav-open {
     overflow: hidden;
     overscroll-behavior: none;
-    touch-action: none;
 
     .site-nav {
       background: var(--bg);

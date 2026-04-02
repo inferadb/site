@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Local Development — InferaDB
+title: Local Development
 doc_title: Local Development
 doc_subtitle: Run InferaDB on your machine for development and testing.
 ---

@@ -1,21 +1,36 @@
 ---
-title: "Managed Authorization Platform — Fine-Grained Access Control"
+title: "Managed Authorization Platform"
 layout: default
 body_class: page-solution
-description: "Managed authorization infrastructure with sub-3µs permission checks, Raft consensus, and cryptographic audit trails. Fine-grained access control for enterprise software — RBAC, ABAC, ReBAC in one system. Alternative to OPA, Cedar, and home-grown solutions."
+description: "Managed authorization with sub-3µs checks and cryptographic audit trails. Fine-grained RBAC, ABAC, ReBAC in one system. Alternative to OPA and Cedar."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "InferaDB Authorization Platform",
+  "description": "{{ page.description }}",
+  "url": "{{ site.url }}/product/authorization",
+  "brand": { "@type": "Organization", "name": "InferaDB" },
+  "category": "Authorization Infrastructure",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "description": "Free tier available" }
+}
+</script>
 
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:PRODUCT // Authorization Platform</p>
         <h1>Fine-grained authorization, managed for you</h1>
         <p class="lead">
-            Every application needs authorization. Most teams build it from
-            scratch — role tables, custom middleware, hand-rolled audit logs.
-            InferaDB is managed authorization infrastructure: a purpose-built
-            system with sub-3µs permission checks, cryptographic audit trails,
-            and native multi-tenancy. Define your permission model, call the
-            API, and stop maintaining authorization code.
+            Your team added a roles table in week one. By year two, it's
+            a custom authorization system — six engineers, a role matrix
+            nobody can reason about, and an audit trail held together with
+            application logs. InferaDB replaces all of it: purpose-built
+            infrastructure where permission checks are faster than a network
+            round-trip to your own database, every decision is tamper-proof,
+            and each customer's data is isolated by default. Define your
+            model, call the API, and get your engineers back.
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -116,7 +131,7 @@ description: "Managed authorization infrastructure with sub-3µs permission chec
             <p class="solution-example-label">How a permission check works</p>
             <p>
                 Your application calls Check with a subject, relation, and object.
-                The engine evaluates your IPL policy against its relationship graph,
+                The engine evaluates your Infera Policy Language (IPL) schema against its relationship graph,
                 traverses the relevant paths, and returns ALLOW or DENY with a
                 revision token — a consistency marker you can use to guarantee
                 subsequent reads see at least the same state. The entire operation

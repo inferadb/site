@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Modeling Guide — InferaDB
+title: Modeling Guide
 doc_title: Modeling Guide
 doc_subtitle: Design a complete authorization schema for a real application, step by step.
 ---

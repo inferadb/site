@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Quick Start — InferaDB
+title: Quick Start
 doc_title: Quick Start
 doc_subtitle: Run InferaDB locally and make your first authorization check.
 last_updated: 2026-03-24

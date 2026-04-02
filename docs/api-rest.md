@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: REST API — InferaDB
+title: REST API
 doc_title: REST API Reference
 doc_subtitle: HTTP endpoints for the InferaDB Engine.
 last_updated: 2026-03-24

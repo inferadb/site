@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Ruby SDK — InferaDB
+title: Ruby SDK
 doc_title: Ruby SDK
 doc_subtitle: Idiomatic Ruby client for InferaDB with Rails integration.
 ---

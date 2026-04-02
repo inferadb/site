@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "InferaDB vs. OpenFGA vs. SpiceDB vs. Oso: Authorization Infrastructure Compared"
+title: "Authorization Infrastructure Compared"
 post_title: "InferaDB vs. OpenFGA vs. SpiceDB vs. Oso: Authorization Infrastructure Compared"
 date: 2026-03-28
 category: engineering
-description: "A fair comparison of authorization infrastructure: InferaDB, OpenFGA, SpiceDB, and Oso. Covers performance, security, pricing, operational burden, and when to build in-house."
+description: "A fair comparison of InferaDB, OpenFGA, SpiceDB, and Oso covering performance, security, pricing, and operational burden."
 hero: /assets/images/dispatch/authorization-compared.svg
 authors:
   - Evan Sims

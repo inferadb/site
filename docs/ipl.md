@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: IPL Overview — InferaDB
+title: IPL Overview
 doc_title: Infera Policy Language
 doc_subtitle: A declarative language for modeling entities, relationships, and permissions.
 related:

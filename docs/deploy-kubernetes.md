@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Kubernetes Deployment — InferaDB
+title: Kubernetes Deployment
 doc_title: Kubernetes Deployment
 doc_subtitle: Deploy InferaDB on Kubernetes with Helm charts and production-grade infrastructure.
 ---

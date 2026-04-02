@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: PHP SDK — InferaDB
+title: PHP SDK
 doc_title: PHP SDK
 doc_subtitle: PHP client for InferaDB with Laravel and Symfony integration.
 ---

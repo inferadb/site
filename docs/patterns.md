@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Schema Patterns — InferaDB
+title: Schema Patterns
 doc_title: Schema Patterns
 doc_subtitle: Reusable recipes for common authorization models.
 ---

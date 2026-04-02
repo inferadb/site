@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Control Architecture — InferaDB
+title: Control Architecture
 doc_title: Control Architecture
 doc_subtitle: Deep dive into InferaDB's control plane — tenant management, authentication, and administration.
 ---

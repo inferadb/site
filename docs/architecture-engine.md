@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Engine Architecture — InferaDB
+title: Engine Architecture
 doc_title: Engine Architecture
 doc_subtitle: Deep dive into InferaDB's data plane — the authorization evaluation engine.
 ---

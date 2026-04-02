@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
+title: "Why We're Building InferaDB"
 post_title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
 date: 2026-03-20
 category: company

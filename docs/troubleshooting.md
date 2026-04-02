@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Troubleshooting — InferaDB
+title: Troubleshooting
 doc_title: Troubleshooting
 doc_subtitle: Debug unexpected authorization decisions.
 ---

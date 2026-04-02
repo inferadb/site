@@ -2,8 +2,21 @@
 title: "AI Agent Authorization"
 layout: default
 body_class: page-solution
-description: "Authorization for AI agent workflows. Delegation modeling, per-user RAG scoping, tool authorization, and resolution traces for every agent action. Works with LangChain, CrewAI, AutoGen."
+description: "Authorization for AI agents. Delegation modeling, per-user RAG scoping, tool authorization, and decision traces. Works with LangChain, CrewAI, AutoGen."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "InferaDB for AI Agents",
+  "description": "{{ page.description }}",
+  "url": "{{ site.url }}/solutions/ai-agents",
+  "provider": { "@type": "Organization", "name": "InferaDB" },
+  "serviceType": "AI Agent Authorization",
+  "audience": { "@type": "Audience", "audienceType": "Engineering teams building autonomous AI agent systems" }
+}
+</script>
 
 <section class="solution-hero">
     <div class="container">
@@ -18,7 +31,7 @@ description: "Authorization for AI agent workflows. Delegation modeling, per-use
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+            <a href="/docs/quickstart" class="btn btn-ghost">Read the Quick Start</a>
         </div>
     </div>
 </section>
@@ -173,7 +186,8 @@ description: "Authorization for AI agent workflows. Delegation modeling, per-use
             <div class="solution-feature">
                 <h3>Tool-level permissions</h3>
                 <p>
-                    Define which tools each agent type can access using IPL. Restrict
+                    Define which tools each agent type can access using the Infera
+                    Policy Language (IPL). Restrict
                     sensitive operations — delete, transfer, escalate — to specific
                     agent configurations and user permission levels.
                 </p>
@@ -308,7 +322,7 @@ description: "Authorization for AI agent workflows. Delegation modeling, per-use
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
-                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
+                <a href="/docs/quickstart" class="btn btn-ghost btn-lg">Read the Quick Start</a>
             </div>
         </div>
     </div>

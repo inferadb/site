@@ -2,13 +2,26 @@
 title: "Authorization for Platform Teams"
 layout: default
 body_class: page-solution
-description: "Centralized authorization as a managed service for microservice architectures. Replace fragmented per-service permission systems with a single authorization API. Terraform provider, zero-downtime policy deploys, multi-region support."
+description: "Centralized authorization for microservices. Replace fragmented permission systems with one API. Terraform provider, zero-downtime deploys, multi-region."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "InferaDB for Platform Engineering",
+  "description": "{{ page.description }}",
+  "url": "{{ site.url }}/solutions/platform-engineering",
+  "provider": { "@type": "Organization", "name": "InferaDB" },
+  "serviceType": "Centralized Authorization Infrastructure",
+  "audience": { "@type": "Audience", "audienceType": "Platform and infrastructure teams managing microservice architectures" }
+}
+</script>
 
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:SOLUTIONS // Platform Engineering</p>
-        <h1>Stop every team from building their own permission system</h1>
+        <h1>One authorization platform for every team and service</h1>
         <p class="lead">
             In a microservice architecture, authorization fragments across services.
             Each team builds their own permission checks, their own role tables, their

@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: TypeScript SDK — InferaDB
+title: TypeScript SDK
 doc_title: TypeScript SDK
 doc_subtitle: Idiomatic Node.js and TypeScript client for InferaDB.
 ---

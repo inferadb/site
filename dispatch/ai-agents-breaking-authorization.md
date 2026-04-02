@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "How AI Agents Are Breaking Traditional Authorization"
+title: "AI Agents Breaking Authorization"
 post_title: "How AI Agents Are Breaking Traditional Authorization"
 date: 2026-03-14
 category: ai
-description: "AI agents need dozens of authorization checks per action. At 5-50ms each, that's seconds of latency. InferaDB delivers 2.8µs checks to make agent-scale auth tractable."
+description: "AI agents need dozens of authorization checks per action. At 5-50ms each, that's seconds of latency. InferaDB delivers 2.8us checks."
 hero: /assets/images/dispatch/ai-agents.svg
 authors:
   - Evan Sims

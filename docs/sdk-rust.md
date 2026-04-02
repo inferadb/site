@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Rust SDK — InferaDB
+title: Rust SDK
 doc_title: Rust SDK
 doc_subtitle: Type-safe, async-first client library for InferaDB.
 ---

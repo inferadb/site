@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Java SDK — InferaDB
+title: Java SDK
 doc_title: Java SDK
 doc_subtitle: Type-safe Java client for InferaDB.
 ---

@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: WASM Modules — InferaDB
+title: WASM Modules
 doc_title: WASM Policy Modules
 doc_subtitle: Extend authorization logic with sandboxed WebAssembly.
 ---

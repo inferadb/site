@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Python SDK — InferaDB
+title: Python SDK
 doc_title: Python SDK
 doc_subtitle: Async and sync Python client for InferaDB.
 ---

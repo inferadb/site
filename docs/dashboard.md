@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Dashboard — InferaDB
+title: Dashboard
 doc_title: Dashboard
 doc_subtitle: A web-based management interface for InferaDB tenants, policies, and authorization data.
 ---

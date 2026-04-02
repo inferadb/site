@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: IPL Reference — InferaDB
+title: IPL Reference
 doc_title: Schema Reference
 doc_subtitle: Complete syntax reference for the Infera Policy Language.
 ---

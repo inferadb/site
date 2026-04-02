@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Ledger Architecture — InferaDB
+title: Ledger Architecture
 doc_title: Ledger Architecture
 doc_subtitle: Deep dive into InferaDB's storage layer — a per-vault blockchain with Raft consensus.
 ---

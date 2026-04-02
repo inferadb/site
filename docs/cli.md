@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: CLI — InferaDB
+title: CLI
 doc_title: CLI Reference
 doc_subtitle: "The inferadb command-line interface for managing authorization."
 ---

@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Docker Deployment — InferaDB
+title: Docker Deployment
 doc_title: Docker Deployment
 doc_subtitle: Run InferaDB services as Docker containers.
 ---

@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: gRPC API — InferaDB
+title: gRPC API
 doc_title: gRPC API Reference
 doc_subtitle: Protocol Buffers service definition for the InferaDB Engine.
 ---

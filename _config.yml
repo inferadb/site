@@ -48,3 +48,7 @@ exclude:
   - assets/images/linkedin-banner-source.svg
   - assets/images/linkedin-banner.png
   - docs/plans
+  - scripts
+  - PITCH.md
+  - PITCH-COSTANOA.md
+  - LINKEDIN.md

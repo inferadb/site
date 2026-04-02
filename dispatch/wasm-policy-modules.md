@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
+title: "WebAssembly Policy Modules"
 post_title: "WebAssembly Policy Modules: Custom Authorization Logic in Any Language"
 date: 2026-03-01
 category: engineering
-description: "InferaDB lets you write custom authorization logic in Rust, TypeScript, or any WASM-compatible language — sandboxed with strict resource limits and zero I/O access."
+description: "Write custom authorization logic in Rust, TypeScript, or any WASM-compatible language — sandboxed with strict resource limits."
 hero: /assets/images/dispatch/wasm-modules.svg
 authors:
   - Evan Sims

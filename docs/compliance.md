@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Compliance — InferaDB
+title: Compliance
 doc_title: Compliance
 doc_subtitle: How InferaDB maps to common regulatory and compliance frameworks.
 ---

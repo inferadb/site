@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: C/C++ SDK — InferaDB
+title: C/C++ SDK
 doc_title: C/C++ SDK
 doc_subtitle: Native C library with C++ wrapper for InferaDB.
 ---

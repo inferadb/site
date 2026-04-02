@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Architecture — InferaDB
+title: Architecture
 doc_title: Architecture
 doc_subtitle: System overview of InferaDB's three-service architecture.
 last_updated: 2026-03-24

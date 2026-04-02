@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Configuration Reference — InferaDB
+title: Configuration Reference
 doc_title: Configuration Reference
 doc_subtitle: Complete reference for Engine, Control, and Ledger configuration.
 ---

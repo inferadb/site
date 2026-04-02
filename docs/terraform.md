@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Terraform Provider — InferaDB
+title: Terraform Provider
 doc_title: Terraform Provider
 doc_subtitle: Manage InferaDB infrastructure as code.
 ---

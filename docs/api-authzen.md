@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: AuthZEN API — InferaDB
+title: AuthZEN API
 doc_title: AuthZEN API
 doc_subtitle: OpenID Foundation Authorization API specification endpoints.
 ---

@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: .NET SDK — InferaDB
+title: .NET SDK
 doc_title: .NET SDK
 doc_subtitle: Async C# client for InferaDB with ASP.NET Core integration.
 ---

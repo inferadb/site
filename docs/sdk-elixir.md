@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Elixir SDK — InferaDB
+title: Elixir SDK
 doc_title: Elixir SDK
 doc_subtitle: Idiomatic Elixir client for InferaDB with Phoenix integration.
 ---

@@ -4,7 +4,7 @@ title: "Migrating from Home-Grown RBAC to InferaDB"
 post_title: "Migrating from Home-Grown RBAC to InferaDB"
 date: 2026-03-25
 category: engineering
-description: "A concrete guide to migrating from home-grown RBAC to InferaDB. Replace your homegrown authorization system with managed authorization infrastructure — step by step, with dual-write, shadow mode, and rollback."
+description: "Step-by-step guide to migrating from home-grown RBAC to InferaDB with dual-write, shadow mode, and rollback strategies."
 hero: /assets/images/dispatch/migrating-rbac.svg
 authors:
   - Evan Sims

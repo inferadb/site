@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Authentication — InferaDB
+title: Authentication
 doc_title: Authentication
 doc_subtitle: How clients authenticate with the Engine and Control services.
 ---

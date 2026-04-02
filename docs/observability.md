@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Observability — InferaDB
+title: Observability
 doc_title: Observability
 doc_subtitle: Metrics, tracing, and logging across InferaDB services.
 ---

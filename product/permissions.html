@@ -1,25 +1,37 @@
 ---
-title: "Permissions Modeling — Define RBAC, ABAC, ReBAC in One Schema"
+title: "Permissions Modeling — RBAC, ABAC, ReBAC"
 layout: default
 body_class: page-solution
-description: "Model permissions as relationships, not role tables. Define your entire access control system in a single declarative schema — RBAC, ABAC, and ReBAC unified. Readable, testable, version-controlled. Inspired by Google Zanzibar."
+description: "Model permissions as relationships, not role tables. RBAC, ABAC, and ReBAC in one declarative schema. Testable, version-controlled. Zanzibar-inspired."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "InferaDB Permissions Modeling",
+  "description": "{{ page.description }}",
+  "url": "{{ site.url }}/product/permissions",
+  "brand": { "@type": "Organization", "name": "InferaDB" },
+  "category": "Authorization Policy Language"
+}
+</script>
 
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:PRODUCT // Permissions Modeling</p>
-        <h1>Stop maintaining role tables. Start modeling relationships.</h1>
+        <h1>Permissions modeling that replaces your role tables</h1>
         <p class="lead">
-            IPL is a declarative language for defining authorization as relationships
-            between users, resources, and organizations. Instead of sprawling role
-            matrices and hardcoded if-statements, you write a schema that describes
-            how your system actually works — and InferaDB derives every permission
-            decision from it. Readable by engineers, auditable by compliance,
-            version-controlled like the rest of your code.
+            Your permission system started as a roles table. Now it's a maze of
+            join queries, hardcoded checks, and exception logic scattered across
+            your codebase. The Infera Policy Language (IPL) replaces all of it
+            with a single schema that describes how your system actually works —
+            and InferaDB derives every permission decision from it. Readable by
+            engineers, auditable by compliance, version-controlled like code.
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+            <a href="/docs/ipl" class="btn btn-ghost">Explore the Language</a>
         </div>
     </div>
 </section>
@@ -30,7 +42,7 @@ description: "Model permissions as relationships, not role tables. Define your e
         <div class="solution-section-label" data-reveal><span>SEC.01</span> The Problem</div>
         <h2 data-reveal>Role tables do not scale. You already know this.</h2>
         <p data-reveal>
-            RBAC starts clean: admin, editor, viewer. Three roles, a simple lookup
+            RBAC (role-based access control) starts clean: admin, editor, viewer. Three roles, a simple lookup
             table, and you ship. Then the product grows. Teams need scoped access.
             Permissions need to inherit across organizational hierarchies. One
             customer needs deny-override rules for compliance. Another needs
@@ -130,10 +142,11 @@ description: "Model permissions as relationships, not role tables. Define your e
         <div class="solution-section-label" data-reveal><span>SEC.03</span> What IPL Looks Like</div>
         <h2 data-reveal>Nine lines. An entire permission model.</h2>
         <p data-reveal>
-            IPL reads like a specification, not code. You define types, their
-            relationships, and how permissions derive from those relationships.
-            Here is a complete model for a SaaS product with organizations, teams,
-            and documents:
+            IPL reads like a specification, not code. You describe the things
+            in your system (organizations, teams, documents), how they relate
+            to each other, and what access each relationship grants. Here is
+            a complete model for a SaaS product — the schema below replaces
+            five database tables and hundreds of lines of middleware:
         </p>
         <div class="code-window" data-reveal>
             <div class="code-header">
@@ -363,7 +376,7 @@ description: "Model permissions as relationships, not role tables. Define your e
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
-                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
+                <a href="/docs/ipl" class="btn btn-ghost btn-lg">Explore the Language</a>
             </div>
         </div>
     </div>

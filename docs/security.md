@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Security — InferaDB
+title: Security
 doc_title: Security
 doc_subtitle: InferaDB's security model, threat mitigations, and defense-in-depth architecture.
 ---

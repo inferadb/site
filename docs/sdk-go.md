@@ -1,6 +1,6 @@
 ---
 layout: docs
-title: Go SDK — InferaDB
+title: Go SDK
 doc_title: Go SDK
 doc_subtitle: Idiomatic Go client for InferaDB.
 ---

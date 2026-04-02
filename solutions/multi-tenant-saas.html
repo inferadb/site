@@ -2,13 +2,26 @@
 title: "Multi-Tenant SaaS Authorization"
 layout: default
 body_class: page-solution
-description: "Win enterprise deals with multi-tenant authorization that handles per-tenant permissions, team hierarchies, customer-managed roles, and permission-aware search — without months of custom engineering."
+description: "Multi-tenant authorization for SaaS. Per-tenant permissions, team hierarchies, customer-managed roles, and permission-aware search. No custom engineering."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "InferaDB for Multi-Tenant SaaS",
+  "description": "{{ page.description }}",
+  "url": "{{ site.url }}/solutions/multi-tenant-saas",
+  "provider": { "@type": "Organization", "name": "InferaDB" },
+  "serviceType": "Authorization Infrastructure",
+  "audience": { "@type": "Audience", "audienceType": "SaaS companies building multi-tenant applications" }
+}
+</script>
 
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:SOLUTIONS // Multi-Tenant SaaS</p>
-        <h1>Win enterprise deals your permission system can't handle today</h1>
+        <h1>Authorization that wins the enterprise deals you're losing today</h1>
         <p class="lead">
             Every lost enterprise deal has the same root cause: your authorization
             can't support their org structure. Custom roles, nested teams, granular
@@ -19,7 +32,7 @@ description: "Win enterprise deals with multi-tenant authorization that handles 
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+            <a href="/docs/quickstart" class="btn btn-ghost">Read the Quick Start</a>
         </div>
     </div>
 </section>
@@ -90,9 +103,10 @@ description: "Win enterprise deals with multi-tenant authorization that handles 
             <div class="solution-feature">
                 <h3>1. Define your permission model</h3>
                 <p>
-                    Describe your entities, relations, and computed permissions in IPL.
-                    Teams, orgs, workspaces, custom roles — express your exact domain
-                    model, not a simplified version of it.
+                    Describe your entities, relations, and computed permissions in
+                    the Infera Policy Language (IPL). Teams, orgs, workspaces,
+                    custom roles — express your exact domain model, not a
+                    simplified version of it.
                 </p>
             </div>
             <div class="solution-feature">
@@ -142,11 +156,12 @@ description: "Win enterprise deals with multi-tenant authorization that handles 
                 </p>
             </div>
             <div class="solution-feature">
-                <h3>Cryptographic tenant isolation</h3>
+                <h3>Tenant isolation by default</h3>
                 <p>
-                    Each tenant's authorization data lives in a cryptographically
-                    isolated vault. Cross-tenant leaks aren't just unlikely — they're
-                    architecturally impossible. One less thing on your CISO's worry list.
+                    Each customer's authorization data is encrypted with its own
+                    key in a separate vault. Cross-tenant leaks aren't just
+                    unlikely — they're architecturally impossible. One less thing
+                    on your CISO's worry list.
                 </p>
             </div>
             <div class="solution-feature">
@@ -248,7 +263,7 @@ description: "Win enterprise deals with multi-tenant authorization that handles 
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
-                <a href="/docs/architecture" class="btn btn-ghost btn-lg">See How It Works</a>
+                <a href="/docs/quickstart" class="btn btn-ghost btn-lg">Read the Quick Start</a>
             </div>
         </div>
     </div>

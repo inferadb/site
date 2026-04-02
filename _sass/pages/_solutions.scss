@@ -212,6 +212,11 @@
   }
 }
 
+// Compare wrap inside solution pages — needs bottom spacing when followed by a new container
+.solution-content .compare-wrap {
+  margin-bottom: 2rem;
+}
+
 .solution-code {
   margin-bottom: 2rem;
 

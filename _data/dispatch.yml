@@ -1,4 +1,23 @@
 # Posts — link to individual pages at /dispatch/{slug}
+- title: "MCP Needs Authorization"
+  date: 2026-04-02
+  category: ai
+  slug: mcp-authorization-security
+  teaser: /assets/images/dispatch/mcp-authorization.svg
+  excerpt: "MCP connects AI agents to tools and data sources but has no built-in authorization. Every tool call is a trust boundary crossing without access control."
+  authors:
+    - Evan Sims
+
+- title: "The State of Authorization in 2026: An Industry Analysis"
+  date: 2026-04-02
+  category: security
+  slug: state-of-authorization-2026
+  teaser: /assets/images/dispatch/state-of-authorization.svg
+  excerpt: "Analysis of authorization practices across 500+ organizations. Most still use home-grown RBAC. AI agents are exposing the gaps. Broken access control remains the #1 application security risk for the fourth consecutive year."
+  authors:
+    - Jane Sims
+    - Evan Sims
+
 - title: "InferaDB vs. OpenFGA vs. SpiceDB vs. Oso: Authorization Infrastructure Compared"
   date: 2026-03-28
   category: engineering

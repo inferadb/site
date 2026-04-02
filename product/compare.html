@@ -1,0 +1,284 @@
+---
+title: "Compare Authorization Infrastructure"
+layout: default
+body_class: page-solution
+description: "Compare InferaDB to AuthZed, SpiceDB, Oso, Permit.io, OpenFGA, OPA, and Cedar. An honest look at authorization infrastructure options."
+---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "InferaDB Authorization Platform",
+  "description": "{{ page.description }}",
+  "url": "{{ site.url }}/product/compare",
+  "brand": { "@type": "Organization", "name": "InferaDB" },
+  "category": "Authorization Infrastructure"
+}
+</script>
+
+<section class="solution-hero">
+    <div class="container">
+        <p class="solution-eyebrow">SYS:PRODUCT // Compare</p>
+        <h1>An honest look at authorization infrastructure</h1>
+        <p class="lead">
+            Every approach to authorization has trade-offs. This page compares
+            InferaDB to the alternatives &mdash; what each does well, where each
+            falls short, and which is right for your situation.
+        </p>
+        <div class="solution-hero-actions">
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/docs/architecture" class="btn btn-ghost">See How It Works</a>
+        </div>
+    </div>
+</section>
+
+<section class="solution-content">
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.01</span> The Approaches</div>
+        <h2 data-reveal>Six approaches to authorization</h2>
+        <p data-reveal>
+            Teams evaluating authorization infrastructure typically consider one
+            of six approaches. Each has genuine strengths and real limitations.
+        </p>
+        <div class="solution-features solution-features--wide" data-reveal>
+            <div class="solution-feature">
+                <h3>Build in-house</h3>
+                <p>
+                    Role tables in your database, custom middleware. Full control,
+                    full burden. Works early, breaks at scale. You own the entire
+                    problem: graph traversal, caching, consistency, audit trails,
+                    tenant isolation. Cost: $900K+/year for a 6-person team.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Policy engines (OPA, Cedar)</h3>
+                <p>
+                    Evaluate rules against input data. Strong at policy evaluation
+                    &mdash; OPA's Rego and Cedar's policy language are well-designed.
+                    But they do not store relationships, do not provide consistency
+                    guarantees, and do not include audit trails. You still need a
+                    data layer.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>AuthZed / SpiceDB</h3>
+                <p>
+                    Zanzibar-inspired, open source. Strong community and proven at
+                    scale &mdash; OpenAI is a customer. Resource-based cloud pricing
+                    ($2/hr). No cryptographic audit trails. Backed by CockroachDB
+                    or PostgreSQL for storage.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Oso</h3>
+                <p>
+                    Offers both core authorization (Oso Cloud) and agent
+                    permissions posture management. Strong thought leadership
+                    and press coverage. Per-seat pricing. Recent focus on
+                    AI agent security monitoring alongside their authorization
+                    platform.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Permit.io</h3>
+                <p>
+                    Built on OPA/OPAL. UI-forward with embeddable authorization
+                    components. MAU-based pricing. Broad feature set spanning
+                    multiple products: MCP Gateway, App Permissions, Agent Security.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>OpenFGA</h3>
+                <p>
+                    CNCF incubating project. Free, open source, and used by Docker
+                    and Grafana. No managed service, no audit trails, no encryption
+                    at rest. You operate the infrastructure yourself.
+                </p>
+            </div>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.02</span> Where InferaDB Is Different</div>
+        <h2 data-reveal>What no alternative delivers</h2>
+        <p data-reveal>
+            InferaDB is not a better version of the same approach. It is a
+            different architecture &mdash; purpose-built from storage engine to
+            API layer for one job. InferaDB is currently in early access
+            &mdash; join the waitlist for priority onboarding, launch-day
+            pricing, and direct engineering support.
+        </p>
+        <div class="solution-features" data-reveal>
+            <div class="solution-feature">
+                <h3>Purpose-built storage engine</h3>
+                <p>
+                    Custom B+ tree optimized for relationship graph traversal. Not
+                    Postgres, not CockroachDB, not Spanner underneath. 2.8&micro;s
+                    p99 reads. The storage layer is the product.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Cryptographic audit trails</h3>
+                <p>
+                    Hash-chained, Merkle-verified, independently auditable. Not
+                    just logging &mdash; proof. Every permission decision is
+                    tamper-evident and verifiable by third parties.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Per-vault encryption</h3>
+                <p>
+                    Each tenant's data encrypted with its own AES-256-GCM key.
+                    Isolation at the storage layer, not the application layer. A
+                    compromised node cannot leak cross-tenant data.
+                </p>
+            </div>
+            <div class="solution-feature">
+                <h3>Seven compliance frameworks</h3>
+                <p>
+                    SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, EU AI Act &mdash;
+                    mapped by architecture, not bolt-on reporting. The system is
+                    designed to produce the evidence auditors need.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Side-by-Side</div>
+        <h2 data-reveal>How every approach compares</h2>
+        <p data-reveal>
+            Nine dimensions that matter when choosing authorization
+            infrastructure. We have marked competitor strengths where they
+            genuinely lead.
+        </p>
+        <div class="compare-wrap" data-reveal>
+            <table class="compare-matrix">
+                <thead>
+                    <tr>
+                        <th class="compare-dimension-head" scope="col">Dimension</th>
+                        <th scope="col">Built In-House</th>
+                        <th scope="col">OPA / Cedar</th>
+                        <th scope="col">AuthZed<span class="compare-col-sub">SpiceDB</span></th>
+                        <th scope="col">Oso</th>
+                        <th scope="col">Permit.io</th>
+                        <th class="compare-col-infera" scope="col">InferaDB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-reveal data-reveal-delay="0">
+                        <th class="compare-dimension" scope="row">Setup time</th>
+                        <td class="compare-weak">Months</td>
+                        <td class="compare-neutral">Weeks</td>
+                        <td class="compare-neutral">Days</td>
+                        <td class="compare-neutral">Days</td>
+                        <td class="compare-neutral">Days</td>
+                        <td class="compare-win">Minutes</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="40">
+                        <th class="compare-dimension" scope="row">Check latency</th>
+                        <td class="compare-neutral">Varies</td>
+                        <td class="compare-neutral">1-10 ms</td>
+                        <td class="compare-neutral">5-10 ms</td>
+                        <td class="compare-neutral">Varies</td>
+                        <td class="compare-neutral">Sub-50 ms</td>
+                        <td class="compare-win">~3 &#181;s</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="80">
+                        <th class="compare-dimension" scope="row">Relationship storage</th>
+                        <td class="compare-weak">DIY</td>
+                        <td class="compare-weak">None</td>
+                        <td class="compare-win">Built-in</td>
+                        <td class="compare-neutral">Built-in</td>
+                        <td class="compare-neutral">Built-in</td>
+                        <td class="compare-win">Purpose-built</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="120">
+                        <th class="compare-dimension" scope="row">Audit trail</th>
+                        <td class="compare-weak">DIY</td>
+                        <td class="compare-neutral">Decision logs</td>
+                        <td class="compare-neutral">Logging</td>
+                        <td class="compare-neutral">Session logs</td>
+                        <td class="compare-neutral">Audit logs</td>
+                        <td class="compare-win">Cryptographic proof</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="160">
+                        <th class="compare-dimension" scope="row">Tenant isolation</th>
+                        <td class="compare-weak">DIY</td>
+                        <td class="compare-weak">Not built-in</td>
+                        <td class="compare-neutral">Namespace</td>
+                        <td class="compare-weak">N/A</td>
+                        <td class="compare-neutral">Namespace</td>
+                        <td class="compare-win">Per-vault encryption</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="200">
+                        <th class="compare-dimension" scope="row">Compliance mapping</th>
+                        <td class="compare-weak">Manual</td>
+                        <td class="compare-weak">None</td>
+                        <td class="compare-neutral">Partial</td>
+                        <td class="compare-neutral">Partial</td>
+                        <td class="compare-neutral">SOC 2, HIPAA</td>
+                        <td class="compare-win">7 frameworks</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="240">
+                        <th class="compare-dimension" scope="row">AI agent support</th>
+                        <td class="compare-weak">DIY</td>
+                        <td class="compare-neutral">Policy-only</td>
+                        <td class="compare-neutral">Check API</td>
+                        <td class="compare-win">Agent monitoring</td>
+                        <td class="compare-win">MCP Gateway</td>
+                        <td class="compare-win">Delegation modeling</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="280">
+                        <th class="compare-dimension" scope="row">Pricing</th>
+                        <td class="compare-weak">$900K+/year</td>
+                        <td class="compare-win">Free + infra</td>
+                        <td class="compare-neutral">$2/hr</td>
+                        <td class="compare-neutral">$15/seat/mo</td>
+                        <td class="compare-neutral">$5/MAU/mo</td>
+                        <td class="compare-win">From $0</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="320">
+                        <th class="compare-dimension" scope="row">Open source</th>
+                        <td class="compare-weak">N/A</td>
+                        <td class="compare-win">Yes</td>
+                        <td class="compare-win">Yes (SpiceDB)</td>
+                        <td class="compare-neutral">Partial</td>
+                        <td class="compare-win">Yes (OPAL)</td>
+                        <td class="compare-win">Yes (core)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container solution-narrow">
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Related Reading</div>
+        <ul class="solution-related" data-reveal>
+            <li><a href="/product/authorization">Managed Authorization Platform</a></li>
+            <li><a href="/product/permissions">Fine-Grained Permissions</a></li>
+            <li><a href="/product/compliance">Compliance and Audit Trails</a></li>
+            <li><a href="/solutions/multi-tenant-saas">Multi-Tenant SaaS Authorization</a></li>
+            <li><a href="/dispatch/authorization-infrastructure-compared">Authorization Infrastructure Compared</a></li>
+        </ul>
+
+    </div>
+</section>
+
+<section class="solution-cta">
+    <div class="container">
+        <div class="solution-cta-inner" data-reveal>
+            <p class="solution-cta-eyebrow">Every approach has trade-offs. The question is which trade-offs you can live with.</p>
+            <h2>See if InferaDB is right for your stack.</h2>
+            <p>
+                Nine dimensions compared honestly.<br/>
+                No vendor lock-in on the core engine.<br/>
+                Free tier to prove it works before you commit.
+            </p>
+            <div class="solution-cta-actions">
+                <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+                <a href="/docs/quickstart" class="btn btn-ghost btn-lg">Read the Quick Start</a>
+            </div>
+        </div>
+    </div>
+</section>

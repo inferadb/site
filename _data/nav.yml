@@ -12,6 +12,9 @@
         - title: Compliance & Audit
           desc: "Pass SOC 2, HIPAA, and GDPR audits by default"
           url: "/product/compliance"
+        - title: Compare
+          desc: "How InferaDB stacks up against the alternatives"
+          url: "/product/compare"
     - label: Solutions
       items:
         - title: Multi-Tenant SaaS

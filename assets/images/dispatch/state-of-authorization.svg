@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" fill="none">
+
+  <g transform="translate(480, 200)">
+    <!-- Rising bar chart — authorization gap growing over time -->
+    <!-- Five bars, ascending height: the problem getting worse -->
+    <rect x="-100" y="20" width="16" height="40" fill="#dce1e8" rx="1"/>
+    <rect x="-60" y="5" width="16" height="55" fill="#dce1e8" rx="1"/>
+    <rect x="-20" y="-15" width="16" height="75" fill="#dce1e8" rx="1"/>
+    <rect x="20" y="-35" width="16" height="95" fill="#dce1e8" rx="1"/>
+    <rect x="60" y="-60" width="16" height="120" fill="#dce1e8" rx="1"/>
+
+    <!-- Baseline — the floor -->
+    <line x1="-110" y1="60" x2="86" y2="60" stroke="#dce1e8" stroke-width="0.5"/>
+
+    <!-- Trend line — upward trajectory -->
+    <line x1="-92" y1="20" x2="68" y2="-60" stroke="#dce1e8" stroke-width="0.75" stroke-dasharray="3 2"/>
+  </g>
+</svg>

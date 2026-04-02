@@ -135,26 +135,32 @@ description: "Model permissions as relationships, not role tables. Define your e
             Here is a complete model for a SaaS product with organizations, teams,
             and documents:
         </p>
-        <div class="solution-code" data-reveal>
-            <pre><code>type organization {
-    relation admin
-    relation member
+        <div class="code-window" data-reveal>
+            <div class="code-header">
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-title">schema.ipl</span>
+            </div>
+            <pre><code><span class="kw">type</span> <span class="type">organization</span> {
+    <span class="kw">relation</span> <span class="fn">admin</span>
+    <span class="kw">relation</span> <span class="fn">member</span>
 }
 
-type team {
-    relation parent: organization
-    relation member
-    relation admin = admin from parent
+<span class="kw">type</span> <span class="type">team</span> {
+    <span class="kw">relation</span> <span class="fn">parent</span>: <span class="type">organization</span>
+    <span class="kw">relation</span> <span class="fn">member</span>
+    <span class="kw">relation</span> <span class="fn">admin</span> = <span class="fn">admin</span> from <span class="fn">parent</span>
 }
 
-type document {
-    relation parent: team
-    relation viewer
-    relation editor
-    relation owner
-    relation can_view = viewer | editor | owner | viewer from parent
-    relation can_edit = editor | owner
-    relation can_admin = owner | admin from parent
+<span class="kw">type</span> <span class="type">document</span> {
+    <span class="kw">relation</span> <span class="fn">parent</span>: <span class="type">team</span>
+    <span class="kw">relation</span> <span class="fn">viewer</span>
+    <span class="kw">relation</span> <span class="fn">editor</span>
+    <span class="kw">relation</span> <span class="fn">owner</span>
+    <span class="kw">relation</span> <span class="fn">can_view</span> = <span class="fn">viewer</span> <span class="op">|</span> <span class="fn">editor</span> <span class="op">|</span> <span class="fn">owner</span> <span class="op">|</span> <span class="fn">viewer</span> from <span class="fn">parent</span>
+    <span class="kw">relation</span> <span class="fn">can_edit</span> = <span class="fn">editor</span> <span class="op">|</span> <span class="fn">owner</span>
+    <span class="kw">relation</span> <span class="fn">can_admin</span> = <span class="fn">owner</span> <span class="op">|</span> <span class="fn">admin</span> from <span class="fn">parent</span>
 }</code></pre>
         </div>
         <p data-reveal>
@@ -348,12 +354,12 @@ type document {
 <section class="solution-cta">
     <div class="container">
         <div class="solution-cta-inner" data-reveal>
-            <p class="solution-cta-eyebrow">Stop building permission systems. Start shipping features.</p>
-            <h2>Your authorization model should be smaller than your README.</h2>
+            <p class="solution-cta-eyebrow">Every permission change is a code change, a migration, and a prayer.</p>
+            <h2>There's a better way to model access control.</h2>
             <p>
-                A declarative schema that replaces role tables, inheritance logic,
-                and permission middleware — validated before deploy, traceable in
-                production, and version-controlled like everything else.
+                One schema replaces scattered role tables.<br/>
+                Version-controlled. Validated before deploy.<br/>
+                Traceable in production.
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>

@@ -107,6 +107,23 @@ description: "Centralized authorization as a managed service for microservice ar
             repo, reviewed through pull requests, applied through CI/CD pipelines.
             No ClickOps. No drift.
         </p>
+        <div class="code-window" data-reveal>
+            <div class="code-header">
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-title">main.tf</span>
+            </div>
+            <pre><code><span class="kw">resource</span> <span class="str">"inferadb_vault"</span> <span class="str">"production"</span> {
+  name   = <span class="str">"production"</span>
+  region = <span class="str">"us-east-1"</span>
+}
+
+<span class="kw">resource</span> <span class="str">"inferadb_schema"</span> <span class="str">"main"</span> {
+  vault_id = inferadb_vault.production.id
+  source   = <span class="fn">file</span>(<span class="str">"schema.ipl"</span>)
+}</code></pre>
+        </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.04</span> Zero-Downtime Deploys</div>
         <h2 data-reveal>Policy changes without service interruption</h2>
@@ -229,11 +246,12 @@ description: "Centralized authorization as a managed service for microservice ar
 <section class="solution-cta">
     <div class="container">
         <div class="solution-cta-inner" data-reveal>
-            <p class="solution-cta-eyebrow">Ready to centralize authorization?</p>
-            <h2>One service. Every team. Every decision.</h2>
+            <p class="solution-cta-eyebrow">Authorization is fragmenting across your services. Nobody has the full picture.</p>
+            <h2>One authorization layer. Every service. Every decision.</h2>
             <p>
-                Replace fragmented per-service permission systems with a managed
-                authorization service that scales with your platform.
+                Managed infrastructure your teams consume.<br/>
+                Not another system they build and maintain.<br/>
+                Authorization as a service, not a project.
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>

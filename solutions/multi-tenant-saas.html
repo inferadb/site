@@ -73,6 +73,19 @@ description: "Win enterprise deals with multi-tenant authorization that handles 
             within teams, sharing across boundaries. You define the model. The
             service handles resolution, isolation, and scale.
         </p>
+        <div class="code-window" data-reveal>
+            <div class="code-header">
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-dot"></span>
+                <span class="code-title">middleware.ts</span>
+            </div>
+            <pre><code><span class="kw">const</span> allowed = <span class="kw">await</span> inferadb
+  .vault(<span class="str">"production"</span>)
+  .check(<span class="str">"document:123"</span>, <span class="str">"edit"</span>, <span class="str">"user:alice"</span>);
+
+<span class="kw">if</span> (!allowed.permitted) <span class="kw">return</span> res.status(<span class="lit">403</span>);</code></pre>
+        </div>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
                 <h3>1. Define your permission model</h3>
@@ -226,11 +239,12 @@ description: "Win enterprise deals with multi-tenant authorization that handles 
 <section class="solution-cta">
     <div class="container">
         <div class="solution-cta-inner" data-reveal>
-            <p class="solution-cta-eyebrow">Ready to simplify multi-tenant authorization?</p>
-            <h2>Stop building permission systems. Start shipping features.</h2>
+            <p class="solution-cta-eyebrow">The next enterprise prospect will ask for permissions your system can't handle.</p>
+            <h2>Close the deal instead of filing the feature request.</h2>
             <p>
-                Replace months of custom authorization engineering with a managed
-                service purpose-built for multi-tenant SaaS.
+                Team hierarchies. Custom roles. Granular sharing.<br/>
+                Managed multi-tenant authorization.<br/>
+                No custom engineering required.
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>

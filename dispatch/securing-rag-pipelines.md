@@ -3,6 +3,7 @@ layout: post
 title: "Securing RAG Pipelines"
 post_title: "Securing RAG Pipelines: Per-User Document Authorization for AI"
 date: 2026-01-25
+last_modified_at: 2026-01-25
 category: ai
 description: "Most RAG pipelines have a critical security flaw: no per-user document authorization. InferaDB enables pre-retrieval auth at 2.8µs per check."
 hero: /assets/images/dispatch/securing-rag.svg

@@ -3,6 +3,7 @@ layout: post
 title: "State of Authorization 2026"
 post_title: "The State of Authorization in 2026: An Industry Analysis"
 date: 2026-04-02
+last_modified_at: 2026-04-02
 category: security
 description: "Analysis of authorization practices across 500+ organizations. Most still use home-grown RBAC. AI agents are exposing the gaps."
 hero: /assets/images/dispatch/state-of-authorization.svg

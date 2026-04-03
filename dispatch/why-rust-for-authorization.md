@@ -3,6 +3,7 @@ layout: post
 title: "Why We Chose Rust for InferaDB"
 post_title: "Why We Chose Rust for InferaDB"
 date: 2026-02-08
+last_modified_at: 2026-02-08
 category: engineering
 description: "Memory safety without GC pauses, fearless concurrency, and zero-cost abstractions make sub-microsecond authorization possible. Why we chose Rust."
 hero: /assets/images/dispatch/why-rust.svg

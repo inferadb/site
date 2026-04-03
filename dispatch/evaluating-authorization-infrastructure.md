@@ -3,6 +3,7 @@ layout: post
 title: "Evaluating Authorization Infrastructure"
 post_title: "How to Evaluate Authorization Infrastructure: A Buyer's Checklist"
 date: 2026-03-26
+last_modified_at: 2026-03-26
 category: security
 description: "A structured evaluation framework for authorization infrastructure covering performance, security, audit trails, compliance, pricing, and lock-in risk."
 hero: /assets/images/dispatch/evaluating-authorization.svg

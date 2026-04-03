@@ -3,6 +3,7 @@ layout: post
 title: "Migrating from Home-Grown RBAC to InferaDB"
 post_title: "Migrating from Home-Grown RBAC to InferaDB"
 date: 2026-03-25
+last_modified_at: 2026-03-25
 category: engineering
 description: "Step-by-step guide to migrating from home-grown RBAC to InferaDB with dual-write, shadow mode, and rollback strategies."
 hero: /assets/images/dispatch/migrating-rbac.svg

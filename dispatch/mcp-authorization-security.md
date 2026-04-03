@@ -3,6 +3,7 @@ layout: post
 title: "MCP Needs Authorization"
 post_title: "Why the Model Context Protocol Needs an Authorization Layer"
 date: 2026-04-02
+last_modified_at: 2026-04-02
 category: ai
 description: "MCP connects AI agents to tools and data sources but has no built-in authorization. Every tool call is a trust boundary crossing without access control."
 hero: /assets/images/dispatch/mcp-authorization.svg

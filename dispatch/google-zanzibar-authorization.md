@@ -3,6 +3,7 @@ layout: post
 title: "Google Zanzibar Authorization Model"
 post_title: "Google Zanzibar: The Authorization Model Behind Every Google Product"
 date: 2026-03-24
+last_modified_at: 2026-03-24
 category: engineering
 description: "Google built Zanzibar to check permissions 10M times per second across Gmail, Drive, and Cloud. How it works and why InferaDB goes further."
 hero: /assets/images/dispatch/zanzibar.svg

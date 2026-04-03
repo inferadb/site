@@ -3,6 +3,7 @@ layout: post
 title: "Infera Policy Language Design"
 post_title: "The Infera Policy Language: One Schema for Every Authorization Model"
 date: 2026-02-25
+last_modified_at: 2026-02-25
 category: engineering
 description: "IPL unifies ReBAC, RBAC, and ABAC in a single schema language with PEG grammar, static analysis, and parallel evaluation."
 hero: /assets/images/dispatch/designing-ipl.svg

@@ -26,8 +26,13 @@
     background: var(--accent);
     color: #0b0d11;
     font-weight: 700;
-    &:hover { background: var(--accent-hover); transform: translateY(-1px); }
-    &:active { background: var(--accent); transform: translateY(1px); }
+    box-shadow: 0 1px 4px rgba(200, 164, 78, 0.15);
+    &:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(200, 164, 78, 0.25), 0 0 0 1px rgba(200, 164, 78, 0.1);
+    }
+    &:active { background: var(--accent); transform: translateY(1px); box-shadow: none; }
   }
 
   &-ghost {

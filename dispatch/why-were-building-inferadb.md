@@ -3,6 +3,7 @@ layout: post
 title: "Why We're Building InferaDB"
 post_title: "InferaDB: Why We're Building a Purpose-Built Authorization Database"
 date: 2026-03-20
+last_modified_at: 2026-03-20
 category: company
 description: "Broken access control is OWASP's #1 risk. InferaDB is purpose-built managed authorization infrastructure with sub-microsecond latency."
 hero: /assets/images/dispatch/why-building.svg

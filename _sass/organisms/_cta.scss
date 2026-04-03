@@ -54,6 +54,27 @@
   gap: 0.75rem;
 }
 
+// Mid-page CTA — conversion point between sections.
+// Subtle visual weight: border top/bottom creates a "decision band"
+// that's distinct from content sections without being intrusive.
+.mid-cta {
+  padding: 2.5rem 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(200, 164, 78, 0.015);
+
+  .container {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+}
+
+@media (width <= 768px) {
+  .mid-cta .container { flex-direction: column; align-items: center; }
+}
+
 // CTA section — grid pattern background (matches hero)
 .cta {
   position: relative;

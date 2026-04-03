@@ -12,15 +12,15 @@
   flex-direction: column;
   justify-content: center;
 
-  // Dot grid background — renders behind everything
+  // Dot grid background — very subtle, lets constellation breathe
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background-image: radial-gradient(circle, #272d38 1px, transparent 1px);
     background-size: 32px 32px;
-    mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.5) 0%, transparent 60%);
-    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.5) 0%, transparent 60%);
+    mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.25) 0%, transparent 50%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0.25) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
   }
@@ -34,10 +34,9 @@
   width: 1200px;
   height: 900px;
   background: radial-gradient(ellipse at center,
-    rgba(200, 164, 78, 0.06) 0%,
-    rgba(200, 164, 78, 0.03) 25%,
-    rgba(86, 182, 194, 0.015) 45%,
-    transparent 65%
+    rgba(200, 164, 78, 0.035) 0%,
+    rgba(200, 164, 78, 0.015) 30%,
+    transparent 60%
   );
   pointer-events: none;
   z-index: 1;

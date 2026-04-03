@@ -365,8 +365,9 @@ if (toggle && links) {
     mega.classList.remove('is-open');
     mega.setAttribute('aria-hidden', 'true');
     triggers.forEach(function(t) { t.setAttribute('aria-expanded', 'false'); });
+    panels.forEach(function(p) { p.classList.remove('is-active', 'is-exit-left', 'is-exit-right'); });
     activeTrigger = null;
-    // Don't clear activePanel — keeps position for re-open
+    activePanel = null;
   }
 
   function scheduleClose() {

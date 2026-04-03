@@ -17,6 +17,13 @@
     font-size: 0.9375rem;
     color: var(--text);
     line-height: 1.8;
+
+    a:not(.section-header-link) {
+      color: var(--accent);
+      text-decoration: none;
+
+      &:hover { text-decoration: underline; }
+    }
   }
 
   .section-header-link {

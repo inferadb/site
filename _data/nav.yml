@@ -1,34 +1,38 @@
 - title: Product
-  groups:
-    - label: Capabilities
-      items:
-        - title: Authorization Platform
-          desc: "Managed authorization infrastructure you integrate, not build"
-          url: "/product/authorization"
-          featured: true
-        - title: Permissions Modeling
-          desc: "Define your entire permission system in one schema"
-          url: "/product/permissions"
-        - title: Compliance & Audit
-          desc: "Pass SOC 2, HIPAA, and GDPR audits by default"
-          url: "/product/compliance"
-        - title: Compare
-          desc: "How InferaDB stacks up against the alternatives"
-          url: "/product/compare"
-    - label: Solutions
-      items:
-        - title: Multi-Tenant SaaS
-          desc: Per-tenant permissions without role explosion
-          url: "/solutions/multi-tenant-saas"
-        - title: Regulated Industries
-          desc: Authorization that satisfies regulators by design
-          url: "/solutions/regulated-industries"
-        - title: AI Agents
-          desc: Secure authorization for autonomous AI workflows
-          url: "/solutions/ai-agents"
-        - title: Platform Engineering
-          desc: One authorization layer for all your services
-          url: "/solutions/platform-engineering"
+  bento: true
+  items:
+    - title: Authorization Platform
+      desc: "Managed authorization infrastructure you integrate, not build. Sub-3µs checks, cryptographic audit trails, native multi-tenancy."
+      url: "/product/authorization"
+      area: hero
+    - title: Multi-Tenant SaaS
+      desc: Per-tenant permissions without role explosion
+      url: "/solutions/multi-tenant-saas"
+      area: saas
+    - title: Regulated Industries
+      desc: Authorization that satisfies regulators by design
+      url: "/solutions/regulated-industries"
+      area: regulated
+    - title: AI Agents
+      desc: Secure authorization for autonomous AI workflows
+      url: "/solutions/ai-agents"
+      area: agents
+    - title: Platform Engineering
+      desc: One authorization layer for all your services
+      url: "/solutions/platform-engineering"
+      area: platform
+    - title: Permissions Modeling
+      desc: "Define your entire permission system in one schema"
+      url: "/product/permissions"
+      area: permissions
+    - title: Compliance & Audit
+      desc: "Pass SOC 2, HIPAA, and GDPR audits by default"
+      url: "/product/compliance"
+      area: compliance
+    - title: Compare
+      desc: "How InferaDB stacks up against the alternatives"
+      url: "/product/compare"
+      area: compare
 
 - title: Resources
   bento: true

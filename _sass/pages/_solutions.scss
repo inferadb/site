@@ -6,6 +6,46 @@
 
 .solution-hero {
   @include page-hero;
+  position: relative;
+  overflow: hidden;
+
+  // Dot grid background — matches homepage hero
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, #272d38 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0.4) 0%, transparent 55%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0.4) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Amber/teal glow — subtler than homepage
+  &::after {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 600px;
+    background: radial-gradient(ellipse at center,
+      rgba(200, 164, 78, 0.04) 0%,
+      rgba(200, 164, 78, 0.02) 30%,
+      rgba(86, 182, 194, 0.01) 50%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  // Content above backgrounds
+  > .container {
+    position: relative;
+    z-index: 1;
+  }
 
   h1 {
     letter-spacing: -0.03em;
@@ -86,8 +126,10 @@
 
 .solution-feature {
   padding: 1.5rem;
+  background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 
   h3 {
     font-size: 1rem;
@@ -212,8 +254,9 @@
   }
 }
 
-// Compare wrap inside solution pages — needs bottom spacing when followed by a new container
-.solution-content .compare-wrap {
+// Compare wrap and code windows inside solution pages — bottom spacing
+.solution-content .compare-wrap,
+.solution-content .code-window {
   margin-bottom: 2rem;
 }
 
@@ -328,6 +371,16 @@
     font-size: 0.75rem;
     color: var(--text-secondary);
     line-height: 1.5;
+  }
+}
+
+.solution-diagram {
+  margin: 2rem 0;
+  text-align: center;
+
+  svg {
+    max-width: 100%;
+    height: auto;
   }
 }
 

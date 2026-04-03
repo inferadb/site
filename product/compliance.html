@@ -119,6 +119,51 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
                 evidence speaks for itself.
             </p>
         </div>
+        <div class="solution-diagram" data-reveal>
+            <svg viewBox="0 0 680 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hash-chained audit trail diagram" role="img">
+                <!-- Entry 1 -->
+                <rect x="20" y="10" width="120" height="40" rx="3" stroke="#dce1e8" stroke-width="1.5"/>
+                <text x="80" y="35" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500">Entry 1</text>
+
+                <!-- Arrow: Entry 1 to Entry 2 -->
+                <line x1="140" y1="30" x2="232" y2="30" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="232,26 240,30 232,34" fill="#7d8590"/>
+                <text x="186" y="22" text-anchor="middle" fill="#c8a44e" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="500">hash</text>
+
+                <!-- Entry 2 -->
+                <rect x="240" y="10" width="120" height="40" rx="3" stroke="#dce1e8" stroke-width="1.5"/>
+                <text x="300" y="35" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500">Entry 2</text>
+
+                <!-- Arrow: Entry 2 to Entry 3 -->
+                <line x1="360" y1="30" x2="452" y2="30" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="452,26 460,30 452,34" fill="#7d8590"/>
+                <text x="406" y="22" text-anchor="middle" fill="#c8a44e" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="500">hash</text>
+
+                <!-- Entry 3 -->
+                <rect x="460" y="10" width="120" height="40" rx="3" stroke="#dce1e8" stroke-width="1.5"/>
+                <text x="520" y="35" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="11" font-weight="500">Entry 3</text>
+
+                <!-- Continuation dots -->
+                <line x1="580" y1="30" x2="630" y2="30" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="630,26 638,30 630,34" fill="#7d8590"/>
+                <text x="656" y="35" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="14">...</text>
+
+                <!-- Signed indicator: Entry 1 -->
+                <line x1="80" y1="50" x2="80" y2="76" stroke="#7d8590" stroke-width="1" stroke-dasharray="4 3"/>
+                <polygon points="76,76 80,84 84,76" fill="#7d8590"/>
+                <text x="80" y="100" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">signed</text>
+
+                <!-- Signed indicator: Entry 2 -->
+                <line x1="300" y1="50" x2="300" y2="76" stroke="#7d8590" stroke-width="1" stroke-dasharray="4 3"/>
+                <polygon points="296,76 300,84 304,76" fill="#7d8590"/>
+                <text x="300" y="100" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">signed</text>
+
+                <!-- Signed indicator: Entry 3 -->
+                <line x1="520" y1="50" x2="520" y2="76" stroke="#7d8590" stroke-width="1" stroke-dasharray="4 3"/>
+                <polygon points="516,76 520,84 524,76" fill="#7d8590"/>
+                <text x="520" y="100" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">signed</text>
+            </svg>
+        </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.03</span> What Gets Recorded</div>
         <h2 data-reveal>Full decision context, not just allow/deny</h2>

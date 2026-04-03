@@ -138,32 +138,70 @@ description: "Managed authorization with sub-3µs checks and cryptographic audit
                 completes in microseconds, not milliseconds.
             </p>
         </div>
+        <div class="solution-diagram" data-reveal>
+            <svg viewBox="0 0 680 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Permission check flow diagram" role="img">
+                <!-- App box -->
+                <rect x="1" y="20" width="72" height="36" rx="3" stroke="#dce1e8" stroke-width="1.5"/>
+                <text x="37" y="43" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="500">App</text>
+
+                <!-- Arrow: App to Engine -->
+                <line x1="73" y1="38" x2="168" y2="38" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="168,34 176,38 168,42" fill="#7d8590"/>
+                <text x="120" y="30" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">Check API</text>
+
+                <!-- Engine box (amber accent) -->
+                <rect x="176" y="14" width="100" height="48" rx="3" stroke="#c8a44e" stroke-width="1.5"/>
+                <text x="226" y="43" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="500">Engine</text>
+
+                <!-- Arrow: Engine to Graph Traversal -->
+                <line x1="276" y1="38" x2="356" y2="38" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="356,34 364,38 356,42" fill="#7d8590"/>
+
+                <!-- Graph Traversal box -->
+                <rect x="364" y="20" width="120" height="36" rx="3" stroke="#dce1e8" stroke-width="1.5"/>
+                <text x="424" y="43" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="11">Graph Traversal</text>
+
+                <!-- Arrow: Graph Traversal to ALLOW/DENY -->
+                <line x1="484" y1="38" x2="564" y2="38" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="564,34 572,38 564,42" fill="#7d8590"/>
+
+                <!-- ALLOW / DENY box (amber text) -->
+                <rect x="572" y="20" width="104" height="36" rx="3" stroke="#c8a44e" stroke-width="1.5"/>
+                <text x="624" y="43" text-anchor="middle" fill="#c8a44e" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="600">ALLOW / DENY</text>
+
+                <!-- Arrow: Engine down to Audit -->
+                <line x1="226" y1="62" x2="226" y2="82" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="222,82 226,90 230,82" fill="#7d8590"/>
+
+                <!-- Audit Trail box -->
+                <rect x="176" y="90" width="100" height="28" rx="3" stroke="#7d8590" stroke-width="1"/>
+                <text x="226" y="109" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">Audit Trail</text>
+            </svg>
+        </div>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
-                <h3>IPL policy evaluation</h3>
+                <h3>Relationship graph, not rule engine</h3>
                 <p>
-                    InferaDB Permission Language defines your authorization model
-                    declaratively. The engine compiles IPL into an optimized evaluation
-                    plan and executes it against the relationship graph — no
-                    interpretation overhead at check time.
+                    Authorization decisions are resolved by traversing a relationship graph,
+                    not by evaluating a rule chain. Permission checks are O(depth)
+                    in the graph, not O(rules) in your policy. Complexity grows
+                    without latency growing.
                 </p>
             </div>
             <div class="solution-feature">
-                <h3>Six core services</h3>
+                <h3>Linearizable writes via Raft</h3>
                 <p>
-                    Check, BatchCheck, Expansion, Resources, Subjects, and Watch.
-                    Each is a focused API that does one thing well. No monolithic
-                    query language to learn — just the operations authorization
-                    systems actually need.
+                    Every relationship write is replicated through Raft consensus before
+                    acknowledgment. When a write succeeds, every subsequent read — on any
+                    replica — reflects that change. No eventual consistency surprises.
                 </p>
             </div>
             <div class="solution-feature">
-                <h3>Revision tokens</h3>
+                <h3>Per-vault encryption</h3>
                 <p>
-                    Every write returns a revision token. Pass it to subsequent reads
-                    to guarantee consistency — no stale permission checks, no
-                    time-of-check-to-time-of-use race conditions. Consistency without
-                    coordination overhead.
+                    Each tenant's data is encrypted at rest with AES-256-GCM using
+                    per-vault keys. Tenant isolation is enforced at the storage layer,
+                    not just the application layer.
                 </p>
             </div>
         </div>
@@ -193,34 +231,6 @@ description: "Managed authorization with sub-3µs checks and cryptographic audit
             <div class="solution-perf-card">
                 <span class="solution-perf-number">Zero</span>
                 <span class="solution-perf-label">performance cliffs at scale</span>
-            </div>
-        </div>
-        <div class="solution-features" data-reveal>
-            <div class="solution-feature">
-                <h3>Two-layer LRU cache</h3>
-                <p>
-                    Hot permission checks are served from an in-process cache with
-                    automatic invalidation on writes. No external cache to manage,
-                    no TTL tuning, no stale data. The cache is consistency-aware —
-                    it invalidates on relationship changes, not on timers.
-                </p>
-            </div>
-            <div class="solution-feature">
-                <h3>No capacity planning</h3>
-                <p>
-                    Performance scales linearly with your workload. Add replicas for
-                    read throughput, add nodes for storage capacity. No re-sharding,
-                    no rebalancing, no downtime. Your authorization layer grows with
-                    your application.
-                </p>
-            </div>
-            <div class="solution-feature">
-                <h3>Predictable under load</h3>
-                <p>
-                    Rust's lack of garbage collection means no GC pauses, no tail
-                    latency spikes, no p99 surprises during traffic bursts. The
-                    latency you measure in staging is the latency you get in production.
-                </p>
             </div>
         </div>
 
@@ -284,44 +294,7 @@ description: "Managed authorization with sub-3µs checks and cryptographic audit
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.05</span> Architecture</div>
-        <h2 data-reveal>How it works under the hood</h2>
-        <p data-reveal>
-            InferaDB is three components: the Engine that evaluates permissions, the
-            Ledger that provides an immutable audit trail, and the Dashboard that
-            gives your team visibility into your authorization system. The Engine is
-            the core — everything else builds on its primitives.
-        </p>
-        <div class="solution-features" data-reveal>
-            <div class="solution-feature">
-                <h3>Relationship graph, not rule engine</h3>
-                <p>
-                    Authorization decisions are resolved by traversing a relationship graph,
-                    not by evaluating a rule chain. This means permission checks are O(depth)
-                    in the graph, not O(rules) in your policy. As your policy grows in
-                    complexity, check latency stays constant.
-                </p>
-            </div>
-            <div class="solution-feature">
-                <h3>Linearizable writes via Raft</h3>
-                <p>
-                    Every relationship write is replicated through Raft consensus before
-                    acknowledgment. When a write succeeds, every subsequent read — on any
-                    replica — reflects that change. No eventual consistency surprises.
-                </p>
-            </div>
-            <div class="solution-feature">
-                <h3>Per-vault encryption</h3>
-                <p>
-                    Each tenant's data is encrypted at rest with AES-256-GCM using
-                    per-vault keys. Tenant isolation is enforced at the storage layer,
-                    not just the application layer. A compromised node cannot leak
-                    cross-tenant relationship data.
-                </p>
-            </div>
-        </div>
-
-        <div class="solution-section-label" data-reveal><span>SEC.06</span> How InferaDB Compares</div>
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> How InferaDB Compares</div>
         <h2 data-reveal>An honest look at the alternatives</h2>
         <p data-reveal>
             Engineers evaluating authorization infrastructure typically consider
@@ -380,7 +353,7 @@ description: "Managed authorization with sub-3µs checks and cryptographic audit
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.07</span> Common Patterns</div>
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Common Patterns</div>
         <h2 data-reveal>How teams use the authorization engine</h2>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
@@ -409,7 +382,7 @@ description: "Managed authorization with sub-3µs checks and cryptographic audit
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.08</span> Related Reading</div>
+        <div class="solution-section-label" data-reveal><span>SEC.07</span> Related Reading</div>
         <ul class="solution-related" data-reveal>
             <li><a href="/docs/architecture-engine">Engine Architecture Documentation</a></li>
             <li><a href="/docs/ipl">InferaDB Permission Language Reference</a></li>

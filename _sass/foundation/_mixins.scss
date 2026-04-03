@@ -13,11 +13,12 @@
   letter-spacing: 0.06em;
 }
 
-// Card surface: dark raised panel with border
+// Card surface: dark raised panel with border and subtle depth
 @mixin card-surface {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.05);
 }
 
 // Tab bar container: horizontal scroll without visible scrollbars.

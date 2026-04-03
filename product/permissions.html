@@ -194,6 +194,49 @@ description: "Model permissions as relationships, not role tables. RBAC, ABAC, a
                 is the logic. There is nothing else to maintain.
             </p>
         </div>
+        <div class="solution-diagram" data-reveal>
+            <svg viewBox="0 0 680 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Delegation chain showing relationship inheritance" role="img">
+                <!-- Org node -->
+                <rect x="40" y="10" width="80" height="36" rx="3" stroke="#c8a44e" stroke-width="1.5"/>
+                <text x="80" y="33" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="500">Org</text>
+
+                <!-- Arrow: Org to Team -->
+                <line x1="120" y1="28" x2="260" y2="28" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="260,24 268,28 260,32" fill="#7d8590"/>
+                <text x="190" y="20" text-anchor="middle" fill="#c8a44e" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="500">admin</text>
+
+                <!-- Team node -->
+                <rect x="268" y="10" width="80" height="36" rx="3" stroke="#c8a44e" stroke-width="1.5"/>
+                <text x="308" y="33" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="500">Team</text>
+
+                <!-- Arrow: Team to Document -->
+                <line x1="348" y1="28" x2="488" y2="28" stroke="#7d8590" stroke-width="1"/>
+                <polygon points="488,24 496,28 488,32" fill="#7d8590"/>
+                <text x="418" y="20" text-anchor="middle" fill="#c8a44e" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="500">member</text>
+
+                <!-- Document node -->
+                <rect x="496" y="10" width="100" height="36" rx="3" stroke="#c8a44e" stroke-width="1.5"/>
+                <text x="546" y="33" text-anchor="middle" fill="#dce1e8" font-family="Inter, system-ui, sans-serif" font-size="12" font-weight="500">Document</text>
+
+                <!-- Downward arrow from Org -->
+                <line x1="80" y1="46" x2="80" y2="90" stroke="#7d8590" stroke-width="1" stroke-dasharray="4 3"/>
+                <polygon points="76,90 80,98 84,90" fill="#7d8590"/>
+                <text x="80" y="118" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">admin</text>
+
+                <!-- Downward arrow from Team -->
+                <line x1="308" y1="46" x2="308" y2="90" stroke="#7d8590" stroke-width="1" stroke-dasharray="4 3"/>
+                <polygon points="304,90 308,98 312,90" fill="#7d8590"/>
+                <text x="308" y="118" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">viewer</text>
+
+                <!-- Downward arrow from Document -->
+                <line x1="546" y1="46" x2="546" y2="90" stroke="#7d8590" stroke-width="1" stroke-dasharray="4 3"/>
+                <polygon points="542,90 546,98 550,90" fill="#7d8590"/>
+                <text x="546" y="118" text-anchor="middle" fill="#c8a44e" font-family="Inter, system-ui, sans-serif" font-size="10" font-weight="500">can_view</text>
+
+                <!-- Label -->
+                <text x="340" y="152" text-anchor="middle" fill="#7d8590" font-family="Inter, system-ui, sans-serif" font-size="10">Inherited permissions flow downward through the relationship graph</text>
+            </svg>
+        </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.04</span> Key Capabilities</div>
         <h2 data-reveal>Expressive enough for real authorization problems</h2>

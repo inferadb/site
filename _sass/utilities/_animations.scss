@@ -219,3 +219,70 @@ html.js [data-reveal="left"] {
     transform: translateX(0);
   }
 }
+
+// ─── Solution Page Reveal Enhancements ──────────────────────
+// More pronounced slide-up for solution-specific elements.
+// These override the default data-reveal translateY(10px) with a larger offset.
+
+html.js .solution-feature[data-reveal],
+html.js .solution-stat[data-reveal],
+html.js .solution-perf-card[data-reveal],
+html.js .solution-framework[data-reveal] {
+  transform: translateY(16px);
+}
+
+// Solution section labels — slide from left instead of up
+html.js .solution-section-label[data-reveal] {
+  transform: translateX(-12px) translateY(0);
+  transition: opacity 0.4s var(--ease-mechanical), transform 0.4s var(--ease-mechanical);
+
+  &.in-view {
+    transform: translateX(0) translateY(0);
+  }
+}
+
+// Stat and perf cards — more dramatic entry offset
+html.js .solution-perf-card[data-reveal],
+html.js .solution-stat[data-reveal] {
+  transform: translateY(20px);
+}
+
+// Staggered delays for solution feature cards inside a grid
+.solution-features [data-reveal],
+.solution-features[data-reveal] .solution-feature {
+  &:nth-child(2) { transition-delay: 60ms; }
+  &:nth-child(3) { transition-delay: 120ms; }
+  &:nth-child(4) { transition-delay: 180ms; }
+  &:nth-child(5) { transition-delay: 240ms; }
+  &:nth-child(6) { transition-delay: 300ms; }
+}
+
+// @starting-style for solution elements (browsers that support it)
+.solution-feature,
+.solution-stat,
+.solution-perf-card,
+.solution-framework {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  transition: opacity 0.5s var(--ease-mechanical),
+              transform 0.5s var(--ease-mechanical),
+              border-color 0.15s;
+}
+
+.solution-perf-card,
+.solution-stat {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.solution-section-label {
+  @starting-style {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  transition: opacity 0.4s var(--ease-mechanical), transform 0.4s var(--ease-mechanical);
+}

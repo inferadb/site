@@ -112,13 +112,13 @@ description: "Centralized authorization for microservices. Replace fragmented pe
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.03</span> Infrastructure as Code</div>
-        <h2 data-reveal>Terraform provider for authorization infrastructure</h2>
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Authorization as Code</div>
+        <h2 data-reveal>Terraform, branching, and zero-downtime deploys</h2>
         <p data-reveal>
-            Manage vaults, policies, clients, teams, and grants through
-            Terraform. Authorization configuration lives in your infrastructure
-            repo, reviewed through pull requests, applied through CI/CD pipelines.
-            No ClickOps. No drift.
+            Manage vaults, policies, and grants through Terraform. Branch
+            and test policy changes against production data. Merge when
+            validated — updates apply atomically across all regions. No
+            ClickOps, no drift, no downtime.
         </p>
         <div class="code-window" data-reveal>
             <div class="code-header">
@@ -138,58 +138,14 @@ description: "Centralized authorization for microservices. Replace fragmented pe
 }</code></pre>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.04</span> Zero-Downtime Deploys</div>
-        <h2 data-reveal>Policy changes without service interruption</h2>
-        <p data-reveal>
-            Branch, test, and merge authorization policies like application code.
-            Policy updates are applied atomically across all regions — every endpoint
-            transitions to the new policy simultaneously. No rolling restarts, no
-            inconsistency windows, no downtime.
-        </p>
-        <div class="solution-features" data-reveal>
-            <div class="solution-feature">
-                <h3>Policy branching</h3>
-                <p>
-                    Create branches to test policy changes against production
-                    data without affecting live traffic. Merge when validated.
-                </p>
-            </div>
-            <div class="solution-feature">
-                <h3>Assertion testing</h3>
-                <p>
-                    Write test assertions that validate policy behavior before
-                    deployment. CI fails if a policy change breaks expected access
-                    patterns.
-                </p>
-            </div>
-            <div class="solution-feature">
-                <h3>Atomic rollout</h3>
-                <p>
-                    All regions apply policy changes at the same revision.
-                    No split-brain, no stale policy evaluation.
-                </p>
-            </div>
-        </div>
-
-        <div class="solution-section-label" data-reveal><span>SEC.05</span> Multi-Region</div>
-        <h2 data-reveal>Global authorization for global teams</h2>
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> Global and Observable</div>
+        <h2 data-reveal>Multi-region authorization with full visibility</h2>
         <p data-reveal>
             InferaDB runs in the regions where your services run. Authorization
-            decisions resolve locally — no cross-region round trips for reads.
-            Policy changes propagate globally in under 50 milliseconds. Your
-            services get consistent, low-latency authorization everywhere without
-            you managing a single node.
-        </p>
-
-        <div class="solution-section-label" data-reveal><span>SEC.06</span> Observability</div>
-        <h2 data-reveal>Full visibility into every authorization decision</h2>
-        <p data-reveal>
-            Platform teams need to know what their services are doing. InferaDB
-            exposes a Prometheus metrics endpoint, OpenTelemetry trace spans for
-            every authorization check, and Grafana-compatible dashboards out of
-            the box. Monitor decision latency, error rates, and policy evaluation
-            patterns across your entire platform from your existing observability
-            stack.
+            decisions resolve locally — no cross-region round trips. Policy
+            changes propagate globally in under 50ms. Prometheus metrics,
+            OpenTelemetry traces, and Grafana dashboards integrate with
+            your existing observability stack out of the box.
         </p>
 
         <div class="solution-stats" data-reveal>
@@ -211,7 +167,7 @@ description: "Centralized authorization for microservices. Replace fragmented pe
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.07</span> Adoption Path</div>
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Adoption Path</div>
         <h2 data-reveal>How platform teams adopt InferaDB</h2>
         <p data-reveal>
             No big-bang migration required. Teams adopt InferaDB incrementally
@@ -245,7 +201,7 @@ description: "Centralized authorization for microservices. Replace fragmented pe
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.08</span> Related Reading</div>
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Related Reading</div>
         <ul class="solution-related" data-reveal>
             <li><a href="/product/authorization">Authorization Platform</a></li>
             <li><a href="/product/permissions">Permissions Modeling</a></li>

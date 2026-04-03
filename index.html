@@ -98,111 +98,6 @@ description: "Managed authorization infrastructure. Microsecond permission check
     </div>
 </section>
 
-<!-- Comparison Matrix — moved up: the highest-value section for non-experts -->
-<section class="compare" id="compare" aria-labelledby="compare-heading">
-    <div class="container">
-        <div class="section-header" data-reveal>
-            <h2 id="compare-heading">How InferaDB stacks up</h2>
-            <p>
-                Every approach to authorization has trade-offs. Here's an honest
-                look at what you get with InferaDB versus the alternatives.
-            </p>
-        </div>
-        <div class="compare-wrap" data-reveal>
-            <table class="compare-matrix">
-                <thead>
-                    <tr>
-                        <th class="compare-dimension-head" scope="col">
-                            Dimension
-                        </th>
-                        <th class="compare-col-inhouse" scope="col">
-                            Built In-House
-                        </th>
-                        <th class="compare-col-policy" scope="col">
-                            Policy Engines<span class="compare-col-sub"
-                                >OPA / Cedar</span
-                            >
-                        </th>
-                        <th class="compare-col-managed" scope="col">
-                            Managed Services<span class="compare-col-sub"
-                                >AuthZed / Oso</span
-                            >
-                        </th>
-                        <th class="compare-col-infera" scope="col">InferaDB</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-reveal data-reveal-delay="0">
-                        <th class="compare-dimension" scope="row">
-                            Setup time
-                        </th>
-                        <td class="compare-weak">Months</td>
-                        <td class="compare-neutral">Weeks</td>
-                        <td class="compare-neutral">Days</td>
-                        <td class="compare-win">Minutes</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="40">
-                        <th class="compare-dimension" scope="row">Latency</th>
-                        <td class="compare-neutral">Varies</td>
-                        <td class="compare-neutral">1-10 ms</td>
-                        <td class="compare-neutral">5-10 ms</td>
-                        <td class="compare-win">~3 &#181;s</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="80">
-                        <th class="compare-dimension" scope="row">
-                            Audit trail
-                        </th>
-                        <td class="compare-weak">Build it yourself</td>
-                        <td class="compare-weak">Decision logs only</td>
-                        <td class="compare-neutral">Audit logging</td>
-                        <td class="compare-win">Cryptographic proof</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="120">
-                        <th class="compare-dimension" scope="row">
-                            Tenant isolation
-                        </th>
-                        <td class="compare-weak">DIY per-tenant</td>
-                        <td class="compare-weak">Not built-in</td>
-                        <td class="compare-neutral">Namespace-level</td>
-                        <td class="compare-win">Per-vault encryption</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="160">
-                        <th class="compare-dimension" scope="row">
-                            Compliance
-                        </th>
-                        <td class="compare-weak">Manual effort</td>
-                        <td class="compare-weak">Policy-only</td>
-                        <td class="compare-neutral">Partial</td>
-                        <td class="compare-win">SOC 2 / HIPAA ready</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="200">
-                        <th class="compare-dimension" scope="row">
-                            Maintenance
-                        </th>
-                        <td class="compare-weak">Dedicated team</td>
-                        <td class="compare-neutral">Rego / Cedar upkeep</td>
-                        <td class="compare-neutral">Vendor-managed</td>
-                        <td class="compare-win">Zero ops</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="240">
-                        <th class="compare-dimension" scope="row">Cost</th>
-                        <td class="compare-weak">$900K+ / year</td>
-                        <td class="compare-neutral">Infra + team</td>
-                        <td class="compare-neutral">Resource / MAU-based</td>
-                        <td class="compare-win">From $0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="compare-cta" data-reveal>
-            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/product/compare" class="compare-cta-link"
-                >See the full comparison &rarr;</a
-            >
-        </div>
-    </div>
-</section>
-
 <!-- Performance -->
 <section class="performance" id="product" aria-labelledby="performance-heading">
     <div class="container">
@@ -363,6 +258,111 @@ description: "Managed authorization infrastructure. Microsecond permission check
                     makes this tractable.
                 </p>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison Matrix — after use cases: visitors now have context to evaluate -->
+<section class="compare" id="compare" aria-labelledby="compare-heading">
+    <div class="container">
+        <div class="section-header" data-reveal>
+            <h2 id="compare-heading">How InferaDB stacks up</h2>
+            <p>
+                Every approach to authorization has trade-offs. Here's an honest
+                look at what you get with InferaDB versus the alternatives.
+            </p>
+        </div>
+        <div class="compare-wrap" data-reveal>
+            <table class="compare-matrix">
+                <thead>
+                    <tr>
+                        <th class="compare-dimension-head" scope="col">
+                            Dimension
+                        </th>
+                        <th class="compare-col-inhouse" scope="col">
+                            Built In-House
+                        </th>
+                        <th class="compare-col-policy" scope="col">
+                            Policy Engines<span class="compare-col-sub"
+                                >OPA / Cedar</span
+                            >
+                        </th>
+                        <th class="compare-col-managed" scope="col">
+                            Managed Services<span class="compare-col-sub"
+                                >AuthZed / Oso</span
+                            >
+                        </th>
+                        <th class="compare-col-infera" scope="col">InferaDB</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-reveal data-reveal-delay="0">
+                        <th class="compare-dimension" scope="row">
+                            Setup time
+                        </th>
+                        <td class="compare-weak">Months</td>
+                        <td class="compare-neutral">Weeks</td>
+                        <td class="compare-neutral">Days</td>
+                        <td class="compare-win">Minutes</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="40">
+                        <th class="compare-dimension" scope="row">Latency</th>
+                        <td class="compare-neutral">Varies</td>
+                        <td class="compare-neutral">1-10 ms</td>
+                        <td class="compare-neutral">5-10 ms</td>
+                        <td class="compare-win">~3 &#181;s</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="80">
+                        <th class="compare-dimension" scope="row">
+                            Audit trail
+                        </th>
+                        <td class="compare-weak">Build it yourself</td>
+                        <td class="compare-weak">Decision logs only</td>
+                        <td class="compare-neutral">Audit logging</td>
+                        <td class="compare-win">Cryptographic proof</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="120">
+                        <th class="compare-dimension" scope="row">
+                            Tenant isolation
+                        </th>
+                        <td class="compare-weak">DIY per-tenant</td>
+                        <td class="compare-weak">Not built-in</td>
+                        <td class="compare-neutral">Namespace-level</td>
+                        <td class="compare-win">Per-vault encryption</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="160">
+                        <th class="compare-dimension" scope="row">
+                            Compliance
+                        </th>
+                        <td class="compare-weak">Manual effort</td>
+                        <td class="compare-weak">Policy-only</td>
+                        <td class="compare-neutral">Partial</td>
+                        <td class="compare-win">SOC 2 / HIPAA ready</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="200">
+                        <th class="compare-dimension" scope="row">
+                            Maintenance
+                        </th>
+                        <td class="compare-weak">Dedicated team</td>
+                        <td class="compare-neutral">Rego / Cedar upkeep</td>
+                        <td class="compare-neutral">Vendor-managed</td>
+                        <td class="compare-win">Zero ops</td>
+                    </tr>
+                    <tr data-reveal data-reveal-delay="240">
+                        <th class="compare-dimension" scope="row">Cost</th>
+                        <td class="compare-weak">$900K+ / year</td>
+                        <td class="compare-neutral">Infra + team</td>
+                        <td class="compare-neutral">Resource / MAU-based</td>
+                        <td class="compare-win">From $0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="compare-cta" data-reveal>
+            <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
+            <a href="/product/compare" class="compare-cta-link"
+                >See the full comparison &rarr;</a
+            >
         </div>
     </div>
 </section>
@@ -551,15 +551,15 @@ description: "Managed authorization infrastructure. Microsecond permission check
         <div class="cta-content" data-reveal>
             <div class="cta-glow"></div>
             <p class="cta-eyebrow">
-                Your team is building authorization instead of product.
+                No commitment required
             </p>
             <h2 id="cta-heading">
-                Stop building permissions.<br />Start shipping
-                <span class="gradient-text">features</span>.
+                Try it free. Deploy in minutes,<br />not
+                <span class="gradient-text">months</span>.
             </h2>
             <p>
-                Replace 6+ engineers and $900K/year of in-house authorization
-                with a managed service that scales from day one.
+                100K checks/month at $0. No credit card required.
+                Direct access to the engineering team during onboarding.
             </p>
             <div class="cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg"

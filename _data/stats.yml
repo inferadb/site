@@ -1,0 +1,29 @@
+# Single source of truth for sitewide statistics that appear on multiple pages.
+# Update here once; every Liquid template referencing site.data.stats picks it up.
+#
+# Update the waitlist count in this file only. Verify with the actual signup
+# total before bumping. Round down (under-promise, over-deliver).
+
+waitlist_count: 240
+waitlist_label: "waitlist"  # Standardize terminology — was split between "early access list" and "waitlist"
+
+# Performance numbers — kept here for consistent reference across pages.
+# When /benchmarks ships, these become the canonical citations for every
+# numeric claim sitewide.
+perf:
+  check_latency_p99: "2.8μs"
+  throughput_per_sec: "4.9 billion"
+  audit_overhead: "0.3ms"
+  global_consistency: "47ms"
+
+# Compliance posture — keep this current as certifications progress.
+compliance:
+  frameworks_mapped: 7
+  soc2_status: "Type II audit in progress"  # Update with date when committed
+  hipaa_status: "Architecture eligible; BAA at GA"
+
+# SDK status — number reflects shipped SDKs, not roadmap.
+# When SDKs ship, increment shipped and decrement roadmap.
+sdks:
+  shipped: 0
+  roadmap: 10

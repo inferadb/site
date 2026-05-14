@@ -30,15 +30,15 @@ Each teaser should communicate the post's core concept through a single abstract
 
 ### Existing Examples
 
-| Post | Concept | Visual |
-|---|---|---|
-| Authorization Compared | Four products side by side | Four distinct geometric symbols in a row — hexagon, square, diamond, circle — each with unique internal structure |
-| CISO Guide | Fine-grained permissions | A ring of individually placed dots that forms a circle — each dot is a discrete permission, together they form the whole |
-| Buyer's Checklist | Systematic evaluation | A grid of filled and hollow circles — rows are dimensions, columns are vendors, filled means pass |
+| Post                   | Concept                    | Visual                                                                                                                   |
+| ---------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Authorization Compared | Four products side by side | Four distinct geometric symbols in a row — hexagon, square, diamond, circle — each with unique internal structure        |
+| CISO Guide             | Fine-grained permissions   | A ring of individually placed dots that forms a circle — each dot is a discrete permission, together they form the whole |
+| Buyer's Checklist      | Systematic evaluation      | A grid of filled and hollow circles — rows are dimensions, columns are vendors, filled means pass                        |
 
 ### Wiring Up
 
-**Teaser** (dispatch index card) — add `teaser:` field in `_data/now.yml`:
+**Teaser** (dispatch index card) — add `teaser:` field in `_data/dispatch.yml`:
 
 ```yaml
 - title: "Post Title"

@@ -1,0 +1,102 @@
+// ─── Controls map ─────────────────────────────────────────────
+// Compliance framework → InferaDB capability mapping table.
+// Used on /product/compliance. Designed for scanning, not reading.
+
+// Anchor target for the in-page hero CTA — clear the fixed nav stack
+#framework-mapping { scroll-margin-top: 6rem; }
+
+.controls-map {
+  margin: 3rem 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.controls-map-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+
+  thead th {
+    background: var(--bg-raised);
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody th {
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-align: left;
+    vertical-align: top;
+    width: 36%;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--accent-overlay-subtle);
+  }
+
+  tbody td {
+    color: var(--text);
+    vertical-align: top;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.controls-map-footnote {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-raised);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+
+  a {
+    color: var(--accent);
+  }
+}
+
+@media (width <= 768px) {
+  .controls-map-table {
+    font-size: 0.875rem;
+
+    thead { display: none; }
+
+    tbody th,
+    tbody td {
+      display: block;
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border-bottom: none;
+    }
+
+    tbody th {
+      padding-bottom: 0.25rem;
+      background: transparent;
+    }
+
+    tbody td {
+      padding-top: 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}

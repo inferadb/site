@@ -41,13 +41,17 @@ exclude:
   - Gemfile.lock
   - README.md
   - CLAUDE.md
+  - DESIGN_SYSTEM.md
   - DISPATCH_TEASERS.md
+  - EDITORIAL.md
   - .jekyll-cache
   - vendor
   - assets/images/og-source.svg
   - assets/images/linkedin-banner-source.svg
   - assets/images/linkedin-banner.png
   - docs/plans
+  - docs/personas
+  - docs/audits
   - scripts
   - PITCH.md
   - PITCH-COSTANOA.md

@@ -9,7 +9,7 @@ description: "Compare InferaDB to AuthZed, SpiceDB, Oso, Permit.io, OpenFGA, OPA
 {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "InferaDB Authorization Platform",
+  "name": "InferaDB Authorization Database",
   "description": "{{ page.description }}",
   "url": "{{ site.url }}/product/compare",
   "brand": { "@type": "Organization", "name": "InferaDB" },
@@ -20,11 +20,12 @@ description: "Compare InferaDB to AuthZed, SpiceDB, Oso, Permit.io, OpenFGA, OPA
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:PRODUCT // Compare</p>
-        <h1>An honest look at authorization infrastructure</h1>
+        <h1>How InferaDB compares</h1>
         <p class="lead">
-            Every approach to authorization has trade-offs. This page compares
-            InferaDB to the alternatives &mdash; what each does well, where each
-            falls short, and which is right for your situation.
+            Every approach to authorization has trade-offs. InferaDB makes a
+            specific bet: that audit, isolation, and consistency belong in the
+            storage engine — not the application layer. This page compares us
+            honestly to alternatives that made different bets.
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -250,12 +251,27 @@ description: "Compare InferaDB to AuthZed, SpiceDB, Oso, Permit.io, OpenFGA, OPA
                 </tbody>
             </table>
         </div>
+        <p class="compare-matrix-footnote" data-reveal>
+            <strong>Sources &amp; methodology.</strong>
+            Competitor figures are pulled from public marketing pages and
+            documentation as of May 2026 —
+            <a href="https://openfga.dev" rel="nofollow noopener">OpenFGA</a>,
+            <a href="https://authzed.com" rel="nofollow noopener">Authzed / SpiceDB</a>,
+            <a href="https://www.cerbos.dev" rel="nofollow noopener">Cerbos</a>,
+            <a href="https://www.osohq.com" rel="nofollow noopener">Oso</a>,
+            <a href="https://www.permit.io" rel="nofollow noopener">Permit.io</a>.
+            InferaDB latency is engine-internal p99 on commodity hardware;
+            end-to-end SDK-observed latency adds approximately 500&micro;s
+            of network overhead. A reproducible benchmark methodology is
+            forthcoming. Spotted a number that's out of date?
+            <a href="/contact">Tell us</a>.
+        </p>
     </div>
     <div class="container solution-narrow">
 
         <div class="solution-section-label" data-reveal><span>SEC.04</span> Related Reading</div>
         <ul class="solution-related" data-reveal>
-            <li><a href="/product/authorization">Managed Authorization Platform</a></li>
+            <li><a href="/product/authorization">Managed Authorization Database</a></li>
             <li><a href="/product/permissions">Fine-Grained Permissions</a></li>
             <li><a href="/product/compliance">Compliance and Audit Trails</a></li>
             <li><a href="/solutions/multi-tenant-saas">Multi-Tenant SaaS Authorization</a></li>

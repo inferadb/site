@@ -1,0 +1,319 @@
+---
+title: "Why InferaDB — The thesis behind a purpose-built authorization database"
+layout: default
+body_class: page-why
+description: "A first-principles argument for purpose-built authorization infrastructure. Why bolted-on policy engines hit a wall, why microsecond latency matters, and why correctness is an architectural property — not a feature."
+---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Why InferaDB — The thesis behind a purpose-built authorization database",
+  "description": "{{ page.description | escape }}",
+  "url": "{{ site.url }}/why",
+  "author": { "@type": "Organization", "name": "InferaDB" },
+  "publisher": { "@type": "Organization", "name": "InferaDB", "logo": { "@type": "ImageObject", "url": "{{ site.url }}/assets/images/og-logo.png" } }
+}
+</script>
+
+<section class="why-hero" aria-labelledby="why-hero-heading">
+    <div class="container">
+        <p class="why-eyebrow">SYS:THESIS // Why InferaDB</p>
+        <h1 id="why-hero-heading">Authorization is a database problem, not a policy problem.</h1>
+        <p class="lead">
+            Every existing approach treats authorization as a layer you bolt onto
+            a general-purpose database. That worked when users were human and
+            applications were monolithic. It doesn't work in 2026.
+            This is the argument for starting over.
+        </p>
+        <p class="why-prereq">
+            New to authorization concepts? Start with
+            <a href="/learn/authorization">What is authorization?</a> for a plain-language
+            introduction to RBAC, ReBAC, ABAC, and the latency / audit problem.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-thesis-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.01</span> The thesis</div>
+        <h2 id="why-thesis-heading">Authorization runs in the hot path of every request. Treat it like infrastructure.</h2>
+        <p>
+            Authentication answers a question once per session. Authorization
+            answers a question on every API call, every database read, every
+            agent action — sometimes dozens of times per request. That's not a
+            policy lookup. That's a database workload.
+        </p>
+        <p>
+            For two decades the industry has treated authorization as a thin
+            layer over an existing database. Some teams use rows in Postgres.
+            Some use a sidecar. Some use a SaaS gateway. The common pattern is
+            that the storage was designed for something else, and authorization
+            inherits its constraints — latency, consistency, audit fidelity,
+            tenant isolation. None of those properties were designed for the
+            authorization workload.
+        </p>
+        <p>
+            We think that's the wrong starting point. Authorization deserves
+            the same architectural seriousness the industry gave authentication
+            a decade ago — a purpose-built layer with its own storage engine,
+            its own consistency model, its own correctness guarantees. That
+            layer is InferaDB — the only ReBAC system where audit, isolation,
+            and consistency are properties of the storage engine, not
+            application-layer bolt-ons.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-wall-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.02</span> The wall</div>
+        <h2 id="why-wall-heading">Bolted-on policy engines hit four ceilings at once.</h2>
+        <p>
+            Every authorization architecture we've seen — and we've seen most of
+            them — eventually hits the same four ceilings. Not all at once, but
+            all in a predictable order. Latency first, then audit fidelity, then
+            tenant isolation, then consistency. By the time a team is debugging
+            the fourth, they're three years into a custom system they didn't
+            mean to build.
+        </p>
+        <h3>Ceiling 1 — Latency</h3>
+        <p>
+            A single API request might trigger one permission check. An AI
+            agent action triggers thirty. Most authorization systems sit at
+            5–50 ms per check on top of network round-trips. At thirty checks
+            that's 150 ms of pure authorization latency in a request budget of
+            300 ms. The product feels broken before any business logic runs.
+        </p>
+        <h3>Ceiling 2 — Audit fidelity</h3>
+        <p>
+            A traditional audit log is a row in a mutable table. Anyone with
+            admin access can alter or delete entries. When an auditor asks "can
+            you prove user X couldn't access resource Y on March 14th," the
+            answer is a promise, not a proof. Regulators have stopped accepting
+            promises.
+        </p>
+        <h3>Ceiling 3 — Tenant isolation</h3>
+        <p>
+            Multi-tenancy in most authorization systems is enforced at the
+            application layer — a <code>tenant_id</code> column and discipline. A single
+            misconfigured query can leak one customer's permissions into
+            another's session. In healthcare and government that's not a bug
+            ticket; it's a notification under HIPAA, GDPR, or the relevant
+            breach-disclosure law.
+        </p>
+        <h3>Ceiling 4 — Consistency</h3>
+        <p>
+            If Alice revokes Bob's access at 12:00:00.000, Bob must lose access
+            on the next request — not eventually. Eventually-consistent
+            authorization is a security incident waiting for a clock skew.
+            Strong consistency at this volume is hard, which is why most
+            systems quietly don't offer it.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-database-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.03</span> Why a database</div>
+        <h2 id="why-database-heading">A database is the only honest answer.</h2>
+        <p>
+            A library can offer a nice API. A sidecar can offer locality. Neither
+            can offer storage guarantees, because neither owns the storage.
+            Once you commit to owning the storage, the architectural conversation
+            changes from "what API do we expose" to "what does the disk look
+            like, what does the consensus protocol look like, what does the
+            audit log look like, what does tenant isolation look like at the
+            page level."
+        </p>
+        <p>
+            That's the conversation we're interested in. It's the conversation
+            that produces 2.8&nbsp;μs permission checks instead of 5&nbsp;ms,
+            cryptographic audit instead of mutable logs, per-tenant key
+            isolation instead of <code>WHERE tenant_id = ?</code>, and strict
+            serializability instead of "we hope replication catches up before
+            anyone notices."
+        </p>
+        <p>
+            InferaDB is a Rust database engine purpose-built for the
+            authorization workload. It is not a policy layer over Postgres.
+            It is not a wrapper around Redis. It is its own storage engine,
+            its own consensus protocol, its own audit subsystem. We made that
+            choice because the alternative — building authorization on a
+            general-purpose database — is the choice every prior generation
+            already made and regretted.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-arch-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.04</span> The architecture</div>
+        <h2 id="why-arch-heading">Three subsystems, one consistency model.</h2>
+        <p>
+            The engine separates concerns into three subsystems with a single
+            shared consistency model. Each subsystem can be reasoned about
+            independently — which is the whole point of designing storage
+            from scratch.
+        </p>
+        <h3>The control plane</h3>
+        <p>
+            Schemas, tenants, keys, and revisions. Every change is itself an
+            audited event. Schema deployment is transactional and revertible.
+            Read more in <a href="/docs/architecture-control">architecture: control plane</a>.
+        </p>
+        <h3>The engine</h3>
+        <p>
+            The hot path. A purpose-built storage layer optimized for the
+            authorization access pattern: many small reads, occasional
+            relationship writes, append-only audit. Microsecond latency at the
+            single-check level, billions of checks per second under load.
+            Read more in <a href="/docs/architecture-engine">architecture: engine</a>.
+        </p>
+        <h3>The ledger</h3>
+        <p>
+            The audit subsystem. Hash-chained, Ed25519-signed, Merkle-provable.
+            Write overhead 0.3&nbsp;ms. Replayable end-to-end for incident
+            review. Read more in <a href="/docs/architecture-ledger">architecture: ledger</a>.
+        </p>
+        <p>
+            All three subsystems share a single consistency model — strict
+            serializability with revision tokens — so a permission revoked in
+            the control plane is visible in the engine and recorded in the
+            ledger before the next request returns.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-research-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.05</span> Standing on shoulders</div>
+        <h2 id="why-research-heading">We didn't invent this. We read the literature.</h2>
+        <p>
+            The authorization research record is rich and surprisingly cohesive.
+            We borrow shamelessly from it. Wherever we make a non-obvious
+            architectural choice, we want a reader to be able to trace the
+            reasoning back to a paper.
+        </p>
+        <h3>Zanzibar (Google, 2019)</h3>
+        <p>
+            The canonical paper on planet-scale authorization. Established that
+            relationship-based access control could be both expressive and fast
+            at Google's scale. Our policy model is Zanzibar-influenced; our
+            execution model diverges where we think their cache-heavy approach
+            leaves correctness on the table.
+        </p>
+        <h3>OpenFGA (Auth0/CNCF)</h3>
+        <p>
+            We helped build it. We've run it in production. It demonstrated that
+            a fine-grained authorization system can be developer-friendly. It
+            also demonstrated the ceiling that a Postgres-backed system hits
+            once you push past a certain query volume — which is the gap
+            InferaDB exists to close.
+        </p>
+        <h3>Spanner / TrueTime (Google, 2012)</h3>
+        <p>
+            For the consistency model. Strict serializability is achievable at
+            global scale; the question is what cost you're willing to pay in
+            latency. We chose differently than Spanner because our workload is
+            different — but the reasoning frame is the same.
+        </p>
+        <h3>VSR &amp; Raft (consensus)</h3>
+        <p>
+            Replication is a solved problem if you're willing to read the
+            originals. We use Raft for the control plane and a tuned variant
+            for the audit ledger.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-crypto-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.06</span> Correctness as architecture</div>
+        <h2 id="why-crypto-heading">Cryptography turns audit from a promise into a proof.</h2>
+        <p>
+            "Trust us, the logs weren't altered" is not a defense in a 2026
+            audit. The standard a CISO has to meet under SOC 2, NIST, HIPAA,
+            and the EU AI Act is independent verifiability — an auditor must
+            be able to prove the integrity of the record without trusting the
+            vendor.
+        </p>
+        <p>
+            InferaDB's audit log is hash-chained at write time. Each entry
+            includes the hash of its predecessor, an Ed25519 signature, and a
+            Merkle proof of inclusion in the global tree. An auditor verifies
+            the chain with open-source tooling. If a single byte of a single
+            entry is altered, the chain breaks and the alteration is visible
+            from outside our infrastructure.
+        </p>
+        <p>
+            This isn't a feature you turn on. It's the only mode the audit
+            subsystem has. Correctness is an architectural property, not a
+            checkbox.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-agents-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.07</span> What agents broke</div>
+        <h2 id="why-agents-heading">AI agents are not a niche workload. They are the new shape of every workload.</h2>
+        <p>
+            A traditional API request triggers one permission check. An AI agent
+            request might trigger thirty — one for the agent's own credentials,
+            one per principal it's acting on behalf of, one per tool it
+            invokes, one per artifact it touches. The permission check is no
+            longer the gate; it's the substrate.
+        </p>
+        <p>
+            At thirty checks per action, a 5&nbsp;ms latency floor produces
+            150&nbsp;ms of pure authorization overhead. That's the difference
+            between an agent that feels responsive and one that feels broken.
+            ISACA called it "the looming authorization crisis." Cisco and
+            Microsoft both shipped agent-authorization frameworks at RSA 2026.
+            Every framework eventually asks the same question — where do you
+            store the relationships, and how fast can you check them. Our
+            answer is: in a database designed for it, in microseconds.
+        </p>
+    </div>
+</section>
+
+<section class="why-section" aria-labelledby="why-method-heading">
+    <div class="container why-narrow">
+        <div class="why-section-label"><span>SEC.08</span> How we build it</div>
+        <h2 id="why-method-heading">Deterministic simulation, formal models, supply-chain hygiene.</h2>
+        <p>
+            We took the engineering culture seriously from the first commit.
+            That meant choosing Rust for the storage engine, building
+            deterministic simulation testing into the test harness from day
+            one, formally modeling the consensus protocol before implementing
+            it, and signing every artifact in the supply chain.
+        </p>
+        <p>
+            Deterministic simulation testing means we run the engine against
+            adversarial fault injection — random network partitions, clock
+            skew, disk corruption, process crashes — at hundreds of times
+            real-time speed. A single simulation hour exercises hundreds of
+            production-equivalent days. Bugs that would surface once a year in
+            production surface in minutes in simulation.
+        </p>
+        <p>
+            We don't ship anything that hasn't survived this process. That
+            isn't a marketing claim — it's a precondition for the latency and
+            correctness guarantees the rest of this page makes.
+        </p>
+    </div>
+</section>
+
+<section class="why-cta" aria-labelledby="why-cta-heading">
+    <div class="container">
+        <h2 id="why-cta-heading">
+            If you've read this far, you're the reason we're building it.
+        </h2>
+        <div class="why-cta-actions">
+            <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+            <a href="/docs/quickstart" class="btn btn-ghost btn-lg">Read the Docs</a>
+        </div>
+    </div>
+</section>

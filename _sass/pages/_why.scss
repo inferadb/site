@@ -1,0 +1,141 @@
+// ─── /why — long-form thesis page ─────────────────────────────
+// Reuses about-page conventions (eyebrow, section labels, narrow
+// container) but with a denser vertical rhythm because the page
+// is meant to be read end-to-end.
+
+.page-why {
+  // Container width override for prose-heavy reading
+  --why-narrow-width: 720px;
+}
+
+.why-narrow {
+  max-width: var(--why-narrow-width);
+  margin-inline: auto;
+}
+
+.why-hero {
+  padding: 8rem 0 5rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+
+  .container {
+    max-width: var(--why-narrow-width);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 600;
+    color: var(--text-white);
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    margin: 1rem 0 1.5rem;
+    text-wrap: balance;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    color: var(--text);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+}
+
+.why-prereq {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--accent);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+
+  a { color: var(--accent); }
+}
+
+.why-eyebrow {
+  @include eyebrow;
+  margin-bottom: 0.75rem;
+}
+
+.why-section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+
+  &:first-of-type { border-top: none; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.625rem, 3vw, 2.25rem);
+    font-weight: 600;
+    color: var(--text-white);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin: 0.5rem 0 1.5rem;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin: 2rem 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--accent);
+  }
+}
+
+.why-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+
+  span {
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+}
+
+.why-cta {
+  padding: 8rem 0 10rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--text-white);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-bottom: 2rem;
+    text-wrap: balance;
+  }
+}
+
+.why-cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+@media (width <= 768px) {
+  .why-hero { padding: 5rem 0 3rem; }
+  .why-section { padding: 3.5rem 0; }
+  .why-cta { padding: 5rem 0; }
+  .why-cta-actions { flex-direction: column; align-items: center; }
+}

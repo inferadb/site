@@ -20,7 +20,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:PRODUCT // Compliance &amp; Audit</p>
-        <h1>Pass compliance audits without engineering sprints</h1>
+        <h1>Compliance, by construction</h1>
         <p class="lead">
             Audit season shouldn't require weeks of log pulling, report writing,
             and questionnaire archaeology. InferaDB produces tamper-proof,
@@ -30,7 +30,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/docs/compliance" class="btn btn-ghost">View Framework Mapping</a>
+            <a href="#framework-mapping" class="btn btn-ghost">View Framework Mapping</a>
         </div>
     </div>
 </section>
@@ -165,7 +165,102 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
             </svg>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.03</span> What Gets Recorded</div>
+        <div class="solution-section-label" data-reveal><span>SEC.03</span> Framework Mapping</div>
+        <h2 id="framework-mapping" data-reveal>Map InferaDB to the controls your auditor already uses</h2>
+        <p data-reveal>
+            Most authorization stacks force compliance teams to translate generic
+            access-control descriptions into specific control IDs. InferaDB's
+            architecture maps directly to the controls your auditor will ask
+            about — by design, not by interpretation.
+        </p>
+        <div class="solution-callout--teal" data-reveal>
+            <h3>About this mapping</h3>
+            <p>
+                The table below describes how InferaDB's <em>architecture</em>
+                satisfies each control. Third-party attestation reports
+                (SOC 2 Type II, ISO 27001) are on the post-GA roadmap.
+                Today, the controls are properties of the system; soon, they'll
+                be properties auditors have signed off on. <a href="/contact">Talk to us</a>
+                if you need a current attestation timeline for procurement.
+            </p>
+        </div>
+        <div class="controls-map" data-reveal>
+            <table class="controls-map-table">
+                <caption class="sr-only">Mapping of InferaDB architectural properties to common compliance framework controls</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Framework / Control</th>
+                        <th scope="col">InferaDB capability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">ISO 27001:2022 — A.5.15 Access control</th>
+                        <td>Unified RBAC + ReBAC + ABAC policy with revision-tracked schema; every change auditable.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ISO 27001:2022 — A.8.15 Logging</th>
+                        <td>Hash-chained, append-only audit log; tamper-evident by construction.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SOC 2 — CC6.1 Logical access</th>
+                        <td>Microsecond permission checks at every boundary (2.8&micro;s p99); no caching layer required.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SOC 2 — CC7.2 System monitoring</th>
+                        <td>Streaming audit export to SIEM with 0.3 ms write overhead; full decision context per entry.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NIST 800-53 — AC-3 Access enforcement</th>
+                        <td>Strict-serializable consistency; revoked permissions take effect on the next request, globally.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NIST 800-53 — AU-9 Protection of audit information</th>
+                        <td>Per-tenant cryptographic isolation + Ed25519-signed entries; auditors verify without trusting the server.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NIST 800-53 — AU-10 Non-repudiation</th>
+                        <td>Merkle-proof inclusion in the global audit tree; every decision is independently provable.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">HIPAA — &sect; 164.312(b) Audit controls</th>
+                        <td>Per-record decision trace including subject, resource, permission, and policy revision.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">HIPAA — &sect; 164.312(e) Transmission security</th>
+                        <td>TLS 1.3 in transit; per-tenant encryption at rest; no shared-tenant data path.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PCI DSS 4.0 — 7.2 Define and enforce access</th>
+                        <td>Need-to-know enforcement via ReBAC relationships; no role explosion.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PCI DSS 4.0 — 10.3 Audit log integrity</th>
+                        <td>Append-only hash-chained log; alteration breaks the chain and surfaces in monitoring.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">GDPR — Article 32 Security of processing</th>
+                        <td>Purpose-built for least-privilege enforcement at request time; per-tenant key isolation.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">EU AI Act — Article 12 Record-keeping</th>
+                        <td>Every agent-initiated permission check captured with full context; replayable for incident review.</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DORA — Article 6 ICT risk management framework</th>
+                        <td>Multi-region replication with explicit fault model; documented RTO/RPO for the authorization layer.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="controls-map-footnote">
+                Need a mapping for a framework not listed —
+                <a href="/contact">request one</a>. We publish full mappings
+                under our compliance documentation at
+                <a href="/docs/compliance">/docs/compliance</a>.
+            </p>
+        </div>
+
+        <div class="solution-section-label" data-reveal><span>SEC.04</span> What Gets Recorded</div>
         <h2 data-reveal>Full decision context, not just allow/deny</h2>
         <p data-reveal>
             A log line that says "access denied" tells an auditor nothing useful.
@@ -213,7 +308,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
             </p>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.04</span> Framework Coverage</div>
+        <div class="solution-section-label" data-reveal><span>SEC.05</span> Framework Coverage</div>
         <h2 data-reveal>One audit trail, seven frameworks</h2>
         <p data-reveal>
             Compliance frameworks differ in language but converge on the same
@@ -285,7 +380,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.05</span> Data Residency &amp; Erasure</div>
+        <div class="solution-section-label" data-reveal><span>SEC.06</span> Data Residency &amp; Erasure</div>
         <h2 data-reveal>Data stays where regulators require it — and disappears when they demand it</h2>
         <p data-reveal>
             Data residency and erasure are architectural properties, not policy
@@ -342,7 +437,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.06</span> Common Patterns</div>
+        <div class="solution-section-label" data-reveal><span>SEC.07</span> Common Patterns</div>
         <h2 data-reveal>How teams use audit capabilities</h2>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
@@ -371,7 +466,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
             </div>
         </div>
 
-        <div class="solution-section-label" data-reveal><span>SEC.07</span> Related Reading</div>
+        <div class="solution-section-label" data-reveal><span>SEC.08</span> Related Reading</div>
         <ul class="solution-related" data-reveal>
             <li><a href="/dispatch/eu-regulation-authorization">NIS2, DORA, and the EU AI Act</a></li>
             <li><a href="/dispatch/ciso-guide-fine-grained-authorization">The CISO's Guide to Fine-Grained Authorization</a></li>

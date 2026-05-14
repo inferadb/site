@@ -78,7 +78,7 @@
   category: ai
   slug: ai-agents-breaking-authorization
   teaser: /assets/images/dispatch/ai-agents.svg
-  excerpt: "Traditional authorization handles 1-2 checks per request. AI agent workflows need dozens — and at 5-50ms each, that's seconds of latency before any work happens. The agent era needs authorization infrastructure built for machine-speed decisions."
+  excerpt: "Traditional authorization handles 1-2 checks per request. AI agent workflows need dozens — and at 5-50ms each, that's seconds of latency before any work happens. The agent era needs authorization infrastructure built for microsecond decisions."
   authors:
     - Evan Sims
 

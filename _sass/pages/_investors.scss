@@ -1,0 +1,330 @@
+// ─── /investors — by-invitation investor brief ───────────────
+// Sober variant of the long-form page pattern. Same structural
+// rhythm as /why and /learn (eyebrow + SEC.0N labels + narrow
+// container), but tuned for an investor audience: tighter type,
+// no animation, no constellation, no decorative gradients. Page
+// is intentionally unlinked from main nav and excluded from
+// search indexes via noindex front matter.
+
+.page-investors {
+  --investors-narrow-width: 760px;
+}
+
+.investors-narrow {
+  max-width: var(--investors-narrow-width);
+  margin-inline: auto;
+}
+
+.investors-hero {
+  padding: 7rem 0 4rem;
+  border-bottom: 1px solid var(--border);
+
+  .container {
+    max-width: var(--investors-narrow-width);
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: var(--text-white);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    margin: 1rem 0 1.5rem;
+    text-wrap: balance;
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    color: var(--text);
+    line-height: 1.7;
+    text-wrap: pretty;
+    margin-bottom: 2rem;
+
+    em {
+      color: var(--text-white);
+      font-style: italic;
+    }
+  }
+
+  // Hero CTA pair (book / view deck) — same component as the closing CTA,
+  // sized down slightly to sit between the lead and the meta block.
+  .investors-cta-actions {
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.investors-eyebrow {
+  @include eyebrow;
+  margin-bottom: 0.75rem;
+}
+
+.investors-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+
+  a {
+    color: var(--accent);
+    margin-left: 0.25rem;
+    white-space: nowrap;
+  }
+}
+
+.investors-section {
+  padding: 4rem 0;
+  border-top: 1px solid var(--border);
+
+  &:first-of-type { border-top: none; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.75vw, 2rem);
+    font-weight: 600;
+    color: var(--text-white);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.5rem;
+    text-wrap: balance;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--text-white);
+    margin: 2rem 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    text-wrap: pretty;
+
+    strong { color: var(--text-white); font-weight: 600; }
+    em { color: var(--text-white); font-style: italic; }
+  }
+
+  ul {
+    margin: 0 0 1.5rem;
+    padding-left: 1.25rem;
+
+    li {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 0.625rem;
+      padding-left: 0.25rem;
+
+      strong { color: var(--text-white); font-weight: 600; }
+
+      &::marker {
+        color: var(--accent);
+      }
+    }
+  }
+
+  a {
+    color: var(--accent);
+  }
+}
+
+.investors-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+
+  span {
+    color: var(--accent);
+    margin-right: 0.5rem;
+  }
+}
+
+// ─── Competitive comparison table (SEC.05) ───────────────────
+// Three-column "Vendor / Their position / Why they can't
+// replicate" matrix. Mobile reflows to stacked cells.
+
+.investors-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+
+  thead th {
+    background: var(--bg-raised);
+    color: var(--text-white);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody th {
+    color: var(--text-white);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-align: left;
+    vertical-align: top;
+    width: 22%;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--accent-overlay-subtle);
+  }
+
+  tbody td {
+    color: var(--text);
+    vertical-align: top;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+
+    &:nth-child(2) { width: 36%; }
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+// ─── Pull quote (SEC.07 — design partner placeholder) ────────
+// Styled so a design-partner quote can be added with one block
+// when an attribution becomes available.
+
+.investors-pullquote {
+  margin: 2.5rem 0;
+  padding: 1.5rem 1.75rem;
+  border-left: 3px solid var(--accent);
+  background: var(--bg-raised);
+  border-radius: 0 var(--radius) var(--radius) 0;
+
+  p {
+    font-family: var(--font-display);
+    font-size: 1.125rem !important;
+    color: var(--text-white) !important;
+    line-height: 1.5 !important;
+    font-weight: 500;
+    margin-bottom: 0.75rem !important;
+    text-wrap: pretty;
+  }
+
+  cite {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-style: normal;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+}
+
+.investors-cta {
+  padding: 6rem 0 8rem;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 600;
+    color: var(--text-white);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-bottom: 1rem;
+    text-wrap: balance;
+  }
+
+  p {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    text-wrap: pretty;
+
+    a { color: var(--accent); }
+  }
+}
+
+.investors-cta-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.investors-cta-secondary {
+  font-size: 0.9375rem !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: 3rem !important;
+
+  a { color: var(--accent); }
+}
+
+.investors-footnote {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem !important;
+  line-height: 1.7 !important;
+  color: var(--text-secondary) !important;
+  letter-spacing: 0.01em;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  margin-bottom: 0 !important;
+}
+
+@media (width <= 768px) {
+  .investors-hero { padding: 5rem 0 3rem; }
+  .investors-section { padding: 3rem 0; }
+  .investors-cta { padding: 5rem 0 6rem; }
+  .investors-cta-actions { flex-direction: column; align-items: stretch; }
+
+  .investors-comparison-table {
+    font-size: 0.875rem;
+
+    thead { display: none; }
+
+    tbody th,
+    tbody td {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-bottom: none;
+
+      &:nth-child(2) { width: 100%; }
+    }
+
+    tbody th {
+      padding-bottom: 0.25rem;
+      background: transparent;
+    }
+
+    tbody td {
+      padding-top: 0;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}

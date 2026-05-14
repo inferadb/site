@@ -2,7 +2,7 @@
 layout: default
 title: "Managed Authorization Infrastructure"
 body_class: home
-description: "Ship features instead of building permissions. Microsecond permission checks, cryptographic audit trails, and zero ops. Start free."
+description: "The only ReBAC engine measured in microseconds. One schema for RBAC, ReBAC, and ABAC. Cryptographic audit by default. Built for the regulated enterprise."
 ---
 
 <!-- Hero -->
@@ -14,7 +14,7 @@ description: "Ship features instead of building permissions. Microsecond permiss
     ></canvas>
     <div class="hero-glow"></div>
     <div class="container">
-        <p class="hero-eyebrow">Authorization infrastructure, managed</p>
+        <p class="hero-eyebrow">SYS:ROOT // Authorization Database</p>
         <h1 class="hero-title" data-hero-decrypt>
             <span data-hero-static>Know who can access</span><br />
             <span data-hero-static>what in </span
@@ -28,405 +28,66 @@ description: "Ship features instead of building permissions. Microsecond permiss
             >
         </h1>
         <p class="hero-subtitle">
-            Ship features instead of building permissions. One API replaces
-            months of in-house access control — with microsecond checks,
-            cryptographic audit trails, and zero ops.
+            Ship features instead of building permissions.
+            Microsecond decisions, cryptographic audit by default — without
+            operating any infrastructure yourself.
         </p>
         <div class="hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
-            <a href="/product/authorization" class="btn btn-ghost"
-                >See How It Works</a
+            <a href="/docs/quickstart" class="btn btn-ghost"
+                >Read the Docs</a
             >
         </div>
+        <p class="hero-proof">
+            Joining {{ site.data.stats.waitlist_count }}+ teams on the {{ site.data.stats.waitlist_label }}.
+        </p>
     </div>
 </section>
 
-<!-- Problem -->
-<section class="problem" aria-labelledby="problem-heading">
+{% include trust-strip.html %}
+
+<!-- Statement -->
+<section class="statement" aria-labelledby="statement-heading">
     <div class="container">
-        <div class="section-header" data-reveal>
-            <h2 id="problem-heading">Authorization is a hidden crisis</h2>
-            <p>
-                The #1 API security risk. Every company needs it. Most build
-                it from scratch. Get it wrong and you're on the front page for
-                the wrong reasons.
-            </p>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card" data-reveal data-reveal-delay="0">
-                <span
-                    class="stat-number"
-                    data-decrypt-num="#1"
-                    data-decrypt-delay="0"
-                    >#1</span
-                >
-                <span class="stat-label"
-                    >API security risk: broken access control</span
-                >
-                <span class="stat-source"
-                    >OWASP Top 10 (2021, 2025) &amp; API Security Top 10
-                    (2023)</span
-                >
-            </div>
-            <div class="stat-card" data-reveal data-reveal-delay="80">
-                <span
-                    class="stat-number"
-                    data-decrypt-num="$4.88M"
-                    data-decrypt-delay="400"
-                    >$4.88M</span
-                >
-                <span class="stat-label"
-                    >average cost of a data breach globally</span
-                >
-                <span class="stat-source">IBM Cost of a Data Breach, 2024</span>
-            </div>
-            <div class="stat-card" data-reveal data-reveal-delay="160">
-                <span
-                    class="stat-number"
-                    data-decrypt-num="$924K"
-                    data-decrypt-delay="800"
-                    >$924K</span
-                >
-                <span class="stat-label"
-                    >annual cost of a 6-person authorization team built
-                    in-house</span
-                >
-                <span class="stat-source"
-                    >Based on avg. US software engineer salary</span
-                >
-            </div>
-        </div>
+        <h2 id="statement-heading" class="sr-only">The problem</h2>
+        <p class="statement-text" data-reveal>
+            <strong>The only ReBAC engine measured in microseconds.</strong>
+            One schema for RBAC, ReBAC, and ABAC. Audit, isolation, and consistency
+            built into the storage layer — not application-layer bolt-ons. Built for
+            the regulated enterprise.
+        </p>
     </div>
 </section>
 
-<!-- Performance -->
-<section class="performance" id="product" aria-labelledby="performance-heading">
+<!-- Feature: Permissions -->
+<section class="feature-section" aria-labelledby="feat-permissions">
     <div class="container">
-        <div class="section-header" data-reveal>
-            <h2 id="performance-heading">
-                Every decision recorded. Zero overhead.
-            </h2>
-            <p>
-                Permission checks in microseconds, automatic audit trails, and
-                scaling you never think about. That's what managed authorization
-                should feel like.
-                <a href="/product/authorization">See how it works &rarr;</a>
-            </p>
-        </div>
-        <div class="perf-grid">
-            <div class="perf-card perf-hero" data-reveal data-reveal-delay="0">
-                <span
-                    class="perf-number"
-                    data-decrypt-num="2.8µs"
-                    data-decrypt-delay="0"
-                    >2.8µs</span
-                >
-                <span class="perf-label">permission check speed</span>
-                <span class="perf-context"
-                    >Orders of magnitude faster than alternatives</span
-                >
+        <div class="feature-split" data-reveal>
+            <div class="feature-left">
+                <h2 id="feat-permissions">
+                    Ship in minutes what used to take months to build
+                </h2>
             </div>
-            <div class="perf-card" data-reveal data-reveal-delay="60">
-                <span
-                    class="perf-number"
-                    data-decrypt-num="4.9b"
-                    data-decrypt-delay="500"
-                    >4.9b</span
-                >
-                <span class="perf-label">checks/second</span>
-                <span class="perf-context"
-                    >Never a bottleneck in your hot path</span
-                >
-            </div>
-            <div class="perf-card" data-reveal data-reveal-delay="120">
-                <span
-                    class="perf-number"
-                    data-decrypt-num="0.3ms"
-                    data-decrypt-delay="1000"
-                    >0.3ms</span
-                >
-                <span class="perf-label">audit trail overhead</span>
-                <span class="perf-context"
-                    >Every decision recorded at zero cost</span
-                >
-            </div>
-            <div class="perf-card" data-reveal data-reveal-delay="180">
-                <span
-                    class="perf-number"
-                    data-decrypt-num="47ms"
-                    data-decrypt-delay="1500"
-                    >47ms</span
-                >
-                <span class="perf-label">global sync speed</span>
-                <span class="perf-context"
-                    >Consistency across every region</span
-                >
-            </div>
-        </div>
-        <p class="perf-note">GDPR compliant and audit-ready on every plan.</p>
-    </div>
-</section>
-
-<!-- Use Cases -->
-<section class="use-cases" aria-labelledby="use-cases-heading">
-    <div class="container">
-        <div class="section-header" data-reveal>
-            <h2 id="use-cases-heading">Authorization for every stack</h2>
-        </div>
-        <div class="uc-grid">
-            <div class="uc-card" data-reveal>
-                <span class="uc-icon">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        aria-hidden="true"
-                    >
-                        <rect x="2" y="3" width="20" height="14" rx="2" />
-                        <path d="M8 21h8M12 17v4" />
-                    </svg>
-                </span>
-                <h3>
-                    <a href="/solutions/multi-tenant-saas">Multi-Tenant SaaS</a>
-                </h3>
+            <div class="feature-right">
                 <p>
-                    Your customers demand per-account permissions, nested teams,
-                    and custom roles. InferaDB models arbitrarily complex
-                    hierarchies without role explosion — and scales from 10
-                    users to 10 million without re-architecture.
-                </p>
-            </div>
-            <div class="uc-card" data-reveal>
-                <span class="uc-icon">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        aria-hidden="true"
+                    One policy language for roles, relationships, and attributes
+                    — RBAC, ReBAC, and ABAC in a single schema.
+                    <a href="/product/permissions"
+                        >Express your permission model in minutes, not months
+                        &rarr;</a
                     >
-                        <path
-                            d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
-                        />
-                    </svg>
-                </span>
-                <h3>
-                    <a href="/solutions/regulated-industries"
-                        >Compliance &amp; Regulation</a
-                    >
-                </h3>
-                <p>
-                    SOC 2, HIPAA, GDPR, NIS2, DORA, PCI DSS — InferaDB's
-                    cryptographic audit trails and data residency controls
-                    satisfy regulatory requirements by default, not as an
-                    afterthought.
-                </p>
-            </div>
-            <div class="uc-card" data-reveal>
-                <span class="uc-icon">
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M12 2a4 4 0 0 0-4 4c0 2 1.5 3.5 4 5 2.5-1.5 4-3 4-5a4 4 0 0 0-4-4z"
-                        />
-                        <path
-                            d="M4.5 15.5C2.5 16.5 1 18 1 20h22c0-2-1.5-3.5-3.5-4.5"
-                        />
-                        <circle cx="12" cy="17" r="3" />
-                    </svg>
-                </span>
-                <h3>
-                    <a href="/solutions/ai-agents">AI Agent Authorization</a>
-                </h3>
-                <p>
-                    Every AI agent action requires a permission decision.
-                    Traditional systems handle 1-2 checks per request. Agent
-                    workflows require dozens. InferaDB's microsecond latency
-                    makes this tractable.
                 </p>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- Comparison Matrix — after use cases: visitors now have context to evaluate -->
-<section class="compare" id="compare" aria-labelledby="compare-heading">
-    <div class="container">
-        <div class="section-header" data-reveal>
-            <h2 id="compare-heading">How InferaDB stacks up</h2>
-            <p>
-                You're either building authorization in-house, stitching
-                together policy engines, or paying for a managed service that
-                still leaves gaps.<br />
-                <a href="/product/compare"
-                    >Here's what changes with InferaDB &rarr;</a
-                >
-            </p>
-        </div>
-        <div class="compare-wrap" data-reveal>
-            <table class="compare-matrix">
-                <thead>
-                    <tr>
-                        <th class="compare-dimension-head" scope="col">
-                            Dimension
-                        </th>
-                        <th class="compare-col-inhouse" scope="col">
-                            Built In-House
-                        </th>
-                        <th class="compare-col-policy" scope="col">
-                            Policy Engines<span class="compare-col-sub"
-                                >OPA / Cedar</span
-                            >
-                        </th>
-                        <th class="compare-col-managed" scope="col">
-                            Managed Services<span class="compare-col-sub"
-                                >AuthZed / Oso</span
-                            >
-                        </th>
-                        <th class="compare-col-infera" scope="col">InferaDB</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr data-reveal data-reveal-delay="0">
-                        <th class="compare-dimension" scope="row">
-                            Setup time
-                        </th>
-                        <td class="compare-weak">Months</td>
-                        <td class="compare-neutral">Weeks</td>
-                        <td class="compare-neutral">Days</td>
-                        <td class="compare-win">Minutes</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="40">
-                        <th class="compare-dimension" scope="row">Latency</th>
-                        <td class="compare-neutral">Varies</td>
-                        <td class="compare-neutral">1-10 ms</td>
-                        <td class="compare-neutral">5-10 ms</td>
-                        <td class="compare-win">~3 &#181;s</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="80">
-                        <th class="compare-dimension" scope="row">
-                            Audit trail
-                        </th>
-                        <td class="compare-weak">Build it yourself</td>
-                        <td class="compare-weak">Decision logs only</td>
-                        <td class="compare-neutral">Audit logging</td>
-                        <td class="compare-win">Cryptographic proof</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="120">
-                        <th class="compare-dimension" scope="row">
-                            Tenant isolation
-                        </th>
-                        <td class="compare-weak">DIY per-tenant</td>
-                        <td class="compare-weak">Not built-in</td>
-                        <td class="compare-neutral">Namespace-level</td>
-                        <td class="compare-win">Per-vault encryption</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="160">
-                        <th class="compare-dimension" scope="row">
-                            Compliance
-                        </th>
-                        <td class="compare-weak">Manual effort</td>
-                        <td class="compare-weak">Policy-only</td>
-                        <td class="compare-neutral">Partial</td>
-                        <td class="compare-win">SOC 2 / HIPAA ready</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="200">
-                        <th class="compare-dimension" scope="row">
-                            Maintenance
-                        </th>
-                        <td class="compare-weak">Dedicated team</td>
-                        <td class="compare-neutral">Rego / Cedar upkeep</td>
-                        <td class="compare-neutral">Vendor-managed</td>
-                        <td class="compare-win">Zero ops</td>
-                    </tr>
-                    <tr data-reveal data-reveal-delay="240">
-                        <th class="compare-dimension" scope="row">Cost</th>
-                        <td class="compare-weak">$900K+ / year</td>
-                        <td class="compare-neutral">Infra + team</td>
-                        <td class="compare-neutral">Resource / MAU-based</td>
-                        <td class="compare-win">From $0</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
-
-<!-- How it works -->
-<section class="how-it-works" aria-labelledby="hiw-heading">
-    {% include dot-grid.html %}
-    <div class="container">
-        <div class="section-header" data-reveal>
-            <h2 id="hiw-heading">
-                Replace thousands of lines of auth code with three
-            </h2>
-            <p>
-                One policy language for roles, relationships, and attributes —
-                RBAC, ReBAC, and ABAC in a single schema.
-                <a href="/product/permissions"
-                    >Express your permission model in minutes, not months
-                    &rarr;</a
-                >
-            </p>
-        </div>
-        <div
-            class="hiw-tabs"
-            role="tablist"
-            aria-label="Perspective"
-            data-reveal
-        >
-            <button
-                class="hiw-tab"
-                role="tab"
-                aria-selected="false"
-                aria-controls="hiw-panel-dev"
-                data-hiw-tab="dev"
-                tabindex="-1"
-                id="hiw-tab-dev"
-            >
-                For Developers
-            </button>
-            <button
-                class="hiw-tab active"
-                role="tab"
-                aria-selected="true"
-                aria-controls="hiw-panel-sec"
-                data-hiw-tab="sec"
-                id="hiw-tab-sec"
-            >
-                For Security Teams
-            </button>
-        </div>
-
-        <!-- Developer perspective -->
-        <div
-            class="hiw-grid hiw-panel"
-            id="hiw-panel-dev"
-            role="tabpanel"
-            aria-labelledby="hiw-tab-dev"
-            data-hiw-panel="dev"
-        >
-            <div class="hiw-code" data-reveal>
-                <div class="code-window">
-                    <div class="code-header">
-                        <span class="code-dot"></span>
-                        <span class="code-dot"></span>
-                        <span class="code-dot"></span>
-                        <span class="code-title">schema.ipl</span>
-                    </div>
-                    <pre><code><span class="kw">entity</span> <span class="type">organization</span> {
+        <div class="feature-visual" data-reveal>
+            <div class="code-window">
+                <div class="code-header">
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-title">schema.ipl</span>
+                </div>
+                <pre><code><span class="kw">entity</span> <span class="type">organization</span> {
   <span class="kw">relation</span> <span class="fn">admin</span>: <span class="type">user</span>
   <span class="kw">relation</span> <span class="fn">member</span>: <span class="type">user</span>
 }
@@ -445,57 +106,60 @@ description: "Ship features instead of building permissions. Microsecond permiss
   <span class="kw">permission</span> <span class="fn">edit</span> = editor <span class="op">or</span> owner
   <span class="kw">permission</span> <span class="fn">delete</span> = owner
 }</code></pre>
-                </div>
-            </div>
-            <div class="hiw-steps" data-reveal data-reveal-delay="100">
-                <div class="hiw-step">
-                    <span class="hiw-step-num">01</span>
-                    <h3>Define your model</h3>
-                    <p>
-                        Express entities, relationships, and permissions in IPL.
-                        Supports ReBAC, RBAC, ABAC, and custom WebAssembly logic
-                        — all in one schema.
-                    </p>
-                </div>
-                <div class="hiw-step">
-                    <span class="hiw-step-num">02</span>
-                    <h3>Write relationships</h3>
-                    <p>
-                        Store tuples like
-                        <code>(user:alice, editor, document:123)</code> via REST
-                        or gRPC. Every change is cryptographically committed to
-                        the ledger.
-                    </p>
-                </div>
-                <div class="hiw-step">
-                    <span class="hiw-step-num">03</span>
-                    <h3>Check permissions</h3>
-                    <p>
-                        Ask "can user X do Y on resource Z?" and get an answer
-                        in microseconds with a full explanation path and
-                        revision token for consistency.
-                    </p>
-                </div>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- Security & compliance perspective -->
-        <div
-            class="hiw-grid hiw-panel active"
-            id="hiw-panel-sec"
-            role="tabpanel"
-            aria-labelledby="hiw-tab-sec"
-            data-hiw-panel="sec"
-        >
-            <div class="hiw-code" data-reveal>
-                <div class="code-window">
-                    <div class="code-header">
-                        <span class="code-dot"></span>
-                        <span class="code-dot"></span>
-                        <span class="code-dot"></span>
-                        <span class="code-title">audit-trail.json</span>
-                    </div>
-                    <pre><code>{
+<!-- Feature: Performance -->
+<section class="feature-section" aria-labelledby="feat-performance">
+    <div class="container">
+        <div class="feature-split" data-reveal>
+            <div class="feature-left">
+                <h2 id="feat-performance">
+                    Built for microseconds
+                </h2>
+            </div>
+            <div class="feature-right">
+                <p>
+                    Designed out of the box for the most demanding authorization
+                    workloads. Permission checks in <strong>2.8&micro;s</strong>.
+                    <strong>4.9 billion</strong> checks per second. Automatic
+                    audit trails with <strong>0.3ms</strong> overhead. Global
+                    consistency in <strong>47ms</strong>.
+                    <a href="/product/authorization">See how it works &rarr;</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature: Audit -->
+<section class="feature-section" aria-labelledby="feat-audit">
+    <div class="container">
+        <div class="feature-split" data-reveal>
+            <div class="feature-left">
+                <h2 id="feat-audit">
+                    Cryptographic proof for every permission check
+                </h2>
+            </div>
+            <div class="feature-right">
+                <p>
+                    Hash-chained audit entries. Tamper-evident, append-only,
+                    per-tenant isolation. Merkle proofs verify nothing has been
+                    altered. Export to your SIEM or compliance toolchain.
+                </p>
+            </div>
+        </div>
+        <div class="feature-visual" data-reveal>
+            <div class="code-window">
+                <div class="code-header">
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-title">audit-trail.json</span>
+                </div>
+                <pre><code>{
   <span class="fn">"decision"</span>: <span class="lit">"ALLOWED"</span>,
   <span class="fn">"subject"</span>: <span class="lit">"user:alice"</span>,
   <span class="fn">"permission"</span>: <span class="lit">"edit"</span>,
@@ -509,35 +173,88 @@ description: "Ship features instead of building permissions. Microsecond permiss
   <span class="fn">"prev_hash"</span>: <span class="lit">"5f2b8d1ca9..."</span>,
   <span class="fn">"vault"</span>: <span class="lit">"prod-us-east"</span>
 }</code></pre>
-                </div>
             </div>
-            <div class="hiw-steps" data-reveal data-reveal-delay="100">
-                <div class="hiw-step">
-                    <span class="hiw-step-num">01</span>
-                    <h3>Every decision recorded</h3>
-                    <p>
-                        Each permission check produces a hash-chained audit
-                        entry. Tamper-evident, append-only, per-tenant
-                        isolation.
-                    </p>
+        </div>
+    </div>
+</section>
+
+<!-- Feature: AI Agents -->
+<section class="feature-section" aria-labelledby="feat-agents">
+    <div class="container">
+        <div class="feature-split" data-reveal>
+            <div class="feature-left">
+                <h2 id="feat-agents">
+                    Microsecond authorization for the agentic era
+                </h2>
+            </div>
+            <div class="feature-right">
+                <p>
+                    A traditional API request triggers one permission check. An
+                    AI agent action triggers <strong>thirty or more</strong> —
+                    one per principal it acts on behalf of, one per tool it
+                    invokes, one per artifact it touches. Microsecond decisions
+                    make this tractable. Cryptographic audit makes it accountable.
+                    <a href="/solutions/ai-agents">See agent authorization patterns &rarr;</a>
+                </p>
+            </div>
+        </div>
+        <div class="feature-visual" data-reveal>
+            <div class="code-window">
+                <div class="code-header">
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-title">agent-check.ts</span>
                 </div>
-                <div class="hiw-step">
-                    <span class="hiw-step-num">02</span>
-                    <h3>Cryptographic proof</h3>
-                    <p>
-                        Merkle proofs verify that no audit entry has been
-                        altered or deleted. Export to your SIEM or compliance
-                        toolchain.
-                    </p>
-                </div>
-                <div class="hiw-step">
-                    <span class="hiw-step-num">03</span>
-                    <h3>Framework-ready compliance</h3>
-                    <p>
-                        Maps directly to SOC 2, HIPAA, GDPR, PCI DSS, and NIS2
-                        controls. Purpose-built for regulated environments.
-                    </p>
-                </div>
+                <pre><code><span class="cm">// Agent acting on behalf of a user — full delegation chain</span>
+<span class="kw">const</span> decision = <span class="kw">await</span> infera.<span class="fn">check</span>({
+  <span class="fn">subject</span>: <span class="lit">"agent:research-bot"</span>,
+  <span class="fn">on_behalf_of</span>: <span class="lit">"user:alice"</span>,
+  <span class="fn">permission</span>: <span class="lit">"read"</span>,
+  <span class="fn">resource</span>: <span class="lit">"document:q3-strategy"</span>,
+  <span class="fn">context</span>: { <span class="fn">tool</span>: <span class="lit">"vector-search"</span>, <span class="fn">trace_id</span>: ctx.<span class="fn">trace</span> }
+});
+
+<span class="cm">// Decision: ALLOWED in 2.4&micro;s</span>
+<span class="cm">// Audit: hash-chained, replayable, full delegation captured</span></code></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Use Cases -->
+<section class="use-cases-minimal" aria-labelledby="uc-heading">
+    <div class="container">
+        <h2 id="uc-heading">Authorization for every stack</h2>
+        <div class="uc-minimal-grid" data-reveal>
+            <div class="uc-minimal-item">
+                <h3>
+                    <a href="/solutions/multi-tenant-saas">Multi-Tenant SaaS</a>
+                </h3>
+                <p>
+                    Per-account permissions, nested teams, and custom roles.
+                    Scales from 10 users to 10 million without re-architecture.
+                </p>
+            </div>
+            <div class="uc-minimal-item">
+                <h3>
+                    <a href="/solutions/regulated-industries"
+                        >Compliance &amp; Regulation</a
+                    >
+                </h3>
+                <p>
+                    SOC 2, HIPAA, GDPR, PCI DSS — satisfied by default, not as
+                    an afterthought.
+                </p>
+            </div>
+            <div class="uc-minimal-item">
+                <h3>
+                    <a href="/solutions/platform-engineering">Platform Engineering</a>
+                </h3>
+                <p>
+                    One authorization layer for every service in your stack.
+                    No bespoke permissions code per team.
+                </p>
             </div>
         </div>
     </div>
@@ -547,16 +264,10 @@ description: "Ship features instead of building permissions. Microsecond permiss
 <section class="cta" aria-labelledby="cta-heading">
     <div class="container">
         <div class="cta-content" data-reveal>
-            <div class="cta-glow"></div>
-            <p class="cta-eyebrow">No commitment required</p>
             <h2 id="cta-heading">
-                Try it free. Deploy in<br />
-                minutes, not <span class="gradient-text">months</span>.
+                The authorization layer your stack was
+                <span class="gradient-text">missing</span>.
             </h2>
-            <p>
-                100K checks/month at $0. No credit card required. Direct access
-                to the engineering team during onboarding.
-            </p>
             <div class="cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg"
                     >Get Early Access</a

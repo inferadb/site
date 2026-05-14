@@ -9,9 +9,10 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
     <div class="container">
         <div class="waitlist-content">
             <span class="hero-eyebrow">Early Access</span>
-            <h1>Be first to deploy authorization that scales</h1>
+            <h1>Be first to deploy the authorization database</h1>
             <p class="waitlist-lead">
-                200+ teams are already on the list. Lock in launch-day pricing
+                {{ site.data.stats.waitlist_count }}+ teams are already on the
+                {{ site.data.stats.waitlist_label }}. Lock in launch-day pricing
                 and get priority access to the authorization database built by
                 the engineers behind OpenFGA.
             </p>
@@ -98,22 +99,27 @@ description: "Join the InferaDB waitlist — lock in launch-day pricing, get pri
                         </li>
                         <li>
                             <strong>Free tier from day one.</strong>
-                            Start with 100K checks/month at no cost. Scale when you're ready.
+                            Start with 100K checks/month at no cost.
+                        </li>
+                        <li>
+                            <strong>Architectural firsts in production.</strong>
+                            Cryptographic audit by default. Per-tenant cryptographic isolation.
+                            Microsecond decisions. The capabilities your current stack can't deliver.
                         </li>
                     </ul>
-                    <p class="waitlist-learn-more"><a href="/product/authorization">Learn more about the platform &rarr;</a></p>
+                    <p class="waitlist-learn-more"><a href="/product/authorization">Learn more about the database &rarr;</a></p>
                     <div class="waitlist-stats">
                         <div class="waitlist-stat">
-                            <span class="waitlist-stat-num">2.8&micro;s</span>
-                            <span class="waitlist-stat-label">p99 latency</span>
+                            <span class="waitlist-stat-num">{{ site.data.stats.waitlist_count }}+</span>
+                            <span class="waitlist-stat-label">teams already on the {{ site.data.stats.waitlist_label }}</span>
                         </div>
                         <div class="waitlist-stat">
-                            <span class="waitlist-stat-num">4.9B</span>
-                            <span class="waitlist-stat-label">checks/second</span>
+                            <span class="waitlist-stat-num">0</span>
+                            <span class="waitlist-stat-label">infrastructure to operate</span>
                         </div>
                         <div class="waitlist-stat">
-                            <span class="waitlist-stat-num">$0</span>
-                            <span class="waitlist-stat-label">to start</span>
+                            <span class="waitlist-stat-num">Microseconds</span>
+                            <span class="waitlist-stat-label">per permission check</span>
                         </div>
                     </div>
                 </div>

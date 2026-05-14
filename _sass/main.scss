@@ -26,6 +26,7 @@
 @import 'molecules/search';
 @import 'molecules/section-header';
 @import 'molecules/section-break';
+@import 'molecules/trust-strip';
 
 // ─── Organisms ──────────────────────────────────────────────
 // Complex components composed of molecules and atoms
@@ -43,7 +44,10 @@
 @import 'organisms/devex';
 @import 'organisms/oss-cloud';
 @import 'organisms/cta';
+@import 'organisms/statement';
+@import 'organisms/feature-split';
 @import 'organisms/comparison';
+@import 'organisms/controls-map';
 @import 'organisms/pricing-table';
 @import 'organisms/pricing-faq';
 
@@ -58,6 +62,9 @@
 @import 'pages/dispatch';
 @import 'pages/solutions';
 @import 'pages/careers';
+@import 'pages/investors';
+@import 'pages/learn';
+@import 'pages/why';
 
 // ─── Utilities ──────────────────────────────────────────────
 // Cross-cutting: accessibility, animations, syntax highlighting

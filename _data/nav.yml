@@ -1,8 +1,8 @@
 - title: Product
   bento: true
   items:
-    - title: Authorization Platform
-      desc: "Managed authorization infrastructure you integrate, not build. Sub-3µs checks, cryptographic audit trails, native multi-tenancy."
+    - title: Authorization Database
+      desc: "The managed authorization database you integrate, not build. Microsecond checks, cryptographic audit trails, native multi-tenancy."
       url: "/product/authorization"
       area: hero
     - title: Multi-Tenant SaaS
@@ -57,6 +57,10 @@
       desc: How authorization modeling works
       url: "/docs/concepts"
       area: concepts
+    - title: What is Authorization?
+      desc: Plain-language intro to RBAC, ReBAC, ABAC and the latency / audit problem
+      url: "/learn/authorization"
+      area: learn
     - title: Modeling Guide
       desc: Design a schema step by step
       url: "/docs/modeling"
@@ -92,6 +96,10 @@
       desc: Why we're building the authorization layer for modern software
       url: "/about"
       area: about
+    - title: Why InferaDB
+      desc: The thesis behind a purpose-built authorization database
+      url: "/why"
+      area: thesis
     - title: Careers
       desc: Build the future of authorization
       url: "/careers"

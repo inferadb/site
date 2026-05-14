@@ -1,0 +1,242 @@
+---
+title: "What is authorization? — A plain-language introduction"
+layout: default
+body_class: page-learn
+description: "Authorization decides who is allowed to do what in an application. Learn how RBAC, ReBAC, and ABAC differ — and when each falls short — without the academic detour."
+---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LearningResource",
+  "name": "What is authorization?",
+  "description": "{{ page.description | escape }}",
+  "url": "{{ site.url }}/learn/authorization",
+  "learningResourceType": "Concept introduction",
+  "educationalLevel": "Beginner"
+}
+</script>
+
+<section class="learn-hero" aria-labelledby="learn-hero-heading">
+    <div class="container">
+        <p class="learn-eyebrow">SYS:LEARN // Authorization Fundamentals</p>
+        <h1 id="learn-hero-heading">What is authorization?</h1>
+        <p class="lead">
+            Authentication asks <em>who are you</em>. Authorization asks
+            <em>what are you allowed to do</em>. This page explains the
+            difference, walks through the three common models you'll encounter
+            (RBAC, ReBAC, ABAC), and shows where each one falls short. No
+            prior knowledge required.
+        </p>
+        <nav class="learn-toc" aria-label="On this page">
+            <ol>
+                <li><a href="#authn-vs-authz">Authentication vs. authorization</a></li>
+                <li><a href="#rbac">RBAC — Role-based access control</a></li>
+                <li><a href="#rebac">ReBAC — Relationship-based access control</a></li>
+                <li><a href="#abac">ABAC — Attribute-based access control</a></li>
+                <li><a href="#combine">Why most real systems need all three</a></li>
+                <li><a href="#latency">Why latency matters</a></li>
+                <li><a href="#audit">Why the audit log matters</a></li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<section class="learn-section" id="authn-vs-authz" aria-labelledby="learn-authn-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-authn-heading">Authentication vs. authorization</h2>
+        <p>
+            These get conflated all the time. They're not the same thing, and
+            confusing them is the root of a surprising number of security
+            incidents.
+        </p>
+        <p>
+            <strong>Authentication</strong> answers the question
+            <em>"who is making this request?"</em>. Logging in with a password
+            is authentication. Showing a passport is authentication. The
+            answer is an identity — a user ID, a service account, a token.
+        </p>
+        <p>
+            <strong>Authorization</strong> answers the question
+            <em>"is this identity allowed to do this thing on this resource?"</em>.
+            Once you know who someone is, you still need to decide whether they
+            can read this document, edit that record, or delete this account.
+            Authorization is the decision; authentication just provides the
+            input.
+        </p>
+        <p>
+            A single login (one authentication) might trigger thousands of
+            authorization checks over the lifetime of a session — every page
+            view, every API call, every database read. That's why the
+            performance characteristics of an authorization system matter so
+            much more than people expect.
+        </p>
+    </div>
+</section>
+
+<section class="learn-section" id="rbac" aria-labelledby="learn-rbac-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-rbac-heading">RBAC — Role-based access control</h2>
+        <p>
+            RBAC is the model most people learn first. You group permissions
+            into <em>roles</em> (Admin, Editor, Viewer), then assign roles to
+            users. A user's permissions are the union of the permissions
+            attached to their roles.
+        </p>
+        <p>
+            RBAC is great for org-chart authorization: HR can edit employees,
+            Engineering can deploy services, Sales can view contracts. It's
+            simple to reason about and easy to audit because the answer to
+            "what can this user do" is just "look up their roles."
+        </p>
+        <h3>Where RBAC falls short</h3>
+        <p>
+            RBAC explodes the moment your authorization is per-resource rather
+            than per-org. "Alice can edit Document 1234 but only view Document
+            5678" is not a role — it's a relationship to a specific resource.
+            Modeling that in RBAC requires either inventing a role per
+            (user, resource) pair (combinatorial explosion) or layering
+            something else on top of RBAC. Most teams reach this limit faster
+            than they expect.
+        </p>
+    </div>
+</section>
+
+<section class="learn-section" id="rebac" aria-labelledby="learn-rebac-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-rebac-heading">ReBAC — Relationship-based access control</h2>
+        <p>
+            ReBAC models authorization as a graph of <em>relationships</em>
+            between users and resources. Alice is an editor of Document 1234.
+            Document 1234 lives in Folder X. Bob is a member of Team Y, and
+            Team Y has viewer access to Folder X. Bob's permission to read
+            Document 1234 is derived by traversing the graph.
+        </p>
+        <p>
+            Google introduced this model in their 2019 Zanzibar paper, which
+            described how Google handles authorization at planet scale. ReBAC
+            is the model behind Google Drive's sharing, GitHub's repo access,
+            Notion's permissions, and most modern collaboration software.
+        </p>
+        <h3>Where ReBAC falls short</h3>
+        <p>
+            The graph traversal is computationally non-trivial. A naive
+            implementation will check permissions in milliseconds; a
+            production-grade one needs careful indexing, caching, and
+            consistency design. ReBAC also doesn't naturally express
+            attribute-driven rules ("only allow access during business hours
+            from a managed device") — for that, you need ABAC.
+        </p>
+    </div>
+</section>
+
+<section class="learn-section" id="abac" aria-labelledby="learn-abac-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-abac-heading">ABAC — Attribute-based access control</h2>
+        <p>
+            ABAC makes the authorization decision a function of
+            <em>attributes</em> — properties of the user, the resource, the
+            action, and the request context. "Allow if user.department equals
+            resource.department and request.time is within business hours and
+            request.device.is_managed is true."
+        </p>
+        <p>
+            ABAC is what regulated industries reach for when policy needs to
+            depend on context. Healthcare authorization often depends on the
+            patient relationship and the clinician's current role. Financial
+            authorization depends on transaction value, time of day, and
+            geographic origin.
+        </p>
+        <h3>Where ABAC falls short</h3>
+        <p>
+            Pure ABAC is hard to audit because the decision depends on values
+            that change at request time. "Why was this access allowed yesterday
+            at 2:14 PM?" requires reconstructing the attributes that were true
+            at that exact moment. Without a strong audit log, ABAC becomes
+            opaque — exactly the wrong property for compliance.
+        </p>
+    </div>
+</section>
+
+<section class="learn-section" id="combine" aria-labelledby="learn-combine-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-combine-heading">Why most real systems need all three</h2>
+        <p>
+            Real-world applications usually need all three models, often inside
+            the same authorization decision. A SaaS product might use RBAC for
+            org-level roles (Admin vs Member), ReBAC for per-document sharing
+            (Alice is editor of this doc), and ABAC for contextual rules
+            (deny edits outside business hours from unmanaged devices).
+        </p>
+        <p>
+            Most systems handle this by running RBAC, ReBAC, and ABAC in three
+            separate subsystems that gradually drift apart — different policy
+            languages, different audit logs, different consistency models.
+            That's how teams end up with three sources of truth and a quarterly
+            audit ritual to reconcile them.
+        </p>
+        <p>
+            InferaDB unifies all three in a single declarative policy language
+            with one audit log. Roles, relationships, and attributes are
+            first-class citizens in the same schema, so a permission check
+            traverses all three in a single decision. One authorization layer,
+            one audit trail.
+        </p>
+    </div>
+</section>
+
+<section class="learn-section" id="latency" aria-labelledby="learn-latency-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-latency-heading">Why latency matters</h2>
+        <p>
+            Authorization runs in the hot path of every request. A typical web
+            page view triggers one or two checks. A typical API call triggers
+            three to five. An AI agent action triggers thirty or more — one
+            per principal it acts on behalf of, one per tool it invokes, one
+            per artifact it touches.
+        </p>
+        <p>
+            At thirty checks per action, the difference between a 5&nbsp;ms
+            authorization system and a 3&nbsp;μs system is the difference
+            between 150&nbsp;ms of latency overhead and 0.1&nbsp;ms. The first
+            number ruins user experience; the second number is invisible.
+            Authorization latency isn't a tuning concern — it's a product
+            constraint.
+        </p>
+    </div>
+</section>
+
+<section class="learn-section" id="audit" aria-labelledby="learn-audit-heading">
+    <div class="container learn-narrow">
+        <h2 id="learn-audit-heading">Why the audit log matters</h2>
+        <p>
+            For most regulated industries, the audit log <em>is</em> the
+            compliance posture. Auditors don't take "we have access controls"
+            on faith; they ask for evidence that the access controls were
+            enforced correctly at every relevant moment in time.
+        </p>
+        <p>
+            The standard a modern audit log has to meet is independent
+            verifiability — the auditor must be able to prove the integrity of
+            the record without trusting the vendor. That requires
+            cryptographic techniques (hash chains, signatures, Merkle proofs)
+            built into the audit subsystem from day one. Bolting verifiable
+            audit onto a traditional database is hard; that's why most systems
+            still rely on mutable logs and hope nobody asks.
+        </p>
+    </div>
+</section>
+
+<section class="learn-cta" aria-labelledby="learn-cta-heading">
+    <div class="container">
+        <h2 id="learn-cta-heading">You've read the prerequisite. Read the thesis.</h2>
+        <p>
+            InferaDB is the authorization database you'd build if you had
+            another six engineers and twelve months.
+        </p>
+        <div class="learn-cta-actions">
+            <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>
+            <a href="/why" class="btn btn-ghost btn-lg">Read the thesis</a>
+        </div>
+    </div>
+</section>

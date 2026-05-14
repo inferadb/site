@@ -1,0 +1,28 @@
+// ─── Statement — bold typographic block ──────────────────────
+// Linear-inspired: large text, bold first sentence, centered.
+
+.statement {
+  padding: 8rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.statement-text {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  line-height: 1.7;
+  color: var(--text);
+  text-align: center;
+  text-wrap: balance;
+
+  strong {
+    color: var(--text-white);
+    font-weight: 600;
+  }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+@media (width <= 768px) {
+  .statement { padding: 5rem 0; }
+}

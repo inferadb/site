@@ -26,41 +26,53 @@ This site MUST build on GitHub Pages' Jekyll 3.10.0 pipeline. Key restrictions:
 - **Jekyll processes both `.md` and `.html`** with the same stem — only one can exist (e.g., `docs/index.md` and `docs/index.html` conflict; delete one)
 - **CLAUDE.md is excluded** in `_config.yml` because its Liquid-like code examples (`assign`) cause parse errors
 
-## Visual Design System — Mil-Spec Hard Sci-Fi Industrial
+## Visual Design System
 
-The site uses a distinctive industrial aesthetic inspired by NASA/aerospace documentation, Neon Genesis Evangelion mechanical design, and hard sci-fi UI (Marathon, Dead Space). This is NOT a generic dark-mode SaaS template.
+The site uses a typography-driven, ultra-minimal dark aesthetic. The visual identity is industrial (angular corners, hazard amber, mechanical easing) but the layout philosophy prioritizes restraint, generous whitespace, and asymmetric editorial layouts. Typography and spacing do the hierarchy work — not cards, icons, or decorative elements. This is NOT a generic dark-mode SaaS template.
+
+For the complete design system — tokens, type scale, layout patterns, component specs, and file organization — see [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 
 ### Color Palette
 
-| Token            | Value     | Usage                                       |
-| ---------------- | --------- | ------------------------------------------- |
-| `--bg`           | `#0b0d11` | Dark slate (blue-tinted, not neutral black) |
-| `--text`         | `#7d8590` | Body text (cool slate gray)                 |
-| `--text-white`   | `#dce1e8` | Headings (cool off-white, never pure white) |
-| `--accent`       | `#c8a44e` | Primary accent — hazard amber               |
-| `--accent-teal`  | `#56b6c2` | Secondary — desaturated teal (types, info)  |
-| `--accent-red`   | `#d45858` | Errors, denied states                       |
-| `--accent-green` | `#6a9e4a` | Success, allowed states                     |
-| `--border`       | `#1c2028` | Panel edges (subtle, not prominent)         |
-| `--border-interactive` | `#3a4250` | Interactive element borders (3:1 vs bg) |
+| Token                  | Value     | Usage                                       |
+| ---------------------- | --------- | ------------------------------------------- |
+| `--bg`                 | `#0b0d11` | Dark slate (blue-tinted, not neutral black) |
+| `--text`               | `#7d8590` | Body text (cool slate gray)                 |
+| `--text-secondary`     | `#778189` | Supporting text, subtitles (lower contrast) |
+| `--text-white`         | `#dce1e8` | Headings (cool off-white, never pure white) |
+| `--accent`             | `#c8a44e` | Primary accent — hazard amber               |
+| `--accent-teal`        | `#56b6c2` | Secondary — desaturated teal (types, info)  |
+| `--accent-red`         | `#d45858` | Errors, denied states                       |
+| `--accent-green`       | `#6a9e4a` | Success, allowed states                     |
+| `--border`             | `#1c2028` | Section separators, panel edges (subtle)    |
+| `--border-interactive` | `#3a4250` | Interactive element borders (3:1 vs bg)     |
 
 ### Typography
 
-- **Display headings**: Figtree (`--font-display`)
+- **Display headings**: Figtree (`--font-display`) — used for all section headings and the hero
 - **Body text**: Inter (`--font-sans`)
-- **Technical labels, readouts, dates, codes**: JetBrains Mono (`--font-mono`)
+- **Technical labels, code, data readouts**: JetBrains Mono (`--font-mono`)
 
-Monospaced type is used heavily for: hero eyebrow (`SYS:INFERADB //`), credibility bar, stat numbers, diff-highlight badges, category labels on Now cards, tab navigation, CTA eyebrow, and changelog dates. This creates the "data readout" feeling.
+### Layout Paradigm
+
+- **Asymmetric split**: Feature sections use heading-left / description-right grid, not centered headers
+- **Statement blocks**: High-impact claims as large centered text with bold first sentence
+- **Generous spacing**: 8–10rem between sections (5rem mobile). Whitespace is structural.
+- **Section separators**: 1px `var(--border)` top border on major sections
+- **Minimal CTA**: Large heading + buttons only. No glow, no eyebrow, no description.
+- **Code windows as visuals**: Product artifacts (schemas, audit trails) replace screenshots
 
 ### Design Rules
 
 - **Border radius: 3px/2px** — angular, not rounded. Industrial, not consumer.
-- **No purple/pink** — the old gradient accent was replaced with hazard amber.
 - **`gradient-text` used sparingly** — only in the hero title and CTA, nowhere else.
 - **Nav has a 2px amber top-border** — status indicator strip, like a control panel.
 - **Buttons are solid amber with dark text** — not gradient, not outlined.
 - **Code syntax highlighting** uses amber (keywords), teal (types), green (strings/literals).
-- **`text-wrap: balance`** on headings, **`text-wrap: pretty`** on paragraphs.
+- **`text-wrap: balance`** on headings and statement text, **`text-wrap: pretty`** on paragraphs.
+- **No stat cards or comparison tables on the homepage** — weave numbers into prose.
+- **No tabbed interfaces on marketing pages** — use stacked feature sections.
+- **No icons as section decoration** — typography and whitespace create hierarchy.
 
 ### What NOT To Do
 
@@ -68,7 +80,11 @@ Monospaced type is used heavily for: hero eyebrow (`SYS:INFERADB //`), credibili
 - Don't add rounded corners above 3px — this is an angular design.
 - Don't use neon glow, lens flare, or gradient backgrounds — lighting is cool and diffuse.
 - Don't use emoji in the UI.
-- Don't make it look like every other SaaS site.
+- Don't use cards for stat grids — weave data into prose.
+- Don't center section headings when there's adjacent body text — use the split layout.
+- Don't repeat CTA buttons between every section — hero + closing CTA is sufficient.
+- Don't reduce section padding below 5rem (mobile) or 8rem (desktop).
+- Don't add decorative elements to fill whitespace — whitespace is the design.
 
 ## Accessibility (WCAG 2.1 AA)
 
@@ -78,14 +94,14 @@ This site targets WCAG 2.1 AA compliance. All changes must maintain these standa
 
 All text colors meet 4.5:1 contrast ratio against both `--bg` (#0b0d11) and `--bg-card` (#10131a):
 
-| Token | Value | vs bg | vs card |
-|-------|-------|-------|---------|
-| `--text` | `#7d8590` | 5.21:1 | 4.98:1 |
-| `--text-secondary` | `#778189` | 4.89:1 | 4.68:1 |
-| `--accent` | `#c8a44e` | 8.22:1 | 7.85:1 |
-| `--accent-teal` | `#56b6c2` | 8.21:1 | 7.85:1 |
-| `--accent-red` | `#d45858` | 4.94:1 | 4.72:1 |
-| `--accent-green` | `#6a9e4a` | 6.11:1 | 5.84:1 |
+| Token              | Value     | vs bg  | vs card |
+| ------------------ | --------- | ------ | ------- |
+| `--text`           | `#7d8590` | 5.21:1 | 4.98:1  |
+| `--text-secondary` | `#778189` | 4.89:1 | 4.68:1  |
+| `--accent`         | `#c8a44e` | 8.22:1 | 7.85:1  |
+| `--accent-teal`    | `#56b6c2` | 8.21:1 | 7.85:1  |
+| `--accent-red`     | `#d45858` | 4.94:1 | 4.72:1  |
+| `--accent-green`   | `#6a9e4a` | 6.11:1 | 5.84:1  |
 
 `--muted` (#555d68, ~2.9:1) is for decorative elements only (borders, separators) — **never use it for essential text**.
 
@@ -134,13 +150,13 @@ Red and green accents are confusable with amber for deuteranopes (~6% of males).
 
 ### Layouts (`_layouts/`)
 
-| Layout         | Wraps                                                | Used by                             |
-| -------------- | ---------------------------------------------------- | ----------------------------------- |
-| `default.html` | Base HTML (head, nav, footer, scripts)               | All other layouts                   |
-| `page.html`    | Centered article with header                         | `contact.html`                      |
-| `docs.html`    | Sidebar + content with nav from `_data/docs_nav.yml` | All `/docs/` pages                  |
-| `dispatch.html` | Header + category tabs + content area               | All `/dispatch/` and `/changelog/` pages |
-| `post.html`     | Full article with breadcrumb (Dispatch / category / date) | Individual Dispatch posts           |
+| Layout          | Wraps                                                     | Used by                                  |
+| --------------- | --------------------------------------------------------- | ---------------------------------------- |
+| `default.html`  | Base HTML (head, nav, footer, scripts)                    | All other layouts                        |
+| `page.html`     | Centered article with header                              | `contact.html`                           |
+| `docs.html`     | Sidebar + content with nav from `_data/docs_nav.yml`      | All `/docs/` pages                       |
+| `dispatch.html` | Header + category tabs + content area                     | All `/dispatch/` and `/changelog/` pages |
+| `post.html`     | Full article with breadcrumb (Dispatch / category / date) | Individual Dispatch posts                |
 
 ### Content Sections
 
@@ -156,19 +172,19 @@ Red and green accents are confusable with amber for deuteranopes (~6% of males).
 
 ### Data Files (`_data/`)
 
-| File            | Drives                                                       |
-| --------------- | ------------------------------------------------------------ |
-| `nav.yml`       | Top navigation links                                         |
-| `docs_nav.yml`  | Documentation sidebar sections and links                     |
-| `features.yml`  | Homepage differentiator cards                                |
+| File            | Drives                                                                        |
+| --------------- | ----------------------------------------------------------------------------- |
+| `nav.yml`       | Top navigation links                                                          |
+| `docs_nav.yml`  | Documentation sidebar sections and links                                      |
+| `features.yml`  | Homepage differentiator cards                                                 |
 | `dispatch.yml`  | Dispatch posts (news, ai, engineering, security) — linked to individual pages |
-| `changelog.yml` | Changelog entries with inline `body` markdown                |
-| `press.yml`     | Press entries with external `url` fields                     |
-| `socials.yml`   | Social links in footer                                       |
+| `changelog.yml` | Changelog entries with inline `body` markdown                                 |
+| `press.yml`     | Press entries with external `url` fields                                      |
+| `socials.yml`   | Social links in footer                                                        |
 
 ### Styles
 
-Single SCSS file at `_sass/main.scss`, imported via `assets/css/styles.scss` (which has empty front matter to trigger Jekyll processing). All CSS variables, component styles, responsive breakpoints, and page-specific styles are in this one file.
+Atomic SCSS architecture at `_sass/`, imported via `assets/css/styles.scss` (which has empty front matter to trigger Jekyll processing). Entry point is `_sass/main.scss` which imports: foundation (tokens, mixins, reset) → atoms (buttons, badges) → molecules (cards, code windows, forms) → organisms (hero, nav, feature-split, statement, CTA) → pages → utilities. Each partial owns its responsive breakpoints.
 
 ### Logo
 

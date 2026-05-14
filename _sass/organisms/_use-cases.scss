@@ -71,3 +71,52 @@
 @media (width <= 1024px) {
   .uc-grid { grid-template-columns: 1fr; }
 }
+
+// ─── Minimal variant — text only, no cards/icons ────────────
+
+.use-cases-minimal {
+  padding: 8rem 0;
+  border-top: 1px solid var(--border);
+
+  > .container > h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 600;
+    color: var(--text-white);
+    letter-spacing: -0.03em;
+    margin-bottom: 3rem;
+  }
+}
+
+.uc-minimal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.uc-minimal-item {
+  h3 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+
+    a {
+      color: var(--text-white);
+      text-decoration: none;
+
+      &:hover { color: var(--accent); }
+    }
+  }
+
+  p {
+    font-size: 0.9375rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+}
+
+@media (width <= 768px) {
+  .use-cases-minimal { padding: 5rem 0; }
+  .uc-minimal-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}

@@ -2,7 +2,7 @@
 title: "AI Agent Authorization"
 layout: default
 body_class: page-solution
-description: "Authorization for AI agents. Delegation modeling, per-user RAG scoping, tool authorization, and decision traces. Works with LangChain, CrewAI, AutoGen."
+description: "Authorization for AI agents. Delegation modeling, per-user RAG scoping, tool authorization, and decision traces. Designed for any agent framework with middleware support."
 ---
 
 <script type="application/ld+json">
@@ -21,13 +21,13 @@ description: "Authorization for AI agents. Delegation modeling, per-user RAG sco
 <section class="solution-hero">
     <div class="container">
         <p class="solution-eyebrow">SYS:SOLUTIONS // AI Agents</p>
-        <h1>Authorization that keeps pace with autonomous agents</h1>
+        <h1>Microsecond authorization for the agentic era</h1>
         <p class="lead">
             Every agent action — every tool call, every document retrieval, every
             API request — needs a permission check scoped to the invoking user.
             Traditional authorization systems buckle under this workload. InferaDB
-            handles dozens of checks per agent turn with no perceptible latency,
-            full delegation modeling, and a complete audit trail.
+            handles thirty or more checks per agent action in microseconds, with
+            full delegation modeling and a cryptographic audit trail.
         </p>
         <div class="solution-hero-actions">
             <a href="/waitlist" class="btn btn-primary">Get Early Access</a>
@@ -63,11 +63,11 @@ description: "Authorization for AI agents. Delegation modeling, per-user RAG sco
         </div>
         <div class="solution-features" data-reveal>
             <div class="solution-feature">
-                <h3>Dozens of checks per turn</h3>
+                <h3>Thirty or more checks per agent action</h3>
                 <p>
-                    An agent reasoning over a user's documents might check permissions
-                    on 20+ resources in a single turn. Traditional policy engines
-                    turn this into 100ms+ of blocking latency per turn.
+                    An agent reasoning over a user's documents may check permissions
+                    on thirty or more resources in a single action. Traditional policy
+                    engines turn this into 100ms+ of blocking latency per turn.
                 </p>
             </div>
             <div class="solution-feature">
@@ -203,9 +203,11 @@ description: "Authorization for AI agents. Delegation modeling, per-user RAG sco
             <div class="solution-feature">
                 <h3>Framework compatibility</h3>
                 <p>
-                    Works with LangChain, CrewAI, AutoGen, and any agent framework
-                    with middleware support. Wrap your tool executor with InferaDB
-                    middleware and every invocation is authorized automatically.
+                    Designed to work with any agent framework that supports
+                    middleware around tool execution. First-class integrations
+                    for LangChain, CrewAI, and AutoGen are on the roadmap;
+                    today, the language-agnostic SDK + REST/gRPC APIs let you
+                    wire authorization into any executor in a few lines.
                 </p>
             </div>
         </div>
@@ -259,7 +261,7 @@ description: "Authorization for AI agents. Delegation modeling, per-user RAG sco
                 <p>
                     Add InferaDB middleware to your agent executor. Every tool call and
                     retrieval request is intercepted and authorized before execution.
-                    Works with LangChain, CrewAI, AutoGen, and custom frameworks.
+                    Pattern works with any framework that supports executor middleware; first-class LangChain / CrewAI / AutoGen integrations on the roadmap.
                 </p>
             </div>
             <div class="solution-feature">
@@ -301,7 +303,7 @@ description: "Authorization for AI agents. Delegation modeling, per-user RAG sco
 
         <div class="solution-section-label" data-reveal><span>SEC.07</span> Related Reading</div>
         <ul class="solution-related" data-reveal>
-            <li><a href="/product/authorization">Authorization Platform</a></li>
+            <li><a href="/product/authorization">Authorization Database</a></li>
             <li><a href="/product/permissions">Permissions Modeling</a></li>
             <li><a href="/dispatch/ai-agents-breaking-authorization">How AI Agents Are Breaking Traditional Authorization</a></li>
             <li><a href="/dispatch/securing-rag-pipelines">Securing RAG Pipelines</a></li>
@@ -314,11 +316,11 @@ description: "Authorization for AI agents. Delegation modeling, per-user RAG sco
     <div class="container">
         <div class="solution-cta-inner" data-reveal>
             <p class="solution-cta-eyebrow">AI agents are shipping today without proper authorization.</p>
-            <h2>Do not be the breach headline.</h2>
+            <h2>Authorize every agent action — at agent latency budgets.</h2>
             <p>
                 Delegation modeling. Per-user RAG scoping. Tool authorization.<br/>
                 Full resolution traces for every agent action.<br/>
-                No perceptible latency overhead.
+                Microseconds, not milliseconds.
             </p>
             <div class="solution-cta-actions">
                 <a href="/waitlist" class="btn btn-primary btn-lg">Get Early Access</a>

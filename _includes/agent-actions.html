@@ -1,0 +1,15 @@
+{%- comment -%}
+  Discuss-with-AI affordance. Mirrors the docs-toc-actions pattern from
+  _layouts/docs.html but as a reusable include for long-form marketing
+  pages (/why, /learn/*, /product/*).
+
+  Place near the bottom of a page, after the body content but before
+  the closing CTA. The "Copy markdown" button is omitted here because
+  marketing pages are HTML-source, not markdown. Claude/ChatGPT
+  receive the canonical URL and can fetch the page themselves.
+{%- endcomment -%}
+<div class="agent-actions" aria-label="Discuss this page with an AI">
+  <span class="agent-actions-label">Discuss with AI:</span>
+  <a class="agent-action" href="https://chatgpt.com/?q=Help%20me%20understand%20this%20InferaDB%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener noreferrer">Open in ChatGPT<span class="sr-only"> (opens in new tab)</span></a>
+  <a class="agent-action" href="https://claude.ai/new?q=Help%20me%20understand%20this%20InferaDB%20page%3A%20{{ page.url | absolute_url | url_encode }}" target="_blank" rel="noopener noreferrer">Open in Claude<span class="sr-only"> (opens in new tab)</span></a>
+</div>

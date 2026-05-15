@@ -2,7 +2,7 @@
 title: "What is authorization? — A plain-language introduction"
 layout: default
 body_class: page-learn
-description: "Authorization decides who is allowed to do what in an application. Learn how RBAC, ReBAC, and ABAC differ — and when each falls short — without the academic detour."
+description: "Authorization decides who is allowed to do what. Learn how RBAC, ReBAC, and ABAC differ — and when each falls short."
 ---
 
 <script type="application/ld+json">
@@ -13,7 +13,11 @@ description: "Authorization decides who is allowed to do what in an application.
   "description": "{{ page.description | escape }}",
   "url": "{{ site.url }}/learn/authorization",
   "learningResourceType": "Concept introduction",
-  "educationalLevel": "Beginner"
+  "educationalLevel": "Beginner",
+  "datePublished": "2026-05-13",
+  "dateModified": "2026-05-15",
+  "author": { "@type": "Organization", "name": "InferaDB" },
+  "publisher": { "@type": "Organization", "name": "InferaDB", "logo": { "@type": "ImageObject", "url": "{{ site.url }}/assets/images/og-logo.png" } }
 }
 </script>
 
@@ -226,6 +230,8 @@ description: "Authorization decides who is allowed to do what in an application.
         </p>
     </div>
 </section>
+
+{% include agent-actions.html %}
 
 <section class="learn-cta" aria-labelledby="learn-cta-heading">
     <div class="container">

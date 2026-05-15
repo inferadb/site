@@ -1,9 +1,58 @@
 ---
-title: Pricing
+title: "Pricing — Usage-based authorization, no per-seat trap"
 layout: default
 body_class: page-pricing
 description: "InferaDB pricing — start free, scale from $29/month. Usage-based, no per-seat charges. Enterprise add-ons available."
 ---
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  "name": "InferaDB Pricing",
+  "url": "{{ site.url }}/pricing",
+  "itemListElement": [
+    {
+      "@type": "Offer",
+      "name": "Free",
+      "price": "0",
+      "priceCurrency": "USD",
+      "priceSpecification": { "@type": "UnitPriceSpecification", "price": "0", "priceCurrency": "USD", "unitText": "MONTH" },
+      "description": "100K checks/month, 10K relationships, 1 vault, 50 req/s. No credit card required.",
+      "availability": "https://schema.org/PreOrder",
+      "url": "{{ site.url }}/waitlist"
+    },
+    {
+      "@type": "Offer",
+      "name": "Launch",
+      "price": "29",
+      "priceCurrency": "USD",
+      "priceSpecification": { "@type": "UnitPriceSpecification", "price": "29", "priceCurrency": "USD", "unitText": "MONTH" },
+      "description": "Production-ready cloud authorization. Usage-based scaling.",
+      "availability": "https://schema.org/PreOrder",
+      "url": "{{ site.url }}/waitlist"
+    },
+    {
+      "@type": "Offer",
+      "name": "Scale",
+      "price": "499",
+      "priceCurrency": "USD",
+      "priceSpecification": { "@type": "UnitPriceSpecification", "price": "499", "priceCurrency": "USD", "unitText": "MONTH" },
+      "description": "High-volume cloud authorization with priority support.",
+      "availability": "https://schema.org/PreOrder",
+      "url": "{{ site.url }}/waitlist"
+    },
+    {
+      "@type": "Offer",
+      "name": "Enterprise",
+      "priceCurrency": "USD",
+      "description": "Custom contracts, dedicated infrastructure, SSO/SCIM, custom SLA, on-prem option.",
+      "availability": "https://schema.org/PreOrder",
+      "url": "{{ site.url }}/contact"
+    }
+  ]
+}
+</script>
 
 <section class="pricing-section">
     <div class="container">

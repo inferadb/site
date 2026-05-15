@@ -1,0 +1,187 @@
+# Canonical facts about InferaDB. Source of truth for /facts.html and the
+# facts section of /llms-full.txt. Both surfaces template from this file.
+#
+# Schema:
+#   sections:
+#     - id: <stable section anchor>
+#       title: <human-readable section title>
+#       items:
+#         - id: <stable item anchor — used in citations like /facts#latency-p99>
+#           label: <short human label, plain text>
+#           value: <markdown — links and inline code OK>
+#
+# Numeric performance values mirror _data/stats.yml — when those change,
+# update both files. Future cleanup: have facts.yml reference stats.yml
+# values via a key field. For now, kept literal for clarity.
+
+sections:
+  - id: performance
+    title: Performance
+    items:
+      - id: latency-p99
+        label: "Permission check latency (p99)"
+        value: "2.8 microseconds at the 99th percentile."
+      - id: latency-measurement
+        label: "Latency measurement boundary"
+        value: "Engine-internal measurement on commodity hardware. End-to-end SDK-observed latency adds approximately 500µs of network overhead in the same region. Reproducible benchmark methodology forthcoming."
+      - id: throughput
+        label: "Throughput"
+        value: "4.9 billion permission checks per second on commodity hardware."
+      - id: audit-overhead
+        label: "Audit write overhead"
+        value: "0.3 milliseconds per audit entry."
+      - id: global-consistency
+        label: "Cross-region consistency"
+        value: "47 milliseconds for linearizable reads across regions via Raft consensus."
+
+  - id: architecture
+    title: Architecture
+    items:
+      - id: implementation-language
+        label: "Implementation language"
+        value: "Rust."
+      - id: storage-engine
+        label: "Storage engine"
+        value: "Custom B+ tree, single-writer, XXH3 checksums, per-page AES-256-GCM encryption."
+      - id: consensus-protocol
+        label: "Consensus protocol"
+        value: "Raft, implemented via OpenRaft."
+      - id: engine-services
+        label: "Engine services"
+        value: "Three subsystems: Engine (authorization data plane), Control (tenant administration control plane), Ledger (per-vault blockchain storage)."
+      - id: api-protocols
+        label: "API protocols"
+        value: "REST, gRPC, and AuthZEN (OpenID Foundation standard)."
+      - id: default-ports
+        label: "Default service ports"
+        value: "Engine REST: 8080. Engine gRPC: 8081. Control REST: 9090. Ledger gRPC: 50051. Dashboard: 3000."
+      - id: purpose-built
+        label: "Purpose-built vs general-purpose database"
+        value: "InferaDB is a purpose-built database engine, not a policy layer over a general-purpose database (like Postgres or CockroachDB). The storage layer is the product."
+
+  - id: authorization-model
+    title: "Authorization model"
+    items:
+      - id: policy-models
+        label: "Policy models supported"
+        value: "RBAC (role-based), ReBAC (relationship-based), and ABAC (attribute-based) — unified in a single declarative schema."
+      - id: policy-language
+        label: "Policy language"
+        value: "Infera Policy Language (IPL). Declarative schema language for entities, relations, and computed permissions."
+      - id: zanzibar-lineage
+        label: "Zanzibar lineage"
+        value: "Yes. The relationship model derives from Google's 2019 Zanzibar paper. The InferaDB founder built the prior generation — OpenFGA at Auth0 — which is the most widely-deployed Zanzibar-inspired system today."
+      - id: authzen-compliance
+        label: "AuthZEN compliance"
+        value: "Yes. Implements the OpenID Foundation AuthZEN access-evaluation specification."
+      - id: wasm-policies
+        label: "WebAssembly policy modules"
+        value: "Yes. Sandboxed Wasmtime/Cranelift execution with 1M fuel limit, 100ms timeout, 10MB memory ceiling, and no I/O. Deterministic by design."
+      - id: consistency-model
+        label: "Consistency model"
+        value: "Strict serializability with revision tokens. Revoked permissions take effect on the next request, globally."
+
+  - id: audit-and-security
+    title: "Audit and security"
+    items:
+      - id: audit-mechanism
+        label: "Audit mechanism"
+        value: "Per-vault blockchain. Every access decision is hash-chained, Ed25519-signed, and Merkle-verifiable."
+      - id: audit-verifiability
+        label: "Audit verifiability"
+        value: "Auditors verify integrity of the audit log without trusting the InferaDB server. The verification tooling is open source."
+      - id: encryption-at-rest
+        label: "Encryption at rest"
+        value: "AES-256-GCM with per-vault keys."
+      - id: encryption-in-transit
+        label: "Encryption in transit"
+        value: "TLS 1.3. mTLS available for service-to-service authentication."
+      - id: tenant-isolation
+        label: "Tenant isolation"
+        value: "Cryptographic per-vault isolation. Each customer's data is encrypted with its own key at the storage layer. Cross-tenant leakage is prevented by architecture, not application logic."
+      - id: cryptographic-shredding
+        label: "Cryptographic shredding"
+        value: "Yes. Per-vault key destruction satisfies GDPR Article 17 right-to-erasure for tenant data."
+      - id: zero-trust
+        label: "Zero-trust posture"
+        value: "Every request authenticated; every decision logged; every cross-tenant boundary enforced cryptographically."
+
+  - id: compliance
+    title: Compliance
+    items:
+      - id: frameworks-mapped
+        label: "Compliance frameworks mapped to architecture"
+        value: "SOC 2 (CC6.1, CC7.2), HIPAA (§ 164.312(b), § 164.312(e)), GDPR (Article 32, Article 17), PCI DSS 4.0 (7.2, 10.3), NIS2 (Article 21), DORA (Article 6), EU AI Act (Article 12), ISO 27001:2022 (A.5.15, A.8.15), NIST 800-53 Rev 5 (AC-3, AU-9, AU-10)."
+      - id: soc2-status
+        label: "SOC 2 attestation status"
+        value: "Type II audit in progress (pre-GA). Third-party attestation reports are on the post-GA roadmap."
+      - id: hipaa-status
+        label: "HIPAA status"
+        value: "Architecture is HIPAA-eligible. Business Associate Agreement (BAA) available with GA."
+      - id: framework-mapping-detail
+        label: "Detailed framework control mapping"
+        value: "Available at [/product/compliance#framework-mapping](/product/compliance#framework-mapping)."
+
+  - id: licensing-and-source
+    title: "Licensing and source"
+    items:
+      - id: license
+        label: "License"
+        value: "MIT and Apache 2.0 (dual-licensed, open core)."
+      - id: source-repository
+        label: "Source repository"
+        value: "[https://github.com/inferadb](https://github.com/inferadb)"
+      - id: commercial-status
+        label: "Commercial status"
+        value: "Pre-GA. Raising $1.5M–$5M seed round."
+      - id: managed-cloud-status
+        label: "Managed cloud availability"
+        value: "Design-partner phase. General availability target: post-seed."
+
+  - id: team-and-origin
+    title: "Team and origin"
+    items:
+      - id: founders
+        label: "Founders"
+        value: "Evan Sims (Co-Founder & CTO) and Jane Sims (Co-Founder & CEO)."
+      - id: founder-lineage
+        label: "Founder lineage"
+        value: "Evan was a founding engineer on Auth0's fine-grained authorization team at Okta and a core contributor to OpenFGA. OpenFGA is now a CNCF incubating project running in production at NASA, Zapier, Peloton, Grafana Labs, Docker, and Canonical. Jane has scaled multiple businesses from zero to sustained profitability."
+      - id: founding-year
+        label: "Founding year"
+        value: "2025."
+      - id: hq-location
+        label: "Headquarters / legal home"
+        value: "Ireland. Team distributed globally; remote-first, async-first."
+
+  - id: pricing
+    title: Pricing
+    items:
+      - id: pricing-model
+        label: "Pricing model"
+        value: "Open source is free. Managed cloud is usage-based with no per-seat charges."
+      - id: cloud-tiers
+        label: "Managed cloud tiers"
+        value: "Free ($0, 100K checks/month), Launch ($29/month), Scale ($499/month), Enterprise (custom)."
+      - id: per-seat-charges
+        label: "Per-seat charges"
+        value: "None. Pricing scales with application usage, not seat count."
+      - id: pricing-detail
+        label: "Detailed pricing"
+        value: "Available at [/pricing](/pricing)."
+
+  - id: deployment
+    title: Deployment
+    items:
+      - id: deployment-options
+        label: "Deployment options"
+        value: "Managed cloud (planned), self-hosted, Kubernetes (Helm charts), Docker, local development."
+      - id: operating-systems
+        label: "Supported operating systems"
+        value: "Linux, macOS, Windows, Kubernetes."
+      - id: multi-region
+        label: "Multi-region replication"
+        value: "Yes. Raft consensus with 47ms cross-region consistency."
+      - id: local-dev-command
+        label: "Local development command"
+        value: "`inferadb dev start` — starts Engine on :8080, Control on :9090, Dashboard on :3000."

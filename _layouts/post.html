@@ -61,3 +61,34 @@ body_class: page-post
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ page.post_title | jsonify }},
+  "description": {{ page.description | default: page.excerpt | default: page.post_title | jsonify }},
+  "datePublished": "{{ page.date | date: '%Y-%m-%d' }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date: '%Y-%m-%d' }}",
+  "url": "{{ site.url }}{{ page.url }}",
+  "mainEntityOfPage": "{{ site.url }}{{ page.url }}",
+  "image": "{{ site.url }}{{ page.hero | default: '/assets/images/og-logo.png' }}",
+  "articleSection": "{{ bc_cat_name }}",
+  "author": [
+    {%- if page.authors -%}
+      {%- for author_name in page.authors -%}
+        {%- assign member = nil -%}
+        {%- for m in site.data.team -%}{%- if m.name == author_name -%}{%- assign member = m -%}{%- endif -%}{%- endfor -%}
+        {%- unless forloop.first %},{% endunless %}
+        { "@type": "Person", "name": {{ author_name | jsonify }}{% if member.role %}, "jobTitle": {{ member.role | jsonify }}{% endif %} }
+      {%- endfor -%}
+    {%- else -%}
+      { "@type": "Organization", "name": "InferaDB" }
+    {%- endif -%}
+  ],
+  "publisher": {
+    "@type": "Organization",
+    "name": "InferaDB",
+    "logo": { "@type": "ImageObject", "url": "{{ site.url }}/assets/images/og-logo.png" }
+  }
+}
+</script>

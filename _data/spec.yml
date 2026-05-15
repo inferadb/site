@@ -1,0 +1,167 @@
+# Integration specification for InferaDB. Source of truth for /spec.html
+# and the integration-spec section of /llms-full.txt. Both surfaces
+# template from this file.
+#
+# Schema:
+#   sections:
+#     - id: <section anchor>
+#       title: <section heading>
+#       lead: <optional intro paragraph, markdown>
+#       subsections:
+#         - id: <subsection anchor>
+#           title: <subsection heading>
+#           body: <markdown — lists, prose, code blocks, all OK>
+#
+# Markdown bodies are rendered to HTML by `markdownify` on /spec.html and
+# emitted as raw markdown in /llms-full.txt. Anchor IDs preserved at the
+# subsection level.
+
+sections:
+  - id: apis
+    title: APIs
+    subsections:
+      - id: rest-engine
+        title: "Engine REST API (port 8080)"
+        body: |
+          - `POST /v1/evaluate` — check whether a subject has a permission on a resource
+          - `POST /v1/relationships:write` — write relationship tuples (transactional)
+          - `POST /v1/relationships:list` — query relationship tuples
+          - `POST /v1/resources/list` — list resources accessible to a subject
+          - `POST /v1/subjects/list` — list subjects with access to a resource
+          - `POST /v1/simulate` — evaluate against a hypothetical schema or relationship set
+          - `POST /v1/expand` — expand a permission into its computed-userset tree
+          - `POST /v1/watch` — server-sent-events stream of permission-change events
+          - `GET /health/live`, `GET /health/ready`, `GET /health/startup` — health probes (no auth)
+          - `GET /metrics` — Prometheus metrics
+
+      - id: rest-authzen
+        title: "AuthZEN API (port 8080, /access/v1/)"
+        body: |
+          - `POST /access/v1/evaluation` — single permission evaluation (OpenID Foundation AuthZEN spec)
+          - `POST /access/v1/evaluations` — batch evaluation, up to 100 per call
+          - `POST /access/v1/search/resource` — list-resources equivalent
+          - `POST /access/v1/search/subject` — list-subjects equivalent
+
+      - id: grpc-engine
+        title: "Engine gRPC API (port 8081)"
+        body: |
+          Service: `AuthorizationService`. Methods:
+
+          - `Evaluate`
+          - `Expand`
+          - `WriteRelationships`
+          - `ListResources`
+          - `ListSubjects`
+          - `Watch`
+          - `Simulate`
+
+      - id: rest-control
+        title: "Control REST API (port 9090)"
+        body: |
+          Authentication endpoints:
+
+          - `POST /v1/auth/register`
+          - `POST /v1/auth/login/password`
+          - `POST /v1/auth/logout`
+          - `POST /v1/auth/verify-email`
+          - `POST /v1/auth/cli/authorize` — PKCE flow
+          - `POST /v1/auth/cli/token`
+
+          CRUD:
+
+          - `/v1/organizations`
+          - `/v1/organizations/{org}/vaults`
+          - `/v1/organizations/{org}/clients`
+          - `/v1/organizations/{org}/teams`
+
+          Token issuance:
+
+          - `POST /v1/organizations/{org}/vaults/{vault}/tokens`
+          - `POST /v1/tokens/refresh`
+          - `POST /v1/token` — client assertion (RFC 7523)
+
+      - id: grpc-ledger
+        title: "Ledger gRPC API (port 50051)"
+        body: |
+          Services: `ReadService`, `WriteService`, `AdminService`, `OrganizationService`, `VaultService`, `UserService`, `TokenService`, `EventsService`, `HealthService`, `RaftService`.
+
+  - id: authentication
+    title: Authentication
+    subsections:
+      - id: auth-mechanisms
+        body: |
+          - **JWT** — Ed25519, RFC 7523 client assertion. JWKS endpoint on Control.
+          - **OAuth 2.0** — Standard authorization code flow with PKCE for CLI; client credentials for service-to-service.
+          - **WebAuthn** — Passkey support for user authentication on the Dashboard.
+          - **mTLS** — Certificate-based authentication for service-to-service traffic.
+
+  - id: schema
+    title: "Schema (IPL)"
+    subsections:
+      - id: schema-info
+        body: |
+          - **File** — `schema.ipl`, plain text, version-controlled in your repo.
+          - **Top-level constructs** — `type`, `relation`, `forbid`, `permission`.
+          - **Expression operators** — `|` (union/OR), `&` (intersection/AND), `-` (exclusion/AND-NOT), `from` (tuple-to-userset traversal), `->` (related-object dereference), `module("name")` (WASM call).
+          - **Wildcards** — `user:*` for public-resource semantics.
+          - **Evaluation order** — `forbid` rules first (deny-overrides). Permits second. Union short-circuits on first Allow. Intersection short-circuits on first Deny.
+          - **Schema validation** — Three-pass validation: syntax, type-checking, reference resolution. `inferadb schemas validate schema.ipl` for CLI validation.
+
+  - id: sdks
+    title: SDKs
+    subsections:
+      - id: sdk-list
+        body: |
+          "Planned" indicates committed roadmap; check [/docs/](/docs/) for current shipping state.
+
+          - **Rust** (shipping) — `crates.io`, `Client::builder()`, `vault.check()`, `vault.require()`, `vault.check_batch()`, `MockClient`, `InMemoryClient`, `TestVault`
+          - **TypeScript** (planned) — `@inferadb/sdk`, Express and Next.js middleware
+          - **Go** (planned) — `github.com/inferadb/go`, net/http middleware, gRPC interceptor
+          - **Python** (planned) — `inferadb`, async/sync, FastAPI dependency, Django decorator
+          - **Java** (planned) — `com.inferadb:inferadb-sdk`, Spring Boot `@RequirePermission`
+          - **.NET** (planned) — `InferaDB.Sdk`, ASP.NET Core authorization policies
+          - **PHP** (planned) — `inferadb/inferadb-php`, Laravel middleware, Symfony Voter
+          - **Ruby** (planned) — `inferadb` gem, Rails controller concern
+          - **Elixir** (planned) — Phoenix Plug, LiveView
+          - **C/C++** (planned) — `libinferadb`, C11 ABI + C++20 RAII wrapper
+
+  - id: deployment
+    title: Deployment
+    subsections:
+      - id: deployment-options
+        body: |
+          - **Local development** — `inferadb dev start` runs Engine on :8080, Control on :9090, Dashboard on :3000.
+          - **Docker images** — `inferadb/inferadb-engine`, `inferadb/inferadb-control`, `inferadb/inferadb-ledger`.
+          - **Kubernetes** — Helm charts. Reference deployment uses Talos Linux + Cilium CNI + Flux CD + Terraform.
+          - **Terraform provider** — `inferadb/inferadb` manages organizations, vaults, clients, certificates, teams, grants.
+
+  - id: configuration
+    title: Configuration
+    subsections:
+      - id: config-options
+        body: |
+          - **Environment variables** — Prefix `INFERADB__ENGINE__`, `INFERADB__CONTROL__`, `INFERADB__LEDGER__`, with double-underscore separator for nested keys.
+          - **YAML configuration** — Pass with `--config /path/to/config.yaml`.
+          - **Dry-run validation** — `inferadb --validate` exits non-zero on configuration errors without starting the server.
+
+  - id: observability
+    title: Observability
+    subsections:
+      - id: observability-options
+        body: |
+          - **Metrics** — Prometheus exposition at `GET /metrics` on each service. Standard authorization metrics: check rate, latency histogram, deny rate, audit-write latency.
+          - **Tracing** — OpenTelemetry OTLP. Each Check call produces a trace span with the resolution path.
+          - **Logging** — Structured JSON to stdout. Configure verbosity via `RUST_LOG`.
+
+  - id: standards-compliance
+    title: "Standards compliance"
+    subsections:
+      - id: standards-list
+        body: |
+          - **AuthZEN** — OpenID Foundation access-evaluation API specification
+          - **OAuth 2.0** — RFC 6749, plus PKCE (RFC 7636) for CLI
+          - **JWT client assertion** — RFC 7523
+          - **WebAuthn** — W3C standard for passkey authentication
+          - **OpenTelemetry OTLP** — for distributed tracing
+          - **Prometheus exposition format** — for metrics
+          - **RFC 9116** — security disclosure (see [/.well-known/security.txt](/.well-known/security.txt))

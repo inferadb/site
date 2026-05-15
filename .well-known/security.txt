@@ -1,0 +1,14 @@
+---
+permalink: /.well-known/security.txt
+sitemap: false
+layout: null
+---
+# InferaDB security disclosure policy
+# https://datatracker.ietf.org/doc/html/rfc9116
+
+Contact: mailto:security@inferadb.com
+Expires: 2027-05-15T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://inferadb.com/.well-known/security.txt
+Policy: https://github.com/inferadb/.github/blob/main/SECURITY.md
+Acknowledgments: https://inferadb.com/security

@@ -1,5 +1,5 @@
 ---
-title: "Investor Brief — InferaDB"
+title: "Investor Brief"
 layout: default
 body_class: page-investors
 description: "InferaDB investor brief. The authorization database for the agentic era and the regulated enterprise."
@@ -10,71 +10,102 @@ sitemap: false
 <section class="investors-hero" aria-labelledby="investors-hero-heading">
     <div class="container investors-narrow">
         <p class="investors-eyebrow">SYS:INVESTORS // Investment Brief</p>
-        <h1 id="investors-hero-heading">The authorization database for the agentic era and the regulated enterprise.</h1>
+        <h1 id="investors-hero-heading">
+            The authorization database for the agentic era and the regulated
+            enterprise.
+        </h1>
         <p class="lead">
             Authentication consolidated a decade ago — Okta IPO'd, acquired
             Auth0 for $6.5 billion, and the category found its winner.
             Authorization didn't. We're building the managed authorization
             database for the two forces consolidating the category now: AI
-            agents that need fine-grained permission checks at machine
-            speed, and regulators that demand cryptographic proof of every
-            access decision. Built by the team that shipped the prior
-            generation of this category at Auth0/Okta.
+            agents that need fine-grained permission checks in microseconds, and
+            regulators that demand cryptographic proof of every access decision.
+            We shipped the prior generation of this category at Auth0/Okta.
         </p>
         <div class="investors-cta-actions">
-            <a href="https://calendar.app.google/R1cR6fFNAitYrZDPA" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">Book a 20-min walkthrough</a>
-            <a href="https://docs.google.com/presentation/d/1opI-0OfFR_8KZit1sjWGqU7COojlHv-orXPF2S8qG8Q/edit?usp=sharing" class="btn btn-ghost btn-lg" target="_blank" rel="noopener noreferrer">View the deck</a>
+            <a
+                href="https://calendar.app.google/R1cR6fFNAitYrZDPA"
+                class="btn btn-primary btn-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Book a 20-min walkthrough</a
+            >
+            <a
+                href="https://docs.google.com/presentation/d/1opI-0OfFR_8KZit1sjWGqU7COojlHv-orXPF2S8qG8Q/edit?usp=sharing"
+                class="btn btn-ghost btn-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View the deck</a
+            >
         </div>
     </div>
 </section>
 
-<section class="investors-section" aria-labelledby="investors-convergence-heading">
+<section
+    class="investors-section"
+    aria-labelledby="investors-convergence-heading"
+>
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.01</span> The convergence</div>
-        <h2 id="investors-convergence-heading">Two forces are consolidating authorization right now — and they're feeding each other.</h2>
+        <div class="investors-section-label">
+            <span>SEC.01</span> The convergence
+        </div>
+        <h2 id="investors-convergence-heading">
+            Two forces are consolidating authorization right now — and they're
+            feeding each other.
+        </h2>
         <p>
-            Authorization wasn't ignored for a decade because the problem
-            was unimportant. It was ignored because the workloads tolerated
-            the tolerable. Human users making synchronous requests at human
-            speeds. Application logs that auditors accepted because the
-            alternative was nothing better.
+            Authorization wasn't ignored for a decade because the problem was
+            unimportant. It was ignored because the workloads tolerated the
+            tolerable. Human users making synchronous requests at human speeds.
+            Application logs that auditors accepted because the alternative was
+            nothing better.
         </p>
-        <p>
-            Both conditions broke in the same 18 months.
-        </p>
+        <p>Both conditions broke in the same 18 months.</p>
 
         <h3>AI agents broke the model.</h3>
         <p>
-            A traditional API request triggers one or two permission checks.
-            An AI agent action triggers thirty or more — one per principal it
-            acts on behalf of, one per tool it invokes, one per artifact it
-            touches. At the 5–50 millisecond per-check latency floor of
-            Postgres-backed authorization systems, a single agent action
-            takes seconds to authorize. The product is broken before any
-            business logic runs.
+            A traditional API request triggers one or two permission checks. An
+            AI agent action triggers thirty or more — one per principal it acts
+            on behalf of, one per tool it invokes, one per artifact it touches.
+            At the 5–50 millisecond per-check latency floor of Postgres-backed
+            authorization systems, a single agent action takes seconds to
+            authorize. The product is broken before any business logic runs.
         </p>
         <p>
             ISACA framed it as <em>"the looming authorization crisis."</em>
-            Cisco and Microsoft both shipped agent-authorization frameworks
-            at RSA 2026. When two security incumbents move on the same topic
-            on the same date, the category is consolidating. Enterprise
-            security teams are now actively shopping for the layer.
+            Cisco and Microsoft both shipped agent-authorization frameworks at
+            RSA 2026. When two security incumbents move on the same topic on the
+            same date, the category is consolidating. Enterprise security teams
+            are now actively shopping for the layer.
         </p>
 
         <h3>Regulators caught up — to the same problem.</h3>
         <p>
-            Three regulations now compel auditable, fine-grained access
-            control with tamper-evident logs:
+            Three regulations now compel auditable, fine-grained access control
+            with tamper-evident logs:
         </p>
         <ul>
-            <li><strong>NIS2</strong> (EU, effective 2024) — extends cybersecurity obligations to ~160,000 EU entities including critical-infrastructure operators.</li>
-            <li><strong>DORA</strong> (EU financial sector, effective January 2025) — mandates auditable ICT risk controls for every financial firm operating in the EU.</li>
-            <li><strong>EU AI Act</strong> (phased through 2026–2027) — requires record-keeping for high-risk AI systems, including who authorized what action.</li>
+            <li>
+                <strong>NIS2</strong> (EU, effective 2024) — extends
+                cybersecurity obligations to ~160,000 EU entities including
+                critical-infrastructure operators.
+            </li>
+            <li>
+                <strong>DORA</strong> (EU financial sector, effective January
+                2025) — mandates auditable ICT risk controls for every financial
+                firm operating in the EU.
+            </li>
+            <li>
+                <strong>EU AI Act</strong> (phased through 2026–2027) — requires
+                record-keeping for high-risk AI systems, including who
+                authorized what action.
+            </li>
         </ul>
         <p>
-            US regulators are pulling in the same direction: NIST 800-53 Rev
-            5 access-enforcement controls, FedRAMP audit-log requirements,
-            and the SEC's 2023 cyber-disclosure rule.
+            US regulators are pulling in the same direction: NIST 800-53 Rev 5
+            access-enforcement controls, FedRAMP audit-log requirements, and the
+            SEC's 2023 cyber-disclosure rule.
         </p>
 
         <h3>The intersection is the wedge.</h3>
@@ -83,85 +114,97 @@ sitemap: false
             <em>auditable authorization records</em> for every high-risk AI
             system. NIS2 doesn't just require access controls — it requires
             <em>tamper-evident</em> ones. The agentic era and the regulatory
-            cycle aren't separate timing triggers. The regulatory cycle is
-            the regulators' response to the agentic era.
+            cycle aren't separate timing triggers. The regulatory cycle is the
+            regulators' response to the agentic era.
         </p>
         <p>
             Every authorization vendor in the market addresses one half. We
             built the system that addresses both — at agent speed, with
-            cryptographic audit by default. Every enterprise CISO has this
-            on the 2026 budget.
+            cryptographic audit by default. Every enterprise CISO has this on
+            the 2026 budget.
         </p>
     </div>
 </section>
 
 <section class="investors-section" aria-labelledby="investors-market-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.02</span> The market</div>
-        <h2 id="investors-market-heading">$43 billion by 2030. The under-invested half. No managed leader.</h2>
+        <div class="investors-section-label">
+            <span>SEC.02</span> The market
+        </div>
+        <h2 id="investors-market-heading">
+            $43 billion by 2030. The under-invested half. No managed leader.
+        </h2>
         <p>
             The IAM (identity and access management) market is approximately
-            <strong>$26 billion today, projected to reach $43 billion by 2030</strong>
+            <strong
+                >$26 billion today, projected to reach $43 billion by
+                2030</strong
+            >
             on industry analyst estimates. It splits roughly in half:
             <em>authentication</em> — proving who someone is — and
             <em>authorization</em> — deciding what they're allowed to do.
         </p>
         <p>
-            Authentication consolidated. Okta, Auth0 (acquired by Okta for
-            $6.5 billion), Microsoft Entra, and a handful of regional
-            incumbents now own most of it. Authorization did not. Total
-            funding across pure-play authorization startups remains under
+            Authentication consolidated. Okta, Auth0 (acquired by Okta for $6.5
+            billion), Microsoft Entra, and a handful of regional incumbents now
+            own most of it. Authorization did not. Total funding across
+            pure-play authorization startups remains under
             <strong>$70 million</strong> — roughly one-tenth of Auth0's exit
-            value alone. Every company that needs fine-grained access
-            control still builds it themselves: bespoke role tables,
-            scattered permission checks, audit logs nobody trusts.
+            value alone. Every company that needs fine-grained access control
+            still builds it themselves: bespoke role tables, scattered
+            permission checks, audit logs nobody trusts.
         </p>
         <p>
             That arrangement was tolerable when users were human and
-            applications were monolithic. The convergence in SEC.01 has
-            made it untenable for the next 18 months.
+            applications were monolithic. The convergence in SEC.01 has made it
+            untenable for the next 18 months.
         </p>
     </div>
 </section>
 
 <section class="investors-section" aria-labelledby="investors-product-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.03</span> What we built</div>
-        <h2 id="investors-product-heading">A managed authorization database — call an API, never operate the infrastructure.</h2>
+        <div class="investors-section-label">
+            <span>SEC.03</span> What we built
+        </div>
+        <h2 id="investors-product-heading">
+            A managed authorization database — call an API, never operate the
+            infrastructure.
+        </h2>
         <p>
             InferaDB is a fully managed authorization service. Customers
             integrate by calling an API. We handle multi-region replication,
             zero-downtime upgrades, compliance posture, and monitoring.
-            Underneath, it's a purpose-built database engine written in Rust
-            — not a policy library bolted onto Postgres.
+            Underneath, it's a purpose-built database engine written in Rust —
+            not a policy library bolted onto Postgres.
         </p>
         <p>
-            That architectural choice is the entire product. It produces
-            three properties that the competitive set cannot match without
-            rebuilding their storage layer:
+            That architectural choice is the entire product. It produces three
+            properties that the competitive set cannot match without rebuilding
+            their storage layer:
         </p>
         <ul>
             <li>
-                <strong>Microsecond decisions.</strong> Permission checks
-                run in 2.8 microseconds at the 99th percentile — roughly
-                two thousand times faster than published competitor
-                latencies. This is what makes AI agent workloads tractable.
+                <strong>Microsecond decisions.</strong> Permission checks run in
+                2.8 microseconds at the 99th percentile — roughly two thousand
+                times faster than published competitor latencies. This is what
+                makes AI agent workloads tractable.
             </li>
             <li>
-                <strong>Cryptographic audit by default.</strong> Every
-                access decision is hash-chained and Merkle-verified.
-                Auditors confirm the integrity of the log without trusting
-                our infrastructure. No competitor offers this; for SOC 2,
-                HIPAA, NIS2, and EU AI Act conformance it is the
-                difference between a clean audit and a finding.
+                <strong>Cryptographic audit by default.</strong> Every access
+                decision is hash-chained and Merkle-verified. Auditors confirm
+                the integrity of the log without trusting our infrastructure. No
+                competitor offers this; for SOC 2, HIPAA, NIS2, and EU AI Act
+                conformance it is the difference between a clean audit and a
+                finding.
             </li>
             <li>
                 <strong>Cryptographic per-tenant isolation.</strong> Each
-                customer's data is encrypted with its own key at the
-                storage layer. Cross-tenant leakage isn't prevented by
-                application logic; it's architecturally impossible. In
-                healthcare, government, and financial services, this is
-                the difference between selling and not selling.
+                customer's data is encrypted with its own key at the storage
+                layer. Cross-tenant leakage isn't prevented by application
+                logic; it's architecturally impossible. In healthcare,
+                government, and financial services, this is the difference
+                between selling and not selling.
             </li>
         </ul>
         <p>
@@ -176,38 +219,44 @@ sitemap: false
 <section class="investors-section" aria-labelledby="investors-team-heading">
     <div class="container investors-narrow">
         <div class="investors-section-label"><span>SEC.04</span> Why us</div>
-        <h2 id="investors-team-heading">We built the prior generation of this category. We know exactly where it broke.</h2>
+        <h2 id="investors-team-heading">
+            We built the prior generation of this category. We know exactly
+            where it broke.
+        </h2>
         <p>
             <strong>Evan Sims (co-founder &amp; CTO)</strong> was a founding
-            engineer on Auth0's fine-grained authorization team at Okta and
-            a core contributor to <strong>OpenFGA</strong> — now a CNCF
-            incubating project running in production at NASA, Zapier,
-            Peloton, Grafana Labs, Docker, and Canonical. He shipped the
-            authorization system that millions of developers depend on,
-            then spent a year hitting its architectural ceilings. InferaDB
-            is what he wished he could have built at Auth0.
+            engineer on Auth0's fine-grained authorization team at Okta and a
+            core contributor to <strong>OpenFGA</strong> — now a CNCF incubating
+            project running in production at NASA, Zapier, Peloton, Grafana
+            Labs, Docker, and Canonical. He shipped the authorization system
+            that millions of developers depend on, then spent a year hitting its
+            architectural ceilings. InferaDB is what he wished he could have
+            built at Auth0.
         </p>
         <p>
             <strong>Jane Sims (co-founder &amp; CEO)</strong> has scaled
-            multiple businesses from zero to sustained profitability and
-            owns InferaDB's go-to-market. Operator background, not
-            first-time founder.
+            multiple businesses from zero to sustained profitability and owns
+            InferaDB's go-to-market. Operator background, not first-time
+            founder.
         </p>
         <p>
-            We didn't study this market. We built the prior generation of
-            it. That is a credibility line no other authorization startup
-            can credibly write.
+            We didn't study this market. We built the prior generation of it.
+            That is a credibility line no other authorization startup can
+            credibly write.
         </p>
 
         <h3>How we ship</h3>
         <p>
-            Two co-founders today, building toward a six-engineer team by
-            close of seed. Engineering cadence is public — the
+            Two co-founders today, building toward a six-engineer team by close
+            of seed. Engineering cadence is public — the
             <a href="https://github.com/inferadb">github.com/inferadb</a>
-            org shows commit activity, the public RFC process, and the
-            release cadence. Jane runs the GTM motion she's run before.
-            Evan writes the storage engine he architected at Auth0.
-            We're not a sales team. We're a build team that ships.
+            org shows commit activity, the public RFC process, and the release
+            cadence.
+        </p>
+        <p>
+            Jane runs the GTM motion she's run before. Evan writes the storage
+            engine he architected at Auth0. We're not a sales team. We're a
+            build team that ships.
         </p>
         <p>
             <a href="/about">More about the team and how we work &rarr;</a>
@@ -217,14 +266,18 @@ sitemap: false
 
 <section class="investors-section" aria-labelledby="investors-win-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.05</span> Why we win</div>
-        <h2 id="investors-win-heading">A four-year structural lead, not a feature lead.</h2>
+        <div class="investors-section-label">
+            <span>SEC.05</span> Why we win
+        </div>
+        <h2 id="investors-win-heading">
+            A four-year structural lead, not a feature lead.
+        </h2>
         <p>
-            The competitive set in authorization is well-funded and
-            partially established. Every vendor sells some variant of
-            "fine-grained access control." None has the architecture to
-            ship the three properties we ship — and none can add them
-            without rebuilding their storage engine. The honest comparison:
+            The competitive set in authorization is well-funded and partially
+            established. Every vendor sells some variant of "fine-grained access
+            control." None has the architecture to ship the three properties we
+            ship — and none can add them without rebuilding their storage
+            engine. The honest comparison:
         </p>
 
         <table class="investors-comparison-table">
@@ -238,98 +291,179 @@ sitemap: false
             <tbody>
                 <tr>
                     <th scope="row">Authzed / SpiceDB</th>
-                    <td>The Zanzibar sage. Open-source ReBAC engine over Postgres or CockroachDB. SOC 2 Type II shipped.</td>
-                    <td>Storage layer is a general-purpose database. Cryptographic audit and per-tenant cryptographic isolation require rewriting the engine — abandoning their existing customer base.</td>
+                    <td>
+                        The Zanzibar sage. Open-source ReBAC engine over
+                        Postgres or CockroachDB. SOC 2 Type II shipped.
+                    </td>
+                    <td>
+                        Storage layer is a general-purpose database.
+                        Cryptographic audit and per-tenant cryptographic
+                        isolation require rewriting the engine — abandoning
+                        their existing customer base.
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">OpenFGA (CNCF)</th>
-                    <td>The OSS community standard. No commercial offering of its own.</td>
-                    <td>Auth0/Okta own commercial deployment. We have the founder lineage and an independent commercial path they don't.</td>
+                    <td>
+                        The OSS community standard. No commercial offering of
+                        its own.
+                    </td>
+                    <td>
+                        Auth0/Okta own commercial deployment. We have the
+                        founder lineage and an independent commercial path they
+                        don't.
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Auth0 FGA (Okta)</th>
-                    <td>The incumbent's enterprise tier. Built directly on OpenFGA.</td>
-                    <td>Inherits OpenFGA's storage architecture — same Postgres-backed ceiling. Pricing now sales-led only — wedge for transparent-priced alternatives.</td>
+                    <td>
+                        The incumbent's enterprise tier. Built directly on
+                        OpenFGA.
+                    </td>
+                    <td>
+                        Inherits OpenFGA's storage architecture — same
+                        Postgres-backed ceiling. Pricing now sales-led only —
+                        wedge for transparent-priced alternatives.
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Cerbos</th>
-                    <td>Multi-paradigm policy engine (RBAC/ABAC/ReBAC/PBAC). Nine framework certifications. Ships today.</td>
-                    <td>Stateless policy engine — no relationship store, no cryptographic audit, no per-tenant isolation. Solves a different shape of problem than ours.</td>
+                    <td>
+                        Multi-paradigm policy engine (RBAC/ABAC/ReBAC/PBAC).
+                        Nine framework certifications. Ships today.
+                    </td>
+                    <td>
+                        Stateless policy engine — no relationship store, no
+                        cryptographic audit, no per-tenant isolation. Solves a
+                        different shape of problem than ours.
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Permit.io / Oso</th>
-                    <td>Both pivoted to AI agent permissions / agent observability in 2026.</td>
-                    <td>Pivot signals the original positioning didn't hold. Both inherit general-purpose storage constraints. Both compete on agent surface, not architectural correctness.</td>
+                    <td>
+                        Both pivoted to AI agent permissions / agent
+                        observability in 2026.
+                    </td>
+                    <td>
+                        Pivot signals the original positioning didn't hold. Both
+                        inherit general-purpose storage constraints. Both
+                        compete on agent surface, not architectural correctness.
+                    </td>
                 </tr>
             </tbody>
         </table>
 
         <h3>The structural moat</h3>
         <p>
-            Each of our three differentiating properties — microsecond
-            latency, cryptographic audit, per-tenant cryptographic
-            isolation — is a <strong>storage-layer architectural choice</strong>.
-            They cannot be added to a competitor's product as a feature.
-            They require rebuilding the storage engine — which is the
-            entire product.
+            Each of our three differentiating properties — microsecond latency,
+            cryptographic audit, per-tenant cryptographic isolation — is a
+            <strong>storage-layer architectural choice</strong>. They cannot be
+            added to a competitor's product as a feature. They require
+            rebuilding the storage engine — which is the entire product.
         </p>
         <p>
             Cerbos is stateless and would have to invent a storage layer.
-            SpiceDB and OpenFGA are bolted onto Postgres or CockroachDB
-            and would have to rewrite the storage tier they currently
-            rely on. Auth0 FGA inherits OpenFGA's storage. None can
-            ship our properties without a multi-year engine rewrite that
-            abandons their existing customers.
+            SpiceDB and OpenFGA are bolted onto Postgres or CockroachDB and
+            would have to rewrite the storage tier they currently rely on. Auth0
+            FGA inherits OpenFGA's storage. None can ship our properties without
+            a multi-year engine rewrite that abandons their existing customers.
         </p>
         <p>
-            We have a four-to-five-year structural lead, not a feature
-            lead. The architecture is the moat.
+            We have a four-to-five-year structural lead, not a feature lead. The
+            architecture is the moat.
         </p>
     </div>
 </section>
 
 <section class="investors-section" aria-labelledby="investors-business-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.06</span> Business model</div>
-        <h2 id="investors-business-heading">Open core plus managed cloud — the same playbook that built four $10B+ infrastructure companies.</h2>
+        <div class="investors-section-label">
+            <span>SEC.06</span> Business model
+        </div>
+        <h2 id="investors-business-heading">
+            Open core plus managed cloud — the same playbook that built four
+            $10B+ infrastructure companies.
+        </h2>
         <p>
-            The core engine is open source under MIT and Apache 2.0
-            licenses. The business is the managed cloud: usage-based
-            pricing that grows with the customer's application, not their
-            seat count.
+            The core engine is open source under MIT and Apache 2.0 licenses.
+            The business is the managed cloud: usage-based pricing that grows
+            with the customer's application, not their seat count.
         </p>
         <p>
             This is the exact shape of the four most successful developer
             infrastructure companies of the past decade:
         </p>
         <ul>
-            <li><strong>Auth0</strong> — open core (now CNCF), managed identity cloud — exited to Okta for $6.5 billion in 2021.</li>
-            <li><strong>Datadog</strong> — open-source agents, managed observability cloud — public, ~$50 billion market cap.</li>
-            <li><strong>Snowflake</strong> — open data formats, managed warehouse cloud — public, ~$60 billion market cap.</li>
-            <li><strong>MongoDB</strong> — open-source database, managed Atlas cloud — public, ~$25 billion market cap.</li>
+            <li>
+                <strong>Auth0</strong> — open core (now CNCF), managed identity
+                cloud — exited to Okta for $6.5 billion in 2021.
+            </li>
+            <li>
+                <strong>Datadog</strong> — open-source agents, managed
+                observability cloud — public, ~$50 billion market cap.
+            </li>
+            <li>
+                <strong>Snowflake</strong> — open data formats, managed
+                warehouse cloud — public, ~$60 billion market cap.
+            </li>
+            <li>
+                <strong>MongoDB</strong> — open-source database, managed Atlas
+                cloud — public, ~$25 billion market cap.
+            </li>
         </ul>
         <p>
-            The pattern is consistent: open-core infrastructure becomes
-            the default for its category, and the managed cloud captures
-            the value. Authorization is the next category waiting for it.
+            The pattern is consistent: open-core infrastructure becomes the
+            default for its category, and the managed cloud captures the value.
+            Authorization is the next category waiting for it.
         </p>
     </div>
 </section>
 
 <section class="investors-section" aria-labelledby="investors-traction-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.07</span> Where we are today</div>
-        <h2 id="investors-traction-heading">Pre-GA, with measurable demand and a clear path to commercial readiness.</h2>
+        <div class="investors-section-label">
+            <span>SEC.07</span> Where we are today
+        </div>
+        <h2 id="investors-traction-heading">
+            Pre-GA, with measurable demand and a clear path to commercial
+            readiness.
+        </h2>
         <p>
-            We are deliberately pre-GA. The list below reflects today's
-            actual state — claims investors can verify by talking to us:
+            We are deliberately pre-GA. The list below reflects today's actual
+            state — claims investors can verify by talking to us:
         </p>
         <ul>
-            <li><strong>{{ site.data.stats.waitlist_count }}+ teams on the waitlist</strong>, growing month over month. Composition skews toward multi-tenant SaaS, regulated SaaS, and AI agent platforms.</li>
-            <li><strong>Open-source engine shipping</strong> — public roadmap, public RFC process, MIT + Apache 2.0 licensed.</li>
-            <li><strong>First commercial design partners under NDA</strong> — early conversations with regulated-enterprise teams that need cryptographic audit by their next audit cycle.</li>
-            <li><strong>SOC 2 Type II audit in progress</strong>; full third-party attestations on the post-GA roadmap. Architecture mapped to SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, EU AI Act, ISO 27001:2022, and NIST 800-53 Rev 5 — <a href="/product/compliance#framework-mapping">framework mapping published</a>.</li>
-            <li><strong>Performance benchmarks under preparation</strong> — internal numbers (2.8&micro;s p99, 4.9 billion checks/sec on commodity hardware) will be published with reproducible methodology before GA.</li>
+            <li>
+                <strong
+                    >{{ site.data.stats.waitlist_count }}+ teams on the
+                    waitlist</strong
+                >, growing month over month. Composition skews toward
+                multi-tenant SaaS, regulated SaaS, and AI agent platforms.
+            </li>
+            <li>
+                <strong>Open-source engine shipping</strong> — public roadmap,
+                public RFC process, MIT + Apache 2.0 licensed.
+            </li>
+            <li>
+                <strong>First commercial design partners under NDA</strong> —
+                early conversations with regulated-enterprise teams that need
+                cryptographic audit by their next audit cycle.
+            </li>
+            <li>
+                <strong>SOC 2 Type II audit in progress</strong>; full
+                third-party attestations on the post-GA roadmap. Architecture
+                mapped to SOC 2, HIPAA, GDPR, PCI DSS, NIS2, DORA, EU AI Act,
+                ISO 27001:2022, and NIST 800-53 Rev 5 —
+                <a href="/product/compliance#framework-mapping"
+                    >framework mapping published</a
+                >.
+            </li>
+            <li>
+                <strong>Performance benchmarks under preparation</strong> —
+                internal numbers (2.8&micro;s p99, 4.9 billion checks/sec on
+                commodity hardware) will be published with reproducible
+                methodology before GA.
+            </li>
         </ul>
 
         <!--
@@ -349,89 +483,111 @@ sitemap: false
 
 <section class="investors-section" aria-labelledby="investors-exit-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.08</span> The exit case</div>
-        <h2 id="investors-exit-heading">A clear strategic acquirer pool, plus a credible path to standalone scale.</h2>
+        <div class="investors-section-label">
+            <span>SEC.08</span> The exit case
+        </div>
+        <h2 id="investors-exit-heading">
+            A clear strategic acquirer pool, plus a credible path to standalone
+            scale.
+        </h2>
         <p>
-            <strong>Comparable exit:</strong> Auth0 was founded in 2013,
-            reached unicorn status by 2019, and was acquired by Okta for
-            $6.5 billion in May 2021 — roughly an eight-year arc. The
-            authorization layer is the next consolidation in the same
-            category, and the buyer pool already exists.
+            <strong>Comparable exit:</strong> Auth0 was founded in 2013, reached
+            unicorn status by 2019, and was acquired by Okta for $6.5 billion in
+            May 2021 — roughly an eight-year arc. The authorization layer is the
+            next consolidation in the same category, and the buyer pool already
+            exists.
         </p>
         <p>
             <strong>Strategic acquirers</strong> who structurally need
-            authorization in their stack and have shown willingness to pay
-            for it:
+            authorization in their stack and have shown willingness to pay for
+            it:
         </p>
         <ul>
-            <li><strong>Okta</strong> — already paid $6.5B for the authentication half; authorization completes the IAM platform.</li>
-            <li><strong>Microsoft</strong> — Entra is positioned for the same role inside the Microsoft cloud; Cisco/Microsoft's joint agent authorization push at RSA 2026 signals appetite.</li>
-            <li><strong>Cloudflare</strong> — Zero Trust portfolio is missing the policy layer; Workers and D1 give them the deployment surface.</li>
-            <li><strong>AWS, Google Cloud</strong> — every hyperscaler has a half-built authorization story (IAM, Cedar, Zanzibar internals). Buying beats building.</li>
-            <li><strong>HashiCorp</strong> (now IBM) — security/policy adjacency to Vault and Boundary.</li>
+            <li>
+                <strong>Okta</strong> — already paid $6.5B for the
+                authentication half; authorization completes the IAM platform.
+            </li>
+            <li>
+                <strong>Microsoft</strong> — Entra is positioned for the same
+                role inside the Microsoft cloud; Cisco/Microsoft's joint agent
+                authorization push at RSA 2026 signals appetite.
+            </li>
+            <li>
+                <strong>Cloudflare</strong> — Zero Trust portfolio is missing
+                the policy layer; Workers and D1 give them the deployment
+                surface.
+            </li>
+            <li>
+                <strong>AWS, Google Cloud</strong> — every hyperscaler has a
+                half-built authorization story (IAM, Cedar, Zanzibar internals).
+                Buying beats building.
+            </li>
+            <li>
+                <strong>HashiCorp</strong> (now IBM) — security/policy adjacency
+                to Vault and Boundary.
+            </li>
         </ul>
         <p>
-            <strong>Standalone path:</strong> the Datadog / Snowflake /
-            MongoDB pattern — open-core infrastructure that becomes the
-            default for its category and goes public. The IAM market grows
-            ~$17B between now and 2030; capturing 5% of the authorization
-            half is a $1B+ ARR business.
+            <strong>Standalone path:</strong> the Datadog / Snowflake / MongoDB
+            pattern — open-core infrastructure that becomes the default for its
+            category and goes public. The IAM market grows ~$17B between now and
+            2030; capturing 5% of the authorization half is a $1B+ ARR business.
         </p>
     </div>
 </section>
 
 <section class="investors-section" aria-labelledby="investors-risk-heading">
     <div class="container investors-narrow">
-        <div class="investors-section-label"><span>SEC.09</span> How we could be wrong</div>
-        <h2 id="investors-risk-heading">The bear cases — and how we've thought about them.</h2>
+        <div class="investors-section-label">
+            <span>SEC.09</span> How we could be wrong
+        </div>
+        <h2 id="investors-risk-heading">
+            The bear cases — and how we've thought about them.
+        </h2>
         <p>
-            We've spent more time than we'd like analyzing the cases where
-            the thesis breaks. The honest summary: each one has a real
-            argument, and each one has a real answer.
+            We've spent a great deal of time analyzing the cases where the
+            thesis breaks. The honest summary: each one has a real argument, and
+            each one has a real answer.
         </p>
 
         <h3>"A hyperscaler productizes their internal authorization layer."</h3>
         <p>
-            AWS has Cedar. Google has Zanzibar internals. Microsoft has
-            Entra. Each has had five-plus years to commercialize a
-            fine-grained authorization product, and none has. The reason
-            is structural: their customers want third-party audit
-            credibility that hyperscalers structurally can't provide
-            ("you can't audit your auditor"), and the segment is too
-            narrow to interest their primary GTM. If a hyperscaler
-            reverses course, our cryptographic audit story is the answer
-            to the audit-credibility problem they can't solve.
+            AWS has Cedar. Google has Zanzibar internals. Microsoft has Entra.
+            Each has had five-plus years to commercialize a fine-grained
+            authorization product, and none has. The reason is structural: their
+            customers want third-party audit credibility that hyperscalers
+            structurally can't provide ("you can't audit your auditor"), and the
+            segment is too narrow to interest their primary GTM. If a
+            hyperscaler reverses course, our cryptographic audit story is the
+            answer to the audit-credibility problem they can't solve.
         </p>
 
         <h3>"Open-source competition compresses margins."</h3>
         <p>
             Same dynamic as Datadog vs. Prometheus, MongoDB vs. self-hosted,
-            Confluent vs. Apache Kafka, Snowflake vs. open data formats.
-            In every case, the managed cloud captured the value despite
-            credible OSS alternatives. Our open-source core is a
-            distribution and trust mechanism — not a substitute for the
-            managed offering.
+            Confluent vs. Apache Kafka, Snowflake vs. open data formats. In
+            every case, the managed cloud captured the value despite credible
+            OSS alternatives. Our open-source core is a distribution and trust
+            mechanism — not a substitute for the managed offering.
         </p>
 
         <h3>"The compliance tailwind slows or reverses."</h3>
         <p>
-            EU AI Act enforcement begins 2026 and ramps through 2027;
-            DORA is already in effect; NIS2 transposition deadlines have
-            already passed. The tailwind is regulatory, not market
-            sentiment — meaning it's slow to start and slow to stop.
-            Even under a regulatory rollback scenario, the security
-            posture floor doesn't drop; the compliance ceiling just
-            stops rising.
+            EU AI Act enforcement begins 2026 and ramps through 2027; DORA is
+            already in effect; NIS2 transposition deadlines have already passed.
+            The tailwind is regulatory, not market sentiment — meaning it's slow
+            to start and slow to stop. Even under a regulatory rollback
+            scenario, the security posture floor doesn't drop; the compliance
+            ceiling just stops rising.
         </p>
 
         <h3>"The agentic era is hype that fades."</h3>
         <p>
-            Possible. Even if it does, every regulated enterprise still
-            needs auditable fine-grained access control. The
-            regulated-enterprise wedge stands on its own; the agentic era
-            amplifies it. We're not betting the company on AI adoption
-            rates — we're betting on the architectural correctness that
-            both buyers need.
+            Possible. Even if it does, every regulated enterprise still needs
+            auditable fine-grained access control. The regulated-enterprise
+            wedge stands on its own; the agentic era amplifies it. We're not
+            betting the company on AI adoption rates — we're betting on the
+            architectural correctness that both buyers need.
         </p>
     </div>
 </section>
@@ -442,32 +598,53 @@ sitemap: false
         <h2 id="investors-round-heading">Raising a $1.5M–$5M seed round.</h2>
         <p>
             Range reflects the spread between a tighter-terms round and a
-            fully-allocated round with the right partners. Targeting close
-            once a curated list of thesis-fit funds and angels commits —
-            we're not running a broad process.
+            fully-allocated round with the right partners. Targeting close once
+            a curated list of thesis-fit funds and angels commits — we're not
+            running a broad process.
         </p>
 
         <h3>Use of funds</h3>
         <ul>
-            <li><strong>~60% engineering</strong> — storage, distributed systems, and SDK language coverage. Six engineers by close of seed.</li>
-            <li><strong>~25% go-to-market</strong> — first-cohort commercial onboarding, the design partner program through GA, regulated-enterprise GTM.</li>
-            <li><strong>~15% compliance &amp; audit programs</strong> — SOC 2 Type II completion, ISO 27001 audit, framework attestations on the roadmap.</li>
+            <li>
+                <strong>~60% engineering</strong> — storage, distributed
+                systems, and SDK language coverage. Six engineers by close of
+                seed.
+            </li>
+            <li>
+                <strong>~25% go-to-market</strong> — first-cohort commercial
+                onboarding, the design partner program through GA,
+                regulated-enterprise GTM.
+            </li>
+            <li>
+                <strong>~15% compliance &amp; audit programs</strong> — SOC 2
+                Type II completion, ISO 27001 audit, framework attestations on
+                the roadmap.
+            </li>
         </ul>
 
         <h3>Milestones to next round</h3>
         <ul>
             <li>First $1M ARR with named regulated-enterprise customers</li>
             <li>SOC 2 Type II report shipped, ISO 27001 audit underway</li>
-            <li>10+ paying customers in regulated verticals (healthcare, fintech, government-adjacent)</li>
-            <li>Open-source community traction — measurable downloads, RFC participation, contributions</li>
-            <li>Reproducible benchmark methodology published, validating the latency claims</li>
+            <li>
+                10+ paying customers in regulated verticals (healthcare,
+                fintech, government-adjacent)
+            </li>
+            <li>
+                Open-source community traction — measurable downloads, RFC
+                participation, contributions
+            </li>
+            <li>
+                Reproducible benchmark methodology published, validating the
+                latency claims
+            </li>
         </ul>
 
         <p>
             We're looking for partners whose theses include developer
-            infrastructure, security infrastructure, or AI infrastructure
-            — and who can credibly help with enterprise-security GTM,
-            CISO-network introductions, or compliance-program scaling.
+            infrastructure, security infrastructure, or AI infrastructure — and
+            who can credibly help with enterprise-security GTM, CISO-network
+            introductions, or compliance-program scaling.
         </p>
     </div>
 </section>
@@ -476,28 +653,41 @@ sitemap: false
     <div class="container investors-narrow">
         <h2 id="investors-cta-heading">Talk to us.</h2>
         <p>
-            The fastest path is a 20-minute video call walking through
-            the deck. The slowest is reading the rest of the site —
+            The fastest path is a 20-minute video call walking through the deck.
+            The slowest is reading the rest of the site —
             <a href="/why">/why</a> for the technical thesis,
-            <a href="/product/compliance">/product/compliance</a> for
-            the framework mapping, <a href="/about">/about</a> for the
-            team.
+            <a href="/product/compliance">/product/compliance</a> for the
+            framework mapping, <a href="/about">/about</a> for the team.
         </p>
         <div class="investors-cta-actions">
-            <a href="https://calendar.app.google/R1cR6fFNAitYrZDPA" class="btn btn-primary btn-lg" target="_blank" rel="noopener noreferrer">Book a 20-min walkthrough</a>
-            <a href="https://docs.google.com/presentation/d/1opI-0OfFR_8KZit1sjWGqU7COojlHv-orXPF2S8qG8Q/edit?usp=sharing" class="btn btn-ghost btn-lg" target="_blank" rel="noopener noreferrer">View the deck</a>
+            <a
+                href="https://calendar.app.google/R1cR6fFNAitYrZDPA"
+                class="btn btn-primary btn-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Book a 20-min walkthrough</a
+            >
+            <a
+                href="https://docs.google.com/presentation/d/1opI-0OfFR_8KZit1sjWGqU7COojlHv-orXPF2S8qG8Q/edit?usp=sharing"
+                class="btn btn-ghost btn-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View the deck</a
+            >
         </div>
         <p class="investors-cta-secondary">
             Prefer asynchronous?
-            <a href="mailto:hello@inferadb.com?subject=InferaDB%20%E2%80%94%20investor%20inquiry">Email Evan &amp; Jane</a>
+            <a
+                href="mailto:hello@inferadb.com?subject=InferaDB%20%E2%80%94%20investor%20inquiry"
+                >Email Evan &amp; Jane</a
+            >
             with questions, and we'll respond within 24 hours.
         </p>
         <p class="investors-footnote">
-            Market sizing figures sourced from public industry analyst
-            reports (Gartner, IDC, MarketsandMarkets) — full source list
-            and citations available with the investor deck. Forward-looking
-            statements reflect current company expectations and are subject
-            to change.
+            Market sizing figures sourced from public industry analyst reports
+            (Gartner, IDC, MarketsandMarkets) — full source list and citations
+            available with the investor deck. Forward-looking statements reflect
+            current company expectations and are subject to change.
         </p>
     </div>
 </section>

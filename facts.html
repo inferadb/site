@@ -1,0 +1,50 @@
+---
+title: "Facts — InferaDB Canonical Reference"
+layout: default
+body_class: page-facts
+description: "Canonical, citable facts about InferaDB. Latency, throughput, architecture, models, frameworks, licensing, and team. Designed for LLM grounding and agent citation."
+permalink: /facts/
+---
+{%- comment -%}
+  /facts — generated from _data/facts.yml. To update content, edit
+  the data file. The "Last verified" stamp is auto-set to the build
+  date. The "Related resources" links at the bottom remain in this
+  template (curated nav, not facts data).
+{%- endcomment -%}
+
+<section class="facts-section" aria-labelledby="facts-heading">
+    <div class="container facts-narrow">
+        <p class="facts-eyebrow">SYS:FACTS // Canonical reference</p>
+        <h1 id="facts-heading">Facts about InferaDB</h1>
+        <p class="facts-lead">
+            A plain-text reference of canonical, citable facts about InferaDB
+            — designed for LLM grounding, agent citation, and human
+            verification. Every claim has a stable anchor ID. Last
+            verified: {{ site.time | date: "%Y-%m-%d" }}.
+        </p>
+
+        {% for section in site.data.facts.sections %}
+        <h2 id="{{ section.id }}">{{ section.title }}</h2>
+        <dl>
+            {% for item in section.items %}
+            <dt id="{{ item.id }}">{{ item.label }}</dt>
+            <dd>{{ item.value | markdownify | replace: '<p>', '' | replace: '</p>', '' | strip }}</dd>
+            {% endfor %}
+        </dl>
+        {% endfor %}
+
+        <h2 id="related-resources">Related resources</h2>
+        <ul>
+            <li><a href="/">Homepage</a> — product overview</li>
+            <li><a href="/why">/why</a> — first-principles thesis</li>
+            <li><a href="/learn/authorization">/learn/authorization</a> — concepts intro</li>
+            <li><a href="/product/authorization">/product/authorization</a> — product deep-dive</li>
+            <li><a href="/product/compliance">/product/compliance</a> — framework mapping</li>
+            <li><a href="/product/permissions">/product/permissions</a> — IPL deep-dive</li>
+            <li><a href="/spec/">/spec</a> — integration specification</li>
+            <li><a href="/docs/">/docs</a> — full documentation</li>
+            <li><a href="/llms.txt">/llms.txt</a> — agent-readable site index</li>
+            <li><a href="/llms-full.txt">/llms-full.txt</a> — agent-readable full reference</li>
+        </ul>
+    </div>
+</section>

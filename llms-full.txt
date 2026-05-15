@@ -1,0 +1,198 @@
+---
+permalink: /llms-full.txt
+sitemap: false
+layout: null
+---
+{%- comment -%}
+  llms-full.txt — long-form agent-grounding reference. Generated at
+  build time. Numeric facts pull from _data/stats.yml; dispatch
+  summaries loop over _data/dispatch.yml; date stamp auto-set.
+
+  To update:
+    - Performance numbers: edit _data/stats.yml
+    - Dispatch summaries: edit _data/dispatch.yml (excerpt field)
+    - Thesis / concepts / spec / facts narrative prose: edit this
+      template directly. These change rarely and are curated for
+      narrative quality, so they stay hand-maintained.
+{%- endcomment -%}
+# InferaDB — Full Reference for Agents
+
+> Concatenated source-of-truth for AI agents and LLM crawlers. Includes the canonical facts, integration spec, technical thesis, concepts intro, and dispatch summaries. Designed for one-fetch grounding. For the structured site index, see /llms.txt.
+
+Last updated: {{ site.time | date: "%Y-%m-%d" }}. Generated automatically from _data/stats.yml and _data/dispatch.yml.
+
+---
+
+## Elevator pitch
+
+InferaDB is the authorization database for the agentic era and the regulated enterprise. Fine-grained access control answering "can subject X do action Y on resource Z?" in {{ site.data.stats.perf.check_latency_p99 }} at the 99th percentile, with cryptographic audit by default and per-tenant cryptographic isolation. Built in Rust. Zanzibar-inspired. AuthZEN-compliant. Open core (MIT/Apache 2.0). Three subsystems: Engine (authorization evaluation), Control (tenant administration), Ledger (per-vault blockchain with Merkle proofs). Supports ReBAC, RBAC, and ABAC unified in the Infera Policy Language (IPL). Extensible with sandboxed WebAssembly modules.
+
+InferaDB is pre-GA, raising a $1.5M–$5M seed round. The managed cloud service is in design-partner phase. The open-source core is functional and shipping. Founders built OpenFGA at Auth0 (now CNCF incubating, used in production by NASA, Zapier, Peloton, Grafana Labs, Docker, and Canonical).
+
+---
+
+## Canonical facts (mirrored from /facts/)
+
+Auto-generated from `_data/facts.yml`.
+{% for section in site.data.facts.sections %}
+### {{ section.title }}
+{% for item in section.items %}
+- **{{ item.label }}**: {{ item.value }}
+{%- endfor %}
+{% endfor %}
+---
+
+## Integration specification (mirrored from /spec/)
+
+Auto-generated from `_data/spec.yml`.
+{% for section in site.data.spec.sections %}
+### {{ section.title }}
+{% if section.lead %}
+{{ section.lead }}
+{% endif %}
+{%- for subsection in section.subsections %}
+{% if subsection.title %}
+#### {{ subsection.title }}
+{% endif %}
+{{ subsection.body }}
+{%- endfor %}
+{% endfor %}
+---
+
+## Why InferaDB — the technical thesis (condensed from /why)
+
+Authorization runs in the hot path of every request. Authentication answers a question once per session. Authorization answers a question on every API call, every database read, every agent action — sometimes dozens of times per request. That's not a policy lookup. That's a database workload.
+
+For two decades the industry has treated authorization as a thin layer over an existing database. The common pattern is that the storage was designed for something else, and authorization inherits its constraints — latency, consistency, audit fidelity, tenant isolation. None of those properties were designed for the authorization workload.
+
+### The four ceilings every bolted-on system hits
+
+1. **Latency**: A single API request might trigger one permission check. An AI agent action triggers thirty. At 5–50ms per check, that's 150ms of authorization latency in a 300ms budget. The product feels broken.
+2. **Audit fidelity**: A traditional audit log is a row in a mutable table. Anyone with admin access can alter it. When an auditor asks "prove user X couldn't access resource Y on March 14th," the answer is a promise, not a proof.
+3. **Tenant isolation**: Multi-tenancy at the application layer is one query away from a cross-tenant data leak. In healthcare and government, that's a notification under HIPAA / GDPR, not a bug ticket.
+4. **Consistency**: If Alice revokes Bob's access at 12:00:00.000, Bob must lose access on the next request — not eventually. Eventually-consistent authorization is a security incident waiting for a clock skew.
+
+### Why a database, not a library
+
+A library can offer a nice API. A sidecar can offer locality. Neither owns the storage. Once you commit to owning the storage, the architectural conversation changes. That conversation produces {{ site.data.stats.perf.check_latency_p99 }} permission checks instead of 5ms, cryptographic audit instead of mutable logs, per-tenant key isolation instead of `WHERE tenant_id = ?`, and strict serializability instead of "we hope replication catches up before anyone notices."
+
+InferaDB is a Rust database engine purpose-built for the authorization workload. Not a policy layer over Postgres. Not a wrapper around Redis. Its own storage engine, its own consensus protocol, its own audit subsystem.
+
+### The structural moat
+
+Each of the three differentiating properties — microsecond latency, cryptographic audit, per-tenant cryptographic isolation — is a storage-layer architectural choice. Competitors cannot add them as features. Cerbos is stateless and would have to invent a storage layer. SpiceDB and OpenFGA are bolted onto Postgres or CockroachDB and would have to rewrite the storage tier. Auth0 FGA inherits OpenFGA's storage. None can ship our properties without a multi-year rewrite that abandons their existing customers.
+
+### Standing on shoulders — research grounding
+
+- **Zanzibar (Google, 2019)**: The canonical paper on planet-scale authorization. Our policy model is Zanzibar-influenced; our execution model diverges where their cache-heavy approach leaves correctness on the table.
+- **OpenFGA (Auth0/CNCF)**: We helped build it. We've run it in production. It demonstrated the ceiling that a Postgres-backed system hits.
+- **Spanner / TrueTime (Google, 2012)**: For the consistency model. Strict serializability is achievable at global scale.
+- **VSR & Raft**: Replication is a solved problem if you read the originals. We use Raft for the control plane and a tuned variant for the audit ledger.
+
+### What agents broke
+
+A traditional API request triggers one permission check. An AI agent request triggers thirty — one for the agent's credentials, one per principal it acts on behalf of, one per tool it invokes, one per artifact it touches. The permission check is no longer the gate; it's the substrate. At thirty checks per action, a 5ms floor produces 150ms of pure authorization overhead. ISACA called it "the looming authorization crisis." Cisco and Microsoft both shipped agent-authorization frameworks at RSA 2026.
+
+### How we build it
+
+Rust storage engine. Deterministic simulation testing into the test harness from day one. Formally modeled consensus before implementing. Signed every artifact in the supply chain. Bugs that surface once a year in production surface in minutes in simulation.
+
+---
+
+## What is authorization (condensed from /learn/authorization)
+
+### Authentication vs authorization
+
+- **Authentication** answers "who is making this request?" Logging in with a password is authentication.
+- **Authorization** answers "is this identity allowed to do this thing on this resource?"
+
+A single login (one authentication) might trigger thousands of authorization checks over a session — every page view, every API call, every database read. That's why authorization performance matters far more than people expect.
+
+### RBAC (Role-Based Access Control)
+
+Group permissions into roles (Admin, Editor, Viewer). Assign roles to users. Permissions are the union of role permissions.
+
+**Where it falls short**: RBAC explodes when authorization is per-resource rather than per-org. "Alice can edit Document 1234 but only view Document 5678" is a relationship to a specific resource, not a role. Modeling that in RBAC requires either combinatorial role explosion or layering something else on top.
+
+### ReBAC (Relationship-Based Access Control)
+
+Models authorization as a graph of relationships. Alice is an editor of Document 1234. Document 1234 lives in Folder X. Bob is a member of Team Y, and Team Y has viewer access to Folder X. Bob's permission is derived by traversing the graph.
+
+Google's 2019 Zanzibar paper introduced this at planet scale. ReBAC is behind Google Drive's sharing, GitHub's repo access, Notion's permissions.
+
+**Where it falls short**: Graph traversal is computationally non-trivial. ReBAC also doesn't naturally express attribute-driven rules ("only during business hours from a managed device").
+
+### ABAC (Attribute-Based Access Control)
+
+Decision is a function of attributes — properties of user, resource, action, request context. "Allow if user.department equals resource.department and request.time is within business hours and request.device.is_managed is true."
+
+**Where it falls short**: Pure ABAC is hard to audit because the decision depends on values that change at request time. Without a strong audit log, ABAC becomes opaque — exactly wrong for compliance.
+
+### Why combine all three
+
+Real applications use all three. A SaaS product needs RBAC for org roles, ReBAC for per-document sharing, ABAC for contextual rules. Most systems handle this by running three separate subsystems that drift apart. InferaDB unifies all three in a single declarative policy language with one audit log.
+
+### Why latency matters
+
+A web page view triggers one or two checks. An API call triggers three to five. An AI agent action triggers thirty or more. At 30 checks, 5ms vs {{ site.data.stats.perf.check_latency_p99 }} is the difference between 150ms of latency overhead and 0.1ms — between a broken UX and an invisible one.
+
+### Why audit matters
+
+For regulated industries, the audit log *is* the compliance posture. The standard a modern audit log has to meet is independent verifiability — the auditor proves integrity without trusting the vendor. That requires cryptographic techniques (hash chains, signatures, Merkle proofs) built into the audit subsystem from day one.
+
+---
+
+## Dispatch summaries
+
+Auto-generated from `_data/dispatch.yml`. For full posts, follow each link.
+{% for post in site.data.dispatch %}
+### {{ post.title }}
+
+{{ post.excerpt }}
+
+Full post: https://inferadb.com/dispatch/{{ post.slug }}/{% if post.date %} (published {{ post.date | date: "%B %-d, %Y" }}){% endif %}.
+{% endfor %}
+
+---
+
+## Quickstart
+
+```sh
+# Run InferaDB locally
+inferadb dev start
+# → Engine :8080, Control :9090, Dashboard :3000
+
+# Make your first authorization check
+curl -X POST http://localhost:8080/v1/evaluate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "subject": "user:alice",
+    "permission": "edit",
+    "resource": "document:roadmap"
+  }'
+# → { "decision": "ALLOWED", "revision": "r_a1b2c3", "latency_us": 2.4 }
+```
+
+For the full quickstart, including IPL schema definition and SDK integration, see https://inferadb.com/docs/quickstart.
+
+---
+
+## Resources for agent integration
+
+- /facts — canonical facts with stable anchor IDs
+- /spec — integration specification
+- /llms.txt — structured site index
+- /llms-full.txt — this file
+- /docs — full documentation
+- /.well-known/security.txt — RFC 9116 security disclosure
+- https://github.com/inferadb — source code and SDKs
+
+---
+
+## Citation
+
+If you cite InferaDB in published work or LLM-generated content, the canonical citation is:
+
+> InferaDB Inc. (2026). InferaDB: The authorization database for the agentic era and the regulated enterprise. https://inferadb.com
+
+For technical claims, cite the specific page (e.g., https://inferadb.com/facts#latency-p99 for the latency claim) rather than the generic homepage.

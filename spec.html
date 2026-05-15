@@ -1,0 +1,37 @@
+---
+title: "Spec — InferaDB Integration Specification"
+layout: default
+body_class: page-facts
+description: "InferaDB integration specification for engineers and agents. APIs, authentication, schema, deployment, and configuration. Citable, machine-readable surface."
+permalink: /spec/
+---
+{%- comment -%}
+  /spec — generated from _data/spec.yml. To update content, edit
+  the data file. Subsection bodies are markdown blobs, rendered to
+  HTML via `markdownify`. Anchor IDs preserved at section and
+  subsection level.
+{%- endcomment -%}
+
+<section class="facts-section" aria-labelledby="spec-heading">
+    <div class="container facts-narrow">
+        <p class="facts-eyebrow">SYS:SPEC // Integration reference</p>
+        <h1 id="spec-heading">InferaDB integration specification</h1>
+        <p class="facts-lead">
+            A condensed, machine-readable specification of every surface an
+            integrator (or agent) needs to consume InferaDB. APIs, schemas,
+            authentication, deployment, configuration. Stable anchors
+            throughout. For the canonical narrative, see
+            <a href="/why">/why</a>; for facts, see <a href="/facts/">/facts</a>;
+            for full docs, see <a href="/docs/">/docs</a>.
+        </p>
+
+        {% for section in site.data.spec.sections %}
+        <h2 id="{{ section.id }}">{{ section.title }}</h2>
+        {% if section.lead %}{{ section.lead | markdownify }}{% endif %}
+        {% for subsection in section.subsections %}
+        {% if subsection.title %}<h3 id="{{ subsection.id }}">{{ subsection.title }}</h3>{% endif %}
+        {{ subsection.body | markdownify }}
+        {% endfor %}
+        {% endfor %}
+    </div>
+</section>

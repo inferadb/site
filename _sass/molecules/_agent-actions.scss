@@ -1,0 +1,57 @@
+// ─── Agent actions — discuss-with-AI affordance ──────────────
+// Compact button group placed at the end of long-form marketing
+// pages so a reader can hand the page off to Claude or ChatGPT
+// for follow-up discussion. Mirrors the docs-toc-actions
+// pattern from _layouts/docs.html.
+
+.agent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 3rem auto 0;
+  max-width: 720px;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+}
+
+.agent-actions-label {
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+.agent-action {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  color: var(--text-bright);
+  text-decoration: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  text-transform: none;
+  letter-spacing: 0.01em;
+  transition: color 0.15s var(--ease-mechanical), border-color 0.15s var(--ease-mechanical);
+
+  &:hover {
+    color: var(--text-white);
+    border-color: var(--border-hover);
+  }
+}
+
+@media (width <= 768px) {
+  .agent-actions {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .agent-actions-label { margin-right: 0; }
+  .agent-action { justify-content: center; }
+}

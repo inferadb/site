@@ -8,12 +8,29 @@ description: "Compare InferaDB to AuthZed, SpiceDB, Oso, Permit.io, OpenFGA, OPA
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "InferaDB Authorization Database",
-  "description": "{{ page.description }}",
+  "@type": "ItemList",
+  "name": "InferaDB vs alternatives — competitive comparison",
+  "description": "{{ page.description | escape }}",
   "url": "{{ site.url }}/product/compare",
-  "brand": { "@type": "Organization", "name": "InferaDB" },
-  "category": "Authorization Infrastructure"
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "item": { "@type": "SoftwareApplication", "name": "InferaDB", "url": "https://inferadb.com", "applicationCategory": "SecurityApplication", "description": "Purpose-built authorization database. Microsecond latency, cryptographic audit, per-tenant cryptographic isolation. Open core (MIT/Apache 2.0)." } },
+    { "@type": "ListItem", "position": 2, "item": { "@type": "SoftwareApplication", "name": "OpenFGA", "url": "https://openfga.dev", "applicationCategory": "SecurityApplication", "description": "CNCF incubating ReBAC engine. Open source, no commercial offering of its own. Postgres-backed." } },
+    { "@type": "ListItem", "position": 3, "item": { "@type": "SoftwareApplication", "name": "Authzed / SpiceDB", "url": "https://authzed.com", "applicationCategory": "SecurityApplication", "description": "Zanzibar-faithful open source ReBAC engine over Postgres or CockroachDB. Managed Cloud and Self-Hosted offerings." } },
+    { "@type": "ListItem", "position": 4, "item": { "@type": "SoftwareApplication", "name": "Auth0 FGA", "url": "https://auth0.com/fine-grained-authorization", "applicationCategory": "SecurityApplication", "description": "Okta enterprise tier. Built on OpenFGA. Sales-led pricing." } },
+    { "@type": "ListItem", "position": 5, "item": { "@type": "SoftwareApplication", "name": "Cerbos", "url": "https://www.cerbos.dev", "applicationCategory": "SecurityApplication", "description": "Stateless multi-paradigm policy engine (RBAC/ABAC/ReBAC/PBAC). Nine framework certifications." } },
+    { "@type": "ListItem", "position": 6, "item": { "@type": "SoftwareApplication", "name": "Permit.io", "url": "https://www.permit.io", "applicationCategory": "SecurityApplication", "description": "Developer-focused authorization SaaS. Pivoted to AI agent permissions in 2026." } },
+    { "@type": "ListItem", "position": 7, "item": { "@type": "SoftwareApplication", "name": "Oso", "url": "https://www.osohq.com", "applicationCategory": "SecurityApplication", "description": "Pivoted to AI agent observability and permissions in 2026. Polar DSL." } }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Product", "item": "{{ site.url }}/product/authorization" },
+    { "@type": "ListItem", "position": 2, "name": "Compare", "item": "{{ site.url }}/product/compare" }
+  ]
 }
 </script>
 
@@ -280,6 +297,8 @@ description: "Compare InferaDB to AuthZed, SpiceDB, Oso, Permit.io, OpenFGA, OPA
 
     </div>
 </section>
+
+{% include agent-actions.html %}
 
 <section class="solution-cta">
     <div class="container">

@@ -21,6 +21,13 @@
     <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}" />
     <link rel="author" href="{{ '/humans.txt' | relative_url }}" />
     <link rel="help" href="{{ '/llms.txt' | relative_url }}" type="text/plain" />
+    {%- comment -%}
+      Markdown-source alternate for docs pages — gives LLM crawlers a
+      machine-friendly representation of the same content.
+    {%- endcomment -%}
+    {% if page.path contains 'docs/' and page.path contains '.md' %}
+    <link rel="alternate" type="text/markdown" href="https://github.com/inferadb/site/raw/main/{{ page.path }}" />
+    {% endif %}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -30,6 +37,15 @@
       "url": "{{ site.url }}",
       "applicationCategory": "SecurityApplication",
       "operatingSystem": "Linux, macOS, Windows, Kubernetes",
+      "softwareVersion": "0.x (pre-GA)",
+      "featureList": [
+        "Unified RBAC, ReBAC, and ABAC in one schema",
+        "Microsecond permission checks (2.8µs p99)",
+        "Cryptographic audit by default (hash-chained, Merkle-verified)",
+        "Per-tenant cryptographic isolation (AES-256-GCM)",
+        "Strict serializability with revision tokens",
+        "Multi-region replication via Raft consensus"
+      ],
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -48,6 +64,11 @@
       }
     }
     </script>
+    {%- comment -%}
+      Organization schema — emit only on / and /about so we don't dilute
+      the entity signal across every page on the site.
+    {%- endcomment -%}
+    {% if page.url == "/" or page.url == "/about/" %}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -55,7 +76,7 @@
       "name": "InferaDB",
       "url": "https://inferadb.com",
       "logo": "https://inferadb.com/assets/images/og-logo.png",
-      "description": "Managed authorization infrastructure for modern software.",
+      "description": "The authorization database for the agentic era and the regulated enterprise.",
       "foundingDate": "2025",
       "founders": [
         { "@type": "Person", "name": "Evan Sims", "jobTitle": "Co-Founder & CTO" },
@@ -73,6 +94,7 @@
       ]
     }
     </script>
+    {% endif %}
   </head>
   <body class="{{ page.body_class }}" data-layout="{{ page.layout }}">
     <a href="#main-content" class="skip-link">Skip to content</a>

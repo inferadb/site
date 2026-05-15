@@ -43,7 +43,7 @@
       area: hero
     - title: SDKs
       desc: "TypeScript, Python, Go, Java, Rust — 10 languages"
-      url: "/docs/#sdks"
+      url: "/docs/sdk-typescript"
       area: sdks
     - title: Security Model
       desc: Zero-trust architecture with cryptographic proof

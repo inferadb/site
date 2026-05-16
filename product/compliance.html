@@ -2,7 +2,7 @@
 title: "Compliance & Audit — SOC 2, HIPAA, GDPR Proof"
 layout: default
 body_class: page-solution
-description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cryptographic proof of every access decision. Seven compliance frameworks, one audit trail."
+description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cryptographic proof of every access decision. Nine compliance frameworks, one audit trail."
 ---
 
 <script type="application/ld+json">
@@ -309,7 +309,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
         </div>
 
         <div class="solution-section-label" data-reveal><span>SEC.05</span> Framework Coverage</div>
-        <h2 data-reveal>One audit trail, seven frameworks</h2>
+        <h2 data-reveal>One audit trail, {{ site.data.stats.compliance.frameworks_mapped_spelled | downcase }} frameworks</h2>
         <p data-reveal>
             Compliance frameworks differ in language but converge on the same
             underlying requirements: prove who accessed what, prove the logs
@@ -428,7 +428,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
                 <span class="solution-stat-label">hash-chained audit entries</span>
             </div>
             <div class="solution-stat">
-                <span class="solution-stat-value">7</span>
+                <span class="solution-stat-value">{{ site.data.stats.compliance.frameworks_mapped }}</span>
                 <span class="solution-stat-label">compliance frameworks mapped</span>
             </div>
             <div class="solution-stat">
@@ -486,7 +486,7 @@ description: "Pass SOC 2, HIPAA, and GDPR audits without custom engineering. Cry
             <h2>Make compliance an architecture property, not a scramble.</h2>
             <p>
                 Cryptographic proof of every access decision.<br/>
-                Seven compliance frameworks, one audit trail.<br/>
+                {{ site.data.stats.compliance.frameworks_mapped_spelled }} compliance frameworks, one audit trail.<br/>
                 Evidence your auditors verify independently.
             </p>
             <div class="solution-cta-actions">

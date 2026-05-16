@@ -17,8 +17,21 @@ perf:
   global_consistency: "47ms"
 
 # Compliance posture — keep this current as certifications progress.
+#
+# frameworks_mapped: numeric form used in stat cards, comparison tables,
+#                    and structured data (Liquid: {{ ... }} renders the integer).
+# frameworks_mapped_spelled: capitalized word form used in prose and headings
+#                            (use | downcase for mid-sentence positions).
+# When the count changes, bump BOTH fields together.
+#
+# KNOWN MANUAL UPDATE: product/compliance.html front-matter `description:`
+# also contains the spelled-out count. Jekyll does not render Liquid inside
+# YAML front-matter string values, so this one location must be bumped by
+# hand when frameworks_mapped changes. All body / heading / stat card
+# references auto-update from this file.
 compliance:
-  frameworks_mapped: 7
+  frameworks_mapped: 9
+  frameworks_mapped_spelled: "Nine"
   soc2_status: "Type II audit in progress"  # Update with date when committed
   hipaa_status: "Architecture eligible; BAA at GA"
 
